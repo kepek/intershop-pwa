@@ -1,4 +1,4 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
@@ -43,6 +43,11 @@ export class CamfilRequisitionsService {
     'payments_paymentMethod',
     'payments_paymentInstrument',
   ];
+
+  private requisitionsHeaders = new HttpHeaders({
+    'content-type': 'application/json',
+    Accept: 'application/vnd.intershop.basket.v1+json',
+  });
 
   /**
    * Get all customer requisitions of a certain status and view. The current user is expected to have the approver permission.
@@ -221,6 +226,28 @@ export class CamfilRequisitionsService {
       .pipe(map(() => ({ requisitionId, lineItemId, attribute })));
   }
 
+  deleteLineItemAttribute(requisitionId: string, lineItemId: string, lineItemAttribute: Attribute) {
+    if (!requisitionId) {
+      return throwError('updateLineItemAttribute() called without required id');
+    }
+
+    if (!lineItemId) {
+      return throwError('updateLineItemAttribute() called without required lineItemId');
+    }
+
+    if (!lineItemAttribute) {
+      return throwError('updateLineItemAttribute() called without required attribute');
+    }
+
+    const attributeName = lineItemAttribute.name;
+
+    return this.apiService
+      .delete(`camfilrequisitions/${requisitionId}/items/${lineItemId}/attributes/${attributeName}`, {
+        headers: this.requisitionsHeaders,
+      })
+      .pipe(map(() => ({ requisitionId, lineItemId, attributeName })));
+  }
+
   updateLineItem(requisitionId: string, lineItemUpdate: CamfilRequisitionLineItemUpdate) {
     if (!requisitionId) {
       return throwError('updateLineItem() called without required requisition id');
@@ -229,7 +256,11 @@ export class CamfilRequisitionsService {
     const params = new HttpParams().set('include', this.allIncludes.join());
     const body = {
       quantity: { value: lineItemUpdate.quantity },
+      boxLabel: lineItemUpdate.boxLabel,
     };
+    if (!lineItemUpdate.quantity) {
+      delete body.quantity;
+    }
     return this.apiService
       .put(`camfilrequisitions/${requisitionId}/items/${lineItemUpdate.lineItemId}`, body, {
         params,

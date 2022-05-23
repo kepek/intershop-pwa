@@ -48,36 +48,21 @@ export class CamfilRequisitionLineItemBoxLabelComponent implements OnInit {
       markAsDirtyRecursive(form);
       return;
     }
-    const name = target.getAttribute('name');
 
-    const oldValue = this.boxLabel;
-    let value: string | number = target.value;
-    if (value) {
-      value = +value;
-    }
+    const value = target.value;
+    const boxLabelAttribute: Attribute = { name: 'boxLabel', type: 'String', value };
 
-    const boxLabelAttribute: Attribute = { name, type: 'String', value };
-    // TODO: Verify with BE how line item's attributes are managed
-    if (oldValue) {
-      if (!value) {
-        this.camRequisitionManagementFacade.deleteCamfilRequisitionLineItemAttributes(
-          this.requisition.id,
-          this.lineItem.id,
-          boxLabelAttribute
-        );
-      } else if (value !== oldValue) {
-        this.camRequisitionManagementFacade.updateCamfilRequisitionLineItemAttribute(
-          this.requisition.id,
-          this.lineItem.id,
-          boxLabelAttribute
-        );
-      }
-    } else if (value) {
-      this.camRequisitionManagementFacade.addCamfilRequisitionLineItemAttribute(
+    if (!value) {
+      this.camRequisitionManagementFacade.deleteCamfilRequisitionLineItemAttributes(
         this.requisition.id,
         this.lineItem.id,
         boxLabelAttribute
       );
+    } else {
+      this.camRequisitionManagementFacade.updateCamfilRequisitionLineItem(this.requisition.id, {
+        lineItemId: this.lineItem.id,
+        boxLabel: value,
+      });
     }
   }
 }

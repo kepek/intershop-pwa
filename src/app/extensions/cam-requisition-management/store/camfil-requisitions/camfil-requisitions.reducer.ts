@@ -8,12 +8,13 @@ import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requis
 
 import {
   approveCamfilRequisitionLineItems,
-  approveCamfilRequisitionLineItemsSuccess,
   checkProductAvailabilityFail,
   createCamfilRequisition,
   createCamfilRequisitionFail,
   createCamfilRequisitionSuccess,
   createOrderFromApprovedRequisitionFail,
+  createOrderFromApprovedRequisitionLineItems,
+  createOrderFromApprovedRequisitionLineItemsSuccess,
   createOrderFromApprovedRequisitionSuccess,
   getCamfilRequisitionData,
   loadCamfilRequisition,
@@ -78,7 +79,8 @@ export const requisitionsReducer = createReducer(
     createCamfilRequisition,
     updateCamfilRequisition,
     updateCamfilRequisitionLineItem,
-    updateCamfilRequisitionAddress
+    updateCamfilRequisitionAddress,
+    createOrderFromApprovedRequisitionLineItems
   ),
   unsetLoadingAndErrorOn(
     loadCamfilRequisitionsSuccess,
@@ -89,7 +91,8 @@ export const requisitionsReducer = createReducer(
     createOrderFromApprovedRequisitionSuccess,
     updateCamfilRequisitionSuccess,
     updateCamfilRequisitionAddressSuccess,
-    updateCamfilRequisitionLineItemSuccess
+    updateCamfilRequisitionLineItemSuccess,
+    createOrderFromApprovedRequisitionLineItemsSuccess
   ),
   setErrorOn(
     loadCamfilRequisitionsFail,
@@ -173,12 +176,25 @@ export const requisitionsReducer = createReducer(
     };
     return camfilRequisitionsAdapter.upsertOne(updatedRequisition, state);
   }),
-  on(approveCamfilRequisitionLineItemsSuccess, (state: CamfilRequisitionsState, action) => {
-    const { requisition } = action.payload;
+  on(createOrderFromApprovedRequisitionLineItemsSuccess, (state: CamfilRequisitionsState, action) => {
+    const { requisition, lineItemIds } = action.payload;
+
     const updatedRequisition = {
       ...requisition,
+      approval: {
+        ...requisition.approval,
+        status: 'APPROVED',
+        statusCode: 'APPROVED',
+        lineItemStatuses: requisition.approval.lineItemStatuses.map(lineItem =>
+          lineItemIds.includes(lineItem.lineItemId) ? { ...lineItem, status: 'APPROVED' } : lineItem
+        ),
+      },
+      lineItems: requisition.lineItems.map(lineItem =>
+        lineItemIds.includes(lineItem.id) ? { ...lineItem, requisitionLineItemStatus: 'APPROVED' } : lineItem
+      ),
       partiallyApproved: true,
     };
+
     return camfilRequisitionsAdapter.upsertOne(updatedRequisition, state);
   }),
   // TODO: Update with upsert many
