@@ -156,20 +156,16 @@ export class CamfilRequisitionsService {
       return throwError('removeProductsFromCamfilRequisition() called without required item');
     }
 
-    const elements = [
+    const itemToSend = [
       {
-        sku: item.sku,
+        product: item.sku,
         quantity: { value: item.quantity, unit: '' },
-        boxLabel: item.boxLabel?.label,
-        measurements: item.measurements,
+        attributes: [{ name: 'boxLabel', type: 'String', value: item.boxLabel?.label }],
       },
     ];
-    const body = {
-      elements,
-    };
 
     return this.apiService
-      .post<string>(`camfilrequisitions/${requisitionId}/items`, body)
+      .post<string>(`camfilrequisitions/${requisitionId}/items`, itemToSend)
       .pipe(map(() => requisitionId));
   }
 
