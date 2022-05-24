@@ -45,7 +45,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
 
   guestGdprForm: FormGroup;
   bucketSurchargeTotalsByType?: BasketSurcharge[];
-  sortbucketSurchargeTotalsByType = BasketSurchargeHelper.sortbucketSurchargeTotalsByType;
+  sortBucketSurchargeTotalsByType = BasketSurchargeHelper.sortBucketSurchargeTotalsByType;
   checkIfZeroPrice = PriceHelper.checkIfZeroPrice;
 
   private destroy$ = new Subject();
@@ -97,7 +97,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
       ?.pipe(takeUntil(this.destroy$))
       .subscribe(displayFeesInSpecialOrderOnCheckoutSummary => {
         this.bucketSurchargeTotalsByType = displayFeesInSpecialOrderOnCheckoutSummary
-          ? this.sortbucketSurchargeTotalsByType(this.totals.bucketSurchargeTotalsByType)
+          ? this.sortBucketSurchargeTotalsByType(this.totals.bucketSurchargeTotalsByType)
           : this.totals.bucketSurchargeTotalsByType;
       });
   }

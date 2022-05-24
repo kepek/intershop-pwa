@@ -106,7 +106,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   isNewAddress = AddressHelper.isNewAddress;
   getUrn = AddressHelper.getUrn;
   getId = AddressHelper.getId;
-  sortbucketSurchargeTotalsByType = BasketSurchargeHelper.sortbucketSurchargeTotalsByType;
+  sortBucketSurchargeTotalsByType = BasketSurchargeHelper.sortBucketSurchargeTotalsByType;
 
   private bucket$ = new ReplaySubject<Bucket>(1);
   private shipToAddressFullId$ = new ReplaySubject<string>(1);
@@ -289,7 +289,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
       ?.pipe(takeUntil(this.destroy$))
       .subscribe(displayFeesInSpecialOrderOnCheckoutSummary => {
         this.totals = displayFeesInSpecialOrderOnCheckoutSummary
-          ? { ...this.bucket.totals, surcharges: this.sortbucketSurchargeTotalsByType(this.bucket.totals.surcharges) }
+          ? { ...this.bucket.totals, surcharges: this.sortBucketSurchargeTotalsByType(this.bucket.totals.surcharges) }
           : this.bucket.totals;
       });
   }

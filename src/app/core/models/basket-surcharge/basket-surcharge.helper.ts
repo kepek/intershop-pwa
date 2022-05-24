@@ -20,7 +20,7 @@ export class BasketSurchargeHelper {
     return data?.find(s => s.displayName === displayName);
   }
 
-  static sortbucketSurchargeTotalsByType(bucketSurchargeTotalsByType: BasketSurcharge[]) {
+  static sortBucketSurchargeTotalsByType(bucketSurchargeTotalsByType: BasketSurcharge[]) {
     const surchargeOrder = [
       'CAMFIL_EXTRA_FREIGHT_COST_RULE',
       'CAMFIL_MINIMUM_ORDER_TOPUP',
