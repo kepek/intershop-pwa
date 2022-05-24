@@ -50,10 +50,10 @@ export class CamQuotesEffects {
     this.actions$.pipe(
       ofType(approveQuote),
       mapToPayload(),
-      mergeMap(({ quoteId }) =>
+      mergeMap(({ request }) =>
         this.camQuotesSrv
-          .approveQuote(quoteId)
-          .pipe(mergeMap(response => [approveQuoteSuccess({ response }), loadQuoteDetails({ quoteId })]))
+          .approveQuote(request)
+          .pipe(mergeMap(response => [approveQuoteSuccess({ response }), loadQuoteDetails({ quoteId: request.id })]))
       )
     )
   );
@@ -62,8 +62,8 @@ export class CamQuotesEffects {
     this.actions$.pipe(
       ofType(approveQuotes),
       mapToPayload(),
-      mergeMap(({ quoteIds }) =>
-        forkJoin(quoteIds.map(quoteId => this.camQuotesSrv.approveQuote(quoteId))).pipe(
+      mergeMap(({ request }) =>
+        forkJoin(request.map(r => this.camQuotesSrv.approveQuote(r))).pipe(
           mergeMap(response => [approveQuotesSuccess({ response }), loadQuotes()])
         )
       )
@@ -74,10 +74,10 @@ export class CamQuotesEffects {
     this.actions$.pipe(
       ofType(rejectQuote),
       mapToPayload(),
-      mergeMap(({ quoteId, reason }) =>
+      mergeMap(({ request, reason }) =>
         this.camQuotesSrv
-          .rejectQuote(quoteId, reason)
-          .pipe(mergeMap(response => [rejectQuoteSuccess({ response }), loadQuoteDetails({ quoteId })]))
+          .rejectQuote(request, reason)
+          .pipe(mergeMap(response => [rejectQuoteSuccess({ response }), loadQuoteDetails({ quoteId: request.id })]))
       )
     )
   );
@@ -86,8 +86,8 @@ export class CamQuotesEffects {
     this.actions$.pipe(
       ofType(rejectQuotes),
       mapToPayload(),
-      mergeMap(({ quoteIds, reason }) =>
-        forkJoin(quoteIds.map(quoteId => this.camQuotesSrv.rejectQuote(quoteId, reason))).pipe(
+      mergeMap(({ request, reason }) =>
+        forkJoin(request.map(r => this.camQuotesSrv.rejectQuote(r, reason))).pipe(
           mergeMap(response => [
             rejectQuotesSuccess({ response }),
             loadQuotes(),

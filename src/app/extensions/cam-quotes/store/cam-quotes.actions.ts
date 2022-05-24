@@ -3,6 +3,7 @@ import { createAction } from '@ngrx/store';
 import { payload } from 'ish-core/utils/ngrx-creators';
 
 import { QuoteDetails } from '../models/quote-details/quote-details.model';
+import { QuoteServiceRequest } from '../models/quote-service-request/quote-service-request.model';
 import { QuoteServiceResponse } from '../models/quote-service-response/quote-service-response.model';
 import { Quote } from '../models/quote/quote.model';
 
@@ -20,21 +21,24 @@ export const loadQuoteDetailsSuccess = createAction(
   payload<{ quoteDetails: QuoteDetails }>()
 );
 
-export const approveQuote = createAction('[Cam Quotes] Approve Quote', payload<{ quoteId: string }>());
+export const approveQuote = createAction('[Cam Quotes] Approve Quote', payload<{ request: QuoteServiceRequest }>());
 
 export const approveQuoteSuccess = createAction(
   '[Cam Quotes] Approve Quote Success',
   payload<{ response: QuoteServiceResponse }>()
 );
 
-export const approveQuotes = createAction('[Cam Quotes] Approve Quotes', payload<{ quoteIds: string[] }>());
+export const approveQuotes = createAction('[Cam Quotes] Approve Quotes', payload<{ request: QuoteServiceRequest[] }>());
 
 export const approveQuotesSuccess = createAction(
   '[Cam Quotes] Approve Quotes Success',
   payload<{ response: QuoteServiceResponse[] }>()
 );
 
-export const rejectQuote = createAction('[Cam Quotes] Reject Quote', payload<{ quoteId: string; reason: string }>());
+export const rejectQuote = createAction(
+  '[Cam Quotes] Reject Quote',
+  payload<{ request: QuoteServiceRequest; reason: string }>()
+);
 
 export const rejectQuoteSuccess = createAction(
   '[Cam Quotes] Reject Quote Success',
@@ -43,7 +47,7 @@ export const rejectQuoteSuccess = createAction(
 
 export const rejectQuotes = createAction(
   '[Cam Quotes] Reject Quotes',
-  payload<{ quoteIds: string[]; reason: string }>()
+  payload<{ request: QuoteServiceRequest[]; reason: string }>()
 );
 
 export const rejectQuotesSuccess = createAction(
