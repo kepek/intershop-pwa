@@ -9,6 +9,8 @@ import { map, startWith, take, takeUntil, withLatestFrom } from 'rxjs/operators'
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { BasketSurchargeHelper } from 'ish-core/models/basket-surcharge/basket-surcharge.helper';
+import { BasketSurcharge } from 'ish-core/models/basket-surcharge/basket-surcharge.model';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { PriceHelper } from 'ish-core/models/price/price.helper';
 import { Price } from 'ish-core/models/price/price.model';
@@ -42,6 +44,8 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
   canRequestQuotations$: Observable<boolean>;
 
   guestGdprForm: FormGroup;
+  bucketSurchargeTotalsByType?: BasketSurcharge[];
+  sortbucketSurchargeTotalsByType = BasketSurchargeHelper.sortbucketSurchargeTotalsByType;
   checkIfZeroPrice = PriceHelper.checkIfZeroPrice;
 
   private destroy$ = new Subject();
@@ -87,6 +91,15 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
       this.roleToggleService.hasRole('APP_B2B_REQUEST_QUOTATION'),
       this.camfilConfigurationFacade.isEnabled$('allowQuotes'),
     ]).pipe(map(([hasRequestRole, isQuotesModuleEnabled]) => hasRequestRole && isQuotesModuleEnabled));
+
+    this.camfilConfigurationFacade
+      ?.isEnabled$('displayFeesInSpecialOrderOnCheckoutSummary')
+      ?.pipe(takeUntil(this.destroy$))
+      .subscribe(displayFeesInSpecialOrderOnCheckoutSummary => {
+        this.bucketSurchargeTotalsByType = displayFeesInSpecialOrderOnCheckoutSummary
+          ? this.sortbucketSurchargeTotalsByType(this.totals.bucketSurchargeTotalsByType)
+          : this.totals.bucketSurchargeTotalsByType;
+      });
   }
 
   submitOrder() {

@@ -21,6 +21,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   filterDocsByLanguage: true,
   showAllDocsType: true,
   zipCodeRegExp: '^\\d{5}$',
+  displayFeesInSpecialOrderOnCheckoutSummary: true,
 };
 
 export default camfilConfiguration;

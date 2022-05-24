@@ -29,7 +29,9 @@ import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
 import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
+import { BasketSurchargeHelper } from 'ish-core/models/basket-surcharge/basket-surcharge.helper';
 import { Basket } from 'ish-core/models/basket/basket.model';
+import { BucketTotal } from 'ish-core/models/bucket-total/bucket-total.model';
 import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { Channel } from 'ish-core/models/channel/channel.types';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
@@ -100,9 +102,11 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   deliveryTerm$: Observable<CustomerDeliveryTerm>;
   deliveryPrice$: Observable<Price>;
   showDeliveryTerm$: Observable<boolean>;
+  totals: BucketTotal;
   isNewAddress = AddressHelper.isNewAddress;
   getUrn = AddressHelper.getUrn;
   getId = AddressHelper.getId;
+  sortbucketSurchargeTotalsByType = BasketSurchargeHelper.sortbucketSurchargeTotalsByType;
 
   private bucket$ = new ReplaySubject<Bucket>(1);
   private shipToAddressFullId$ = new ReplaySubject<string>(1);
@@ -279,6 +283,15 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
       this.basketAddresses = basketAddresses;
     });
+
+    this.camfilConfigurationFacade
+      ?.isEnabled$('displayFeesInSpecialOrderOnCheckoutSummary')
+      ?.pipe(takeUntil(this.destroy$))
+      .subscribe(displayFeesInSpecialOrderOnCheckoutSummary => {
+        this.totals = displayFeesInSpecialOrderOnCheckoutSummary
+          ? { ...this.bucket.totals, surcharges: this.sortbucketSurchargeTotalsByType(this.bucket.totals.surcharges) }
+          : this.bucket.totals;
+      });
   }
 
   getBoxLabel(lineItem: LineItem) {

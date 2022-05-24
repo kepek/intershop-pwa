@@ -15,6 +15,7 @@ export interface CamfilChannelSettings {
   allowQuotes: boolean;
   createDynamicAnonymousAddressForNonLoggedInUser: boolean;
   createDynamicAnonymousBasketForNonLoggedInInUser: boolean;
+  displayFeesInSpecialOrderOnCheckoutSummary: boolean;
   guestCheckout: boolean;
   hideAddToBasketLightboxForNonLoggedInUser: boolean;
   hidePricesCamCards: boolean;
