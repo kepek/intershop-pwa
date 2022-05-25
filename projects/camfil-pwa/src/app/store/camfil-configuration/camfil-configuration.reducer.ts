@@ -26,6 +26,7 @@ export const initialState: CamfilConfigurationState = {
   currency: undefined,
   icmChannel: undefined,
   continueShoppingUrl: undefined,
+  zipCodeRegExp: undefined,
 };
 
 export const camfilConfigurationReducer = createReducer(

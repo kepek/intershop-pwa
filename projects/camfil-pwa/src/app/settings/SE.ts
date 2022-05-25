@@ -15,6 +15,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   hidePricesCamCards: true,
   filterDocsByLanguage: true,
   showAllDocsType: true,
+  zipCodeRegExp: '^\\d{3}\\s*\\d{2}$',
 };
 
 export default camfilConfiguration;

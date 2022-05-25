@@ -509,7 +509,7 @@
   "camfil.account.apply_form.street": "Katuosoite",
   "camfil.account.apply_form.title": "Otsikko",
   "camfil.account.apply_form.zipCode.error.invalid": "Väärä postinumero",
-  "camfil.account.apply_form.zipCode.error.pattern": "Anna kelvollinen 5-numeroinen postinumero.",
+  "camfil.account.apply_form.zipCode.error.pattern": "Anna kelvollinen postinumero.",
   "camfil.account.apply_form.zipCode.error.required": "Anna postinumero.",
   "camfil.account.apply_heading": "Hae tiliä",
   "camfil.account.apply_message": "Täytä alla olevat tiedot, niin luomme sinulle käyttäjätilin webkauppaamme. Pakolliset kentät on merkitty tähdellä.",

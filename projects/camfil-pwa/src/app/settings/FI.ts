@@ -15,6 +15,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   hideTitleFieldOnRegisterForm: true,
   filterDocsByLanguage: true,
   showAllDocsType: true,
+  zipCodeRegExp: '^\\d{5}$',
 };
 
 export default camfilConfiguration;

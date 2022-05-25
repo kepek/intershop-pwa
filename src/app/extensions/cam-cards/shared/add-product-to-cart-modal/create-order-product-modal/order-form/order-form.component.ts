@@ -63,6 +63,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       .subscribe(val => {
         this.useSecondAddressLine = val;
       });
+
     this.addressForm = this.fb.group({
       customer: [this.orderToEdit?.customerId],
       contact: [this.orderToEdit?.contactPerson?.erpId || '', Validators.required],
@@ -74,13 +75,17 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       address: [this.orderToEdit?.address || ''],
       addressLine2: [this.orderToEdit?.addressLine2 || ''],
       citySelect: [],
-      zipCode: [this.orderToEdit?.zipCode || '', [Validators.required, Validators.pattern('[0-9]{5}')]],
+      zipCode: [this.orderToEdit?.zipCode || ''],
       area: [{ value: this.orderToEdit?.area || '', disabled: true }, [Validators.required]],
       info: [this.orderToEdit?.info || '', [Validators.maxLength(150)]],
       contactFull: [],
       addressFull: [],
       customerFull: [],
       goodsAcceptanceNote: '',
+    });
+
+    this.camfilConfigurationFacade.zipCodeRegExp$.pipe(take(1), takeUntil(this.destroy$)).subscribe(zipCodeRegExp => {
+      this.addressForm.get('zipCode').setValidators([Validators.required, Validators.pattern(zipCodeRegExp)]);
     });
 
     this.customers$?.pipe(whenTruthy(), distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(customers => {

@@ -2,8 +2,10 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { CamfilApplicant } from 'camfil-pwa/models/camfil-applicant/camfil-applicant.model';
-import { take } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
@@ -41,13 +43,16 @@ export class CamfilApplyFormComponent implements OnInit {
 
   hideTitleField = false;
 
+  private destroy$ = new Subject();
+
   constructor(
     private appFacade: AppFacade,
     private fb: FormBuilder,
     private featureToggle: FeatureToggleService,
     private translate: TranslateService,
     private toastr: CamfilToastrService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private camfilConfigurationFacade: CamfilConfigurationFacade
   ) {}
 
   ngOnInit() {
@@ -72,7 +77,7 @@ export class CamfilApplyFormComponent implements OnInit {
       lastName: ['', [Validators.required]],
       street: ['', [Validators.required]],
       city: ['', [Validators.required]],
-      zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
+      zipCode: [''],
       country: ['', [Validators.required]],
       phoneNumber: ['', [Validators.pattern('[0-9+-/]*')]],
       email: ['', [Validators.required, SpecialValidators.email]],
@@ -88,6 +93,10 @@ export class CamfilApplyFormComponent implements OnInit {
     if (this.businessCustomerRegistration) {
       this.form.addControl('taxationID', new FormControl(''));
     }
+
+    this.camfilConfigurationFacade.zipCodeRegExp$.pipe(take(1), takeUntil(this.destroy$)).subscribe(zipCodeRegExp => {
+      this.form.get('zipCode').setValidators([Validators.required, Validators.pattern(zipCodeRegExp)]);
+    });
   }
 
   private openErrorModal() {

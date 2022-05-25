@@ -42,3 +42,5 @@ export const getCurrency = createSelector(getCamfilConfigurationState, state => 
 export const getICMChannel = createSelector(getCamfilConfigurationState, state => state.icmChannel);
 
 export const getContinueShoppingUrl = createSelector(getCamfilConfigurationState, state => state.continueShoppingUrl);
+
+export const getZipCodeRegExp = createSelector(getCamfilConfigurationState, state => state.zipCodeRegExp);

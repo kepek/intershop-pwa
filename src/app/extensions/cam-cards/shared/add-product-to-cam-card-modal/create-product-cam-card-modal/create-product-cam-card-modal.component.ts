@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
@@ -84,7 +85,8 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
     private camCardsFacade: CamCardsFacade,
     private appFacade: AppFacade,
     private accountFacade: AccountFacade,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private camfilConfigurationFacade: CamfilConfigurationFacade
   ) {}
 
   /**
@@ -122,10 +124,14 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
       company: [''],
       address: [''],
       citySelect: [''],
-      zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
+      zipCode: [''],
       area: [{ value: '', disabled: true }, [Validators.required]],
       countryCode: [{ value: this.defaultCountryCode }, [Validators.maxLength(35)]],
       newCamCard: ['', [Validators.maxLength(30)]],
+    });
+
+    this.camfilConfigurationFacade.zipCodeRegExp$.pipe(take(1), takeUntil(this.destroy$)).subscribe(zipCodeRegExp => {
+      this.camCardForm.get('zipCode').setValidators([Validators.required, Validators.pattern(zipCodeRegExp)]);
     });
 
     this.quantityForm = this.parentForm
