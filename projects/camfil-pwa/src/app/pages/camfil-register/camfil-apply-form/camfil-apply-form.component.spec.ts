@@ -2,7 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
+import { of } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -33,6 +35,7 @@ describe('Camfil Apply Form Component', () => {
   let translate: TranslateService;
   let toastrServiceMock: CamfilToastrService;
   let appFacadeMock: AppFacade;
+  let camfilConfigurationFacadeMock: CamfilConfigurationFacade;
 
   beforeEach(async () => {
     toastrServiceMock = mock(CamfilToastrService);
@@ -42,6 +45,9 @@ describe('Camfil Apply Form Component', () => {
 
     const addressFormFactoryProviderMock = mock(AddressFormFactoryProvider);
     when(addressFormFactoryProviderMock.getFactory(anything())).thenReturn(addressFormFactoryMock);
+
+    camfilConfigurationFacadeMock = mock(CamfilConfigurationFacade);
+    when(camfilConfigurationFacadeMock.zipCodeRegExp$).thenReturn(of('^\\d$'));
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -63,6 +69,7 @@ describe('Camfil Apply Form Component', () => {
         { provide: AddressFormFactoryProvider, useFactory: () => instance(addressFormFactoryProviderMock) },
         { provide: CamfilToastrService, useFactory: () => instance(toastrServiceMock) },
         { provide: AppFacade, useFactory: () => instance(appFacadeMock) },
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacadeMock) },
       ],
       imports: [
         BrowserAnimationsModule,

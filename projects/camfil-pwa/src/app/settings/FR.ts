@@ -20,6 +20,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   useSecondAddressLine: true,
   filterDocsByLanguage: true,
   showAllDocsType: true,
+  zipCodeRegExp: '^\\d{5}$',
 };
 
 export default camfilConfiguration;

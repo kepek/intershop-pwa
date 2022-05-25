@@ -8,6 +8,7 @@ import {
   getCurrency,
   getICMChannel,
   getLanguages,
+  getZipCodeRegExp,
 } from 'camfil-pwa/store/camfil-configuration';
 
 // tslint:disable:member-ordering
@@ -28,4 +29,6 @@ export class CamfilConfigurationFacade {
   icmChannel$ = this.store.pipe(select(getICMChannel));
 
   continueShoppingUrl$ = this.store.pipe(select(getContinueShoppingUrl));
+
+  zipCodeRegExp$ = this.store.pipe(select(getZipCodeRegExp));
 }

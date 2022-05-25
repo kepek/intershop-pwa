@@ -46,4 +46,5 @@ export interface CamfilChannelConfiguration extends Partial<CamfilChannelSetting
   icmChannel: string;
   continueShoppingUrl: string;
   languages: CamfilLang[];
+  zipCodeRegExp: string;
 }

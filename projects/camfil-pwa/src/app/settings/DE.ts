@@ -13,6 +13,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showSubTotalInBasketSummary: true,
   filterDocsByLanguage: true,
   showAllDocsType: true,
+  zipCodeRegExp: '^\\d{5}$',
 };
 
 export default camfilConfiguration;

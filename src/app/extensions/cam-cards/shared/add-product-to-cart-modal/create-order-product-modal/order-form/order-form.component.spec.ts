@@ -53,6 +53,7 @@ describe('Order Form Component', () => {
     when(camCardFacadeMock.addresses$).thenReturn(of({}));
     when(camCardFacadeMock.customers$).thenReturn(of([]));
     when(camfilConfigurationFacade.isEnabled$('useSecondAddressLine')).thenReturn(of(false));
+    when(camfilConfigurationFacade.zipCodeRegExp$).thenReturn(of('^\\d$'));
   });
 
   it('should be created', () => {

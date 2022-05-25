@@ -18,6 +18,7 @@ describe('Camfil Configuration Service', () => {
 
   const configuration: CamfilChannelConfiguration = {
     languages: ['en_GB', 'sv_SE'],
+    zipCodeRegExp: '^\\d$',
     channelCode: 'SE',
     currency: 'SEK',
     icmChannel: 'Camfil-CamfilSE-Site',
