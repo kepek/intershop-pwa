@@ -33,6 +33,8 @@ export class QuotesService {
     'status',
     'creationDate',
     'orderChannel',
+    'customerQuotationNumber',
+    'quotationDate',
   ];
 
   constructor(

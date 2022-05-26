@@ -32,9 +32,15 @@ export class QuoteCostSummaryComponent implements OnInit {
         this.currency = item.totalPrice.currency;
       }
 
-      this.totalQuantity += item.quantity.value;
-      this.listPrice += item.originTotalPrice.value;
-      this.totalPrice += item.totalPrice.value;
+      if (item.quantity) {
+        this.totalQuantity += item.quantity.value;
+      }
+      if (item.originTotalPrice) {
+        this.listPrice += item.originTotalPrice.value;
+      }
+      if (item.totalPrice) {
+        this.totalPrice += item.totalPrice.value;
+      }
     });
   }
 
