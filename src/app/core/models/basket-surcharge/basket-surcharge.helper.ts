@@ -20,16 +20,9 @@ export class BasketSurchargeHelper {
     return data?.find(s => s.displayName === displayName);
   }
 
-  static sortBucketSurchargeTotalsByType(bucketSurchargeTotalsByType: BasketSurcharge[]) {
-    const surchargeOrder = [
-      'CAMFIL_EXTRA_FREIGHT_COST_RULE',
-      'CAMFIL_MINIMUM_ORDER_TOPUP',
-      'CAMFIL_BOX_LABEL_FEE',
-      'Surcharge Gasoil',
-    ];
-
-    return bucketSurchargeTotalsByType
+  static sortSurchargeTotalsByType(surchargeTotalsByType: BasketSurcharge[], surchargeSortingOrder: string[]) {
+    return surchargeTotalsByType
       .slice()
-      .sort((a, b) => surchargeOrder.indexOf(a.displayName) - surchargeOrder.indexOf(b.displayName));
+      .sort((a, b) => surchargeSortingOrder.indexOf(a.displayName) - surchargeSortingOrder.indexOf(b.displayName));
   }
 }

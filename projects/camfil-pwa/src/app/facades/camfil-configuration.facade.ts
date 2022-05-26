@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { CamfilChannelSetting } from 'camfil-pwa/models/camfil-channel-configuration/camfil-channel-configuration.model';
 import {
+  getBasketSurchargeOrder,
+  getBucketSurchargeOrder,
   getCamfilConfigurationParameter,
   getChannelCode,
   getContinueShoppingUrl,
@@ -31,4 +33,8 @@ export class CamfilConfigurationFacade {
   continueShoppingUrl$ = this.store.pipe(select(getContinueShoppingUrl));
 
   zipCodeRegExp$ = this.store.pipe(select(getZipCodeRegExp));
+
+  bucketSurchargeOrder$ = this.store.pipe(select(getBucketSurchargeOrder));
+
+  basketSurchargeOrder$ = this.store.pipe(select(getBasketSurchargeOrder));
 }

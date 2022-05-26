@@ -29,7 +29,6 @@ import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
 import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
-import { BasketSurchargeHelper } from 'ish-core/models/basket-surcharge/basket-surcharge.helper';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { BucketTotal } from 'ish-core/models/bucket-total/bucket-total.model';
 import { Bucket } from 'ish-core/models/bucket/bucket.model';
@@ -106,7 +105,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   isNewAddress = AddressHelper.isNewAddress;
   getUrn = AddressHelper.getUrn;
   getId = AddressHelper.getId;
-  sortBucketSurchargeTotalsByType = BasketSurchargeHelper.sortBucketSurchargeTotalsByType;
 
   private bucket$ = new ReplaySubject<Bucket>(1);
   private shipToAddressFullId$ = new ReplaySubject<string>(1);
@@ -284,14 +282,16 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
       this.basketAddresses = basketAddresses;
     });
 
-    this.camfilConfigurationFacade
-      ?.isEnabled$('displayFeesInSpecialOrderOnCheckoutSummary')
-      ?.pipe(takeUntil(this.destroy$))
-      .subscribe(displayFeesInSpecialOrderOnCheckoutSummary => {
-        this.totals = displayFeesInSpecialOrderOnCheckoutSummary
-          ? { ...this.bucket.totals, surcharges: this.sortBucketSurchargeTotalsByType(this.bucket.totals.surcharges) }
-          : this.bucket.totals;
-      });
+    // this.camfilConfigurationFacade
+    //   ?.isEnabled$('displayFeesInSpecialOrderOnCheckoutSummary')
+    //   ?.pipe(takeUntil(this.destroy$))
+    //   .subscribe(displayFeesInSpecialOrderOnCheckoutSummary => {
+    //     this.totals = displayFeesInSpecialOrderOnCheckoutSummary
+    //       ? { ...this.bucket.totals, surcharges: this.sortBucketSurchargeTotalsByType(this.bucket.totals.surcharges) }
+    //       : this.bucket.totals;
+    //   });
+
+    console.log({ dsad: this.bucket });
   }
 
   getBoxLabel(lineItem: LineItem) {

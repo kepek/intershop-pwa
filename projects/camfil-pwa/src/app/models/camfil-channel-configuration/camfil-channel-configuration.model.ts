@@ -13,6 +13,8 @@ export interface CamfilChannelSettings {
   allowInvoicePaymentIfCreditLimitIsNotReached: boolean;
   allowToAddEmailRecipientsInCheckout: boolean;
   allowQuotes: boolean;
+  bucketSurchargeOrder: string[];
+  basketSurchargeOrder: string[];
   createDynamicAnonymousAddressForNonLoggedInUser: boolean;
   createDynamicAnonymousBasketForNonLoggedInInUser: boolean;
   displayFeesInSpecialOrderOnCheckoutSummary: boolean;

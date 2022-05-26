@@ -281,7 +281,7 @@
     <div *ngIf="bucket">
       <div class="section cost-summary float-right box-shadow--dark mat-elevation-z">
         <camfil-checkout-bucket-summary
-          [totals]="totals"
+          [totals]="bucket.totals"
           cssClass="row dl-horizontal mb-0"
         ></camfil-checkout-bucket-summary>
       </div>

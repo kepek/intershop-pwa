@@ -68,7 +68,7 @@
         <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
       </ng-container>
       <!-- Bucket Surcharges -->
-      <ng-container *ngFor="let surcharge of bucketSurchargeTotalsByType">
+      <ng-container *ngFor="let surcharge of totals.bucketSurchargeTotalsByType">
         <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
       </ng-container>
     </ng-container>
