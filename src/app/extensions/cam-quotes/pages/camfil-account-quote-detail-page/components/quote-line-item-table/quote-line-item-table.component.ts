@@ -17,6 +17,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { Price } from 'ish-core/models/price/price.model';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
+import { ShoppingFacade } from '../../../../../../core/facades/shopping.facade';
+import { ProductCompletenessLevel } from '../../../../../../core/models/product/product.helper';
 
 import { QuoteLineItem } from '../../../../models/quote-details/quote-details.model';
 
@@ -45,10 +47,18 @@ export class QuoteLineItemTableComponent implements OnInit, OnChanges, AfterView
   ];
   lineItemsProcessed: MatTableDataSource<Partial<QuoteLineItem>>;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog,
+    private shoppingFacade: ShoppingFacade) { }
 
   ngOnInit() {
     this.lineItemsProcessed = new MatTableDataSource(this.lineItems);
+    this.lineItems.forEach(item => {
+      if (item.product && !item.product.images) {
+        this.shoppingFacade.product$(item.product.sku, ProductCompletenessLevel.Detail).subscribe(result => {
+          item.product.images = result.images;
+        });
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
