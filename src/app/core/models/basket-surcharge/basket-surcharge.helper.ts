@@ -21,6 +21,8 @@ export class BasketSurchargeHelper {
   }
 
   static sortSurchargeTotalsByType(surchargeTotalsByType: BasketSurcharge[], surchargeSortingOrder: string[]) {
+    console.log({ surchargeSortingOrder });
+    console.log({ surchargeTotalsByType });
     return surchargeTotalsByType
       .slice()
       .sort((a, b) => surchargeSortingOrder.indexOf(a.displayName) - surchargeSortingOrder.indexOf(b.displayName));

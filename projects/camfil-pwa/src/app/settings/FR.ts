@@ -27,13 +27,13 @@ const camfilConfiguration: CamfilChannelConfiguration = {
     BasketSurchargeTypes.ExtraFreightCostRule,
     BasketSurchargeTypes.OrderTopUpShippingRule,
     BasketSurchargeTypes.BoxLabelShippingRule,
-    BasketSurchargeTypes.SpeciialSurchargeGasoil,
+    BasketSurchargeTypes.SurchargeGasoil,
   ],
   basketSurchargeOrder: [
     BasketSurchargeTypes.ExtraFreightCostRule,
     BasketSurchargeTypes.OrderTopUpShippingRule,
     BasketSurchargeTypes.BoxLabelShippingRule,
-    BasketSurchargeTypes.SpeciialSurchargeGasoil,
+    BasketSurchargeTypes.SurchargeGasoil,
   ],
 };
 

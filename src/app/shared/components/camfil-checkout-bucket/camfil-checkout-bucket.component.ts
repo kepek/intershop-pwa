@@ -281,17 +281,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
       this.basketAddresses = basketAddresses;
     });
-
-    // this.camfilConfigurationFacade
-    //   ?.isEnabled$('displayFeesInSpecialOrderOnCheckoutSummary')
-    //   ?.pipe(takeUntil(this.destroy$))
-    //   .subscribe(displayFeesInSpecialOrderOnCheckoutSummary => {
-    //     this.totals = displayFeesInSpecialOrderOnCheckoutSummary
-    //       ? { ...this.bucket.totals, surcharges: this.sortBucketSurchargeTotalsByType(this.bucket.totals.surcharges) }
-    //       : this.bucket.totals;
-    //   });
-
-    console.log({ dsad: this.bucket });
   }
 
   getBoxLabel(lineItem: LineItem) {
