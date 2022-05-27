@@ -58,6 +58,17 @@ export class CamQuotesEffects {
     )
   );
 
+  approveCamQuoteSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(approveQuoteSuccess),
+      map(() =>
+        displaySuccessMessage({
+          message: 'camfil.quotes.quoteslist.approve_quote_success',
+        })
+      )
+    )
+  );
+
   approveCamQuotes$ = createEffect(() =>
     this.actions$.pipe(
       ofType(approveQuotes),
@@ -78,6 +89,17 @@ export class CamQuotesEffects {
         this.camQuotesSrv
           .rejectQuote(request, reason)
           .pipe(mergeMap(response => [rejectQuoteSuccess({ response }), loadQuoteDetails({ quoteId: request.id })]))
+      )
+    )
+  );
+
+  rejectCamQuoteSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(rejectQuoteSuccess),
+      map(() =>
+        displaySuccessMessage({
+          message: 'camfil.quotes.quoteslist.reject_quote_success',
+        })
       )
     )
   );
