@@ -1,6 +1,5 @@
 import { AddressData } from 'ish-core/models/address/address.interface';
 import { Price } from 'ish-core/models/price/price.model';
-import { Image } from 'ish-core/models/image/image.model';
 
 import { Quantity } from '../quote-item/quote-item.interface';
 
@@ -38,7 +37,6 @@ export interface QuoteDetailsData {
       sku: string;
       longDescription: string;
       available: boolean;
-      images: Image[];
     };
   }[];
   deliveryAddress: AddressData;

@@ -17,8 +17,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { Price } from 'ish-core/models/price/price.model';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
+import { Observable } from 'rxjs';
 import { ShoppingFacade } from '../../../../../../core/facades/shopping.facade';
 import { ProductCompletenessLevel } from '../../../../../../core/models/product/product.helper';
+import { Product } from '../../../../../../core/models/product/product.model';
 
 import { QuoteLineItem } from '../../../../models/quote-details/quote-details.model';
 
@@ -52,13 +54,6 @@ export class QuoteLineItemTableComponent implements OnInit, OnChanges, AfterView
 
   ngOnInit() {
     this.lineItemsProcessed = new MatTableDataSource(this.lineItems);
-    this.lineItems.forEach(item => {
-      if (item.product && !item.product.images) {
-        this.shoppingFacade.product$(item.product.sku, ProductCompletenessLevel.Detail).subscribe(result => {
-          item.product.images = result.images;
-        });
-      }
-    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -90,5 +85,9 @@ export class QuoteLineItemTableComponent implements OnInit, OnChanges, AfterView
       autoFocus: false,
       data: { sku },
     });
+  }
+
+  getProductInfo(sku: string): Observable<Product> {
+    return this.shoppingFacade.product$(sku, ProductCompletenessLevel.Detail)
   }
 }
