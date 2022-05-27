@@ -1,6 +1,6 @@
 import { Address } from 'ish-core/models/address/address.model';
+import { Image } from 'ish-core/models/image/image.model';
 import { Price } from 'ish-core/models/price/price.model';
-import { Product } from '../../../../core/models/product/product.model';
 
 import { Quantity } from '../quote-item/quote-item.interface';
 import { QuoteStatus, QuoteType } from '../quote/quote.model';
@@ -14,7 +14,14 @@ export interface QuoteLineItem {
   singlePrice: Price;
   totalPrice: Price;
   productSKU: string;
-  product: Product;
+  product: {
+    name: string;
+    type: string;
+    sku: string;
+    longDescription: string;
+    available: boolean;
+    images: Image[];
+  };
 }
 
 export interface QuoteDetails {

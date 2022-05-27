@@ -1,6 +1,6 @@
 import { AddressData } from 'ish-core/models/address/address.interface';
 import { Price } from 'ish-core/models/price/price.model';
-import { Product } from '../../../../core/models/product/product.model';
+import { Image } from 'ish-core/models/image/image.model';
 
 import { Quantity } from '../quote-item/quote-item.interface';
 
@@ -32,7 +32,14 @@ export interface QuoteDetailsData {
     singlePrice: Price;
     totalPrice: Price;
     productSKU: string;
-    product: Product;
+    product: {
+      name: string;
+      type: string;
+      sku: string;
+      longDescription: string;
+      available: boolean;
+      images: Image[];
+    };
   }[];
   deliveryAddress: AddressData;
   erpnumber: string;
