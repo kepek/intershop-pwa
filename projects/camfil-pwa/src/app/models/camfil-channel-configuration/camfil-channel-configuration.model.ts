@@ -1,4 +1,5 @@
 import channelConfig from 'camfil-pwa/settings';
+
 import { BasketSurchargeTypes } from 'ish-core/models/basket-surcharge/basket-surcharge.types';
 
 export type CamfilChannelCode = keyof typeof channelConfig;
