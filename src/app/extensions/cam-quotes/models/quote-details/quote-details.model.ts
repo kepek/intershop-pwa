@@ -46,14 +46,12 @@ export interface QuoteDetails {
   customerServiceNote: string;
   editable: boolean;
   submitted: boolean;
-  total: {
-    type: 'Money';
-    value: number;
-    currencyMnemonic: string;
-    currency: string;
-  };
+  total: Price;
   items: QuoteLineItem[];
   deliveryAddress: Address;
   quotationReference: string;
   validToDate: number;
+  taxAmount: Price;
+  totalPriceAfterDiscountExVAT: Price;
+  totalQty: number;
 }

@@ -40,6 +40,9 @@ export class QuoteDetailsMapper {
         deliveryAddress: data.deliveryAddress ? AddressMapper.fromData(data.deliveryAddress) : undefined,
         quotationReference: data.quotationReference,
         validToDate: data.validToDate,
+        taxAmount: data.taxAmount,
+        totalPriceAfterDiscountExVAT: data.totalPriceAfterDiscountExVAT,
+        totalQty: data.totalQty,
       };
     } else {
       throw new Error(`QuoteDetails data is required`);

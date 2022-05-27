@@ -2,12 +2,12 @@
   <div class="section cost-summary float-right box-shadow--dark mat-elevation-z">
     <dl class="row dl-horizontal dl-separator mb-0">
       <dt class="col-8">{{ 'camfil.quotes.quote_details.summary.qty' | translate }}</dt>
-      <dd class="col-4">{{ totalQuantity }}</dd>
+      <dd class="col-4">{{ quote.totalQty }}</dd>
       <dt class="col-8">
         {{ 'camfil.account.orderdetails.your.total_price_exl_vat.text' | translate }}
       </dt>
       <dd class="col-4">
-        {{ handlePrice(totalPrice) | ishPrice }}
+        {{ handlePrice(quote.totalPriceAfterDiscountExVAT) | ishPrice }}
       </dd>
       <ng-container *ngIf="volumeDiscount">
         <dt class="col-8">{{ 'camfil.checkout.volume_discount' | translate }}</dt>
@@ -17,13 +17,13 @@
         {{ 'camfil.account.orderdetails.your.tax_amount.text' | translate }}
       </dt>
       <dd class="col-4">
-        {{ handlePrice(totalTaxes) | ishPrice }}
+        {{ handlePrice(quote.taxAmount) | ishPrice }}
       </dd>
       <dt class="col-8 total-price lead">
         {{ 'camfil.account.orderdetails.your.total_price.text' | translate }}
       </dt>
       <dd class="col-4 total-price-value lead">
-        {{ handlePrice(totalPrice) | ishPrice }}
+        {{ handlePrice(quote.total) | ishPrice }}
       </dd>
     </dl>
   </div>
