@@ -36,7 +36,15 @@ export class QuoteDetailsMapper {
         editable: data.editable,
         submitted: data.submitted,
         total: data.total,
-        items: [...data.items],
+        items: [...data.items].map(item => {
+          if (!item.singlePrice) {
+            item.singlePrice = {
+              ...item.totalPrice,
+              value: item.totalPrice.value / item.quantity.value,
+            };
+          }
+          return item;
+        }),
         deliveryAddress: data.deliveryAddress ? AddressMapper.fromData(data.deliveryAddress) : undefined,
         quotationReference: data.quotationReference,
         validToDate: data.validToDate,
