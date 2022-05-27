@@ -1,5 +1,7 @@
 import channelConfig from 'camfil-pwa/settings';
 
+import { BasketSurchargeTypes } from 'ish-core/models/basket-surcharge/basket-surcharge.types';
+
 export type CamfilChannelCode = keyof typeof channelConfig;
 
 export type CamfilCurrency = 'EUR' | 'SEK' | 'CHF';
@@ -13,8 +15,11 @@ export interface CamfilChannelSettings {
   allowInvoicePaymentIfCreditLimitIsNotReached: boolean;
   allowToAddEmailRecipientsInCheckout: boolean;
   allowQuotes: boolean;
+  bucketSurchargeOrder: Array<BasketSurchargeTypes>;
+  basketSurchargeOrder: Array<BasketSurchargeTypes>;
   createDynamicAnonymousAddressForNonLoggedInUser: boolean;
   createDynamicAnonymousBasketForNonLoggedInInUser: boolean;
+  displayFeesInSpecialOrderOnCheckoutSummary: boolean;
   guestCheckout: boolean;
   hideAddToBasketLightboxForNonLoggedInUser: boolean;
   hidePricesCamCards: boolean;

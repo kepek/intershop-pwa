@@ -19,4 +19,10 @@ export class BasketSurchargeHelper {
 
     return data?.find(s => s.displayName === displayName);
   }
+
+  static sortSurchargeTotalsByType(surchargeTotalsByType: BasketSurcharge[], surchargeSortingOrder: string[]) {
+    return surchargeTotalsByType
+      .slice()
+      .sort((a, b) => surchargeSortingOrder.indexOf(a.displayName) - surchargeSortingOrder.indexOf(b.displayName));
+  }
 }

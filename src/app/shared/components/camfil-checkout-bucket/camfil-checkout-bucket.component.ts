@@ -30,6 +30,7 @@ import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
 import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { Basket } from 'ish-core/models/basket/basket.model';
+import { BucketTotal } from 'ish-core/models/bucket-total/bucket-total.model';
 import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { Channel } from 'ish-core/models/channel/channel.types';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
@@ -100,6 +101,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   deliveryTerm$: Observable<CustomerDeliveryTerm>;
   deliveryPrice$: Observable<Price>;
   showDeliveryTerm$: Observable<boolean>;
+  totals: BucketTotal;
   isNewAddress = AddressHelper.isNewAddress;
   getUrn = AddressHelper.getUrn;
   getId = AddressHelper.getId;

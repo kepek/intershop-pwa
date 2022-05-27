@@ -1,5 +1,6 @@
 // tslint:disable: project-structure ish-ordered-imports
 import { CamfilChannelConfiguration } from 'camfil-pwa/models/camfil-channel-configuration/camfil-channel-configuration.model';
+import { BasketSurchargeTypes } from 'ish-core/models/basket-surcharge/basket-surcharge.types';
 
 const camfilConfiguration: CamfilChannelConfiguration = {
   languages: ['fr_FR', 'en_GB'],
@@ -21,6 +22,19 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   filterDocsByLanguage: true,
   showAllDocsType: true,
   zipCodeRegExp: '^\\d{5}$',
+  displayFeesInSpecialOrderOnCheckoutSummary: true,
+  bucketSurchargeOrder: [
+    BasketSurchargeTypes.ExtraFreightCostRule,
+    BasketSurchargeTypes.OrderTopUpShippingRule,
+    BasketSurchargeTypes.BoxLabelShippingRule,
+    BasketSurchargeTypes.SurchargeGasoil,
+  ],
+  basketSurchargeOrder: [
+    BasketSurchargeTypes.ExtraFreightCostRule,
+    BasketSurchargeTypes.OrderTopUpShippingRule,
+    BasketSurchargeTypes.BoxLabelShippingRule,
+    BasketSurchargeTypes.SurchargeGasoil,
+  ],
 };
 
 export default camfilConfiguration;

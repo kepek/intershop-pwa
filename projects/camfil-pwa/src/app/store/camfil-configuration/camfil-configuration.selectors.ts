@@ -44,3 +44,7 @@ export const getICMChannel = createSelector(getCamfilConfigurationState, state =
 export const getContinueShoppingUrl = createSelector(getCamfilConfigurationState, state => state.continueShoppingUrl);
 
 export const getZipCodeRegExp = createSelector(getCamfilConfigurationState, state => state.zipCodeRegExp);
+
+export const getBasketSurchargeOrder = createSelector(getCamfilConfigurationState, state => state.basketSurchargeOrder);
+
+export const getBucketSurchargeOrder = createSelector(getCamfilConfigurationState, state => state.bucketSurchargeOrder);

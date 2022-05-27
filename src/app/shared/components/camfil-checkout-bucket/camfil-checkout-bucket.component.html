@@ -314,7 +314,10 @@
   >
     <ng-container *ngIf="editable; else notEditableTemplate">
       <cdk-virtual-scroll-viewport autosize [minBufferPx]="1500" [maxBufferPx]="3500" [style.height.px]="containerSize">
-        <div *cdkVirtualFor="let item of bucket.lineItems; index as i; trackBy: trackBy" [style.minHeight.px]="itemSize">
+        <div
+          *cdkVirtualFor="let item of bucket.lineItems; index as i; trackBy: trackBy"
+          [style.minHeight.px]="itemSize"
+        >
           <div
             [cdkDragData]="item"
             [cdkDragDisabled]="!editable"
