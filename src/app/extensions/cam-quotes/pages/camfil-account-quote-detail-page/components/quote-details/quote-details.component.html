@@ -25,7 +25,7 @@
       </div>
       <div class="field">
         <span class="label">{{'camfil.quotes.quote_detail.reference' | translate}}</span>
-        <span class="value">???</span>
+        <span class="value">{{ details.quotationReference }}</span>
       </div>
     </div>
     <div class="fields-group">
@@ -39,7 +39,7 @@
       </div>
       <div class="field">
         <span class="label">{{'camfil.quotes.quote_detail.expiration_date' | translate}}</span>
-        <span class="value">??</span>
+        <span class="value">{{ details.validToDate | camfilDate }}</span>
       </div>
     </div>
   </div>

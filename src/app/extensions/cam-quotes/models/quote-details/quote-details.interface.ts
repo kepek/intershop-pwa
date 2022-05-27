@@ -47,4 +47,6 @@ export interface QuoteDetailsData {
   deliveryAddress: AddressData;
   erpnumber: string;
   orderChannel: string;
+  quotationReference: string;
+  validToDate: number;
 }

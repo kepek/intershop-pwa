@@ -54,4 +54,6 @@ export interface QuoteDetails {
   };
   items: QuoteLineItem[];
   deliveryAddress: Address;
+  quotationReference: string;
+  validToDate: number;
 }

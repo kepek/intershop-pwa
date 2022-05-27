@@ -59,6 +59,7 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
   }
 
   reject() {
+    this.loading = true;
     this.quotesFacade.rejectQuote(
       {
         id: this.quoteDetails.id,
@@ -69,6 +70,7 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
   }
 
   approve() {
+    this.loading = true;
     this.quotesFacade.approveQuote({
       id: this.quoteDetails.id,
       number: this.quoteDetails.camfilQuoteNumber,

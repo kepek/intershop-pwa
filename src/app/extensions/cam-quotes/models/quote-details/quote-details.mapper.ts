@@ -38,6 +38,8 @@ export class QuoteDetailsMapper {
         total: data.total,
         items: [...data.items],
         deliveryAddress: data.deliveryAddress ? AddressMapper.fromData(data.deliveryAddress) : undefined,
+        quotationReference: data.quotationReference,
+        validToDate: data.validToDate,
       };
     } else {
       throw new Error(`QuoteDetails data is required`);
