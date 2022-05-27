@@ -156,17 +156,6 @@
     confirmText: handleModalTexts.confirmText | translate
   }"
 >
-  <p *ngIf="invalidProducts.measurements.length || modalType === 'noErpNoAddress'">
-    {{ handleModalTexts.content | translate }}
-  </p>
-
-  <!-- invalidProducts.measurements list -->
-  <div class="mt-3" *ngIf="modalType === 'invalidProducts' && invalidProducts.measurements.length">
-    <div *ngFor="let item of invalidProducts.measurements">
-      {{ item.product.name }} ({{ 'camfil.cam_card.product.id.label' | translate }}: {{ item.product.sku }})
-    </div>
-  </div>
-
   <!-- invalidProducts.notAvailable list -->
   <ng-container *ngIf="invalidProducts.notAvailable.length && modalType === 'invalidProducts'">
     <p>

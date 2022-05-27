@@ -49,7 +49,6 @@ export interface Prices {
 }
 
 export interface InvalidProducts {
-  measurements: CamCardItem[];
   notAvailable: CamCardItem[];
 }
 
@@ -95,7 +94,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   freshErpInfo = false;
   preventCamCardERPIdValidation = false;
 
-  invalidProducts: InvalidProducts = { measurements: [], notAvailable: [] };
+  invalidProducts: InvalidProducts = { notAvailable: [] };
   modalType: 'noErpNoAddress' | 'invalidProducts';
   camCardsInBasketsForAllUsersLoading$: Observable<boolean>;
   camCardsInBasketsForAllUsers: string[];
@@ -292,17 +291,14 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     const { camCardItems } = this.camCard;
     this.invalidProducts =
       this.camCard.subCamCards?.reduce(
-        ({ measurements, notAvailable }, subCC) => {
-          const newMes = CamCardHelper.getInvalidItems(subCC.camCardItems, 'measurement');
-          const notAv = CamCardHelper.getInvalidItems(subCC.camCardItems, 'available');
+        ({ notAvailable }, subCC) => {
+          const notAv = CamCardHelper.getInvalidItems(subCC.camCardItems);
           return {
-            measurements: [...measurements, ...newMes],
             notAvailable: [...notAvailable, ...notAv],
           };
         },
         {
-          measurements: [...CamCardHelper.getInvalidItems(camCardItems, 'measurement')],
-          notAvailable: [...CamCardHelper.getInvalidItems(camCardItems, 'available')],
+          notAvailable: [...CamCardHelper.getInvalidItems(camCardItems)],
         }
       ) || this.invalidProducts;
   }
@@ -341,8 +337,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   }
 
   addItemsToCart(modal: CamfilModalDialogComponent<any>) {
-    const { measurements, notAvailable } = this.invalidProducts;
-    if (measurements.length || notAvailable.length) {
+    const { notAvailable } = this.invalidProducts;
+    if (notAvailable.length) {
       this.modalType = 'invalidProducts';
       modal.show();
       return;

@@ -89,7 +89,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   loading = true;
   isSubOpen = [];
   notBuyableElemnts = [];
-  invalidMesurementsElements = [];
   maintenance = CamCardHelper.maintenance;
   commonShippingMethodId: string;
   basket$: Observable<BasketView>;
@@ -437,14 +436,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   addToCart(modal: CamfilModalDialogComponent<any>) {
-    const { notBuyableElemnts, invalidMesurementsElements } = {
-      notBuyableElemnts: this.getIncorrectCamCardsElements('available'),
-      invalidMesurementsElements: this.getIncorrectCamCardsElements('measurements'),
+    const { notBuyableElemnts } = {
+      notBuyableElemnts: this.getIncorrectCamCardsElements(),
     };
 
-    if (notBuyableElemnts.length || invalidMesurementsElements.length) {
+    if (notBuyableElemnts.length) {
       this.notBuyableElemnts = notBuyableElemnts;
-      this.invalidMesurementsElements = invalidMesurementsElements;
+
       modal.show();
     } else {
       this.addSelectedItemsToCart();
@@ -452,17 +450,15 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   addSelectedItemsToCart() {
-    const list = Object.values(this.productsChecked)
-      .filter((item: CamCamProductChecked) => item.measurement.valid)
-      .reduce((acc, val: CamCamProductChecked) => {
-        const key = val.camCardRoot || val.camCardId;
-        const products = acc[key]?.products || [];
+    const list = Object.values(this.productsChecked).reduce((acc, val: CamCamProductChecked) => {
+      const key = val.camCardRoot || val.camCardId;
+      const products = acc[key]?.products || [];
 
-        acc[key] = {
-          products: [...products, val],
-        };
-        return acc;
-      }, {}) as CamCamProductsAddToCart;
+      acc[key] = {
+        products: [...products, val],
+      };
+      return acc;
+    }, {}) as CamCamProductsAddToCart;
 
     if (!Object.keys(list).length) {
       return;
@@ -537,7 +533,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     return camCard.itemsCount > 0 && !this.maintenance(camCard, ['INACTIVE']);
   }
 
-  getIncorrectCamCardsElements(type) {
+  getIncorrectCamCardsElements() {
     return (
       this.camCardsProcessed.data
         // Checked CamCards
@@ -555,7 +551,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         // mapping checked CamCards for view
         .map((cc: CamCard) => {
           // clean up duplicate products
-          const items = this.getInvalidProductsInCamCard(cc, type).filter(
+          const items = this.getInvalidProductsInCamCard(cc).filter(
             (item, i, arr) => arr.findIndex(el => el.product.sku === item.product.sku) === i
           );
 
@@ -566,10 +562,10 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     );
   }
 
-  getInvalidProductsInCamCard(camCard: CamCard, prop: 'available' | 'measurement') {
-    const invalidItems = CamCardHelper.getInvalidItems(camCard.camCardItems, prop);
+  getInvalidProductsInCamCard(camCard: CamCard) {
+    const invalidItems = CamCardHelper.getInvalidItems(camCard.camCardItems);
     return camCard.subCamCards?.reduce((arr, sub) => {
-      const sumItem = CamCardHelper.getInvalidItems(sub.camCardItems, prop);
+      const sumItem = CamCardHelper.getInvalidItems(sub.camCardItems);
       return sumItem.length ? [...arr, ...sumItem] : arr;
     }, invalidItems);
   }
@@ -584,7 +580,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   isCamCardChecked(camCard: CamCard) {
     const { itemsCount, camCardItems, subCamCards, id } = camCard;
-    const notAvailableProducts = this.getInvalidProductsInCamCard(camCard, 'available')?.length;
+    const notAvailableProducts = this.getInvalidProductsInCamCard(camCard)?.length;
     const items = itemsCount > 0 && notAvailableProducts !== itemsCount;
     const itemsChecked = camCardItems
       ? camCardItems.filter(item => item.product.available).every(item => this.isProductChecked(item.id))
@@ -684,7 +680,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
    **/
   checkIfAllProductsSelected(camCardId: string, products: CamCamProductChecked[]) {
     const camCard = this.camCards.find(c => c.id === camCardId);
-    const allIds = CamCardHelper.getCamCardItemsIds(camCard, true, true);
+    const allIds = CamCardHelper.getCamCardItemsIds(camCard, true);
     return allIds.length === products?.length;
   }
 
