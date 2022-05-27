@@ -450,8 +450,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   addSelectedItemsToCart() {
-    const list = Object.values(this.productsChecked)
-    .reduce((acc, val: CamCamProductChecked) => {
+    const list = Object.values(this.productsChecked).reduce((acc, val: CamCamProductChecked) => {
       const key = val.camCardRoot || val.camCardId;
       const products = acc[key]?.products || [];
 
