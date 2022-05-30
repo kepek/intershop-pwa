@@ -25,7 +25,7 @@ export class CheckoutFacade extends IshCheckoutFacade {
       totals: {
         ...basket?.totals,
         bucketSurchargeTotalsByType: BasketSurchargeHelper.sortSurchargeTotalsByType(
-          basket.totals.bucketSurchargeTotalsByType,
+          basket?.totals?.bucketSurchargeTotalsByType,
           basketSurchargeOrder
         ),
       },
@@ -41,7 +41,7 @@ export class CheckoutFacade extends IshCheckoutFacade {
         ...bucket,
         totals: {
           ...bucket.totals,
-          surcharges: BasketSurchargeHelper.sortSurchargeTotalsByType(bucket.totals.surcharges, bucketSurchargeOrder),
+          surcharges: BasketSurchargeHelper.sortSurchargeTotalsByType(bucket?.totals?.surcharges, bucketSurchargeOrder),
         },
       }))
     )
@@ -56,7 +56,7 @@ export class CheckoutFacade extends IshCheckoutFacade {
         ...bucket,
         totals: {
           ...bucket.totals,
-          surcharges: BasketSurchargeHelper.sortSurchargeTotalsByType(bucket.totals.surcharges, bucketSurchargeOrder),
+          surcharges: BasketSurchargeHelper.sortSurchargeTotalsByType(bucket?.totals?.surcharges, bucketSurchargeOrder),
         },
       }))
     )
