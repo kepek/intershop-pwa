@@ -41,6 +41,8 @@ export interface CamCardItem {
   creationDate?: number;
   comment?: CamCardItemComment;
   measurement?: CamCardMeasurement;
+  lastDeliveryDate?: string;
+  deliveryInterval?: number;
 }
 
 export interface CamCardProduct {

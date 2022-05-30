@@ -50,13 +50,21 @@
         </div>
       </div>
     </div>
-    <camfil-cam-card-product-comment
-      *ngIf="isEditMode || camCardItemData.comment?.label"
-      [camCardItem]="camCardItemData"
-      [currentCamCard]="currentCamCard"
-      [mode]="mode"
-      [ngClass]="{ 'align-self-end': isViewMode }"
-    ></camfil-cam-card-product-comment>
+    <div class="d-flex align-items-center">
+      <camfil-cam-card-delivery-interval
+        [camCard]="currentCamCard"
+        [intervaltype]="'articleRow'"
+        [mainDeliveryInterval]="currentCamCard.deliveryInterval"
+        [camCardItemData]="camCardItemData"
+      ></camfil-cam-card-delivery-interval>
+      <camfil-cam-card-product-comment
+        *ngIf="isEditMode || camCardItemData.comment?.label"
+        [camCardItem]="camCardItemData"
+        [currentCamCard]="currentCamCard"
+        [mode]="mode"
+        [ngClass]="{ 'align-self-end': isViewMode }"
+      ></camfil-cam-card-product-comment>
+    </div>
     <ng-container *ngIf="isEditMode">
       <div class="quantity-row d-flex justify-content-between align-items-center py-3 py-md-0">
         <div class="d-flex justify-content-between align-items-center">
