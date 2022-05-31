@@ -46,7 +46,6 @@ describe('Quote Details Component', () => {
       total: {
         type: 'Money',
         value: 43,
-        currencyMnemonic: 'Tempora eos deserunt.',
         currency: 'Tempora eos deserunt.',
       },
       items: [
@@ -122,6 +121,19 @@ describe('Quote Details Component', () => {
         eligibleShipToAddress: true,
         goodsAcceptanceNote: 'Dolorem enim quis error molestiae.',
       },
+      quotationReference: '',
+      validToDate: 0,
+      taxAmount: {
+        type: 'Money',
+        value: 43,
+        currency: 'Tempora eos deserunt.',
+      },
+      totalPriceAfterDiscountExVAT: {
+        type: 'Money',
+        value: 43,
+        currency: 'Tempora eos deserunt.',
+      },
+      totalQty: 0
     };
     element = fixture.nativeElement;
   });
