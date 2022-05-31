@@ -118,6 +118,7 @@ export interface CamCamProductChecked {
   quantity: number;
   boxLabel?: string;
   measurement?: CamCardMeasurement;
+  sourceCCLineItemId?: string;
 }
 
 export interface CamCamProductsAddToCartItems {

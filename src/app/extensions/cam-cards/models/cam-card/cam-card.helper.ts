@@ -88,6 +88,8 @@ export class CamCardHelper {
                 delete productsToAdd.extensions.createdFromCamCardId;
               }
 
+              console.log(productsToAdd);
+
               productFacade.addProductsFromCamCard(productsToAdd, commonShippingMethodId, currentBasketId, cc.name);
             });
         }

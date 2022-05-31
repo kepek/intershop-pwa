@@ -36,7 +36,7 @@ export class AttributeHelper {
     return [year, month, day].join('-').replace(/\s/g, '');
   }
 
-  static getAttrsBeforeAddToCart(measurements, boxLabel) {
+  static getAttrsBeforeAddToCart(measurements, boxLabel, sourceCCLineItemId?) {
     const measurementsObj = measurements
       ? Object.entries(measurements)
           .map(([key, value]) => ({
@@ -50,6 +50,10 @@ export class AttributeHelper {
     const lineItemAttributes = [...measurementsObj] as Attribute[];
     if (boxLabel) {
       lineItemAttributes.push({ name: 'boxLabel', type: 'String', value: boxLabel });
+    }
+
+    if (sourceCCLineItemId) {
+      lineItemAttributes.push({ name: 'SOURCE_CAMCARD_LINE_ITEM_ID', type: 'String', value: sourceCCLineItemId });
     }
 
     return lineItemAttributes;
@@ -69,7 +73,8 @@ export class AttributeHelper {
   static calculateAttrsToAddFromCC(product: CamCamProductChecked) {
     const boxLabel = product.boxLabel;
     const measurements = product.measurement;
-    return AttributeHelper.getAttrsBeforeAddToCart(measurements, boxLabel);
+    const sourceCCLineItemId = product.sourceCCLineItemId;
+    return AttributeHelper.getAttrsBeforeAddToCart(measurements, boxLabel, sourceCCLineItemId);
   }
 
   static determineLineItemType(lineItem: CamfilOrderLineItem | LineItemView | CamCardItem) {
