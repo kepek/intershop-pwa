@@ -46,7 +46,7 @@
         <div *ngFor="let sub of camCard.subCamCards">
           <div
             class="sub-camcard-collapse px-4 my-2"
-            [ngClass]="{ 'big-sub-camcard__panel': isIntervalVisible === true }"
+            [ngClass]="{ 'big-sub-camcard__panel': isIntervalVisible$ | async }"
             (click)="toggleSubCamCard(sub.id)"
             [attr.aria-expanded]="isSubCamCardOpen(sub.id)"
           >

@@ -51,20 +51,20 @@
       </div>
     </div>
     <div class="d-flex align-items-center">
-      <camfil-cam-card-last-delivery-date
+      <camfil-lazy-cam-card-last-delivery-date
         *ngIf="isEditMode"
         [camCard]="currentCamCard"
         [lastDeliveryDateType]="'articleRow'"
         [mainCCLastDeliveryDate]="currentCamCard.lastDeliveryDate"
         [camCardItemData]="camCardItemData"
-      ></camfil-cam-card-last-delivery-date>
-      <camfil-cam-card-delivery-interval
+      ></camfil-lazy-cam-card-last-delivery-date>
+      <camfil-lazy-cam-card-delivery-interval
         *ngIf="isEditMode"
         [camCard]="currentCamCard"
         [intervaltype]="'articleRow'"
         [mainDeliveryInterval]="currentCamCard.deliveryInterval"
         [camCardItemData]="camCardItemData"
-      ></camfil-cam-card-delivery-interval>
+      ></camfil-lazy-cam-card-delivery-interval>
       <camfil-cam-card-product-comment
         *ngIf="isEditMode || camCardItemData.comment?.label"
         [camCardItem]="camCardItemData"

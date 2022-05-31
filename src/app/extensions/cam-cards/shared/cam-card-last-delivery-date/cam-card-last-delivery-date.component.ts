@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { Observable } from 'rxjs';
 
+import { GenerateLazyComponent } from 'ish-core/utils/module-loader/generate-lazy-component.decorator';
+
 import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
 
 @Component({
@@ -10,6 +12,7 @@ import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
   styleUrls: ['./cam-card-last-delivery-date.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+@GenerateLazyComponent()
 export class CamCardLastDeliveryDateComponent implements OnInit {
   @Input() lastDeliveryDateType = 'subCamCard';
   @Input() camCard: CamCard;

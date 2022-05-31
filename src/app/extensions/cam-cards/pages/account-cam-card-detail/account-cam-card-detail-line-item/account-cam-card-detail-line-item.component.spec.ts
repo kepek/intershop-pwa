@@ -28,10 +28,10 @@ import { ProductVariationDisplayComponent } from 'ish-shared/components/product/
 import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 
+import { LazyCamCardDeliveryIntervalComponent } from '../../../exports/lazy-cam-card-delivery-interval/lazy-cam-card-delivery-interval.component';
+import { LazyCamCardLastDeliveryDateComponent } from '../../../exports/lazy-cam-card-last-delivery-date/lazy-cam-card-last-delivery-date.component';
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { AddProductToCamCardModalComponent } from '../../../shared/add-product-to-cam-card-modal/add-product-to-cam-card-modal.component';
-import { CamCardDeliveryIntervalComponent } from '../../../shared/cam-card-delivery-interval/cam-card-delivery-interval.component';
-import { CamCardLastDeliveryDateComponent } from '../../../shared/cam-card-last-delivery-date/cam-card-last-delivery-date.component';
 import { CamCardProductCommentComponent } from '../../../shared/cam-card-product-comment/cam-card-product-comment.component';
 
 import { AccountCamCardDetailLineItemComponent } from './account-cam-card-detail-line-item.component';
@@ -51,8 +51,6 @@ describe('Account Cam Card Detail Line Item Component', () => {
       declarations: [
         AccountCamCardDetailLineItemComponent,
         MockComponent(AddProductToCamCardModalComponent),
-        MockComponent(CamCardDeliveryIntervalComponent),
-        MockComponent(CamCardLastDeliveryDateComponent),
         MockComponent(CamCardProductCommentComponent),
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductAttributeComponent),
@@ -65,6 +63,8 @@ describe('Account Cam Card Detail Line Item Component', () => {
         MockComponent(CheckboxComponent),
         MockComponent(FaIconComponent),
         MockComponent(InputComponent),
+        MockComponent(LazyCamCardDeliveryIntervalComponent),
+        MockComponent(LazyCamCardLastDeliveryDateComponent),
         MockComponent(ProductBundleDisplayComponent),
         MockComponent(ProductVariationDisplayComponent),
         MockPipe(CamfilDimensionPipe),

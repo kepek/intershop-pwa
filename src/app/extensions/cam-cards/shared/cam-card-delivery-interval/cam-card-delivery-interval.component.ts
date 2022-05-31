@@ -4,6 +4,8 @@ import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configurati
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
+import { GenerateLazyComponent } from 'ish-core/utils/module-loader/generate-lazy-component.decorator';
+
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
 
@@ -13,6 +15,7 @@ import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
   styleUrls: ['./cam-card-delivery-interval.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+@GenerateLazyComponent()
 export class CamCardDeliveryIntervalComponent implements OnInit {
   private static deliveryIntervalOptions = 100;
 
@@ -53,7 +56,7 @@ export class CamCardDeliveryIntervalComponent implements OnInit {
   }
 
   patchDeliveryIntervalForm() {
-    if (this.intervaltype === 'subCamCard') {
+    if (this.intervaltype === 'subCamCard' && this.camCard) {
       const { lastDeliveryDate, deliveryInterval, nextDeliveryDate } = this.camCard;
 
       const interalValue = deliveryInterval
@@ -67,7 +70,7 @@ export class CamCardDeliveryIntervalComponent implements OnInit {
         deliveryInterval: interalValue,
         nextDelivery: nextDeliveryDate ? new Date(nextDeliveryDate) : '',
       });
-    } else {
+    } else if (this.intervaltype === 'articleRow' && this.camCardItemData) {
       const { lastDeliveryDate, deliveryInterval } = this.camCardItemData;
 
       const interalValue = deliveryInterval

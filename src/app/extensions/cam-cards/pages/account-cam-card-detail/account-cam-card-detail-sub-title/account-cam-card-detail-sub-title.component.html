@@ -1,9 +1,9 @@
 <ng-template [ngIf]="!active">
   {{ sub.name }}
-  <camfil-cam-card-last-delivery-date
+  <camfil-lazy-cam-card-last-delivery-date
     [camCard]="sub"
     [lastDeliveryDateType]="'subCamCard'"
-  ></camfil-cam-card-last-delivery-date>
+  ></camfil-lazy-cam-card-last-delivery-date>
 </ng-template>
 <ng-template [ngIf]="active">
   <mat-form-field appearance="fill" class="form-field mat-input-no-label" (click)="$event.stopPropagation()">
@@ -21,11 +21,11 @@
 </ng-template>
 
 <span class="float-right d-flex align-items-center">
-  <camfil-cam-card-delivery-interval
+  <camfil-lazy-cam-card-delivery-interval
     [camCard]="sub"
     [intervaltype]="'subCamCard'"
     [mainDeliveryInterval]="mainDeliveryInterval"
-  ></camfil-cam-card-delivery-interval>
+  ></camfil-lazy-cam-card-delivery-interval>
   <button mat-button (click)="handleEdit($event)">
     <mat-icon svgIcon="edit"></mat-icon>
   </button>
