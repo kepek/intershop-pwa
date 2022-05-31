@@ -542,6 +542,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
             output.push(camcard);
           } else {
             const checkedSubs = camcard.subCamCards.filter(sub => this.isCamCardChecked(sub));
+
             if (checkedSubs.length) {
               output.push(checkedSubs);
             }
@@ -551,9 +552,8 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         // mapping checked CamCards for view
         .map((cc: CamCard) => {
           // clean up duplicate products
-          const items = this.getInvalidProductsInCamCard(cc).filter(
-            (item, i, arr) => arr.findIndex(el => el.product.sku === item.product.sku) === i
-          );
+          const items = this.getInvalidProductsInCamCard(cc) || [];
+          items.filter((item, i, arr) => arr.findIndex(el => el.product.sku === item.product.sku) === i);
 
           return { name: cc.name, isChild: !!cc.rootCamCard, items };
         })
@@ -562,7 +562,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     );
   }
 
-  getInvalidProductsInCamCard(camCard: CamCard) {
+  getInvalidProductsInCamCard(camCard: CamCard): CamCardItem[] {
     const invalidItems = CamCardHelper.getInvalidItems(camCard.camCardItems);
     return camCard.subCamCards?.reduce((arr, sub) => {
       const sumItem = CamCardHelper.getInvalidItems(sub.camCardItems);

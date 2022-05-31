@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
 
@@ -23,8 +25,13 @@ export class CamCardDeliveryIntervalComponent implements OnInit {
   deliveryIntervalOptions: string[] = [
     ...Array(CamCardDeliveryIntervalComponent.deliveryIntervalOptions).keys(),
   ].map(i => (i === 0 ? '--' : i.toString()));
+  isVisible$: Observable<boolean>;
 
-  constructor(private fb: FormBuilder, private camCardsFacade: CamCardsFacade) {}
+  constructor(
+    private fb: FormBuilder,
+    private camCardsFacade: CamCardsFacade,
+    private camfilConfigurationFacade: CamfilConfigurationFacade
+  ) {}
 
   ngOnInit(): void {
     this.initDeliveryIntervalForm();
@@ -33,7 +40,7 @@ export class CamCardDeliveryIntervalComponent implements OnInit {
       map(value => this._deliveryIntervalFilter(value))
     );
 
-    console.log('camCard', this.camCard);
+    this.isVisible$ = this.camfilConfigurationFacade?.isEnabled$('showDeliveryIntervalOnCCDetailPage');
   }
 
   initDeliveryIntervalForm() {

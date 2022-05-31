@@ -1,25 +1,27 @@
-<form [formGroup]="deliveryIntervalForm">
-  <mat-form-field appearance="fill" class="interval-form-field__container form-field ml-md-2">
-    <mat-label>{{ 'camfil.account.cam_card.add_to_form.delivery_interval' | translate }}</mat-label>
-    <input
-      (click)="$event.stopPropagation()"
-      (change)="applyDeliveryInterval()"
-      (keyup)="validateDeliveryInterval()"
-      [formControl]="deliveryIntervalForm.get('deliveryInterval')"
-      [matAutocomplete]="filteredIntervals"
-      matInput
-      name="deliveryInterval"
-      type="text"
-      class="overflow-hidden"
-    />
-    <mat-autocomplete
-      #filteredIntervals="matAutocomplete"
-      (optionSelected)="applyDeliveryInterval()"
-      autoActiveFirstOption
-    >
-      <mat-option *ngFor="let option of deliveryIntervalFilteredOptions$ | async" [value]="option">
-        {{ option }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</form>
+<ng-container *ngIf="isVisible$ | async">
+  <form [formGroup]="deliveryIntervalForm">
+    <mat-form-field appearance="fill" class="interval-form-field__container form-field ml-md-2">
+      <mat-label>{{ 'camfil.account.cam_card.add_to_form.delivery_interval' | translate }}</mat-label>
+      <input
+        (click)="$event.stopPropagation()"
+        (change)="applyDeliveryInterval()"
+        (keyup)="validateDeliveryInterval()"
+        [formControl]="deliveryIntervalForm.get('deliveryInterval')"
+        [matAutocomplete]="filteredIntervals"
+        matInput
+        name="deliveryInterval"
+        type="text"
+        class="overflow-hidden"
+      />
+      <mat-autocomplete
+        #filteredIntervals="matAutocomplete"
+        (optionSelected)="applyDeliveryInterval()"
+        autoActiveFirstOption
+      >
+        <mat-option *ngFor="let option of deliveryIntervalFilteredOptions$ | async" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</ng-container>

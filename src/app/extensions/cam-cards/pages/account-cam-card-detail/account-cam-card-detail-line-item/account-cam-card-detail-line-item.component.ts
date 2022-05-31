@@ -40,6 +40,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   @Input() mode?: 'edit' | 'view';
   @Input() index: number;
   @Input() customerPrices?: { listPrice: Price; salePrice: Price };
+  @Input() isIntervalVisible = false;
   @Output() handleLoad = new EventEmitter<{ res: ProductView; quantity: number }>();
   @Output() handleUpdate = new EventEmitter<{ res: ProductView; quantity: number }>();
   @Output() delete = new EventEmitter<CamCardItem>();

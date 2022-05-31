@@ -2,24 +2,24 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { instance, mock } from 'ts-mockito';
 
-import { CamCardDeliveryIntervalComponent } from './cam-card-delivery-interval.component';
+import { CamCardLastDeliveryDateComponent } from './cam-card-last-delivery-date.component';
 
-describe('Cam Card Delivery Interval Component', () => {
-  let component: CamCardDeliveryIntervalComponent;
-  let fixture: ComponentFixture<CamCardDeliveryIntervalComponent>;
+describe('Cam Card Last Delivery Date Component', () => {
+  let component: CamCardLastDeliveryDateComponent;
+  let fixture: ComponentFixture<CamCardLastDeliveryDateComponent>;
   let element: HTMLElement;
   let camfilConfigurationFacadeMock: CamfilConfigurationFacade;
 
   beforeEach(async () => {
     camfilConfigurationFacadeMock = mock(CamfilConfigurationFacade);
     await TestBed.configureTestingModule({
-      declarations: [CamCardDeliveryIntervalComponent],
+      declarations: [CamCardLastDeliveryDateComponent],
       providers: [{ provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacadeMock) }],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamCardDeliveryIntervalComponent);
+    fixture = TestBed.createComponent(CamCardLastDeliveryDateComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

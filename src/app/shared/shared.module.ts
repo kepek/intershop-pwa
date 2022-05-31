@@ -237,6 +237,7 @@ import { CamfilCheckoutBucketSummaryComponent } from 'ish-shared/components/camf
 import { CamRequisitionManagementExportsModule } from '../extensions/cam-requisition-management/exports/cam-requisition-management-exports.module';
 import { CamfilPwaExportsModule } from 'camfil-pwa';
 import { CamCardDeliveryIntervalComponent } from '../extensions/cam-cards/shared/cam-card-delivery-interval/cam-card-delivery-interval.component';
+import { CamCardLastDeliveryDateComponent } from '../extensions/cam-cards/shared/cam-card-last-delivery-date/cam-card-last-delivery-date.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -394,6 +395,8 @@ const exportedComponents = [
   BasketPromotionComponent,
   BasketShippingAddressWidgetComponent,
   BasketValidationResultsComponent,
+  CamCardDeliveryIntervalComponent,
+  CamCardLastDeliveryDateComponent,
   CamCardModalDetailsComponent,
   CamfilAddressComponent,
   CamfilBannerComponent,
@@ -457,7 +460,6 @@ const exportedComponents = [
   CreateOrderProductSuccessComponent,
   CreateOrderProductsModalComponent,
   CreateOrderProductsSuccessComponent,
-  CamCardDeliveryIntervalComponent,
   ErrorMessageComponent,
   FilterNavigationComponent,
   IdentityProviderLoginComponent,

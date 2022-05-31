@@ -1,5 +1,9 @@
 <ng-template [ngIf]="!active">
   {{ sub.name }}
+  <camfil-cam-card-last-delivery-date
+    [camCard]="sub"
+    [lastDeliveryDateType]="'subCamCard'"
+  ></camfil-cam-card-last-delivery-date>
 </ng-template>
 <ng-template [ngIf]="active">
   <mat-form-field appearance="fill" class="form-field mat-input-no-label" (click)="$event.stopPropagation()">

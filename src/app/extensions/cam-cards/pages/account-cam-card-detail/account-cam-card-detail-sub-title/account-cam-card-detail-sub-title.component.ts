@@ -14,6 +14,7 @@ export class AccountCamCardDetailSubTitleComponent {
 
   @Input() sub: CamCard;
   @Input() mainDeliveryInterval?: number;
+  @Input() isIntervalVisible = false;
   @Output() delete = new EventEmitter<Event>();
 
   active = false;

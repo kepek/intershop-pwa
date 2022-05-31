@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockComponent } from 'ng-mocks';
+import { CamCardDeliveryIntervalComponent } from '../../../shared/cam-card-delivery-interval/cam-card-delivery-interval.component';
+import { CamCardLastDeliveryDateComponent } from '../../../shared/cam-card-last-delivery-date/cam-card-last-delivery-date.component';
 
 import { AccountCamCardDetailSubTitleComponent } from './account-cam-card-detail-sub-title.component';
 
@@ -11,7 +14,11 @@ describe('Account Cam Card Detail Sub Title Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AccountCamCardDetailSubTitleComponent],
+      declarations: [
+        AccountCamCardDetailSubTitleComponent,
+        MockComponent(CamCardDeliveryIntervalComponent),
+        MockComponent(CamCardLastDeliveryDateComponent),
+      ],
       imports: [TranslateModule.forRoot()],
       providers: [provideMockStore()],
     }).compileComponents();
