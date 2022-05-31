@@ -133,7 +133,7 @@ describe('Quote Details Component', () => {
         value: 43,
         currency: 'Tempora eos deserunt.',
       },
-      totalQty: 0
+      totalQty: 0,
     };
     element = fixture.nativeElement;
   });
