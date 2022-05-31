@@ -71,6 +71,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   @Input() camCardLoading: boolean;
   @Output() addCamCard = new EventEmitter<CamCard>();
   @ViewChild(MatSort) sort: MatSort;
+  basketLoading$: Observable<boolean>;
   isStickyCamCardToolbar$: Observable<boolean>;
   camCardsProcessed: MatTableDataSource<CamCard>;
   columnsToDisplay = [
@@ -176,12 +177,15 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       this.basketId = basket.id;
       this.commonShippingMethodId = basket.commonShippingMethod?.id;
     });
+
     this.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
       this.buckets = buckets;
     });
+
     this.checkoutFacade.basketLoading$.pipe(takeUntil(this.destroy$)).subscribe(value => {
       this.basketLoading = value;
     });
+
     this.camCardsFacade.getCamCardsInBasketsForAllUsers$.pipe(takeUntil(this.destroy$)).subscribe(list => {
       this.camCardsInBasketsForAllUsers = list;
     });
@@ -195,6 +199,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         });
       }
     });
+
     this.camfilConfigurationFacade
       .isEnabled$('preventCamCardERPIdValidation')
       ?.pipe(takeUntil(this.destroy$))
