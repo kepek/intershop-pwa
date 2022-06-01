@@ -43,6 +43,7 @@ export interface CamfilChannelSettings {
   useHardcodedAnonymousCustomerForNonLoggedInUser: boolean;
   useHardcodedContactAnonymousCustomerForNonLoggedInUser: boolean;
   useSecondAddressLine: boolean;
+  showDeliveryIntervalOnCCDetailPage: boolean;
 }
 
 export interface CamfilChannelConfiguration extends Partial<CamfilChannelSettings> {

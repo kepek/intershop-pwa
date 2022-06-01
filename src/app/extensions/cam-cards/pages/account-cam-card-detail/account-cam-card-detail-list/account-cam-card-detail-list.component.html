@@ -32,6 +32,7 @@
                     [selectedItemsForm]="selectedItemsForm"
                     [index]="i + 1"
                     [customerPrices]="getCustomerPriceForSku(item.product.sku)"
+                    [isIntervalVisible]="isIntervalVisible$ | async"
                     (handleLoad)="productUpdate($event, item)"
                     (handleUpdate)="productUpdate($event, item)"
                     (delete)="openDeleteConfirmationDialog(productDeleteDialog, null, 'product', $event)"
@@ -45,12 +46,15 @@
         <div *ngFor="let sub of camCard.subCamCards">
           <div
             class="sub-camcard-collapse px-4 my-2"
+            [ngClass]="{ 'big-sub-camcard__panel': isIntervalVisible$ | async }"
             (click)="toggleSubCamCard(sub.id)"
             [attr.aria-expanded]="isSubCamCardOpen(sub.id)"
           >
             <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(sub.id)">arrow_left</mat-icon>
             <camfil-account-cam-card-detail-sub-title
               [sub]="sub"
+              [mainDeliveryInterval]="camCard?.deliveryInterval"
+              [isIntervalVisible]="isIntervalVisible$ | async"
               (delete)="openDeleteConfirmationDialog(subDeleteDialog, sub, 'sub')"
             ></camfil-account-cam-card-detail-sub-title>
           </div>

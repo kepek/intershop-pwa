@@ -41,6 +41,8 @@ export interface CamCardItem {
   creationDate?: number;
   comment?: CamCardItemComment;
   measurement?: CamCardMeasurement;
+  lastDeliveryDate?: string;
+  deliveryInterval?: number;
 }
 
 export interface CamCardProduct {
@@ -116,6 +118,7 @@ export interface CamCamProductChecked {
   quantity: number;
   boxLabel?: string;
   measurement?: CamCardMeasurement;
+  sourceCCLineItemId?: string;
 }
 
 export interface CamCamProductsAddToCartItems {

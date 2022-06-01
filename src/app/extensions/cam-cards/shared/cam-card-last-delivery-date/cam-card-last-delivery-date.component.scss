@@ -1,0 +1,28 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins.scss';
+
+:host {
+  .last-delivery-date__container {
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+    .last-delivery-date__header {
+      margin: 0 auto;
+    }
+
+    .last-delivery-date__value {
+      margin: 0 auto;
+    }
+  }
+  .sub-cam-card__date--container {
+    flex-direction: row;
+    line-height: 55px;
+    .last-delivery-date__header {
+      margin-left: $space-box;
+    }
+
+    .last-delivery-date__value {
+      margin-left: $space-box-half;
+    }
+  }
+}

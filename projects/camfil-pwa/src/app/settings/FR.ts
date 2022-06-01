@@ -35,6 +35,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
     BasketSurchargeTypes.BoxLabelShippingRule,
     BasketSurchargeTypes.SurchargeGasoil,
   ],
+  showDeliveryIntervalOnCCDetailPage: true,
 };
 
 export default camfilConfiguration;

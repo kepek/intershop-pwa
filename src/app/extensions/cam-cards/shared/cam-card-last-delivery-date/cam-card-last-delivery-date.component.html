@@ -1,0 +1,11 @@
+<ng-container *ngIf="isLastDeliveryDateVisible$ | async">
+  <div
+    class="last-delivery-date__container"
+    [ngClass]="{ 'sub-cam-card__date--container': lastDeliveryDateType === 'subCamCard' }"
+  >
+    <p class="text-center last-delivery-date__header">
+      {{ 'camfil.account.cam_card.add_to_form.last_delivery' | translate }}
+    </p>
+    <p class="font-weight-bold text-center last-delivery-date__value">{{ lastDeliveryDateValue || '---' }}</p>
+  </div>
+</ng-container>

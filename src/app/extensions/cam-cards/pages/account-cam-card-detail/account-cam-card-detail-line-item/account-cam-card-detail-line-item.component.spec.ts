@@ -28,6 +28,8 @@ import { ProductVariationDisplayComponent } from 'ish-shared/components/product/
 import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 
+import { LazyCamCardDeliveryIntervalComponent } from '../../../exports/lazy-cam-card-delivery-interval/lazy-cam-card-delivery-interval.component';
+import { LazyCamCardLastDeliveryDateComponent } from '../../../exports/lazy-cam-card-last-delivery-date/lazy-cam-card-last-delivery-date.component';
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { AddProductToCamCardModalComponent } from '../../../shared/add-product-to-cam-card-modal/add-product-to-cam-card-modal.component';
 import { CamCardProductCommentComponent } from '../../../shared/cam-card-product-comment/cam-card-product-comment.component';
@@ -61,6 +63,8 @@ describe('Account Cam Card Detail Line Item Component', () => {
         MockComponent(CheckboxComponent),
         MockComponent(FaIconComponent),
         MockComponent(InputComponent),
+        MockComponent(LazyCamCardDeliveryIntervalComponent),
+        MockComponent(LazyCamCardLastDeliveryDateComponent),
         MockComponent(ProductBundleDisplayComponent),
         MockComponent(ProductVariationDisplayComponent),
         MockPipe(CamfilDimensionPipe),

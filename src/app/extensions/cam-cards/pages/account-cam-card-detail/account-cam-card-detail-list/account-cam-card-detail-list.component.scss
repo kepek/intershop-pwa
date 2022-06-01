@@ -25,6 +25,9 @@
   color: $camfil-text-color-primary;
   background-color: rgba($color-corporate, 0.1);
 }
+.big-sub-camcard__panel {
+  line-height: 65px;
+}
 .cam-card-total {
   font-family: $font-family-SansPro;
   font-size: $font-size-lg;

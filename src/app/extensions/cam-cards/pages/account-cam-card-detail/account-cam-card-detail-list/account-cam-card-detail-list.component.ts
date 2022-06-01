@@ -98,7 +98,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   modalType: 'noErpNoAddress' | 'invalidProducts';
   camCardsInBasketsForAllUsersLoading$: Observable<boolean>;
   camCardsInBasketsForAllUsers: string[];
-
+  isIntervalVisible$: Observable<boolean>;
+  isIntervalVisible = false;
   private destroy$ = new Subject();
 
   constructor(
@@ -180,6 +181,10 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       .subscribe(val => {
         this.preventCamCardERPIdValidation = val;
       });
+    this.isIntervalVisible$ = this.camfilConfigurationFacade?.isEnabled$('showDeliveryIntervalOnCCDetailPage');
+    this.isIntervalVisible$?.pipe(takeUntil(this.destroy$)).subscribe(val => {
+      this.isIntervalVisible = val;
+    });
   }
 
   ngOnDestroy() {

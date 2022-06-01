@@ -6,12 +6,15 @@ import { CamCard } from '../../../models/cam-card/cam-card.model';
 @Component({
   selector: 'camfil-account-cam-card-detail-sub-title',
   templateUrl: './account-cam-card-detail-sub-title.component.html',
+  styleUrls: ['./account-cam-card-detail-sub-title.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountCamCardDetailSubTitleComponent {
   constructor(private camCardsFacade: CamCardsFacade) {}
 
   @Input() sub: CamCard;
+  @Input() mainDeliveryInterval?: number;
+  @Input() isIntervalVisible = false;
   @Output() delete = new EventEmitter<Event>();
 
   active = false;
