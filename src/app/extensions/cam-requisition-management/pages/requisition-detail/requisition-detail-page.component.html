@@ -59,6 +59,7 @@
         (openAddToProductModal)="openAddToProductModal($event, requisition)"
         (approveSelectedProducts)="approveSelectedLineItems(requisition)"
         (addProductToRequisition)="sumbitAddProductToRequisition($event, requisition)"
+        (removeSelectedProducts)="removeMultipleSelectedLineItems(requisition)"
         [requisition]="requisition"
         [lineItemsChecked]="lineItemsChecked"
       ></camfil-requisition-detail-toolbar>

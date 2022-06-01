@@ -183,8 +183,8 @@ export const requisitionsReducer = createReducer(
       ...requisition,
       approval: {
         ...requisition.approval,
-        status: 'APPROVED',
-        statusCode: 'APPROVED',
+        status: 'Partial Approved',
+        statusCode: 'PARTLY_APPROVED',
         lineItemStatuses: requisition.approval.lineItemStatuses.map(lineItem =>
           lineItemIds.includes(lineItem.lineItemId) ? { ...lineItem, status: 'APPROVED' } : lineItem
         ),

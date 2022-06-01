@@ -44,25 +44,28 @@ export class CamfilRequisitionLineItemBoxLabelComponent implements OnInit {
   }
 
   onBlur(target: HTMLDataElement, form: FormGroup) {
-    if (form.invalid) {
-      markAsDirtyRecursive(form);
-      return;
-    }
+    if (this.lineItem?.requisitionLineItemStatus === 'SUBMITTED') {
+      if (form.invalid) {
+        markAsDirtyRecursive(form);
+        return;
+      }
 
-    const value = target.value;
-    const boxLabelAttribute: Attribute = { name: 'boxLabel', type: 'String', value };
+      const value = target.value;
+      const oldValue = this.boxLabel;
+      const boxLabelAttribute: Attribute = { name: 'boxLabel', type: 'String', value };
 
-    if (!value) {
-      this.camRequisitionManagementFacade.deleteCamfilRequisitionLineItemAttributes(
-        this.requisition.id,
-        this.lineItem.id,
-        boxLabelAttribute
-      );
-    } else {
-      this.camRequisitionManagementFacade.updateCamfilRequisitionLineItem(this.requisition.id, {
-        lineItemId: this.lineItem.id,
-        boxLabel: value,
-      });
+      if (oldValue && !value) {
+        this.camRequisitionManagementFacade.deleteCamfilRequisitionLineItemAttributes(
+          this.requisition.id,
+          this.lineItem.id,
+          boxLabelAttribute
+        );
+      } else if (value) {
+        this.camRequisitionManagementFacade.updateCamfilRequisitionLineItem(this.requisition.id, {
+          lineItemId: this.lineItem.id,
+          boxLabel: value,
+        });
+      }
     }
   }
 }

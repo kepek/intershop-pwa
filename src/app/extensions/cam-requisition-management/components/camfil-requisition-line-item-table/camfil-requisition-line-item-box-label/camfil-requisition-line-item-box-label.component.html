@@ -15,6 +15,7 @@
         name="boxLabel"
         type="text"
         [readonly]="lineItem?.requisitionLineItemStatus === 'APPROVED'"
+        [disabled]="lineItem?.requisitionLineItemStatus === 'APPROVED'"
       ></textarea>
     </mat-form-field>
   </form>

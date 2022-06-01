@@ -157,8 +157,8 @@ export class CamfilRequisitionContextFacade
 
   removeMultipleProductsFromCamfilRequisition(lineItemsIds: string[]) {
     this.store.dispatch(
-      removeMultipleProductsFromCamfilRequisition({
-        lineItemsIds,
+      removeProductFromCamfilRequisition({
+        lineItemId: lineItemsIds[0],
         requisitionId: this.get('entity', 'id'),
       })
     );
