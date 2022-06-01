@@ -36,6 +36,7 @@ import {
   detectCamCardToolbar,
   getAddProductSuccess,
   getAllCamCards,
+  getCamCardAdding,
   getCamCardCustomers,
   getCamCardDetails,
   getCamCardError,
@@ -78,6 +79,7 @@ export class CamCardsFacade {
   camCard$: Observable<CamCard[]> = this.store.pipe(select(getAllCamCards));
   currentCamCard$: Observable<CamCard> = this.store.pipe(select(getSelectedCamCardDetails));
   camCardLoading$: Observable<boolean> = this.store.pipe(select(getCamCardLoading));
+  camCardAdding$: Observable<boolean> = this.store.pipe(select(getCamCardAdding));
   camCardsLoading$: Observable<boolean> = this.store.pipe(select(getCamCardsLoading));
   camCardError$: Observable<HttpError> = this.store.pipe(select(getCamCardError));
   isStickyCamCardToolbar$: Observable<boolean> = this.store.pipe(select(isStickyCamCardToolbar));

@@ -258,7 +258,6 @@ describe('Customer Store', () => {
           [Basket API] Check Current Basket
           [Basket API] Load Basket Success:
             basket: {"id":"test","lineItems":[1]}
-          [Basket] Load Buckets
         `);
       });
 

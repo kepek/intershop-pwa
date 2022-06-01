@@ -81,14 +81,12 @@ export class BasketEffects {
   loadBasket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadBasket),
-      switchMap(() => forkJoin([this.basketService.getBasket(), this.basketService.getBuckets()])),
-      mergeMap(([basket, buckets]) => [loadBasketSuccess({ basket }), loadBucketsSuccess({ buckets })])
-    )
-  );
-  loadBasketSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadBasketSuccess),
-      mergeMap(() => [loadBuckets()])
+      mergeMap(() =>
+        forkJoin([this.basketService.getBasket(), this.basketService.getBuckets()]).pipe(
+          mergeMap(([basket, buckets]) => [loadBasketSuccess({ basket }), loadBucketsSuccess({ buckets })]),
+          mapErrorToAction(loadBasketFail)
+        )
+      )
     )
   );
   loadBasketByAPIToken$ = createEffect(() =>
@@ -357,7 +355,7 @@ export class BasketEffects {
    * @param basket
    * @param attributeName
    */
-  private basketContainsAttribute(basket: Basket, attributeName: string): boolean {
-    return !!basket?.attributes?.find(attr => attr.name === attributeName);
+  private basketContainsAttribute(basketOrError: Basket, attributeName: string): boolean {
+    return !!basketOrError?.attributes?.find(attr => attr.name === attributeName);
   }
 }

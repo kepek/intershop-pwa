@@ -8,6 +8,7 @@ import { EMPTY, Observable, of, throwError } from 'rxjs';
 import { anyString, anything, instance, mock, verify, when } from 'ts-mockito';
 
 import { Basket } from 'ish-core/models/basket/basket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { CustomerUserType } from 'ish-core/models/customer/customer.model';
 import { BasketService } from 'ish-core/services/basket/basket.service';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
@@ -28,6 +29,7 @@ import {
   loadBasketEligibleShippingMethodsSuccess,
   loadBasketFail,
   loadBasketSuccess,
+  loadBucketsSuccess,
   resetBasketErrors,
   setBasketAttribute,
   setBasketAttributeFail,
@@ -75,6 +77,7 @@ describe('Basket Effects', () => {
   describe('loadBasket$', () => {
     beforeEach(() => {
       when(basketServiceMock.getBasket()).thenCall(() => of({ id: 'BID' } as Basket));
+      when(basketServiceMock.getBuckets()).thenCall(() => of([] as Bucket[]));
 
       store$.dispatch(
         loginUserSuccess({
@@ -92,6 +95,7 @@ describe('Basket Effects', () => {
 
       effects.loadBasket$.subscribe(() => {
         verify(basketServiceMock.getBasket()).once();
+        verify(basketServiceMock.getBuckets()).once();
         done();
       });
     });
@@ -99,9 +103,10 @@ describe('Basket Effects', () => {
     it('should map to action of type LoadBasketSuccess', () => {
       const id = 'BID';
       const action = loadBasket();
-      const completion = loadBasketSuccess({ basket: { id } as Basket });
-      actions$ = hot('-a-a-a', { a: action });
-      const expected$ = cold('-c-c-c', { c: completion });
+      const completion1 = loadBasketSuccess({ basket: { id } as Basket });
+      const completion2 = loadBucketsSuccess({ buckets: [] as Bucket[] });
+      actions$ = hot('-a', { a: action });
+      const expected$ = cold('-(cd)', { c: completion1, d: completion2 });
 
       expect(effects.loadBasket$).toBeObservable(expected$);
     });

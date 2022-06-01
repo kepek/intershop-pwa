@@ -37,7 +37,7 @@
         {{ cancelButtonTitle ? cancelButtonTitle : ('camfil.modal.cta.button.cancel' | translate) }}
       </button>
 
-      <button class="btn btn-link cta-modal__links--link" type="submit" (click)="emitAction()">
+      <button class="btn btn-link cta-modal__links--link" type="submit" (click)="emitAction()" cdkFocusInitial>
         {{ actionButtonTitle }}
       </button>
     </div>

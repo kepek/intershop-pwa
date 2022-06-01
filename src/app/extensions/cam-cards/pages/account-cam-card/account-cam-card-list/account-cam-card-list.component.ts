@@ -206,6 +206,10 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       .subscribe(val => {
         this.preventCamCardERPIdValidation = val;
       });
+
+    this.camCardsFacade.camCardAdding$.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      this.productAddingInProgress = value;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {

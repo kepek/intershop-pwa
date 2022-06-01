@@ -2,6 +2,12 @@ import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import {
+  addItemsToBasketFromCamCard,
+  addItemsToBasketFromCamCardSuccess,
+  updateBasketFail,
+  updateBucketFail,
+} from 'ish-core/store/customer/basket';
 import { setLoadingOn } from 'ish-core/utils/ngrx-creators';
 
 import {
@@ -80,6 +86,7 @@ import {
 } from './cam-card.actions';
 
 export interface CamCardState extends EntityState<CamCard> {
+  adding: boolean;
   loading: boolean;
   camCardsLoading: boolean;
   selected: string;
@@ -108,6 +115,7 @@ export const camCardAdapter = createEntityAdapter<CamCard>({
 });
 
 export const initialState: CamCardState = camCardAdapter.getInitialState({
+  adding: false,
   loading: false,
   camCardsLoading: false,
   selected: undefined,
@@ -191,6 +199,7 @@ export const camCardReducer = createReducer(
       const { error } = action.payload;
       return {
         ...state,
+        adding: false,
         loading: false,
         error,
         selected: undefined,
@@ -412,6 +421,7 @@ export const camCardReducer = createReducer(
   }),
   on(checkCamCardsInBasketsForAllUsers, (state: CamCardState) => ({
     ...state,
+    adding: true,
     camCardsInBasketsForAllUsers: { loading: true },
   })),
   on(checkCamCardsInBasketsForAllUsersSuccess, (state: CamCardState, action) => {
@@ -420,5 +430,13 @@ export const camCardReducer = createReducer(
       ...state,
       camCardsInBasketsForAllUsers: { loading: false, list: camCardsId },
     };
-  })
+  }),
+  on(addItemsToBasketFromCamCard, (state: CamCardState) => ({
+    ...state,
+    adding: true,
+  })),
+  on(addItemsToBasketFromCamCardSuccess, updateBucketFail, updateBasketFail, (state: CamCardState) => ({
+    ...state,
+    adding: false,
+  }))
 );
