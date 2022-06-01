@@ -11,6 +11,7 @@ import { QuoteDetails } from '../../models/quote-details/quote-details.model';
 import { QuoteItemData } from '../../models/quote-item/quote-item.interface';
 import { QuoteItemMapper } from '../../models/quote-item/quote-item.mapper';
 import { QuoteItem } from '../../models/quote-item/quote-item.model';
+import { QuoteServiceRequest } from '../../models/quote-service-request/quote-service-request.model';
 import { QuoteServiceResponse } from '../../models/quote-service-response/quote-service-response.model';
 import { QuoteData } from '../../models/quote/quote.interface';
 import { QuoteMapper } from '../../models/quote/quote.mapper';
@@ -32,6 +33,8 @@ export class QuotesService {
     'status',
     'creationDate',
     'orderChannel',
+    'customerQuotationNumber',
+    'quotationDate',
   ];
 
   constructor(
@@ -71,13 +74,11 @@ export class QuotesService {
       );
   }
 
-  approveQuote(quoteId: string): Observable<QuoteServiceResponse> {
-    return this.apiSrv.b2bUserEndpoint().post('camfilquotation', { number: quoteId, submitted: true });
+  approveQuote(request: QuoteServiceRequest): Observable<QuoteServiceResponse> {
+    return this.apiSrv.b2bUserEndpoint().post('camfilquotation', { ...request, submitted: true });
   }
 
-  rejectQuote(quoteId: string, reason: string): Observable<QuoteServiceResponse> {
-    return this.apiSrv
-      .b2bUserEndpoint()
-      .post('camfilquotation', { number: quoteId, rejected: true, sellerComment: reason });
+  rejectQuote(request: QuoteServiceRequest, reason: string): Observable<QuoteServiceResponse> {
+    return this.apiSrv.b2bUserEndpoint().post('camfilquotation', { ...request, rejected: true, sellerComment: reason });
   }
 }

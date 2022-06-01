@@ -59,11 +59,22 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
   }
 
   reject() {
-    this.quotesFacade.rejectQuote(this.quoteDetails.camfilQuoteNumber, '');
+    this.loading = true;
+    this.quotesFacade.rejectQuote(
+      {
+        id: this.quoteDetails.id,
+        number: this.quoteDetails.camfilQuoteNumber,
+      },
+      ''
+    );
   }
 
   approve() {
-    this.quotesFacade.approveQuote(this.quoteDetails.camfilQuoteNumber);
+    this.loading = true;
+    this.quotesFacade.approveQuote({
+      id: this.quoteDetails.id,
+      number: this.quoteDetails.camfilQuoteNumber,
+    });
   }
 
   onResize() {

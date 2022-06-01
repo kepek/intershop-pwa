@@ -13,9 +13,13 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Observable } from 'rxjs';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { Price } from 'ish-core/models/price/price.model';
+import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
+import { Product } from 'ish-core/models/product/product.model';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 
 import { QuoteLineItem } from '../../../../models/quote-details/quote-details.model';
@@ -45,7 +49,7 @@ export class QuoteLineItemTableComponent implements OnInit, OnChanges, AfterView
   ];
   lineItemsProcessed: MatTableDataSource<Partial<QuoteLineItem>>;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private shoppingFacade: ShoppingFacade) {}
 
   ngOnInit() {
     this.lineItemsProcessed = new MatTableDataSource(this.lineItems);
@@ -80,5 +84,9 @@ export class QuoteLineItemTableComponent implements OnInit, OnChanges, AfterView
       autoFocus: false,
       data: { sku },
     });
+  }
+
+  getProductInfo(sku: string): Observable<Product> {
+    return this.shoppingFacade.product$(sku, ProductCompletenessLevel.Detail);
   }
 }

@@ -10,7 +10,8 @@ export type QuoteStringProps =
   | 'ERPnumber'
   | 'orderChannel'
   | 'creationDate'
-  | 'quotationDate';
+  | 'quotationDate'
+  | 'customerQuotationNumber';
 
 export type QuoteIntegerProps = 'status';
 

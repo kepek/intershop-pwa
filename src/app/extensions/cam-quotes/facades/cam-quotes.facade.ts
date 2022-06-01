@@ -3,6 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { QuoteDetails } from '../models/quote-details/quote-details.model';
+import { QuoteServiceRequest } from '../models/quote-service-request/quote-service-request.model';
 import { Quote } from '../models/quote/quote.model';
 import {
   approveQuote,
@@ -40,19 +41,19 @@ export class CamQuotesFacade {
     this.store.dispatch(loadQuoteDetails({ quoteId }));
   }
 
-  approveQuote(quoteId: string): void {
-    this.store.dispatch(approveQuote({ quoteId }));
+  approveQuote(request: QuoteServiceRequest): void {
+    this.store.dispatch(approveQuote({ request }));
   }
 
-  approveQuotes(quoteIds: string[]): void {
-    this.store.dispatch(approveQuotes({ quoteIds }));
+  approveQuotes(request: QuoteServiceRequest[]): void {
+    this.store.dispatch(approveQuotes({ request }));
   }
 
-  rejectQuote(quoteId: string, reason: string): void {
-    this.store.dispatch(rejectQuote({ quoteId, reason }));
+  rejectQuote(request: QuoteServiceRequest, reason: string): void {
+    this.store.dispatch(rejectQuote({ request, reason }));
   }
 
-  rejectQuotes(quoteIds: string[], reason: string): void {
-    this.store.dispatch(rejectQuotes({ quoteIds, reason }));
+  rejectQuotes(request: QuoteServiceRequest[], reason: string): void {
+    this.store.dispatch(rejectQuotes({ request, reason }));
   }
 }

@@ -21,12 +21,7 @@ export interface QuoteDetailsData {
   submitted: boolean;
   creationDate: number;
   submittedDate: number;
-  total: {
-    type: 'Money';
-    value: number;
-    currencyMnemonic: string;
-    currency: string;
-  };
+  total: Price;
   items: {
     type: 'CamfilQuotationLineItem';
     lineItemId: string;
@@ -47,4 +42,9 @@ export interface QuoteDetailsData {
   deliveryAddress: AddressData;
   erpnumber: string;
   orderChannel: string;
+  quotationReference: string;
+  validToDate: number;
+  taxAmount: Price;
+  totalPriceAfterDiscountExVAT: Price;
+  totalQty: number;
 }
