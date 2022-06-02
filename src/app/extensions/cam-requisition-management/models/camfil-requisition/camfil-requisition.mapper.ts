@@ -98,16 +98,14 @@ export class CamfilRequisitionMapper {
     }
   }
 
-  static convertToData(payloadData: string): number {
+  static convertToData(payloadData: number): number {
     if (!payloadData) {
       return;
     }
 
-    const date = String(payloadData);
+    const date = new Date(payloadData);
 
-    const dateFromString = new Date(date.replace(/(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3'));
-    dateFromString.setHours(23, 59, 59);
-    return dateFromString.getTime();
+    return date.getTime();
   }
 
   static getLineItemsData(included, approvalData): LineItem[] {
