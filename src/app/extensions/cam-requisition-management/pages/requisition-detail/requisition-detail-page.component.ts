@@ -116,7 +116,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   removeMultipleSelectedLineItems(requisition: CamfilRequisition) {
     const { approval } = requisition;
     if (this.getIsCamfilRequisitionEditable(approval)) {
-      //TODO: Update when BE implement possibility to remove multiple line items
+      // TODO: Update when BE implement possibility to remove multiple line items
       this.context.removeSelectedLineItem(this.lineItemsChecked[0]);
     }
   }
