@@ -184,12 +184,10 @@ export class TrackingService {
           index: item.position,
         }))
       : [];
-    const event: DataLayerEvent = {
+    return {
       event: eventType,
       items,
       item_list_id: camCard.id,
     };
-
-    return event;
   }
 }
