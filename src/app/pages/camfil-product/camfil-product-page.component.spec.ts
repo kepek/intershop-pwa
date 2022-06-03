@@ -29,6 +29,7 @@ import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-load
 import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
 import { RecentlyViewedComponent } from 'ish-shared/components/recently/recently-viewed/recently-viewed.component';
 
+import { TrackingFacade } from '../../extensions/tracking/facades/tracking.facade';
 import { CamfilProductLinksComponent } from '../product/camfil-product-links/camfil-product-links.component';
 import { ProductBundlePartsComponent } from '../product/product-bundle-parts/product-bundle-parts.component';
 import { ProductMasterVariationsComponent } from '../product/product-master-variations/product-master-variations.component';
@@ -45,6 +46,7 @@ describe('Camfil Product Page Component', () => {
   let element: HTMLElement;
   let location: Location;
   let shoppingFacade: ShoppingFacade;
+  let trackingFacade: TrackingFacade;
 
   const categories = categoryTree([{ uniqueId: 'A', categoryPath: ['A'] } as Category]);
 
@@ -52,6 +54,7 @@ describe('Camfil Product Page Component', () => {
     shoppingFacade = mock(ShoppingFacade);
     when(shoppingFacade.selectedProduct$).thenReturn(EMPTY);
     when(shoppingFacade.selectedCategory$).thenReturn(of(createCategoryView(categories, 'A')));
+    trackingFacade = mock(TrackingFacade);
 
     await TestBed.configureTestingModule({
       imports: [
@@ -73,7 +76,11 @@ describe('Camfil Product Page Component', () => {
         MockComponent(RecentlyViewedComponent),
         MockComponent(RetailSetPartsComponent),
       ],
-      providers: [ProductRoutePipe, { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
+      providers: [
+        ProductRoutePipe,
+        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
+        { provide: TrackingFacade, useFactory: () => instance(trackingFacade) },
+      ],
     }).compileComponents();
   });
 

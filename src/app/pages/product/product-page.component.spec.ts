@@ -25,8 +25,6 @@ import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { RecentlyViewedComponent } from 'ish-shared/components/recently/recently-viewed/recently-viewed.component';
 
-import { TrackingFacade } from '../../extensions/tracking/facades/tracking.facade';
-
 import { CamfilProductLinksComponent } from './camfil-product-links/camfil-product-links.component';
 import { ProductBundlePartsComponent } from './product-bundle-parts/product-bundle-parts.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
@@ -40,7 +38,6 @@ describe('Product Page Component', () => {
   let element: HTMLElement;
   let location: Location;
   let shoppingFacade: ShoppingFacade;
-  let trackingFacade: TrackingFacade;
 
   const categories = categoryTree([{ uniqueId: 'A', categoryPath: ['A'] } as Category]);
 
@@ -48,7 +45,6 @@ describe('Product Page Component', () => {
     shoppingFacade = mock(ShoppingFacade);
     when(shoppingFacade.selectedProduct$).thenReturn(EMPTY);
     when(shoppingFacade.selectedCategory$).thenReturn(of(createCategoryView(categories, 'A')));
-    trackingFacade = mock(TrackingFacade);
 
     await TestBed.configureTestingModule({
       imports: [
@@ -65,10 +61,7 @@ describe('Product Page Component', () => {
         MockComponent(RetailSetPartsComponent),
         ProductPageComponent,
       ],
-      providers: [
-        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
-        { provide: TrackingFacade, useFactory: () => instance(trackingFacade) },
-      ],
+      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
   });
 
