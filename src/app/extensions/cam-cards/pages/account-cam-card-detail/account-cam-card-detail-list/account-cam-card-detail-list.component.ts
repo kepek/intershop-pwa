@@ -354,12 +354,12 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   addToCart() {
     const ccId = this.camCard.id;
     const products = this.camCard.camCardItems
-      ?.filter(cc => cc.measurement.valid && cc.product.available)
+      ?.filter(cc => cc.product.available)
       .map(item => this.prepereItemToAdd(this.camCard, item));
 
     this.camCard.subCamCards?.forEach(sub => {
       sub.camCardItems
-        ?.filter(sc => sc.measurement.valid && sc.product.available)
+        ?.filter(sc => sc.product.available)
         .forEach(item => {
           products.push(this.prepereItemToAdd(sub, item));
         });
