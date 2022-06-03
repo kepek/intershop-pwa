@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 
 import { Product } from 'ish-core/models/product/product.model';
 
-import { trackViewCart, trackViewItem } from '../store/tracking-events';
+import { trackViewCart, trackViewItem } from '../store/tracking-events/tracking-events.actions';
 
 // not-dead-code
 @Injectable({ providedIn: 'root' })
