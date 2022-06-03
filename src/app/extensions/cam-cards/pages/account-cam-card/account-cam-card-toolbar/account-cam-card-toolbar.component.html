@@ -1,5 +1,7 @@
 <div [ngClass]="{ 'sticky box-shadow': isSticky }" class="row toolbar-container">
+
   <div class="{{ isSticky ? 'container' : 'col-12' }} text-right">
+
     <ng-container *ishIsAuthorizedTo="'APP_B2B_MANAGE_USERS'">
       <mat-checkbox
         color="primary"
@@ -10,6 +12,7 @@
         {{ 'camfil.account.import.show_all_customer_cc.checkbox.text' | translate }}
       </mat-checkbox>
     </ng-container>
+
     <button
       (click)="importCamCard($event)"
       class="btn-tool secondary-button"
@@ -20,6 +23,7 @@
       <mat-icon class="size-15" svgIcon="create-camcard"></mat-icon>
       {{ 'camfil.account.import.header.text' | translate }}
     </button>
+
     <button
       class="btn-tool secondary-button"
       color="primary"
@@ -30,6 +34,7 @@
       <mat-icon class="crop" svgIcon="plus"></mat-icon>
       {{ 'camfil.account.cam_card.list.button.add_cam_card.label' | translate }}
     </button>
+
     <button
       (click)="copy($event)"
       class="btn-tool secondary-button"
@@ -43,6 +48,7 @@
         'camfil.account.cam_card.list.button.copy.label' | translate
       }}</span>
     </button>
+
     <button
       (click)="move($event)"
       class="btn-tool secondary-button"
@@ -56,6 +62,7 @@
         'camfil.account.cam_card.list.button.move.label' | translate
       }}</span>
     </button>
+
     <camfil-account-cam-card-pdf
       [camCards]="checkedCamCards"
       class="btn-tool secondary-button d-none d-sm-inline-block"
@@ -83,5 +90,7 @@
 
     <camfil-loading *ngIf="productAddingInProgress"></camfil-loading>
   </div>
+
 </div>
+
 <camfil-cam-card-preferences-dialog (submit)="add($event)"></camfil-cam-card-preferences-dialog>

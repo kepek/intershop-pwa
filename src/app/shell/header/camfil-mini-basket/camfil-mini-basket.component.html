@@ -1,6 +1,6 @@
 <div class="quick-cart-link">
   <button color="primary" mat-flat-button routerLink="/checkout">
-    <mat-icon class="color-light" svgIcon="cart"></mat-icon>
+    <mat-icon class="color-light" svgIcon="spinner" *ngIf="basketLoading$ | async; else cartIcon"></mat-icon>
     &nbsp;&nbsp;
     <span class="d-none d-lg-none d-md-inline d-xl-inline">
       {{ 'camfil.shopping_cart.ministatus.items.label' | translate }}&nbsp;&nbsp;
@@ -9,4 +9,7 @@
       {{ totalProductQuantity$ | async }}
     </span>
   </button>
+  <ng-template #cartIcon>
+    <mat-icon class="color-light" svgIcon="cart"></mat-icon>
+  </ng-template>
 </div>

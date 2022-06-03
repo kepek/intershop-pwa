@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { combineLatest, iif, of } from 'rxjs';
+import { combineLatest, forkJoin, iif, of } from 'rxjs';
 import {
   concatMap,
   concatMapTo,
@@ -49,6 +49,7 @@ import {
   loadBasketFail,
   loadBasketSuccess,
   loadBuckets,
+  loadBucketsSuccess,
   loadCustomerDeliveryTerm,
   loadCustomerDeliveryTermFail,
   loadCustomerDeliveryTermSuccess,
@@ -81,17 +82,11 @@ export class BasketEffects {
     this.actions$.pipe(
       ofType(loadBasket),
       mergeMap(() =>
-        this.basketService.getBasket().pipe(
-          map(basket => loadBasketSuccess({ basket })),
+        forkJoin([this.basketService.getBasket(), this.basketService.getBuckets()]).pipe(
+          mergeMap(([basket, buckets]) => [loadBasketSuccess({ basket }), loadBucketsSuccess({ buckets })]),
           mapErrorToAction(loadBasketFail)
         )
       )
-    )
-  );
-  loadBasketSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadBasketSuccess),
-      mergeMap(() => [loadBuckets()])
     )
   );
   loadBasketByAPIToken$ = createEffect(() =>
@@ -360,7 +355,7 @@ export class BasketEffects {
    * @param basket
    * @param attributeName
    */
-  private basketContainsAttribute(basket: Basket, attributeName: string): boolean {
-    return !!basket?.attributes?.find(attr => attr.name === attributeName);
+  private basketContainsAttribute(basketOrError: Basket, attributeName: string): boolean {
+    return !!basketOrError?.attributes?.find(attr => attr.name === attributeName);
   }
 }

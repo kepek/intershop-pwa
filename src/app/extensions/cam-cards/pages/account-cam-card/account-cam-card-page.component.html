@@ -15,3 +15,14 @@
     (addCamCard)="addCamCard($event)"
   ></camfil-account-cam-card-list>
 </div>
+
+<camfil-modal-dialog
+  #processingDialog
+  [options]="{
+    titleText: 'camfil.system_is_processing.heading.text' | translate,
+    confirmText: 'camfil.system_is_processing.button.confirm' | translate,
+    rejectText: 'camfil.system_is_processing.button.reject' | translate
+  }"
+>
+  {{ 'camfil.system_is_processing.body.text' | translate }}
+</camfil-modal-dialog>

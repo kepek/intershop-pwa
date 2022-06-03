@@ -1,8 +1,7 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
 import { OrderService } from 'camfil-pwa/services/order/order.service';
-import { EMPTY, Observable, of, throwError } from 'rxjs';
+import { EMPTY, Observable, forkJoin, of, throwError } from 'rxjs';
 import { catchError, concatMap, map, switchMap, take } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -30,8 +29,6 @@ import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-met
 import { ShippingMethodMapper } from 'ish-core/models/shipping-method/shipping-method.mapper';
 import { ShippingMethod } from 'ish-core/models/shipping-method/shipping-method.model';
 import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
-import { getCurrentBasket } from 'ish-core/store/customer/basket';
-import { whenTruthy } from 'ish-core/utils/operators';
 
 export type BasketUpdateType =
   | { invoiceToAddress: string }
@@ -85,12 +82,7 @@ type ValidationBasketIncludeType =
  */
 @Injectable({ providedIn: 'root' })
 export class BasketService {
-  constructor(
-    private apiService: ApiService,
-    private orderService: OrderService,
-    private store: Store,
-    private appFacade: AppFacade
-  ) {}
+  constructor(private apiService: ApiService, private orderService: OrderService, private appFacade: AppFacade) {}
 
   /**
    * http header for Basket API v1
@@ -473,23 +465,16 @@ export class BasketService {
     });
   }
 
-  // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
-  // tslint:disable-next-line:member-ordering
-  private currentBasket$ = this.store?.pipe(select(getCurrentBasket), whenTruthy(), take(1));
-
   getBuckets(): Observable<Bucket[]> {
     const params = new HttpParams().set('include', 'all');
 
-    return this.currentBasket$.pipe(
-      switchMap(basket =>
-        this.apiService
-          .get(`baskets/current/buckets`, {
-            headers: this.basketHeaders,
-            params,
-          })
-          .pipe(map((payload: BucketData) => BucketMapper.fromListData(payload, basket)))
-      )
-    );
+    return forkJoin([
+      this.getBasket(),
+      this.apiService.get<BucketData>(`baskets/current/buckets`, {
+        headers: this.basketHeaders,
+        params,
+      }),
+    ]).pipe(map(([basket, buckets]) => BucketMapper.fromListData(buckets, basket)));
   }
 
   // CAMFIL

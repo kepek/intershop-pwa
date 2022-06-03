@@ -67,3 +67,5 @@ export const getCamCardsInBasketsForAllUsers = createSelector(
   getCamCardState,
   state => state.camCardsInBasketsForAllUsers.list || []
 );
+
+export const getCamCardAdding = createSelector(getCamCardState, state => state.adding);

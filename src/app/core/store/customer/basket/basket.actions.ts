@@ -157,7 +157,7 @@ export const connectBuckets = createAction('[Basket] Connect buckets', payload<{
 
 export const loadBucketsSuccess = createAction('[Basket] Get Bucket Info Success', payload<{ buckets: Bucket[] }>());
 
-export const loadBucketsFail = createAction('[Basket] Get Bucket Info Fail');
+export const loadBucketsFail = createAction('[Basket] Get Bucket Info Fail', httpError());
 
 export const addEmptyBucket = createAction('[Basket] Add Empty Bucket', payload<{ bucket: Bucket }>());
 

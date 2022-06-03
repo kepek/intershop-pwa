@@ -15,10 +15,13 @@ export class CamfilMiniBasketComponent implements OnInit {
   private static DEFAULT_VALUE = 0;
 
   totalProductQuantity$: Observable<number>;
+  basketLoading$: Observable<boolean>;
 
   constructor(private checkoutFacade: CheckoutFacade) {}
 
   ngOnInit() {
+    this.basketLoading$ = this.checkoutFacade.basketLoading$;
+
     this.totalProductQuantity$ = this.checkoutFacade.buckets$.pipe(
       map(buckets => {
         if (buckets) {

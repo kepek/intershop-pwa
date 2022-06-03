@@ -17,7 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { Observable, ReplaySubject, Subject, combineLatest } from 'rxjs';
-import { first, map, skip, switchMap, take, takeUntil } from 'rxjs/operators';
+import { first, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { CamfilCheckoutGoodsAcceptanceModalComponent } from 'src/app/pages/camfil-checkout-onestep/camfil-checkout-goods-acceptance-modal/camfil-checkout-goods-acceptance-modal.component';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -319,8 +319,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
         deliveryDate: this.toDate(this.bucket.deliveryDate),
       });
     }
-    const scroll = this.currentScrollIndex || this.bucket?.currentScrollIndex;
-    setTimeout(() => this.virtualScrollViewport?.scrollToIndex(scroll));
   }
 
   ngAfterViewInit() {
@@ -332,10 +330,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
 
       clearTimeout(focusTimeout);
     }
-
-    this.virtualScrollViewport?.scrolledIndexChange?.pipe(skip(1), takeUntil(this.destroy$))?.subscribe(el => {
-      this.currentScrollIndex = el;
-    });
 
     const viewportElement = this.virtualScrollViewport?.elementRef?.nativeElement;
 

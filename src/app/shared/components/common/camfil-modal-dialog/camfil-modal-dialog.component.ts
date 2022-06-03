@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 export interface ModalOptions {
@@ -54,6 +54,7 @@ export class CamfilModalDialogComponent<T> {
 
   ngbModalRef: NgbModalRef;
   data: T;
+  dialogRef: MatDialogRef<any>;
 
   constructor(public dialog: MatDialog) {}
   /**
@@ -65,7 +66,10 @@ export class CamfilModalDialogComponent<T> {
     }
 
     const size = this.options && this.options.size ? this.options.size : undefined;
-    this.dialog.open(this.modalDialogTemplate, { width: size });
+
+    this.dialogRef = this.dialog.open(this.modalDialogTemplate, { width: size });
+
+    return this.dialogRef;
   }
 
   /**
@@ -74,6 +78,7 @@ export class CamfilModalDialogComponent<T> {
   hide() {
     this.onClosed.emit(this.data);
     this.dialog.closeAll();
+    return this.dialogRef;
   }
 
   /**

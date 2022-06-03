@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { CamCard } from '../../models/cam-card/cam-card.model';
@@ -30,6 +32,10 @@ export class AccountCamCardPageComponent implements OnInit {
 
   deviceType$: Observable<DeviceType>;
 
+  private destroy$ = new Subject();
+
+  @ViewChild('processingDialog') processingDialog: CamfilModalDialogComponent<unknown>;
+
   constructor(private camCardsFacade: CamCardsFacade, private appFacade: AppFacade) {}
 
   ngOnInit() {
@@ -37,6 +43,10 @@ export class AccountCamCardPageComponent implements OnInit {
     this.camCardLoading$ = this.camCardsFacade.camCardsLoading$;
     this.camCardError$ = this.camCardsFacade.camCardError$;
     this.deviceType$ = this.appFacade.deviceType$;
+
+    this.camCardsFacade.camCardAdding$.pipe(takeUntil(this.destroy$)).subscribe(adding => {
+      this.processingDialog?.[adding ? 'show' : 'hide']();
+    });
   }
 
   /** dispatch delete request */
