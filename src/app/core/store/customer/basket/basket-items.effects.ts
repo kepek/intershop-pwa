@@ -348,7 +348,7 @@ export class BasketItemsEffects {
       mapToPayloadProperty('itemId'),
       concatMap(itemId =>
         this.basketService.deleteBasketItem(itemId).pipe(
-          map(info => deleteBasketItemSuccess({ info })),
+          map(info => deleteBasketItemSuccess({ itemId, info })),
           mapErrorToAction(deleteBasketItemFail)
         )
       )

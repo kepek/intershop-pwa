@@ -4,13 +4,14 @@ import { ActionReducerMap, StoreModule } from '@ngrx/store';
 
 import { TrackingConfigEffects } from './tracking-config/tracking-config.effects';
 import { trackingConfigReducer } from './tracking-config/tracking-config.reducer';
+import { TrackingEventsEffects } from './tracking-events/tracking-events.effects';
 import { TrackingState } from './tracking-store';
 
 const trackingReducers: ActionReducerMap<TrackingState> = {
   gtmToken: trackingConfigReducer,
 };
 
-const trackingEffects = [TrackingConfigEffects];
+const trackingEffects = [TrackingConfigEffects, TrackingEventsEffects];
 
 // not-dead-code
 @NgModule({

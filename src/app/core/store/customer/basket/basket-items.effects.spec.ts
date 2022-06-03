@@ -458,7 +458,7 @@ describe('Basket Items Effects', () => {
     it('should map to action of type DeleteBasketItemSuccess', () => {
       const itemId = 'BIID';
       const action = deleteBasketItem({ itemId });
-      const completion = deleteBasketItemSuccess({ info: undefined });
+      const completion = deleteBasketItemSuccess({ itemId, info: undefined });
       actions$ = hot('-a-a-a', { a: action });
       const expected$ = cold('-c-c-c', { c: completion });
 
@@ -482,7 +482,8 @@ describe('Basket Items Effects', () => {
 
   describe('loadBasketAfterDeleteBasketItem$', () => {
     it('should map to action of type LoadBasket if DeleteBasketItemSuccess action triggered', () => {
-      const action = deleteBasketItemSuccess({ info: undefined });
+      const itemId = 'BIID';
+      const action = deleteBasketItemSuccess({ itemId, info: undefined });
       const completion = loadBasket();
       actions$ = hot('-a-a-a', { a: action });
       const expected$ = cold('-c-c-c', { c: completion });
