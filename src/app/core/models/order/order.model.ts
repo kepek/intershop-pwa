@@ -1,6 +1,8 @@
 import { AbstractBasket } from 'ish-core/models/basket/basket.model';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 
+import { OrderStatusCode } from './order.interface';
+
 export interface OrderLineItem extends LineItem {
   name: string;
   description: string;
@@ -21,7 +23,7 @@ export interface Order extends OrderBasket {
       redirectUrl?: string;
     };
   };
-  statusCode: string;
+  statusCode: OrderStatusCode;
   status: string;
   approval?: {
     approverFirstName: string;
