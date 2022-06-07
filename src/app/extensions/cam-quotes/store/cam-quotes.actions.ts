@@ -21,6 +21,8 @@ export const loadQuoteDetailsSuccess = createAction(
   payload<{ quoteDetails: QuoteDetails }>()
 );
 
+export const createQuoteSuccess = createAction('[Cam Quotes] Create Quote Success');
+
 export const approveQuote = createAction('[Cam Quotes] Approve Quote', payload<{ request: QuoteServiceRequest }>());
 
 export const approveQuoteSuccess = createAction(
