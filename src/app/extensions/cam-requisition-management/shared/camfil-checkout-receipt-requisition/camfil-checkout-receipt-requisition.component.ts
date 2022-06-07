@@ -1,11 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { GenerateLazyComponent } from 'ish-core/utils/module-loader/generate-lazy-component.decorator';
-
-import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
-import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 
 @GenerateLazyComponent()
 @Component({
@@ -13,16 +9,8 @@ import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requis
   templateUrl: './camfil-checkout-receipt-requisition.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilCheckoutReceiptRequisitionComponent implements OnInit {
+export class CamfilCheckoutReceiptRequisitionComponent {
   @Input() basket: Basket;
 
-  requisition$: Observable<CamfilRequisition>;
-
-  constructor(private camRequisitionManagementFacade: CamRequisitionManagementFacade) {}
-
-  ngOnInit() {
-    if (this.basket) {
-      this.requisition$ = this.camRequisitionManagementFacade.requisition$(this.basket.id);
-    }
-  }
+  constructor() {}
 }

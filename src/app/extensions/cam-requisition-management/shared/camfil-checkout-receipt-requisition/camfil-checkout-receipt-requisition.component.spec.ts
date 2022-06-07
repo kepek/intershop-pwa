@@ -29,7 +29,6 @@ describe('Camfil Checkout Receipt Requisition Component', () => {
         MockDirective(ServerHtmlDirective),
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
-      providers: [{ provide: CamRequisitionManagementFacade, useFactory: () => instance(reqFacade) }],
     }).compileComponents();
   });
 

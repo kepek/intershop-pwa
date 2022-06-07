@@ -507,6 +507,7 @@
   "camfil.account.approvals.product_removed.text": "Das Produkt wurde erfolgreich aus der Genehmigung entfernt",
   "camfil.account.approvals.product_validation_fail.text": "(de_DE)_Selected item is no longer for sale",
   "camfil.account.approvals.requisition_updated.text": "Die Genehmigung wurde erfolgreich aktualisiert",
+  "camfil.account.approvals.status_update.approved": "(de_DE)_The approval request has been approved successfully",
   "camfil.account.approvals.status_update.fail.text": "(de_DE)_There was an error during approvals status update",
   "camfil.account.approvals.status_update.reject": "(de_DE)_ Der Genehmigungsantrag wurde erfolgreich abgelehnt",
   "camfil.account.cam_card.access_user.dialog.btn.cancel": "Stornieren",

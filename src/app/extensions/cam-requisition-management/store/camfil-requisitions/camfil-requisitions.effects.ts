@@ -64,6 +64,7 @@ import {
   updateMultipleCamfileRequisitionStatusFail,
 } from './camfil-requisitions.actions';
 import { getSelectedCamfilRequisitionId } from './camfil-requisitions.selectors';
+import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 
 @Injectable()
 export class CamfilRequisitionsEffects {
@@ -221,7 +222,7 @@ export class CamfilRequisitionsEffects {
       mergeMap(payload => [
         displaySuccessMessage({
           message:
-            payload.status === 'APPROVED' || payload.status === 'COMPLETED'
+            payload.status === 'Approved' || payload.status === 'Completed'
               ? 'camfil.account.approvals.status_update.approved'
               : 'camfil.account.approvals.status_update.reject',
         }),
@@ -325,7 +326,10 @@ export class CamfilRequisitionsEffects {
       mergeMap(([, basketId]) =>
         this.requisitionsService.createCamfilRequisition(basketId).pipe(
           tap(() => this.router.navigate(['/checkout/receipt'])),
-          concatMap(requisition => [createCamfilRequisitionSuccess({ requisition }), submitBasketSuccess()]),
+          concatMap((requisitions: CamfilRequisition[]) => [
+            createCamfilRequisitionSuccess({ requisitions }),
+            submitBasketSuccess(),
+          ]),
           mapErrorToAction(createCamfilRequisitionFail)
         )
       )

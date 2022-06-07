@@ -3,18 +3,6 @@
     {{ 'checkout.cart_for_approval.title' | translate }}
   </h1>
   <div>
-    <p *ngIf="requisition$ | async as req">
-      {{ 'checkout.id_of_order.label' | translate
-      }}<strong data-testing-id="order-document-number"
-        >&nbsp;
-        <a
-          [routerLink]="['/account/requisitions/buyer/' + req.id, { status: 'PENDING' }]"
-          data-testing-id="requisition-number"
-          >{{ req.requisitionNo }}</a
-        >
-      </strong>
-    </p>
-
     <p>{{ 'approval.cart.order_has_been_submitted' | translate }}</p>
     <div *ngIf="basket.customerNo; else notifyAnonymous">
       <p

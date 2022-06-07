@@ -155,12 +155,18 @@ export class CamfilRequisitionsService {
     if (!item) {
       return throwError('removeProductsFromCamfilRequisition() called without required item');
     }
+    const measurementsKeys = Object.keys(item.measurements);
+
+    let measurementsArray = [];
+    measurementsKeys?.forEach(key => {
+      measurementsArray.push({ name: key, type: 'Double', value: item.measurements[key] });
+    });
 
     const itemToSend = [
       {
         product: item.sku,
         quantity: { value: item.quantity, unit: '' },
-        attributes: [{ name: 'boxLabel', type: 'String', value: item.boxLabel?.label }],
+        attributes: [{ name: 'boxLabel', type: 'String', value: item.boxLabel?.label }, ...measurementsArray],
       },
     ];
 
@@ -293,7 +299,7 @@ export class CamfilRequisitionsService {
       .pipe(map(() => address));
   }
 
-  createCamfilRequisition(basketId: string): Observable<CamfilRequisition> {
+  createCamfilRequisition(basketId: string): Observable<CamfilRequisition[]> {
     const params = new HttpParams().set('include', this.allIncludes.join());
 
     if (!basketId) {
@@ -307,7 +313,7 @@ export class CamfilRequisitionsService {
       .post<CamfilRequisitionData>(`camfilrequisitions`, body, {
         params,
       })
-      .pipe(concatMap(payload => CamfilRequisitionMapper.fromListData(payload)));
+      .pipe(map(payload => CamfilRequisitionMapper.fromListData(payload)));
   }
 
   approveSelectedLineItems(
