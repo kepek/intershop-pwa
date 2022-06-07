@@ -157,7 +157,7 @@ export class CamfilRequisitionsService {
     }
     const measurementsKeys = Object.keys(item.measurements);
 
-    let measurementsArray = [];
+    const measurementsArray = [];
     measurementsKeys?.forEach(key => {
       measurementsArray.push({ name: key, type: 'Double', value: item.measurements[key] });
     });

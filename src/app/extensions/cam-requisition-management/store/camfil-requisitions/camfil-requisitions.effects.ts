@@ -13,6 +13,7 @@ import { getCurrentBasketId, submitBasketSuccess } from 'ish-core/store/customer
 import { getProduct, loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
+import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 import { CamfilRequisitionsService } from '../../services/requisitions/camfil-requisitions.service';
 
 import {
@@ -64,7 +65,6 @@ import {
   updateMultipleCamfileRequisitionStatusFail,
 } from './camfil-requisitions.actions';
 import { getSelectedCamfilRequisitionId } from './camfil-requisitions.selectors';
-import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 
 @Injectable()
 export class CamfilRequisitionsEffects {
