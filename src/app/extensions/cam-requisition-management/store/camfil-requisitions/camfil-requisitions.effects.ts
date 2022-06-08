@@ -13,6 +13,10 @@ import { getCurrentBasketId, submitBasketSuccess } from 'ish-core/store/customer
 import { getProduct, loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
+import {
+  CamfilRequisitionStatusCodes,
+  CamfilRequisitionStatuses,
+} from '../../models/camfil-requisition/camfil-requisition.interface';
 import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 import { CamfilRequisitionsService } from '../../services/requisitions/camfil-requisitions.service';
 
@@ -161,7 +165,7 @@ export class CamfilRequisitionsEffects {
           .updateCamfilRequisitionStatus(payload.requisitionId, payload.status, payload.approvalComment)
           .pipe(
             map(requisition =>
-              requisition.approval.statusCode === 'APPROVED'
+              requisition.approval.statusCode === CamfilRequisitionStatusCodes.Approved
                 ? createOrderFromApprovedRequisition({
                     requisitionId: requisition.id,
                   })
@@ -222,7 +226,8 @@ export class CamfilRequisitionsEffects {
       mergeMap(payload => [
         displaySuccessMessage({
           message:
-            payload.status === 'Approved' || payload.status === 'Completed'
+            payload.status === CamfilRequisitionStatuses.Approved ||
+            payload.status === CamfilRequisitionStatuses.Completed
               ? 'camfil.account.approvals.status_update.approved'
               : 'camfil.account.approvals.status_update.reject',
         }),
@@ -457,7 +462,7 @@ export class CamfilRequisitionsEffects {
           .pipe(
             // TODO: Change effect to createOrderFromMultipleApprovedRequisition
             map(requisition =>
-              requisition.approval.statusCode === 'APPROVED'
+              requisition.approval.statusCode === CamfilRequisitionStatusCodes.Approved
                 ? createOrderFromApprovedRequisition({
                     requisitionId: requisition.id,
                   })
