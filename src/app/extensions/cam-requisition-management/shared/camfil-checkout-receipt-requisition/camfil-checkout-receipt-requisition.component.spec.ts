@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockDirective } from 'ng-mocks';
 import { of } from 'rxjs';
-import { instance, mock, when } from 'ts-mockito';
+import { mock, when } from 'ts-mockito';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
@@ -29,7 +29,6 @@ describe('Camfil Checkout Receipt Requisition Component', () => {
         MockDirective(ServerHtmlDirective),
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
-      providers: [{ provide: CamRequisitionManagementFacade, useFactory: () => instance(reqFacade) }],
     }).compileComponents();
   });
 
@@ -46,10 +45,5 @@ describe('Camfil Checkout Receipt Requisition Component', () => {
     expect(component).toBeTruthy();
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
-  });
-
-  it('should display the document number after creation', () => {
-    fixture.detectChanges();
-    expect(element.querySelector('[data-testing-id="requisition-number"]').innerHTML.trim()).toContain('req001');
   });
 });

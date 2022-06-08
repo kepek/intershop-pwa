@@ -191,7 +191,7 @@ export const createCamfilRequisitionFail = createAction(
 
 export const createCamfilRequisitionSuccess = createAction(
   '[Camfil Requisitions API] Create Requisition Success',
-  payload<{ requisition: CamfilRequisition }>()
+  payload<{ requisitions: CamfilRequisition[] }>()
 );
 
 export const checkProductAvailabilityFail = createAction('[Camfil Requisitions API] Check Product Availability Fail');

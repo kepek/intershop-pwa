@@ -135,8 +135,11 @@ export const requisitionsReducer = createReducer(
       return camfilRequisitionsAdapter.upsertOne(approvedRequisition, state);
     }
   ),
-  on(updateCamfilRequisitionSuccess, createCamfilRequisitionSuccess, (state: CamfilRequisitionsState, action) =>
+  on(updateCamfilRequisitionSuccess, (state: CamfilRequisitionsState, action) =>
     camfilRequisitionsAdapter.upsertOne(action.payload.requisition, state)
+  ),
+  on(createCamfilRequisitionSuccess, (state: CamfilRequisitionsState, action) =>
+    camfilRequisitionsAdapter.upsertMany(action.payload.requisitions, state)
   ),
   on(updateCamfilRequisitionAddressSuccess, (state: CamfilRequisitionsState, action) => {
     const { requisition, address } = action.payload;

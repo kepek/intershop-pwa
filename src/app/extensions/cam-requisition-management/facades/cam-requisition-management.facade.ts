@@ -129,7 +129,7 @@ export class CamRequisitionManagementFacade {
     this.store.dispatch(
       updateMultipleCamfilRequisitionStatus({
         requisitionIds,
-        status: 'APPROVED',
+        status: 'REJECTED',
         approvalComment: comment,
       })
     );

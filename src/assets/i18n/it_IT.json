@@ -519,6 +519,7 @@
   "camfil.account.approvals.product_removed.text": "Il prodotto è stato rimosso dall'approvazione con successo",
   "camfil.account.approvals.product_validation_fail.text": "(it_IT)_Selected item is no longer for sale",
   "camfil.account.approvals.requisition_updated.text": "L'approvazione è stata aggiornata con successo",
+  "camfil.account.approvals.status_update.approved": "(it_IT)_The approval request has been approved successfully",
   "camfil.account.approvals.status_update.fail.text": "(it_IT)_There was an error during approvals status update",
   "camfil.account.approvals.status_update.reject": "La richiesta di approvazione è stata respinta con successo",
   "camfil.account.cam_card.access_user.dialog.btn.cancel": "Annulla",

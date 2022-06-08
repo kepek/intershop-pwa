@@ -13,7 +13,6 @@ import { User } from 'ish-core/models/user/user.model';
 import { CamfilRequisitionApproval, RequisitionUserBudget } from './camfil-requisition.model';
 
 export interface CamfilRequisitionBaseData extends BasketBaseData {
-  // Adjust to BE response
   requisitionNo?: string;
   basketId: string;
   orderNo?: string;
@@ -48,4 +47,20 @@ export interface CamfilRequisitionData {
     payments_paymentInstrument?: { [id: string]: PaymentInstrument };
   };
   infos?: BasketInfo[];
+}
+
+export enum CamfilRequisitionStatuses {
+  Approved = 'Approved',
+  Pending = 'Pending',
+  Rejected = 'Rejected',
+  Completed = 'Completed',
+  Submitted = 'Submitted',
+}
+
+export enum CamfilRequisitionStatusCodes {
+  Approved = 'APPROVED',
+  Pending = 'PENDING',
+  Rejected = 'REJECTED',
+  Completed = 'COMPLETED',
+  Submitted = 'SUBMITTED',
 }
