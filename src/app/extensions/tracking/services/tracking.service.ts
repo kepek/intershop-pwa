@@ -8,6 +8,7 @@ import { BasketView } from 'ish-core/models/basket/basket.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { getProduct } from 'ish-core/store/shopping/products';
+import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
 import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamCard } from '../../cam-cards/models/cam-card/cam-card.model';
@@ -27,7 +28,11 @@ declare var dataLayer: any;
  */
 @Injectable({ providedIn: 'root' })
 export class TrackingService {
-  constructor(private store: Store, private featureToggleService: FeatureToggleService) {}
+  constructor(
+    private store: Store,
+    private featureToggleService: FeatureToggleService,
+    private cookiesService: CookiesService
+  ) {}
 
   trackBeginCheckout(basket: BasketView) {
     this.push(this.buildEventDataFromBasket(DataLayerEventType.BeginCheckout, basket));
@@ -67,11 +72,31 @@ export class TrackingService {
     this.push(this.buildEventDataFromBasket(DataLayerEventType.CartView, basket));
   }
 
-  trackViewItem(item: Product) {
+  trackViewItem(sku: string) {
     const event: DataLayerEvent = {
       event: DataLayerEventType.ItemView,
-      item_list_name: item.name,
-      page_type: DataLayerPageType.ProductDetail,
+      items: [
+        {
+          item_id: sku,
+        },
+      ],
+    };
+
+    this.push(event);
+  }
+
+  trackViewItemList(item: Product, page: DataLayerPageType) {
+    const event: DataLayerEvent = {
+      event: DataLayerEventType.ItemListView,
+      item_list_id: page,
+      items: [
+        {
+          item_id: item.sku,
+          item_name: item.name,
+          price: item.salePrice?.value,
+          quantity: 0,
+        },
+      ],
     };
 
     this.push(event);
@@ -114,11 +139,16 @@ export class TrackingService {
 
   private push(event) {
     try {
-      if (dataLayer && this.featureToggleService.enabled('tracking')) {
+      if (
+        dataLayer &&
+        this.featureToggleService.enabled('tracking') &&
+        this.cookiesService.cookieConsentFor('tracking')
+      ) {
         dataLayer.push(event);
       }
     } catch (err) {
-      console.error('We could not push your event. Tracking has not been initialized properly.', err);
+      // console.error('We could not push your event. Tracking has not been initialized properly.', err);
+      console.error('firing datalayer event', event);
     }
   }
 
@@ -166,7 +196,7 @@ export class TrackingService {
 
   private getItemDataFormBasketItem(item: LineItemView): DataLayerItem {
     return {
-      item_id: item.id,
+      item_id: item.productSKU,
       currency: item.price.currency,
       discount: 0,
       index: item.position,

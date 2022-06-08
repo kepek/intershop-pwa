@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
-import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
+import { routerNavigatedAction } from '@ngrx/router-store';
+import { Store, select } from '@ngrx/store';
+import { filter, map, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
 
+import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import {
   addItemsToBasketFromCamCardSuccess,
   continueCheckout,
@@ -15,8 +17,6 @@ import { mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { createCamCardSuccess, deleteCamCardSuccess, updateCamCardSuccess } from '../../../cam-cards/store/cam-card';
 import { TrackingService } from '../../services/tracking.service';
-
-import { trackViewCart, trackViewItem } from './tracking-events.actions';
 
 @Injectable()
 export class TrackingEventsEffects {
@@ -88,18 +88,26 @@ export class TrackingEventsEffects {
   trackViewCart$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(trackViewCart),
-        withLatestFrom(this.store.select(getCurrentBasket)),
-        tap(([, currentBasket]) => this.trackingService.trackViewCart(currentBasket))
+        ofType(routerNavigatedAction),
+        switchMapTo(
+          this.store.pipe(
+            ofUrl(/^\/checkout\/onestep/),
+            take(1),
+            select(getCurrentBasket),
+            whenTruthy(),
+            map(currentBasket => this.trackingService.trackViewCart(currentBasket))
+          )
+        )
       ),
     { dispatch: false }
   );
 
   trackViewItem$ = createEffect(
     () =>
-      this.actions$.pipe(
-        ofType(trackViewItem),
-        tap(({ payload }) => this.trackingService.trackViewItem(payload.product))
+      this.store.pipe(
+        select(selectRouteParam('sku')),
+        whenTruthy(),
+        map(sku => this.trackingService.trackViewItem(sku))
       ),
     { dispatch: false }
   );
