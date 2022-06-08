@@ -12,6 +12,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   filterDocsByLanguage: true,
   showAllDocsType: true,
   zipCodeRegExp: '^\\d{4}$',
+  showDeliveryIntervalOnCCDetailPage: true,
 };
 
 export default camfilConfiguration;

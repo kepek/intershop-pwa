@@ -15,6 +15,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showAllDocsType: true,
   zipCodeRegExp: '^\\d{5}$',
   useSecondAddressLine: true,
+  showDeliveryIntervalOnCCDetailPage: true,
 };
 
 export default camfilConfiguration;
