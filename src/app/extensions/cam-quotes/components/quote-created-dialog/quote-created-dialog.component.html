@@ -1,0 +1,9 @@
+<h2>{{ 'camfil.quotes.creation_modal.title' | translate }}</h2>
+<div class="actions">
+  <button (click)="cancel()" class="btn btn-link add-new-product__buttons--link">
+    {{ 'camfil.quotes.creation_modal.reject' | translate }}
+  </button>
+  <button (click)="confirm()" class="btn btn-link add-new-product__buttons--link" routerLink="/account/quotes">
+    {{ 'camfil.quotes.creation_modal.confirm' | translate }}
+  </button>
+</div>

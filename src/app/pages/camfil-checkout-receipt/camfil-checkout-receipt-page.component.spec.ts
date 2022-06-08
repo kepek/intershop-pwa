@@ -28,7 +28,7 @@ describe('Camfil Checkout Receipt Page Component', () => {
     orderCreation: {
       status: 'COMPLETED',
     },
-    statusCode: '1',
+    statusCode: 'NEW',
     status: '1',
     totals: {
       total: {

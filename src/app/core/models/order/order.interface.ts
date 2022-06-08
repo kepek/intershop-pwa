@@ -9,6 +9,8 @@ import { PaymentMethodBaseData } from 'ish-core/models/payment-method/payment-me
 import { PaymentData } from 'ish-core/models/payment/payment.interface';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
 
+export type OrderStatusCode = 'NEW' | 'PENDING' | 'OK' | 'CREATED' | 'FAILED_TO_EXPORT' | 'EXPORTED' | 'RFQ';
+
 export interface OrderBaseData extends BasketBaseData {
   documentNumber: string;
   creationDate: number;
@@ -20,7 +22,7 @@ export interface OrderBaseData extends BasketBaseData {
       redirectUrl?: string;
     };
   };
-  statusCode: string;
+  statusCode: OrderStatusCode;
   status: string;
   basket: string;
   requisitionDocumentNo?: string;

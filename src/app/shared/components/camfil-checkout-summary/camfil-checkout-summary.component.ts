@@ -16,10 +16,6 @@ import { Price } from 'ish-core/models/price/price.model';
 import { whenFalsy } from 'ish-core/utils/operators';
 import { RoleToggleService } from 'ish-core/utils/role-toggle/role-toggle.service';
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
-import {
-  CamfilModalDialogComponent,
-  ModalOptions,
-} from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 @Component({
@@ -48,13 +44,6 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
   checkIfZeroPrice = PriceHelper.checkIfZeroPrice;
 
   private destroy$ = new Subject();
-
-  @ViewChild('quoteCreatedModal') quoteCreatedModal: CamfilModalDialogComponent<any>;
-  quoteCreatedModalOptions: ModalOptions = {
-    titleText: 'The quotation request has been sent',
-    confirmText: 'Go to my Quotations',
-    rejectText: 'Stay at the checkout',
-  };
 
   constructor(
     protected accountFacade: AccountFacade,
@@ -141,9 +130,5 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     this.gdprErrorModal.hide = () => {
       gdprErrorDialogModal.close();
     };
-  }
-
-  onQuoteCreatedModalConfirmed() {
-    this.router.navigate(['account', 'quotes']);
   }
 }
