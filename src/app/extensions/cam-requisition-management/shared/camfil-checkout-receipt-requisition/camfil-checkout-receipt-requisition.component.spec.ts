@@ -46,9 +46,4 @@ describe('Camfil Checkout Receipt Requisition Component', () => {
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
   });
-
-  it('should display the document number after creation', () => {
-    fixture.detectChanges();
-    expect(element.querySelector('[data-testing-id="requisition-number"]').innerHTML.trim()).toContain('req001');
-  });
 });
