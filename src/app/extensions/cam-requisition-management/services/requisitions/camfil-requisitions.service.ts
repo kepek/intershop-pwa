@@ -252,13 +252,16 @@ export class CamfilRequisitionsService {
     const params = new HttpParams().set('include', this.allIncludes.join());
     const body = {
       quantity: { value: lineItemUpdate.quantity },
-      boxLabel: lineItemUpdate.boxLabel,
+      attributes: [{ name: 'boxLabel', type: 'String', value: lineItemUpdate.boxLabel }],
     };
     if (!lineItemUpdate.quantity) {
       delete body.quantity;
     }
+    if (!lineItemUpdate.boxLabel) {
+      delete body.attributes;
+    }
     return this.apiService
-      .put(`camfilrequisitions/${requisitionId}/items/${lineItemUpdate.lineItemId}`, body, {
+      .patch(`camfilrequisitions/${requisitionId}/items/${lineItemUpdate.lineItemId}`, body, {
         params,
       })
       .pipe(map(() => ({ requisitionId, lineItemUpdate })));
