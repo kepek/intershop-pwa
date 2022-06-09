@@ -76,6 +76,9 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
       }
     });
     this.lineItems$ = this.context.select('lineItems');
+    this.view$.pipe(takeUntil(this.destroy$)).subscribe(val => {
+      console.log('Value', val);
+    });
   }
 
   approveRequisition() {
