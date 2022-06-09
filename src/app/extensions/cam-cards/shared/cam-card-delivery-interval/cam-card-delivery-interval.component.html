@@ -1,7 +1,6 @@
 <ng-container *ngIf="isVisible$ | async">
   <form [formGroup]="deliveryIntervalForm">
     <mat-form-field appearance="fill" class="interval-form-field__container form-field ml-md-2">
-      <mat-label>{{ 'camfil.account.cam_card.add_to_form.delivery_interval' | translate }}</mat-label>
       <input
         (click)="$event.stopPropagation()"
         (change)="applyDeliveryInterval()"
@@ -13,6 +12,14 @@
         type="text"
         class="overflow-hidden"
       />
+      <mat-icon
+        class="mat-icon notranslate mat-icon-no-color"
+        svgIcon="delivery-time"
+        matSuffix
+        [title]="'camfil.account.cam_card.add_to_form.delivery_interval' | translate"
+      >
+      </mat-icon>
+
       <mat-autocomplete
         #filteredIntervals="matAutocomplete"
         (optionSelected)="applyDeliveryInterval()"
