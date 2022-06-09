@@ -53,7 +53,7 @@ export class CamfilRequisitionSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.customerNoteForm = new FormGroup({
-      customerNote: new FormControl(this.requisition.userComment),
+      customerNote: new FormControl(this.requisition.info),
     });
   }
 
@@ -62,7 +62,7 @@ export class CamfilRequisitionSummaryComponent implements OnInit {
       const customerNoteValue = target.value;
       const updatedRequisition = {
         ...this.requisition,
-        userComment: customerNoteValue,
+        info: customerNoteValue,
       };
       this.camRequisitionManagementFacade.updateCamfilRequisition(updatedRequisition);
     } else {
