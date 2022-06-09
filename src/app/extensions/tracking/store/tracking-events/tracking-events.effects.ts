@@ -2,43 +2,86 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { filter, map, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
+import { map, mergeMap, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
 
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import {
   addItemsToBasketFromCamCardSuccess,
-  continueCheckout,
   deleteBasketItemSuccess,
   getCurrentBasket,
+  getProductUpdated,
   getSubmittedBasket,
+  updateBasketItemsSuccess,
 } from 'ish-core/store/customer/basket';
 import { createOrderSuccess } from 'ish-core/store/customer/orders';
 import { mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { createCamCardSuccess, deleteCamCardSuccess, updateCamCardSuccess } from '../../../cam-cards/store/cam-card';
 import { TrackingService } from '../../services/tracking.service';
+import { getProductEntities } from 'ish-core/store/shopping/products';
+import { EMPTY } from 'rxjs';
 
 @Injectable()
 export class TrackingEventsEffects {
-  constructor(private actions$: Actions, private store: Store, private trackingService: TrackingService) {}
+  constructor(
+    private actions$: Actions,
+    private store: Store,
+    private trackingService: TrackingService,) { }
 
-  trackBeginCheckout$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(continueCheckout),
-        filter(({ payload }) => payload.targetStep === 5),
-        withLatestFrom(this.store.select(getCurrentBasket)),
-        tap(([, currentBasket]) => this.trackingService.trackBeginCheckout(currentBasket))
-      ),
-    { dispatch: false }
-  );
+  // trackBeginCheckout$ = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(continueCheckout),
+  //       filter(({ payload }) => payload.targetStep === 5),
+  //       withLatestFrom(this.store.select(getCurrentBasket)),
+  //       tap(([, currentBasket]) => this.trackingService.trackBeginCheckout(currentBasket))
+  //     ),
+  //   { dispatch: false }
+  // );
 
   trackAddItemsToBasket$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(addItemsToBasketFromCamCardSuccess),
         withLatestFrom(this.store.select(getCurrentBasket)),
-        tap(([, currentBasket]) => this.trackingService.trackCartAddItem(currentBasket))
+        tap(([, currentBasket]) => this.trackingService.trackCartAddItem(currentBasket, []))
+      ),
+    { dispatch: false }
+  );
+
+  trackChangeItemInBasket$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(updateBasketItemsSuccess),
+        withLatestFrom(this.store.select(getCurrentBasket)),
+        map(([result, currentBasket]) => ({ updatedItems: result.payload.lineItemUpdates, currentBasket })),
+        withLatestFrom(this.store.pipe(select(getProductEntities))),
+        tap(([updatedBasket, products]) => updatedBasket.updatedItems.map(updatedItem => {
+          const basketItem = updatedBasket.currentBasket.lineItems.find(item => item.id === updatedItem.itemId);
+
+          if (basketItem) {
+            const diff = basketItem.quantity.value - updatedItem.quantity;
+            const lineItems = [{
+              ...basketItem,
+              quantity: { value: Math.abs(diff) }
+            }];
+            const productsArray = [basketItem].map(b => products[b.productSKU]);
+
+            if (diff > 0) {
+              return this.trackingService.trackCartRemoveItem({
+                ...updatedBasket.currentBasket,
+                lineItems
+              }, productsArray
+              );
+            }
+
+            this.trackingService.trackCartAddItem({
+              ...updatedBasket.currentBasket,
+              lineItems
+            }, productsArray
+            );
+          }
+        }))
       ),
     { dispatch: false }
   );
@@ -48,9 +91,15 @@ export class TrackingEventsEffects {
       this.actions$.pipe(
         ofType(deleteBasketItemSuccess),
         withLatestFrom(this.store.select(getCurrentBasket)),
-        tap(([deleteItemPayload, currentBasket]) =>
-          this.trackingService.trackCartRemoveItem(deleteItemPayload.payload.itemId, currentBasket)
-        )
+        map(([deleteItemPayload, currentBasket]) => ({
+          ...currentBasket,
+          lineItems: currentBasket.lineItems
+            .filter(i => i.id === deleteItemPayload.payload.itemId)
+            .map(item => ({ ...item, quantity: { value: 0 } }))
+        })),
+        withLatestFrom(this.store.pipe(select(getProductEntities))),
+        tap(([currentBasket, products]) =>
+          this.trackingService.trackCartRemoveItem(currentBasket, currentBasket.lineItems.map(item => products[item.productSKU])))
       ),
     { dispatch: false }
   );
@@ -85,7 +134,7 @@ export class TrackingEventsEffects {
     { dispatch: false }
   );
 
-  trackViewCart$ = createEffect(
+  trackBeginCheckout$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(routerNavigatedAction),
@@ -95,9 +144,14 @@ export class TrackingEventsEffects {
             take(1),
             select(getCurrentBasket),
             whenTruthy(),
-            map(currentBasket => this.trackingService.trackViewCart(currentBasket))
+            withLatestFrom(this.store.pipe(select(getProductEntities))),
+            map(([basketView, products]) =>
+              this.trackingService.trackBeginCheckout(
+                basketView,
+                basketView.lineItems.map(item => products[item.productSKU])
+              ))
           )
-        )
+        ),
       ),
     { dispatch: false }
   );

@@ -184,8 +184,8 @@ export class BasketItemsEffects {
         return basketId
           ? [addProduct()]
           : this.basketService
-              .createBasket()
-              .pipe(mergeMap(basket => [loadBasketSuccess({ basket }), addProduct(basket.id)]));
+            .createBasket()
+            .pipe(mergeMap(basket => [loadBasketSuccess({ basket }), addProduct(basket.id)]));
       })
     )
   );
@@ -198,18 +198,18 @@ export class BasketItemsEffects {
           concatMap((address: Address) =>
             address && address.urn
               ? [
-                  addProductToBasket({
-                    sku: payload.sku,
-                    quantity: payload.quantity,
-                    shippingMethod: payload.shippingMethod,
-                    shipToAddress: address.urn,
-                    basketExtension: payload.basketExtension,
-                    addressId: address.id,
-                    lineItemAttributes: payload.lineItemAttributes,
-                    bucketId: payload.bucketId,
-                  }),
-                  loadBasketAddresses(),
-                ]
+                addProductToBasket({
+                  sku: payload.sku,
+                  quantity: payload.quantity,
+                  shippingMethod: payload.shippingMethod,
+                  shipToAddress: address.urn,
+                  basketExtension: payload.basketExtension,
+                  addressId: address.id,
+                  lineItemAttributes: payload.lineItemAttributes,
+                  bucketId: payload.bucketId,
+                }),
+                loadBasketAddresses(),
+              ]
               : [addProductToBucketAddressFail()]
           ),
           mapErrorToAction(addProductToBucketFail)
@@ -296,7 +296,7 @@ export class BasketItemsEffects {
         ).pipe(
           defaultIfEmpty(),
           last(),
-          map(info => updateBasketItemsSuccess({ info })),
+          map(info => updateBasketItemsSuccess({ lineItemUpdates: updates, info })),
           mapErrorToAction(updateBasketItemsFail)
         )
       )
@@ -455,15 +455,15 @@ export class BasketItemsEffects {
             const products = payload.itemsInfo.products;
             return address && address.urn
               ? [
-                  addProductsToBasketFromCamCard({
-                    products,
-                    shippingMethod: payload.commonShippingMethodId,
-                    shipToAddress: address.urn,
-                    basketExtension: payload.itemsInfo.extensions,
-                    addressId: address.id,
-                    camCardName: payload.camCardName,
-                  }),
-                ]
+                addProductsToBasketFromCamCard({
+                  products,
+                  shippingMethod: payload.commonShippingMethodId,
+                  shipToAddress: address.urn,
+                  basketExtension: payload.itemsInfo.extensions,
+                  addressId: address.id,
+                  camCardName: payload.camCardName,
+                }),
+              ]
               : [addProductToBucketAddressFromCamCardFail()];
           }),
           mapErrorToAction(addProductsFromCamCardFail)
@@ -601,5 +601,5 @@ export class BasketItemsEffects {
     private router: Router,
     private store: Store,
     private basketService: BasketService
-  ) {}
+  ) { }
 }

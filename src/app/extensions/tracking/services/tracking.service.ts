@@ -32,25 +32,25 @@ export class TrackingService {
     private store: Store,
     private featureToggleService: FeatureToggleService,
     private cookiesService: CookiesService
-  ) {}
+  ) { }
 
-  trackBeginCheckout(basket: BasketView) {
-    this.push(this.buildEventDataFromBasket(DataLayerEventType.BeginCheckout, basket));
+  trackBeginCheckout(basket: BasketView, products: Product[]) {
+    this.push(this.buildEventDataFromBasket(DataLayerEventType.BeginCheckout, basket, products));
   }
 
-  trackCartAddItem(basket: BasketView) {
-    this.push(this.buildEventDataFromBasket(DataLayerEventType.CartAddItem, basket));
+  trackCartAddItem(basket: BasketView, products: Product[]) {
+    this.push(this.buildEventDataFromBasket(DataLayerEventType.CartAddItem, basket, products));
   }
 
-  trackCartRemoveItem(itemId: string, basket: BasketView) {
-    const item = basket.lineItems.find(i => i.id === itemId);
-    const event: DataLayerEvent = {
-      event: DataLayerEventType.CartRemoveItem,
-      currency: basket.purchaseCurrency,
-      value: item?.totals.total.gross,
-      items: [this.getItemDataFormBasketItem(item)],
-    };
-    this.push(event);
+  trackCartRemoveItem(basket: BasketView, products: Product[]) {
+    // const event: DataLayerEvent = {
+    //   event: DataLayerEventType.CartRemoveItem,
+    //   currency: basket.purchaseCurrency,
+    //   value: item?.totals.total.net,
+    //   items: [this.getItemDataFormBasketItem(item, products.find(p => p.sku === item.productSKU))],
+    // };
+    // this.push(event);
+    this.push(this.buildEventDataFromBasket(DataLayerEventType.CartRemoveItem, basket, products));
   }
 
   trackCamCardCreate(camCard: CamCard) {
@@ -185,34 +185,36 @@ export class TrackingService {
     return mergedItems;
   }
 
-  private buildEventDataFromBasket(eventType: DataLayerEventType, basket: BasketView): DataLayerEvent {
+  private buildEventDataFromBasket(eventType: DataLayerEventType, basket: BasketView, products: Product[] = []): DataLayerEvent {
     return {
       event: eventType,
       currency: basket.purchaseCurrency,
-      value: basket.totals.total.gross,
-      items: basket.lineItems.map(item => this.getItemDataFormBasketItem(item)),
+      value: basket.lineItems.reduce((prev, curr) => prev + curr.price.net, 0),
+      items: basket.lineItems.map(item => this.getItemDataFormBasketItem(item, products.find(p => p.sku == item.productSKU))),
     };
   }
 
-  private getItemDataFormBasketItem(item: LineItemView): DataLayerItem {
+  private getItemDataFormBasketItem(item: LineItemView, product?: Product): DataLayerItem {
     return {
       item_id: item.productSKU,
       currency: item.price.currency,
       discount: 0,
       index: item.position,
-      price: item.price.gross,
+      price: item.price.net,
       quantity: item.quantity.value,
+      item_name: product ? product.name : null,
+      item_brand: product ? product.manufacturer : null
     };
   }
 
   private buildEventDataFromCamCard(eventType: DataLayerEventType, camCard: CamCard): DataLayerEvent {
     const items: DataLayerItem[] = camCard.camCardItems
       ? camCard.camCardItems.map(item => ({
-          item_id: item.product.sku,
-          item_name: item.product.name,
-          quantity: item.quantity,
-          index: item.position,
-        }))
+        item_id: item.product.sku,
+        item_name: item.product.name,
+        quantity: item.quantity,
+        index: item.position,
+      }))
       : [];
     return {
       event: eventType,

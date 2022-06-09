@@ -235,7 +235,7 @@ export const updateBasketItemsFail = createAction('[Basket API] Update Basket It
 
 export const updateBasketItemsSuccess = createAction(
   '[Basket API] Update Basket Items Success',
-  payload<{ info: BasketInfo[] }>()
+  payload<{ lineItemUpdates: LineItemUpdate[], info: BasketInfo[] }>()
 );
 
 export const deleteBasketItem = createAction('[Basket] Delete Basket Item', payload<{ itemId: string }>());
