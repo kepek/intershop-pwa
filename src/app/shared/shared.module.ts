@@ -235,9 +235,9 @@ import { CamfilDeleteOrderComponent } from 'ish-shared/components/camfil-checkou
 import { CamfilShoppingBucketEmptyComponent } from 'ish-shared/components/camfil-shopping-bucket-empty/camfil-shopping-bucket-empty.component';
 import { CamfilCheckoutBucketSummaryComponent } from 'ish-shared/components/camfil-checkout-bucket-summary/camfil-checkout-bucket-summary.component';
 import { CamRequisitionManagementExportsModule } from '../extensions/cam-requisition-management/exports/cam-requisition-management-exports.module';
-import { CamfilPwaExportsModule } from 'camfil-pwa';
 import { CamCardDeliveryIntervalComponent } from '../extensions/cam-cards/shared/cam-card-delivery-interval/cam-card-delivery-interval.component';
 import { CamCardLastDeliveryDateComponent } from '../extensions/cam-cards/shared/cam-card-last-delivery-date/cam-card-last-delivery-date.component';
+import { CamfilPwaExportsModule } from 'camfil-pwa/exports/camfil-pwa-exports.module';
 
 const importExportModules = [
   AddressFormsSharedModule,
