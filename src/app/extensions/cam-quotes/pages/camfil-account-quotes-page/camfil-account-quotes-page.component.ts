@@ -221,6 +221,7 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
       const capitalizedStatus = QuoteStatusEnum[quote.status];
       return filters[`state${capitalizedStatus}`];
     });
+    debugger;
     return filteredQuotes;
   }
 
@@ -242,10 +243,9 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
   }
 
   private getRequestorsFromQuotes(quotes: Quote[]): void {
-    const recuestors = quotes
+    this.requestors = quotes
       .map(quote => quote.requestedBy)
       .filter((value, index, self) => self.indexOf(value) === index);
-    this.requestors = [...recuestors, 'fake 1', 'fake 2'];
   }
 
   showedQuotesCount(): number {

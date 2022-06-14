@@ -35,13 +35,14 @@ export class QuotesService {
     'orderChannel',
     'customerQuotationNumber',
     'quotationDate',
+    'quotationType'
   ];
 
   constructor(
     private apiSrv: ApiService,
     private quoteDetailMapper: QuoteDetailsMapper,
     private itemsMapper: QuoteItemMapper
-  ) {}
+  ) { }
 
   getQuotes(): Observable<Quote[]> {
     const params = {
