@@ -1240,6 +1240,8 @@
   "camfil.quotes.quoteslist.filters.requestor": "(de_CH)_Filter by requestor",
   "camfil.quotes.quoteslist.filters.search": "(de_CH)_Search quotes",
   "camfil.quotes.quoteslist.filters.type": "(de_CH)_Filter by type",
+  "camfil.quotes.quoteslist.reject_quote_modal.reason_label": "(de_CH)_Enter your reason for rejecting the quote",
+  "camfil.quotes.quoteslist.reject_quote_modal.title": "(de_CH)_Reject quote",
   "camfil.quotes.quoteslist.reject_quote_success": "(de_CH)_Quote rejected successfully",
   "camfil.quotes.quoteslist.reject_quotes": "(de_CH)_Reject quotes",
   "camfil.quotes.quoteslist.reject_quotes_modal.cancel": "(de_CH)_Cancel",

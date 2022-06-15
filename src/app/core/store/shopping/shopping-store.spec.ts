@@ -348,9 +348,6 @@ describe('Shopping Store', () => {
             sortableAttributes: []
           [Filter API] Load Filter Success:
             filterNavigation: {}
-          [Products Internal] Update Product:
-            sku: "P2"
-            changes: {}
         `);
       }));
 
@@ -376,9 +373,6 @@ describe('Shopping Store', () => {
               group: undefined
             [Products API] Load Product Success:
               product: {"sku":"P2","name":"nP2"}
-            [Products Internal] Update Product:
-              sku: "P2"
-              changes: {}
             @ngrx/router-store/navigated:
               routerState: {"url":"/product/P2","params":{"sku":"P2"},"queryParams":{},...
               event: {"id":3,"url":"/product/P2","urlAfterRedirects":"/product/P2"}
@@ -549,12 +543,6 @@ describe('Shopping Store', () => {
           sortableAttributes: []
         [Filter API] Load Filter Success:
           filterNavigation: {}
-        [Products Internal] Update Product:
-          sku: "P1"
-          changes: {}
-        [Products Internal] Update Product:
-          sku: "P2"
-          changes: {}
       `);
     }));
 
@@ -584,9 +572,6 @@ describe('Shopping Store', () => {
             group: undefined
           [Products API] Load Product Success:
             product: {"sku":"P1","name":"nP1"}
-          [Products Internal] Update Product:
-            sku: "P1"
-            changes: {}
           @ngrx/router-store/navigated:
             routerState: {"url":"/category/A.123.456/product/P1","params":{"categoryU...
             event: {"id":2,"url":"/category/A.123.456/product/P1","urlAfterRedi...
@@ -672,9 +657,6 @@ describe('Shopping Store', () => {
             sortableAttributes: []
           [Filter API] Load Filter Success:
             filterNavigation: {}
-          [Products Internal] Update Product:
-            sku: "P2"
-            changes: {}
         `);
       }));
 
@@ -799,9 +781,6 @@ describe('Shopping Store', () => {
         [Recently Viewed Internal] Add Product to Recently:
           sku: "P1"
           group: undefined
-        [Products Internal] Update Product:
-          sku: "P1"
-          changes: {}
         [Categories API] Load Category Success:
           categories: tree(A,A.123)
         [Categories API] Load Category Success:
@@ -868,12 +847,6 @@ describe('Shopping Store', () => {
             sortableAttributes: []
           [Filter API] Load Filter Success:
             filterNavigation: {}
-          [Products Internal] Update Product:
-            sku: "P1"
-            changes: {}
-          [Products Internal] Update Product:
-            sku: "P2"
-            changes: {}
           @ngrx/router-store/navigated:
             routerState: {"url":"/category/A.123.456","params":{"categoryUniqueId":"A...
             event: {"id":2,"url":"/category/A.123.456","urlAfterRedirects":"/ca...
@@ -954,9 +927,6 @@ describe('Shopping Store', () => {
         [Recently Viewed Internal] Add Product to Recently:
           sku: "P1"
           group: undefined
-        [Products Internal] Update Product:
-          sku: "P1"
-          changes: {}
         @ngrx/router-store/navigated:
           routerState: {"url":"/product/P1","params":{"sku":"P1"},"queryParams":{},...
           event: {"id":1,"url":"/product/P1","urlAfterRedirects":"/product/P1"}
@@ -1154,9 +1124,6 @@ describe('Shopping Store', () => {
           sortableAttributes: []
         [Filter API] Load Filter Success:
           filterNavigation: {}
-        [Products Internal] Update Product:
-          sku: "P2"
-          changes: {}
       `);
     }));
   });

@@ -104,6 +104,7 @@ export class ProductsEffects {
       mapToPayloadProperty('product'),
       switchMap(product =>
         this.store.pipe(select(getServerConfigParameter<number>('basket.maxItemQuantity'))).pipe(
+          whenTruthy(),
           map(basketMaxQuantity => {
             const maxOrderQuantity =
               product.maxOrderQuantity > 0 && product.maxOrderQuantity < basketMaxQuantity

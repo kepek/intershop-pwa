@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { pluck, takeUntil } from 'rxjs/operators';
 
+import { QuotesRejectDialogComponent } from '../../components/quotes-reject-dialog/quotes-reject-dialog.component';
 import { CamQuotesFacade } from '../../facades/cam-quotes.facade';
 import { QuoteDetails, QuoteLineItem } from '../../models/quote-details/quote-details.model';
 
@@ -20,11 +22,18 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
 
   isMobileView = false;
 
+  lastRejectReason: string;
+
   @HostListener('window:resize') onWindowsResize() {
     this.onResize();
   }
 
-  constructor(private quotesFacade: CamQuotesFacade, private actRoute: ActivatedRoute, private cd: ChangeDetectorRef) {}
+  constructor(
+    private quotesFacade: CamQuotesFacade,
+    private actRoute: ActivatedRoute,
+    private dialog: MatDialog,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.actRoute.params
@@ -59,14 +68,21 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
   }
 
   reject() {
-    this.loading = true;
-    this.quotesFacade.rejectQuote(
-      {
-        id: this.quoteDetails.id,
-        number: this.quoteDetails.camfilQuoteNumber,
-      },
-      ''
-    );
+    const dialog = this.dialog.open(QuotesRejectDialogComponent);
+    dialog.componentInstance.reason = this.lastRejectReason;
+    dialog.componentInstance.isMultiple = false;
+    dialog.componentInstance.onChange.subscribe(({ reason }) => (this.lastRejectReason = reason));
+    dialog.componentInstance.onConfirm.subscribe(result => {
+      this.loading = true;
+      this.cd.markForCheck();
+      this.quotesFacade.rejectQuote(
+        {
+          id: this.quoteDetails.id,
+          number: this.quoteDetails.camfilQuoteNumber,
+        },
+        result.reason
+      );
+    });
   }
 
   approve() {

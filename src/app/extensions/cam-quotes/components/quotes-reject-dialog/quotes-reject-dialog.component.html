@@ -1,10 +1,21 @@
 <!-- <h2>{{data.title | translate}}</h2> -->
-<h2>{{ 'camfil.quotes.quoteslist.reject_quotes_modal.title' | translate }}</h2>
+<h2>
+  <ng-container *ngIf="!isMultiple; else multipleTitle">
+    {{ 'camfil.quotes.quoteslist.reject_quote_modal.title' | translate }}
+  </ng-container>
+</h2>
 <form [formGroup]="form" class="mt-3 mb-3">
   <mat-form-field appearance="fill" class="w-100 w-md-auto">
-    <mat-label>{{ 'camfil.quotes.quoteslist.reject_quotes_modal.reason_label' | translate }}</mat-label>
-    <input formControlName="reason" matInput
-      [placeholder]="'camfil.quotes.quoteslist.reject_quotes_modal.reason_placeholder' | translate" />
+    <mat-label>
+      <ng-container *ngIf="!isMultiple; else multipleLabel">
+        {{ 'camfil.quotes.quoteslist.reject_quote_modal.reason_label' | translate }}
+      </ng-container>
+    </mat-label>
+    <input
+      formControlName="reason"
+      matInput
+      [placeholder]="'camfil.quotes.quoteslist.reject_quotes_modal.reason_placeholder' | translate"
+    />
   </mat-form-field>
 </form>
 <div class="actions">
@@ -15,3 +26,10 @@
     {{ 'camfil.quotes.quoteslist.reject_quotes_modal.confirm' | translate }}
   </button>
 </div>
+
+<ng-template #multipleTitle>
+  {{ 'camfil.quotes.quoteslist.reject_quotes_modal.title' | translate }}
+</ng-template>
+<ng-template #multipleLabel>
+  {{ 'camfil.quotes.quoteslist.reject_quotes_modal.reason_label' | translate }}
+</ng-template>
