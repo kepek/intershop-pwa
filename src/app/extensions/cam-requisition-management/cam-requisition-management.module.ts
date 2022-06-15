@@ -11,7 +11,6 @@ import { CamfilRequisitionRejectDialogComponent } from './components/camfil-requ
 import { CamfilRequisitionSummaryComponent } from './components/camfil-requisition-summary/camfil-requisition-summary.component';
 import { EditApprovalDetailsModalComponent } from './components/camfil-requisition-summary/edit-approval-details-modal/edit-approval-details-modal.component';
 import { CamfilRequisitionsListComponent } from './components/camfil-requisitions-list/camfil-requisitions-list.component';
-import { CamRequisitionManagementRoutingModule } from './pages/cam-requisition-management-routing.module';
 import { CamRequisitionCheckoutButtonComponent } from './shared/cam-requisition-checkout-button/cam-requisition-checkout-button.component';
 import { CamfilCheckoutReceiptRequisitionComponent } from './shared/camfil-checkout-receipt-requisition/camfil-checkout-receipt-requisition.component';
 import { CamRequisitionManagementStoreModule } from './store/cam-requisition-management-store.module';
@@ -31,7 +30,7 @@ const exportedComponents = [
 ];
 
 @NgModule({
-  imports: [CamRequisitionManagementRoutingModule, CamRequisitionManagementStoreModule, SharedModule],
+  imports: [CamRequisitionManagementStoreModule, SharedModule],
   declarations: [...exportedComponents],
   exports: [...exportedComponents],
 })
