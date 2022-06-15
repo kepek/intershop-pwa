@@ -205,9 +205,7 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
     if (filters.requestor && filters.requestor.length > 0) {
       filteredQuotes = filteredQuotes.filter(quote => filters.requestor.includes(quote.requestedBy));
     }
-    if (filters.type === '2') {
-      filteredQuotes = filteredQuotes.filter(quote => quote.quotationType === 'quotation');
-    }
+    // TODO: Currently only receiving quotations
     if (filters.type === '3') {
       filteredQuotes = filteredQuotes.filter(quote => quote.quotationType === 'proposal');
     }
@@ -221,7 +219,6 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
       const capitalizedStatus = QuoteStatusEnum[quote.status];
       return filters[`state${capitalizedStatus}`];
     });
-    debugger;
     return filteredQuotes;
   }
 
