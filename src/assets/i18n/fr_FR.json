@@ -1252,6 +1252,8 @@
   "camfil.quotes.quoteslist.filters.requestor": "Filter by requestor",
   "camfil.quotes.quoteslist.filters.search": "Search quotes",
   "camfil.quotes.quoteslist.filters.type": "Filter by type",
+  "camfil.quotes.quoteslist.reject_quote_modal.reason_label": "(fr_FR)_Enter your reason for rejecting the quote",
+  "camfil.quotes.quoteslist.reject_quote_modal.title": "(fr_FR)_Reject quote",
   "camfil.quotes.quoteslist.reject_quote_success": "(fr_FR)_Quote rejected successfully",
   "camfil.quotes.quoteslist.reject_quotes": "Reject quotes",
   "camfil.quotes.quoteslist.reject_quotes_modal.cancel": "Cancel",

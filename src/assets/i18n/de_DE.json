@@ -1240,6 +1240,8 @@
   "camfil.quotes.quoteslist.filters.requestor": "nach Antragsteller filtern",
   "camfil.quotes.quoteslist.filters.search": "Angebote suchen",
   "camfil.quotes.quoteslist.filters.type": "Nach Typ filtern",
+  "camfil.quotes.quoteslist.reject_quote_modal.reason_label": "(de_DE)_Enter your reason for rejecting the quote",
+  "camfil.quotes.quoteslist.reject_quote_modal.title": "(de_DE)_Reject quote",
   "camfil.quotes.quoteslist.reject_quote_success": "(de_DE)_Quote rejected successfully",
   "camfil.quotes.quoteslist.reject_quotes": "Angebot ablehnen",
   "camfil.quotes.quoteslist.reject_quotes_modal.cancel": "Abbrechen",

@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class QuotesRejectDialogComponent implements OnInit {
   @Input() reason: string;
+  @Input() isMultiple = true;
   @Output() onChange = new EventEmitter<{ reason: string }>();
   @Output() onConfirm = new EventEmitter<{ reason: string }>();
   form: FormGroup;
