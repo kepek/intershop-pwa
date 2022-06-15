@@ -205,9 +205,7 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
     if (filters.requestor && filters.requestor.length > 0) {
       filteredQuotes = filteredQuotes.filter(quote => filters.requestor.includes(quote.requestedBy));
     }
-    if (filters.type === '2') {
-      filteredQuotes = filteredQuotes.filter(quote => quote.quotationType === 'quotation');
-    }
+    // TODO: Currently only receiving quotations
     if (filters.type === '3') {
       filteredQuotes = filteredQuotes.filter(quote => quote.quotationType === 'proposal');
     }
@@ -242,10 +240,9 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
   }
 
   private getRequestorsFromQuotes(quotes: Quote[]): void {
-    const recuestors = quotes
+    this.requestors = quotes
       .map(quote => quote.requestedBy)
       .filter((value, index, self) => self.indexOf(value) === index);
-    this.requestors = [...recuestors, 'fake 1', 'fake 2'];
   }
 
   showedQuotesCount(): number {
