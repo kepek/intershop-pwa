@@ -281,6 +281,10 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
   }
 
   approveSelectedQuotes() {
+    if (!this.selectedQuotes.length) {
+      return;
+    }
+
     this.quotesFacade.approveQuotes(
       this.selectedQuotes.map(q => ({
         id: q.id,
@@ -299,6 +303,10 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
   }
 
   rejectSelectedQuotes() {
+    if (!this.selectedQuotes.length) {
+      return;
+    }
+
     const dialog = this.dialog.open(QuotesRejectDialogComponent);
     dialog.componentInstance.reason = this.lastRejectReason;
     dialog.componentInstance.onChange.subscribe(({ reason }) => (this.lastRejectReason = reason));
