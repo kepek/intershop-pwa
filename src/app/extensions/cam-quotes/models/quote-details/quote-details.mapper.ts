@@ -20,7 +20,7 @@ export class QuoteDetailsMapper {
         customerDepartment: data.customerDepartment,
         camfilQuoteNumber: data.erpnumber || '-',
         customerQuoteNumber: data.number,
-        requestedBy: `${data.userFirstName} ${data.userLastName}`,
+        requestedBy: data.requestedBy,
         requestedDate: data.creationDate,
         quotationDate: data.submittedDate,
         status: data.status,

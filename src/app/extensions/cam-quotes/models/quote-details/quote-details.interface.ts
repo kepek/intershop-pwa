@@ -47,4 +47,5 @@ export interface QuoteDetailsData {
   taxAmount: Price;
   totalPriceAfterDiscountExVAT: Price;
   totalQty: number;
+  requestedBy: string;
 }

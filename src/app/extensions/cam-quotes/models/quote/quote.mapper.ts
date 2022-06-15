@@ -20,10 +20,7 @@ export class QuoteMapper {
         camfilQuoteNumber: this.getPropFromData(quoteData, 'ERPnumber'),
         customerQuoteNumber:
           this.getPropFromData(quoteData, 'number') || this.getPropFromData(quoteData, 'customerQuotationNumber'),
-        requestedBy: `${this.getPropFromData(quoteData, 'userFirstName')} ${this.getPropFromData(
-          quoteData,
-          'userLastName'
-        )}`,
+        requestedBy: this.getPropFromData(quoteData, 'requestedBy'),
         requestedDate: requestedDate ? new Date(requestedDate) : undefined,
         quotationDate: quotationDate ? new Date(quotationDate) : undefined,
         status: statusId,

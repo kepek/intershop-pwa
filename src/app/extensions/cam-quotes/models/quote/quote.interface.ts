@@ -11,7 +11,8 @@ export type QuoteStringProps =
   | 'orderChannel'
   | 'creationDate'
   | 'quotationDate'
-  | 'customerQuotationNumber';
+  | 'customerQuotationNumber'
+  | 'requestedBy';
 
 export type QuoteIntegerProps = 'status';
 

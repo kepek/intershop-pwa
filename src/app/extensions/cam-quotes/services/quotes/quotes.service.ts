@@ -24,8 +24,7 @@ export class QuotesService {
   private quotesListAttr = [
     'number',
     'name',
-    'userFirstName',
-    'userLastName',
+    'requestedBy',
     'customerNumber',
     'customerName',
     'customerDepartment',
