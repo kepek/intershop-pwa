@@ -54,7 +54,7 @@ export class OrdersEffects {
     @Inject(PLATFORM_ID) protected platformId: string,
     protected store: Store,
     protected translateService: TranslateService
-  ) {}
+  ) { }
 
   /**
    * Creates an order based on the given basket.
@@ -90,6 +90,8 @@ export class OrdersEffects {
             order.orderCreation.stopAction.redirectUrl
           ) {
             location.assign(order.orderCreation.stopAction.redirectUrl);
+            return EMPTY;
+          } else if (order.statusCode === 'RFQ') {
             return EMPTY;
           } else {
             return from(this.router.navigate(['/checkout/receipt']));

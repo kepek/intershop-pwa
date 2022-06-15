@@ -75,6 +75,8 @@ export class OrdersEffects extends IshOrderEffects {
   notificationAfterOrderCreation$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createOrderSuccess),
+      mapToPayloadProperty('order'),
+      filter(order => order.statusCode !== 'RFQ'),
       map(() =>
         displaySuccessMessage({
           message: 'camfil.checkout.message.order_created',
