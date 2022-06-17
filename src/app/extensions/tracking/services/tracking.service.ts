@@ -32,7 +32,7 @@ export class TrackingService {
     private store: Store,
     private featureToggleService: FeatureToggleService,
     private cookiesService: CookiesService
-  ) { }
+  ) {}
 
   trackBeginCheckout(basket: BasketView, products: Product[]) {
     this.push(this.buildEventDataFromBasket(DataLayerEventType.BeginCheckout, basket, products));
@@ -43,41 +43,28 @@ export class TrackingService {
   }
 
   trackCartRemoveItem(basket: BasketView, products: Product[]) {
-    // const event: DataLayerEvent = {
-    //   event: DataLayerEventType.CartRemoveItem,
-    //   currency: basket.purchaseCurrency,
-    //   value: item?.totals.total.net,
-    //   items: [this.getItemDataFormBasketItem(item, products.find(p => p.sku === item.productSKU))],
-    // };
-    // this.push(event);
     this.push(this.buildEventDataFromBasket(DataLayerEventType.CartRemoveItem, basket, products));
-  }
-
-  trackCamCardCreate(camCard: CamCard) {
-    this.push(this.buildEventDataFromCamCard(DataLayerEventType.CamCardCreate, camCard));
-  }
-
-  trackCamCardEdit(camCard: CamCard) {
-    this.push(this.buildEventDataFromCamCard(DataLayerEventType.CamCardEdit, camCard));
-  }
-
-  trackCamCardDelete(camCardId: string) {
-    this.push({
-      event: DataLayerEventType.CamCardDelete,
-      item_list_id: camCardId,
-    });
   }
 
   trackViewCart(basket: BasketView) {
     this.push(this.buildEventDataFromBasket(DataLayerEventType.CartView, basket));
   }
 
-  trackViewItem(sku: string) {
+  trackViewItem(product: Product) {
     const event: DataLayerEvent = {
       event: DataLayerEventType.ItemView,
+      currency: product.salePrice.currency,
+      value: product.salePrice.value,
       items: [
         {
-          item_id: sku,
+          item_id: product.sku,
+          currency: product.salePrice.currency,
+          discount: 0,
+          index: 0,
+          price: product.salePrice.value,
+          quantity: 0,
+          item_name: product.name,
+          item_brand: product.manufacturer,
         },
       ],
     };
@@ -133,6 +120,25 @@ export class TrackingService {
     this.push(event);
   }
 
+  trackCamCardCreate(camCard: CamCard, products: Product[]) {
+    this.push(this.buildEventDataFromCamCard(DataLayerEventType.CamCardCreate, camCard, products));
+  }
+
+  trackCamCardEdit(camCard: CamCard, products: Product[]) {
+    this.push(this.buildEventDataFromCamCard(DataLayerEventType.CamCardEdit, camCard, products));
+  }
+
+  trackCamCardAddItem(camCard: CamCard, products: Product[]) {
+    this.push(this.buildEventDataFromCamCard(DataLayerEventType.CamCardAddItem, camCard, products));
+  }
+
+  trackCamCardDelete(camCardId: string) {
+    this.push({
+      event: DataLayerEventType.CamCardDelete,
+      item_list_id: camCardId,
+    });
+  }
+
   /**
    * Private methods
    */
@@ -147,8 +153,7 @@ export class TrackingService {
         dataLayer.push(event);
       }
     } catch (err) {
-      // console.error('We could not push your event. Tracking has not been initialized properly.', err);
-      console.error('firing datalayer event', event);
+      console.error('We could not push your event. Tracking has not been initialized properly.', err, event);
     }
   }
 
@@ -185,12 +190,21 @@ export class TrackingService {
     return mergedItems;
   }
 
-  private buildEventDataFromBasket(eventType: DataLayerEventType, basket: BasketView, products: Product[] = []): DataLayerEvent {
+  private buildEventDataFromBasket(
+    eventType: DataLayerEventType,
+    basket: BasketView,
+    products: Product[] = []
+  ): DataLayerEvent {
     return {
       event: eventType,
       currency: basket.purchaseCurrency,
       value: basket.lineItems.reduce((prev, curr) => prev + curr.price.net, 0),
-      items: basket.lineItems.map(item => this.getItemDataFormBasketItem(item, products.find(p => p.sku == item.productSKU))),
+      items: basket.lineItems.map(item =>
+        this.getItemDataFormBasketItem(
+          item,
+          products.find(p => p && p.sku === item.productSKU)
+        )
+      ),
     };
   }
 
@@ -202,19 +216,33 @@ export class TrackingService {
       index: item.position,
       price: item.price.net,
       quantity: item.quantity.value,
-      item_name: product ? product.name : null,
-      item_brand: product ? product.manufacturer : null
+      item_name: product ? product.name : undefined,
+      item_brand: product ? product.manufacturer : undefined,
     };
   }
 
-  private buildEventDataFromCamCard(eventType: DataLayerEventType, camCard: CamCard): DataLayerEvent {
-    const items: DataLayerItem[] = camCard.camCardItems
-      ? camCard.camCardItems.map(item => ({
-        item_id: item.product.sku,
-        item_name: item.product.name,
-        quantity: item.quantity,
-        index: item.position,
-      }))
+  private buildEventDataFromCamCard(
+    eventType: DataLayerEventType,
+    camCard: CamCard,
+    products: Product[] = []
+  ): DataLayerEvent {
+    const items = camCard.camCardItems
+      ? camCard.camCardItems.map(item => {
+          const dataLayerItem: DataLayerItem = {
+            item_id: item.product.sku,
+            discount: 0,
+            index: item.position,
+            quantity: item.quantity,
+            item_name: item.product.name,
+          };
+          const product = products ? products.find(p => p && p.sku === item.product.sku) : undefined;
+          if (product) {
+            dataLayerItem.currency = product.salePrice?.currency;
+            dataLayerItem.price = product.salePrice?.value;
+            dataLayerItem.item_brand = product.manufacturer;
+          }
+          return dataLayerItem;
+        })
       : [];
     return {
       event: eventType,

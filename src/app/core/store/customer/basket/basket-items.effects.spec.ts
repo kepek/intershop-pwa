@@ -379,7 +379,7 @@ describe('Basket Items Effects', () => {
       };
       const action = updateBasketItems(payload);
       // tslint:disable-next-line: no-null-keyword
-      const completion = updateBasketItemsSuccess({ info: null });
+      const completion = updateBasketItemsSuccess({ info: null, lineItemUpdates: [] });
       actions$ = hot('-a-a-a', { a: action });
       const expected$ = cold('-c-c-c', { c: completion });
 
@@ -410,7 +410,7 @@ describe('Basket Items Effects', () => {
 
   describe('loadBasketAfterUpdateBasketItem$', () => {
     it('should map to action of type LoadBasket if UpdateBasketItemSuccess action triggered', () => {
-      const action = updateBasketItemsSuccess({ info: undefined });
+      const action = updateBasketItemsSuccess({ info: undefined, lineItemUpdates: [] });
       const completion = loadBasket();
       actions$ = hot('-a', { a: action });
       const expected$ = cold('-c', { c: completion });
