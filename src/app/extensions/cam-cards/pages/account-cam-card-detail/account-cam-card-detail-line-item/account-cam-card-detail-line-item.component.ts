@@ -1,25 +1,16 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { CamfilShoppingFacade } from 'camfil-pwa/facades/camfil-shopping.facade';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, take, takeUntil } from 'rxjs/operators';
+import { Memoize } from 'typescript-memoize';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
-import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Channel } from 'ish-core/models/channel/channel.types';
 import { Price } from 'ish-core/models/price/price.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
-import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 
@@ -32,49 +23,81 @@ import { CamCard, CamCardCustomer, CamCardItem } from '../../../models/cam-card/
   styleUrls: ['./account-cam-card-detail-line-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit, OnDestroy {
-  private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
-  @Input() camCardItemData: CamCardItem;
-  @Input() currentCamCard: CamCard;
-  @Input() selectedItemsForm?: FormArray;
-  @Input() mode?: 'edit' | 'view';
-  @Input() index: number;
-  @Input() customerPrices?: { listPrice: Price; salePrice: Price };
-  @Input() isIntervalVisible = false;
-  @Output() handleLoad = new EventEmitter<{ res: ProductView; quantity: number }>();
-  @Output() handleUpdate = new EventEmitter<{ res: ProductView; quantity: number }>();
-  @Output() delete = new EventEmitter<CamCardItem>();
-  quantity = 0;
-  showPrice: boolean;
-  addToCartForm: FormGroup;
-  selectItemForm: FormGroup;
-  product$: Observable<ProductView>;
-  customers: CamCardCustomer[];
-  @Input() showCheckbox: boolean;
-  @Input() checked: boolean;
-  @Output() changeCheckbox = new EventEmitter<Event>();
-  private destroy$ = new Subject<void>();
-
+export class AccountCamCardDetailLineItemComponent implements OnInit, OnDestroy {
   constructor(
-    private productFacade: ShoppingFacade,
+    private shoppingFacade: CamfilShoppingFacade,
     private camCardsFacade: CamCardsFacade,
     private appFacade: AppFacade,
     public dialog: MatDialog
   ) {}
 
+  @Memoize()
   get isEditMode() {
     return this.mode === 'edit';
   }
-
+  @Memoize()
   get isViewMode() {
     return this.mode === 'view';
   }
 
+  private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
+  private destroy$ = new Subject<void>();
+
+  @Input()
+  camCard: CamCard;
+
+  private camCardItemValue: CamCardItem;
+  get camCardItem(): CamCardItem {
+    return this.camCardItemValue;
+  }
+
+  @Input()
+  set camCardItem(v: CamCardItem) {
+    this.camCardItemValue = v;
+  }
+
+  @Input() selectedItemsForm?: FormArray;
+  @Input() mode?: 'edit' | 'view';
+  @Input() index: number;
+  @Input() customerPrices?: { listPrice: Price; salePrice: Price };
+  @Input() isIntervalVisible = false;
+  @Input() showCheckbox: boolean;
+  @Input() checked: boolean;
+
+  @Output() changeCheckbox = new EventEmitter<Event>();
+  @Output() handleUpdate = new EventEmitter<{ res: ProductView; quantity: number }>();
+  @Output() delete = new EventEmitter<CamCardItem>();
+
+  showPrice: boolean;
+  addToCartForm: FormGroup;
+  selectItemForm: FormGroup;
+  product$: Observable<ProductView>;
+  customers: CamCardCustomer[];
+
+  private quantityValue = 0;
+
+  @Memoize()
+  get quantity() {
+    return this.quantityValue;
+  }
+
+  set quantity(v: number) {
+    this.quantityValue = v;
+  }
+
   ngOnInit() {
     this.initForm();
-    this.quantity = this.camCardItemData.quantity;
+
+    this.quantity = this.camCardItem?.quantity || 0;
+
     this.camCardsFacade.customers$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(c => (this.customers = c));
-    this.updateQuantities();
+
+    this.product$ = this.shoppingFacade.getProduct$(
+      this.camCardItem?.product?.sku,
+      AccountCamCardDetailLineItemComponent.REQUIRED_COMPLETENESS_LEVEL
+    );
+
+    this.updateQuantity();
 
     this.appFacade.getChannel$
       .pipe(whenTruthy(), take(1))
@@ -82,21 +105,15 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
       .subscribe(channel => (this.showPrice = channel !== Channel.SE));
   }
 
-  ngOnChanges(s: SimpleChanges) {
-    if (s.camCardItemData) {
-      this.loadProductDetails();
-    }
-  }
-
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  updateQuantities() {
+  updateQuantity() {
     this.addToCartForm.valueChanges
       .pipe(debounceTime(500), takeUntil(this.destroy$))
-      .subscribe(val => this.updateProductQuantity(this.camCardItemData, val.quantity));
+      .subscribe(val => this.updateProductQuantity(this.camCardItem, val.quantity));
   }
 
   changeCheck(event) {
@@ -104,15 +121,16 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   }
 
   getListPrice(listPrice) {
-    return this.customers.length > 1 && this.customerPrices?.salePrice ? this.customerPrices?.listPrice : listPrice;
+    return !!this.customers?.length && this.customerPrices?.salePrice ? this.customerPrices?.listPrice : listPrice;
   }
 
   getSalePrice(salePrice) {
-    return (this.customers.length > 1 && this.customerPrices?.salePrice) || salePrice;
+    return !!this.customers?.length && this.customerPrices?.salePrice ? this.customerPrices?.salePrice : salePrice;
   }
 
-  measurementToShow() {
-    const mObj = this.camCardItemData.measurement;
+  @Memoize()
+  get measurementToShow() {
+    const mObj = this.camCardItem.measurement;
     if (!mObj) {
       return;
     }
@@ -127,26 +145,6 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
     return Object.values(sortedKeys)
       .filter(item => item && typeof item === 'number')
       .join('x');
-  }
-
-  moveItemToOtherCamCard(camCardItemId: string, sku: string, camCardMoveData: { id: string; name: string }) {
-    if (camCardMoveData.id) {
-      this.camCardsFacade.moveItemToCamCard(
-        this.currentCamCard.id,
-        camCardMoveData.id,
-        camCardItemId,
-        sku,
-        Number(this.addToCartForm.get('quantity').value)
-      );
-    } else {
-      this.camCardsFacade.moveItemToNewCamCard(
-        this.currentCamCard.id,
-        camCardMoveData.name,
-        camCardItemId,
-        sku,
-        Number(this.addToCartForm.get('quantity').value)
-      );
-    }
   }
 
   updateProductQuantity(camCardItem: CamCardItem, quantity: number) {
@@ -170,7 +168,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
         quantity,
       };
 
-      this.camCardsFacade.updateCamCardProduct(this.currentCamCard.rootCamCard, this.currentCamCard.id, newItem);
+      this.camCardsFacade.updateCamCardProduct(this.camCard.rootCamCard, this.camCard.id, newItem);
       this.handleUpdate.emit({ res, quantity: difference });
     });
   }
@@ -180,41 +178,27 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   }
 
   /** Determine the heading of the delete modal and opens the modal. */
-  openQuickViewDialog(camCardItemData: CamCardItem) {
+  openQuickViewDialog(camCardItem: CamCardItem) {
     this.dialog.open(CamfilQuickViewModalComponent, {
       width: '768px',
       autoFocus: false,
-      data: { sku: camCardItemData.product.sku },
+      data: { sku: camCardItem.product.sku },
     });
   }
 
   /** init form in the beginning */
   private initForm() {
     this.addToCartForm = new FormGroup({
-      quantity: new FormControl(this.camCardItemData.quantity || 1, { updateOn: 'blur' }),
+      quantity: new FormControl(this.camCardItem?.quantity || 1, { updateOn: 'blur' }),
     });
 
     if (this.selectedItemsForm) {
       this.selectItemForm = new FormGroup({
         productCheckbox: new FormControl(true),
-        sku: new FormControl(this.camCardItemData.product.sku),
+        sku: new FormControl(this.camCardItem?.product?.sku),
       });
 
       this.selectedItemsForm.push(this.selectItemForm);
-    }
-  }
-
-  /**if the camCardItem is loaded, get product details*/
-  private loadProductDetails() {
-    if (!this.product$) {
-      this.product$ = this.productFacade.product$(
-        this.camCardItemData.product.sku,
-        AccountCamCardDetailLineItemComponent.REQUIRED_COMPLETENESS_LEVEL
-      );
-
-      this.product$
-        .pipe(take(1), takeUntil(this.destroy$))
-        .subscribe((res: ProductView) => this.handleLoad.emit({ res, quantity: this.camCardItemData.quantity }));
     }
   }
 }

@@ -14,15 +14,24 @@ import { camfilOrdersReducer } from './camfil-orders/camfil-orders.reducer';
 import { CamfilPwaState } from './camfil-pwa-store';
 import { CamfilUserEffects } from './camfil-user/camfil-user.effects';
 import { camfilUserReducer } from './camfil-user/camfil-user.reducer';
+import { camfilProductsReducer } from 'camfil-pwa/store/camfil-shopping/camfil-products/camfil-products.reducer';
+import { CamfilProductsEffects } from 'camfil-pwa/store/camfil-shopping/camfil-products/camfil-products.effects';
 
 const camfilPwaReducers: ActionReducerMap<CamfilPwaState> = {
   camfilUser: camfilUserReducer,
   camfilOrders: camfilOrdersReducer,
   camfilConfiguration: camfilConfigurationReducer,
   camfilIcc: camfilIccReducer,
+  camfilProducts: camfilProductsReducer,
 };
 
-const camfilPwaEffects = [CamfilUserEffects, CamfilOrdersEffects, CamfilConfigurationEffects, CamfilIccEffects];
+const camfilPwaEffects = [
+  CamfilUserEffects,
+  CamfilOrdersEffects,
+  CamfilConfigurationEffects,
+  CamfilIccEffects,
+  CamfilProductsEffects,
+];
 
 const metaReducers = [resetOnLogoutMeta];
 

@@ -17,18 +17,16 @@ import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
+import { CamfilShoppingFacade } from 'camfil-pwa/facades/camfil-shopping.facade';
 import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
-import { AppFacade } from 'ish-core/facades/app.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
-import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Address } from 'ish-core/models/address/address.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/bucket/bucket.model';
-import { Channel } from 'ish-core/models/channel/channel.types';
 import { Price } from 'ish-core/models/price/price.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
@@ -66,6 +64,42 @@ export interface InvalidProducts {
   ],
 })
 export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnDestroy {
+  constructor(
+    private translate: TranslateService,
+    private camCardsFacade: CamCardsFacade,
+    private shoppingFacade: CamfilShoppingFacade,
+    private checkoutFacade: CheckoutFacade,
+    private changeDetectorRefs: ChangeDetectorRef,
+    public router: Router,
+    public dialog: MatDialog,
+    private authorizationToggle: AuthorizationToggleService,
+    private camfilConfigurationFacade: CamfilConfigurationFacade
+  ) {}
+
+  get totalPrice(): Price {
+    if (!this.showPrice) {
+      return;
+    }
+    const list = Object.values(this.priceSum);
+    const currency = list.length ? list.find(([item]) => item.currency)[0]?.currency : '';
+    const value = list.reduce((res, [item, , qty]) => res + (item?.value || 0) * qty, 0);
+    return { value, type: 'Money', currency };
+  }
+
+  get handleModalTexts() {
+    const type =
+      this.modalType === 'noErpNoAddress'
+        ? this.camCard.erpId
+          ? 'with_no_completed_address'
+          : 'no_erp_id'
+        : 'invalid_measurements';
+    return {
+      titleText: `camfil.dynamic.cam_card.${type}.header`,
+      confirmText: `camfil.dynamic.cam_card.${type}.btn`,
+      content: `camfil.dynamic.cam_card.${type}.text`,
+    };
+  }
+  private static PRICE_PERMISSIONS = ['APP_B2B_VIEW_PRICES'];
   @Input() deviceType: DeviceType;
   @Input() camCard: CamCard;
   @Input() selectedItemsForm: FormArray;
@@ -82,6 +116,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
 
   isSubOpen = [];
   isStickyCamCardToolbar$: Observable<boolean>;
+  productsLoading$: Observable<boolean>;
   customerPrices$: Observable<Product[]>;
   productsCustomerPrices: Product[];
   priceSum: Prices = {};
@@ -100,34 +135,13 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   camCardsInBasketsForAllUsers: string[];
   isIntervalVisible$: Observable<boolean>;
   isIntervalVisible = false;
+
   private destroy$ = new Subject();
-
-  constructor(
-    private translate: TranslateService,
-    private camCardsFacade: CamCardsFacade,
-    private shoppingFacade: ShoppingFacade,
-    private checkoutFacade: CheckoutFacade,
-    private appFacade: AppFacade,
-    private changeDetectorRefs: ChangeDetectorRef,
-    public router: Router,
-    public dialog: MatDialog,
-    private authorizationToggle: AuthorizationToggleService,
-    private camfilConfigurationFacade: CamfilConfigurationFacade
-  ) {}
-
-  get totalPrice(): Price {
-    if (!this.showPrice) {
-      return;
-    }
-    const list = Object.values(this.priceSum);
-    const currency = list.length ? list.find(([item]) => item.currency)[0]?.currency : '';
-    const value = list.reduce((res, [item, , qty]) => res + (item?.value || 0) * qty, 0);
-    return { value, type: 'Money', currency };
-  }
 
   ngOnInit(): void {
     this.isMobileView = this.isMobile();
     this.isStickyCamCardToolbar$ = this.camCardsFacade.isStickyCamCardToolbar$;
+    this.productsLoading$ = this.shoppingFacade.productsLoading$;
 
     // expand all subCamCards
     this.camCard?.subCamCards?.forEach(sub => {
@@ -143,45 +157,32 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       this.basketId = basket.id;
       this.commonShippingMethodId = basket.commonShippingMethod?.id;
     });
+
     this.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
       this.buckets = buckets;
     });
+
     this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
       this.basketAddresses = basketAddresses;
     });
+
     this.camCardsFacade.getCamCardsInBasketsForAllUsers$.pipe(takeUntil(this.destroy$)).subscribe(list => {
       this.camCardsInBasketsForAllUsers = list;
     });
 
-    const { id, parent } = this.camCard.customer;
-    this.customerPrices$ = this.shoppingFacade.getCustomerPrices$(id);
-
-    this.appFacade.getChannel$.pipe(whenTruthy(), take(1)).subscribe(channel => {
-      this.authorizationToggle
-        .isAuthorizedToCheckArrAll(['APP_B2B_VIEW_PRICES'])
-        .pipe(take(1))
-        .subscribe(permitted => {
-          // TODO (extMlk): hidePricesCamCards settings
-          this.showPrice = channel !== Channel.SE && permitted;
-          if (this.showPrice && !parent) {
-            this.shoppingFacade.loadCustomerPrices(id, CamCardHelper.getCamCardSkus(this.camCard));
-            this.customerPrices$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(prices => {
-              this.newSkusAfterUpdate = [];
-              this.productsCustomerPrices = prices;
-            });
-          }
-          this.changeDetectorRefs.detectChanges();
-        });
-    });
+    this.customerPrices$ = this.shoppingFacade.getCustomerPrices$(this.camCard?.customer?.id);
 
     this.calculateInvalidProducts();
+
     this.camfilConfigurationFacade
       .isEnabled$('preventCamCardERPIdValidation')
       ?.pipe(takeUntil(this.destroy$))
       .subscribe(val => {
         this.preventCamCardERPIdValidation = val;
       });
+
     this.isIntervalVisible$ = this.camfilConfigurationFacade?.isEnabled$('showDeliveryIntervalOnCCDetailPage');
+
     this.isIntervalVisible$?.pipe(takeUntil(this.destroy$)).subscribe(val => {
       this.isIntervalVisible = val;
     });
@@ -201,41 +202,33 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       const itemToRemove = Object.keys(this.priceSum).filter(key => !currentCamCardItemsId.includes(key));
       itemToRemove.forEach(item => this.cleanPriceSum(item));
 
-      // if new product added to CamCard
-      if (previousValue) {
-        const currentSkus = CamCardHelper.getCamCardSkus(currentValue);
-        const previousSkus = CamCardHelper.getCamCardSkus(previousValue);
-        this.newSkusAfterUpdate = currentSkus.filter(x => !previousSkus.includes(x));
-        if (this.showPrice && this.newSkusAfterUpdate.length) {
-          this.shoppingFacade.loadCustomerPrices(this.camCard.customer.id, this.newSkusAfterUpdate);
-          this.newSkusAfterUpdate = [];
+      this.loadProducts(this.camCard)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          this.loadCustomerPrices();
+        });
+
+      if (this.camCard?.subCamCards) {
+        const currentChanges = currentValue.subCamCards.map(element => element.id);
+        const previousChanges = previousValue?.subCamCards.map(element => element.id);
+        const difference = currentChanges.filter(element => !previousChanges?.includes(element));
+
+        if (difference.length) {
+          this.isSubOpen = this.isSubOpen.concat(difference);
         }
-
-        if (this.camCard?.subCamCards) {
-          const currentChanges = currentValue.subCamCards.map(element => element.id);
-          const previousChanges = previousValue?.subCamCards.map(element => element.id);
-          const difference = currentChanges.filter(element => !previousChanges?.includes(element));
-
-          if (difference.length) {
-            this.isSubOpen = this.isSubOpen.concat(difference);
-          }
-        }
-
-        this.calculateInvalidProducts();
       }
+
+      this.calculateInvalidProducts();
 
       this.changeDetectorRefs.detectChanges();
     }
+
     this.isMobileView = this.isMobile();
   }
 
   getCustomerPriceForSku(sku: string) {
     const item = this.productsCustomerPrices?.find(prod => prod.sku === sku);
     return { listPrice: item?.listPrice, salePrice: item?.salePrice };
-  }
-
-  isNewSku(sku: string) {
-    return this.showPrice && this.newSkusAfterUpdate.includes(sku);
   }
 
   isMobile() {
@@ -275,20 +268,6 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       quantity: item.quantity,
       boxLabel: CamCardHelper.handleBoxLabelToOrderItem(parent, item),
       measurement: item.measurement,
-    };
-  }
-
-  get handleModalTexts() {
-    const type =
-      this.modalType === 'noErpNoAddress'
-        ? this.camCard.erpId
-          ? 'with_no_completed_address'
-          : 'no_erp_id'
-        : 'invalid_measurements';
-    return {
-      titleText: `camfil.dynamic.cam_card.${type}.header`,
-      confirmText: `camfil.dynamic.cam_card.${type}.btn`,
-      content: `camfil.dynamic.cam_card.${type}.text`,
     };
   }
 
@@ -497,5 +476,31 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     const { sku, quantity, boxLabel, measurements } = quickAddData;
     const rootCamCardId = this.camCard?.id;
     this.camCardsFacade.addProductToCamCard(rootCamCardId, sku, quantity, boxLabel, measurements, 0, true);
+  }
+
+  private loadProducts(cc: CamCard) {
+    const skus = CamCardHelper.getCamCardSkus(cc);
+    return this.shoppingFacade.products$(skus).pipe(take(1));
+  }
+
+  private loadCustomerPrices() {
+    if (!this.showPrice) {
+      return;
+    }
+
+    this.authorizationToggle
+      .isAuthorizedToCheckArrAll(AccountCamCardDetailListComponent.PRICE_PERMISSIONS)
+      .pipe(whenTruthy(), take(1))
+      .subscribe(() => {
+        const skus = CamCardHelper.getCamCardSkus(this.camCard);
+        const customerId = this.camCard.customer.id;
+        this.shoppingFacade.loadCustomerPrices(customerId, skus);
+        this.shoppingFacade
+          .getCustomerPrices$(customerId)
+          .pipe(whenTruthy(), take(1))
+          .subscribe(prices => {
+            this.productsCustomerPrices = prices;
+          });
+      });
   }
 }

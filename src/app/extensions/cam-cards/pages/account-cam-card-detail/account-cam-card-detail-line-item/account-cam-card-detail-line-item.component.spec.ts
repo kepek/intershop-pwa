@@ -92,7 +92,7 @@ describe('Account Cam Card Detail Line Item Component', () => {
     when(appFacadeMock.getChannel$).thenReturn(of('channel'));
     when(camCardsFacadeMock.customers$).thenReturn(of([]));
 
-    component.camCardItemData = {
+    component.camCardItem = {
       id: '1234',
       product: {
         sku: 'abcd',

@@ -1,5 +1,5 @@
 import { HttpHeaders } from '@angular/common/http';
-import { OrderService } from 'camfil-pwa/services/order/order.service';
+import { OrderService } from 'camfil-pwa/services/ish-order/order.service';
 import { of, throwError } from 'rxjs';
 import { anyString, anything, capture, instance, mock, verify, when } from 'ts-mockito';
 

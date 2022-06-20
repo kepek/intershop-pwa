@@ -1,6 +1,6 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { OrderService } from 'camfil-pwa/services/order/order.service';
+import { OrderService } from 'camfil-pwa/services/ish-order/order.service';
 import { EMPTY, Observable, forkJoin, of, throwError } from 'rxjs';
 import { catchError, concatMap, map, switchMap, take } from 'rxjs/operators';
 
