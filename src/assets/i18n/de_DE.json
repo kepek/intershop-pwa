@@ -242,7 +242,7 @@
   "account.profile.update_email.message": "Ihre E-Mail-Adresse wurde aktualisiert. Wir haben zur Bestätigung eine E-Mail an {{0}} gesendet.",
   "account.profile.update_password.message": "Ihr Kennwort wurde aktualisiert.",
   "account.profile.update_profile.message": "Ihre Profilinformationen wurden aktualisiert.",
-  "account.quotes.link": "Meinge Angebote",
+  "account.quotes.link": "Meine Angebote",
   "account.quotes.widget.my_quotes.heading": "Meine Preisangebote",
   "account.quotes.widget.responded.label": "Beantwortete Preisangebote",
   "account.quotes.widget.submitted.label": "Gesendete Anfragen",
