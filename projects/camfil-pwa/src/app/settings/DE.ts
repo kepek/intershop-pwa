@@ -9,7 +9,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   icmChannel: 'Camfil-CamfilDE-Site',
   allowQuotes: true,
   showDutiesAndSurchargesTotalInBasketSummary: true,
-  showGoodsAcceptanceIcon: true,
+  allowToSelectGoodsAcceptanceTimes: true,
   showSubTotalInBasketSummary: true,
   filterDocsByLanguage: true,
   showAllDocsType: true,
