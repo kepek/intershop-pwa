@@ -13,6 +13,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showAllDocsType: true,
   zipCodeRegExp: '^\\d{4}$',
   showDeliveryIntervalOnCCDetailPage: true,
+  preventCamCardERPIdValidation: true,
 };
 
 export default camfilConfiguration;

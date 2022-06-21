@@ -16,6 +16,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   zipCodeRegExp: '^\\d{5}$',
   useSecondAddressLine: true,
   showDeliveryIntervalOnCCDetailPage: true,
+  preventCamCardERPIdValidation: true,
 };
 
 export default camfilConfiguration;
