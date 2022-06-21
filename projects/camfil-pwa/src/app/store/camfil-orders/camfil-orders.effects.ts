@@ -23,7 +23,7 @@ import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper
 import { displayErrorMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import { loadBasket } from 'ish-core/store/customer/basket';
-import { getProducts, loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
+import { loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import {
@@ -47,9 +47,8 @@ import {
   loadCamfilOrdersFail,
   loadCamfilOrdersSuccess,
   selectCamfilOrder,
-  updateCamfilOrder,
 } from './camfil-orders.actions';
-import { getCamfilOrderEntities, getSelectedOrder, getSelectedOrderId } from './camfil-orders.selectors';
+import { getCamfilOrderEntities, getSelectedOrderId } from './camfil-orders.selectors';
 
 @Injectable()
 export class CamfilOrdersEffects {
@@ -129,30 +128,6 @@ export class CamfilOrdersEffects {
       switchMap(({ lineItems }) => [
         ...lineItems.map(({ sku }) => loadProductIfNotLoaded({ sku, level: ProductCompletenessLevel.List })),
       ])
-    )
-  );
-
-  checkProductsAvailabilityForSelectedCamfilOrder$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadCamfilOrderLineItemsSuccess),
-      mapToPayload(),
-      map(({ lineItems }) =>
-        lineItems.reduce<string[]>((acc, val) => (acc.find(sku => sku === val.sku) ? acc : [...acc, val.sku]), [])
-      ),
-      switchMap(skus =>
-        this.store.pipe(
-          select(getProducts, { skus }),
-          filter(products => products.length === skus.length)
-        )
-      ),
-      // check whether product failed or availability when not failed
-      map(products =>
-        products.map(({ availability, failed, sku }) => ({ sku, availability: failed ? false : availability }))
-      ),
-      // check if all products are available, if not user should not be able to re-order
-      map(availabilities => availabilities.every(({ availability }) => !!availability)),
-      withLatestFrom(this.store.pipe(select(getSelectedOrder))),
-      map(([canReOrder, order]) => updateCamfilOrder({ order: { ...order, canReOrder } }))
     )
   );
 
