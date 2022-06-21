@@ -160,6 +160,9 @@
     confirmText: handleModalTexts.confirmText | translate
   }"
 >
+  <p *ngIf="modalType === 'noErpNoAddress'">
+    {{ handleModalTexts.content | translate }}
+  </p>
   <!-- invalidProducts.notAvailable list -->
   <ng-container *ngIf="invalidProducts.notAvailable.length && modalType === 'invalidProducts'">
     <p>
