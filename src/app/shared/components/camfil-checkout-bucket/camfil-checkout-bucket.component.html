@@ -115,7 +115,7 @@
             </dd>
           </div>
         </ng-container>
-        <ng-container *camfilChannelToggle="'showGoodsAcceptanceIcon'">
+        <ng-container *camfilChannelToggle="'allowToSelectGoodsAcceptanceTimes'">
           <ng-container *ngIf="goodsAcceptanceNote">
             <div class="row recipients-container">
               <dt class="col-12 p-0">{{ 'camfil.checkout.cta.goods_acceptance' | translate }}</dt>
@@ -224,7 +224,7 @@
             <li>
               <camfil-delete-order [order]="bucket"></camfil-delete-order>
             </li>
-            <li *camfilChannelToggle="'showGoodsAcceptanceIcon'">
+            <li *camfilChannelToggle="'allowToSelectGoodsAcceptanceTimes'">
               <a (click)="openEditGoodsAcceptanceTimeModal()">
                 <mat-icon class="delivery-time-icon" svgIcon="delivery-time"></mat-icon>
                 {{ 'camfil.checkout.cta.select_goods_acceptace.header' | translate }}

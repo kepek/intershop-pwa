@@ -14,6 +14,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   zipCodeRegExp: '^\\d{4}$',
   showDeliveryIntervalOnCCDetailPage: true,
   preventCamCardERPIdValidation: true,
+  allowToSelectGoodsAcceptanceTimes: true,
 };
 
 export default camfilConfiguration;
