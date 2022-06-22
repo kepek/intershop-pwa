@@ -4,6 +4,7 @@ import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { map, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
 
+import { BasketView } from 'ish-core/models/basket/basket.model';
 import { ofUrl } from 'ish-core/store/core/router';
 import {
   addItemsToBasketFromCamCardSuccess,
@@ -13,7 +14,6 @@ import {
   updateBasketItemsSuccess,
 } from 'ish-core/store/customer/basket';
 import { createOrderSuccess } from 'ish-core/store/customer/orders';
-import { getProductEntities } from 'ish-core/store/shopping/products';
 import { mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import {
@@ -48,13 +48,7 @@ export class TrackingEventsEffects {
         ofType(addItemsToBasketFromCamCardSuccess),
         withLatestFrom(this.store.select(getCurrentBasket)),
         map(([, currentBasket]) => currentBasket),
-        withLatestFrom(this.store.pipe(select(getProductEntities))),
-        tap(([currentBasket, products]) =>
-          this.trackingService.trackCartAddItem(
-            currentBasket,
-            currentBasket.lineItems.map(item => products[item.productSKU])
-          )
-        )
+        tap(currentBasket => this.trackingService.trackCartAddItem(currentBasket))
       ),
     { dispatch: false }
   );
@@ -63,10 +57,11 @@ export class TrackingEventsEffects {
     () =>
       this.actions$.pipe(
         ofType(updateBasketItemsSuccess),
+        tap(() => console.log('updateBasketItemsSuccess')),
         withLatestFrom(this.store.select(getCurrentBasket)),
+        tap(() => console.log('getCurrentBasket')),
         map(([result, currentBasket]) => ({ updatedItems: result.payload.lineItemUpdates, currentBasket })),
-        withLatestFrom(this.store.pipe(select(getProductEntities))),
-        tap(([updatedBasket, products]) =>
+        tap(updatedBasket =>
           updatedBasket.updatedItems.map(updatedItem => {
             const basketItem = updatedBasket.currentBasket.lineItems.find(item => item.id === updatedItem.itemId);
 
@@ -78,25 +73,15 @@ export class TrackingEventsEffects {
                   quantity: { value: Math.abs(diff) },
                 },
               ];
-              const productsArray = [basketItem].map(b => products[b.productSKU]);
-
+              const basket: BasketView = {
+                ...updatedBasket.currentBasket,
+                lineItems,
+              };
               if (diff > 0) {
-                return this.trackingService.trackCartRemoveItem(
-                  {
-                    ...updatedBasket.currentBasket,
-                    lineItems,
-                  },
-                  productsArray
-                );
+                return this.trackingService.trackCartRemoveItem(basket);
               }
 
-              this.trackingService.trackCartAddItem(
-                {
-                  ...updatedBasket.currentBasket,
-                  lineItems,
-                },
-                productsArray
-              );
+              this.trackingService.trackCartAddItem(basket);
             }
           })
         )
@@ -115,13 +100,7 @@ export class TrackingEventsEffects {
             .filter(i => i.id === deleteItemPayload.payload.itemId)
             .map(item => ({ ...item, quantity: { value: 0 } })),
         })),
-        withLatestFrom(this.store.pipe(select(getProductEntities))),
-        tap(([currentBasket, products]) =>
-          this.trackingService.trackCartRemoveItem(
-            currentBasket,
-            currentBasket.lineItems.map(item => products[item.productSKU])
-          )
-        )
+        tap(currentBasket => this.trackingService.trackCartRemoveItem(currentBasket))
       ),
     { dispatch: false }
   );
@@ -136,13 +115,7 @@ export class TrackingEventsEffects {
             take(1),
             select(getCurrentBasket),
             whenTruthy(),
-            withLatestFrom(this.store.pipe(select(getProductEntities))),
-            map(([basketView, products]) =>
-              this.trackingService.trackBeginCheckout(
-                basketView,
-                basketView.lineItems.map(item => products[item.productSKU])
-              )
-            )
+            map(currentBasket => this.trackingService.trackBeginCheckout(currentBasket))
           )
         )
       ),
@@ -177,13 +150,7 @@ export class TrackingEventsEffects {
       this.actions$.pipe(
         ofType(createCamCardSuccess),
         mapToPayloadProperty('camCard'),
-        withLatestFrom(this.store.pipe(select(getProductEntities))),
-        tap(([camCard, products]) =>
-          this.trackingService.trackCamCardCreate(
-            camCard,
-            camCard.camCardItems.map(item => products[item.product.sku])
-          )
-        )
+        tap(camCard => this.trackingService.trackCamCardCreate(camCard))
       ),
     { dispatch: false }
   );
@@ -194,13 +161,7 @@ export class TrackingEventsEffects {
         ofType(updateCamCardSuccess),
         withLatestFrom(this.store.pipe(select(getSelectedCamCardDetails))),
         map(([, camCardDetails]) => camCardDetails),
-        withLatestFrom(this.store.pipe(select(getProductEntities))),
-        tap(([camCard, products]) =>
-          this.trackingService.trackCamCardEdit(
-            camCard,
-            camCard.camCardItems.map(item => products[item.product.sku])
-          )
-        )
+        tap(camCard => this.trackingService.trackCamCardEdit(camCard))
       ),
     { dispatch: false }
   );
@@ -211,13 +172,7 @@ export class TrackingEventsEffects {
         ofType(addProductToCamCardSuccess),
         withLatestFrom(this.store.pipe(select(getSelectedCamCardDetails))),
         map(([, camCardDetails]) => camCardDetails),
-        withLatestFrom(this.store.pipe(select(getProductEntities))),
-        tap(([camCard, products]) =>
-          this.trackingService.trackCamCardAddItem(
-            camCard,
-            camCard.camCardItems.map(item => products[item.product?.sku])
-          )
-        )
+        tap(camCard => this.trackingService.trackCamCardAddItem(camCard))
       ),
     { dispatch: false }
   );
@@ -228,13 +183,7 @@ export class TrackingEventsEffects {
         ofType(updateCamCardProductSuccess),
         withLatestFrom(this.store.pipe(select(getSelectedCamCardDetails))),
         map(([, camCardDetails]) => camCardDetails),
-        withLatestFrom(this.store.pipe(select(getProductEntities))),
-        tap(([camCard, products]) =>
-          this.trackingService.trackCamCardEdit(
-            camCard,
-            camCard.camCardItems.map(item => products[item.product?.sku])
-          )
-        )
+        tap(camCard => this.trackingService.trackCamCardEdit(camCard))
       ),
     { dispatch: false }
   );
@@ -245,13 +194,7 @@ export class TrackingEventsEffects {
         ofType(removeItemFromCamCardSuccess),
         withLatestFrom(this.store.pipe(select(getSelectedCamCardDetails))),
         map(([, camCardDetails]) => camCardDetails),
-        withLatestFrom(this.store.pipe(select(getProductEntities))),
-        tap(([camCard, products]) =>
-          this.trackingService.trackCamCardEdit(
-            camCard,
-            camCard.camCardItems.map(item => products[item.product?.sku])
-          )
-        )
+        tap(camCard => this.trackingService.trackCamCardEdit(camCard))
       ),
     { dispatch: false }
   );

@@ -28,7 +28,6 @@ export interface DataLayerItem {
   item_name?: string;
   affiliation?: string;
   coupon?: string;
-  currency?: string;
   discount?: number;
   index?: number;
   item_brand?: string;
