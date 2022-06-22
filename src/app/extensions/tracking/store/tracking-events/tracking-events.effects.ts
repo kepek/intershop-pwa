@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
+import { camfilUpdateBasketItemsSuccess } from 'camfil-pwa/store/customer/ish-basket/ish-basket.actions';
 import { map, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
 
 import { BasketView } from 'ish-core/models/basket/basket.model';
@@ -11,7 +12,6 @@ import {
   deleteBasketItemSuccess,
   getCurrentBasket,
   getSubmittedBasket,
-  updateBasketItemsSuccess,
 } from 'ish-core/store/customer/basket';
 import { createOrderSuccess } from 'ish-core/store/customer/orders';
 import { mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
@@ -56,7 +56,7 @@ export class TrackingEventsEffects {
   trackChangeItemInBasket$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(updateBasketItemsSuccess),
+        ofType(camfilUpdateBasketItemsSuccess),
         tap(() => console.log('updateBasketItemsSuccess')),
         withLatestFrom(this.store.select(getCurrentBasket)),
         tap(() => console.log('getCurrentBasket')),

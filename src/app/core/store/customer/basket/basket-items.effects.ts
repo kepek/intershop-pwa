@@ -296,7 +296,7 @@ export class BasketItemsEffects {
         ).pipe(
           defaultIfEmpty(),
           last(),
-          map(info => updateBasketItemsSuccess({ lineItemUpdates: updates, info })),
+          map(info => updateBasketItemsSuccess({ info })),
           mapErrorToAction(updateBasketItemsFail)
         )
       )
@@ -597,9 +597,9 @@ export class BasketItemsEffects {
   );
 
   constructor(
-    private actions$: Actions,
-    private router: Router,
-    private store: Store,
-    private basketService: BasketService
+    protected actions$: Actions,
+    protected router: Router,
+    protected store: Store,
+    protected basketService: BasketService
   ) {}
 }
