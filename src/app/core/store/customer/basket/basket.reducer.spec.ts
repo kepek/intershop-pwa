@@ -274,7 +274,7 @@ describe('Basket Reducer', () => {
 
     describe('UpdateBasketItemsSuccess action', () => {
       it('should set loading to false', () => {
-        const action = updateBasketItemsSuccess({ info: [{ message: 'info' } as BasketInfo], lineItemUpdates: [] });
+        const action = updateBasketItemsSuccess({ info: [{ message: 'info' } as BasketInfo] });
         const state = basketReducer(initialState, action);
 
         expect(state.info[0].message).toEqual('info');
