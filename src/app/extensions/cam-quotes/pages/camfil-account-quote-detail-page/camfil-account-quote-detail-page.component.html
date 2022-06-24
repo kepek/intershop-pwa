@@ -14,7 +14,7 @@
       <div class="status">{{ quoteDetails?.statusText }}</div>
     </div>
 
-    <div class="right-items">
+    <div class="right-items" *ngIf="canApprove$ | async">
       <a mat-stroked-button color="primary" (click)="reject()">
         {{ 'camfil.quotes.quote_detail.reject_quote' | translate }}
       </a>
@@ -29,7 +29,6 @@
   <camfil-quote-line-item-table [lineItems]="quoteDetails.items" [isMobileView]="isMobileView">
   </camfil-quote-line-item-table>
   <camfil-quote-cost-summary [quote]="quoteDetails"></camfil-quote-cost-summary>
-
 </ng-container>
 
 <camfil-loading *ngIf="loading" fixed="true"></camfil-loading>
