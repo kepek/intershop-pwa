@@ -18,6 +18,7 @@ import {
   getCamQuoteDetailsLoading,
   getCamQuotesApprovedSuccess,
   getCamQuotesList,
+  getCamQuotesListActionsLoading,
   getCamQuotesRejectedSuccess,
 } from '../store/cam-quotes.selectors';
 
@@ -25,6 +26,7 @@ import {
 @Injectable({ providedIn: 'root' })
 export class CamQuotesFacade {
   quotes$: Observable<Quote[]> = this.store.pipe(select(getCamQuotesList));
+  quotesActionsLoading$: Observable<boolean> = this.store.pipe(select(getCamQuotesListActionsLoading));
   quoteDetails$: Observable<QuoteDetails> = this.store.pipe(select(getCamQuoteDetails));
   quoteDetailsLoading$: Observable<boolean> = this.store.pipe(select(getCamQuoteDetailsLoading));
 

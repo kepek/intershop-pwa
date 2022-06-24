@@ -29,7 +29,6 @@
   <camfil-quote-line-item-table [lineItems]="quoteDetails.items" [isMobileView]="isMobileView">
   </camfil-quote-line-item-table>
   <camfil-quote-cost-summary [quote]="quoteDetails"></camfil-quote-cost-summary>
-
 </ng-container>
 
-<camfil-loading *ngIf="loading" fixed="true"></camfil-loading>
+<camfil-loading *ngIf="loading$ | async" fixed="true"></camfil-loading>

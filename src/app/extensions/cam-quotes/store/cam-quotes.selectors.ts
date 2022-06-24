@@ -14,6 +14,11 @@ export const getCamQuoteDetailsState = createSelector(getCamQuotesState, (state:
 
 export const getCamQuotesList = createSelector(getCamQuotesListState, (state: CamQuotesListState) => state.quotes);
 
+export const getCamQuotesListActionsLoading = createSelector(
+  getCamQuotesListState,
+  (state: CamQuotesListState) => state.actionsLoading
+);
+
 export const getCamQuoteDetails = createSelector(
   getCamQuoteDetailsState,
   (state: CamQuoteDetailState) => state.quoteDetails

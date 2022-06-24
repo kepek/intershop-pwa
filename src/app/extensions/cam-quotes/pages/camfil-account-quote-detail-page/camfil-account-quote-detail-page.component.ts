@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { pluck, takeUntil } from 'rxjs/operators';
 
 import { QuotesRejectDialogComponent } from '../../components/quotes-reject-dialog/quotes-reject-dialog.component';
@@ -16,7 +16,7 @@ import { QuoteDetails, QuoteLineItem } from '../../models/quote-details/quote-de
 })
 export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy {
   quoteDetails: QuoteDetails;
-  loading: boolean;
+  loading$: Observable<boolean>;
   selectedItems: QuoteLineItem[] = [];
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -28,12 +28,7 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
     this.onResize();
   }
 
-  constructor(
-    private quotesFacade: CamQuotesFacade,
-    private actRoute: ActivatedRoute,
-    private dialog: MatDialog,
-    private cd: ChangeDetectorRef
-  ) {}
+  constructor(private quotesFacade: CamQuotesFacade, private actRoute: ActivatedRoute, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.actRoute.params
@@ -44,10 +39,7 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
       this.quoteDetails = details;
     });
 
-    this.quotesFacade.quoteDetailsLoading$.pipe(takeUntil(this.destroy$)).subscribe(loading => {
-      this.loading = loading;
-      this.cd.detectChanges();
-    });
+    this.loading$ = this.quotesFacade.quoteDetailsLoading$;
 
     this.onResize();
   }
@@ -73,8 +65,8 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
     dialog.componentInstance.isMultiple = false;
     dialog.componentInstance.onChange.subscribe(({ reason }) => (this.lastRejectReason = reason));
     dialog.componentInstance.onConfirm.subscribe(result => {
-      this.loading = true;
-      this.cd.markForCheck();
+      // this.loading = true;
+      // this.cd.markForCheck();
       this.quotesFacade.rejectQuote(
         {
           id: this.quoteDetails.id,
@@ -86,7 +78,7 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
   }
 
   approve() {
-    this.loading = true;
+    // this.loading = true;
     this.quotesFacade.approveQuote({
       id: this.quoteDetails.id,
       number: this.quoteDetails.camfilQuoteNumber,

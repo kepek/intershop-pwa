@@ -88,6 +88,8 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
 
   lastRejectReason: string;
 
+  actionsLoading$: Observable<boolean>;
+
   constructor(
     private cd: ChangeDetectorRef,
     private quotesFacade: CamQuotesFacade,
@@ -175,6 +177,7 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
     });
 
     this.onResize();
+    this.actionsLoading$ = this.quotesFacade.quotesActionsLoading$;
   }
 
   ngAfterViewInit() {
