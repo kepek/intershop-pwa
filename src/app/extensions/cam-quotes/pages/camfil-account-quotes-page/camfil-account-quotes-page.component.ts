@@ -90,6 +90,7 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
 
   lastRejectReason: string;
 
+  actionsLoading$: Observable<boolean>;
   canApprove$: Observable<boolean>;
 
   constructor(
@@ -180,7 +181,7 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
     });
 
     this.onResize();
-
+    this.actionsLoading$ = this.quotesFacade.quotesActionsLoading$;
     this.canApprove$ = this.roleToggleService.hasRole('APP_B2B_APPROVER');
   }
 

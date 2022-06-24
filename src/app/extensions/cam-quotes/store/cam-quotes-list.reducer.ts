@@ -2,18 +2,28 @@ import { createReducer, on } from '@ngrx/store';
 
 import { Quote } from '../models/quote/quote.model';
 
-import { approveQuotesSuccess, loadQuotesSuccess, rejectQuotesSuccess } from './cam-quotes.actions';
+import {
+  approveQuotes,
+  approveQuotesError,
+  approveQuotesSuccess,
+  loadQuotesSuccess,
+  rejectQuotes,
+  rejectQuotesError,
+  rejectQuotesSuccess,
+} from './cam-quotes.actions';
 
 export interface CamQuotesListState {
   quotes: Quote[];
   approvedQuotesSuccess: boolean;
   rejectedQuotesSuccess: boolean;
+  actionsLoading: boolean;
 }
 
 export const initialState: CamQuotesListState = {
   quotes: [],
   approvedQuotesSuccess: false,
   rejectedQuotesSuccess: false,
+  actionsLoading: false,
 };
 
 export const camQuotesListReducer = createReducer(
@@ -27,6 +37,16 @@ export const camQuotesListReducer = createReducer(
       rejectedQuotesSuccess: false,
     };
   }),
-  on(approveQuotesSuccess, (state: CamQuotesListState) => ({ ...state, approvedQuotesSuccess: true })),
-  on(rejectQuotesSuccess, (state: CamQuotesListState) => ({ ...state, rejectedQuotesSuccess: true }))
+  on(approveQuotes, rejectQuotes, (state: CamQuotesListState) => ({ ...state, actionsLoading: true })),
+  on(approveQuotesSuccess, (state: CamQuotesListState) => ({
+    ...state,
+    approvedQuotesSuccess: true,
+    actionsLoading: false,
+  })),
+  on(rejectQuotesSuccess, (state: CamQuotesListState) => ({
+    ...state,
+    rejectedQuotesSuccess: true,
+    actionsLoading: false,
+  })),
+  on(approveQuotesError, rejectQuotesError, (state: CamQuotesListState) => ({ ...state, actionsLoading: false }))
 );

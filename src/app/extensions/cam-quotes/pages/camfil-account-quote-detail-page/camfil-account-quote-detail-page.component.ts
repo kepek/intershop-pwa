@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
@@ -18,7 +18,7 @@ import { QuoteDetails, QuoteLineItem } from '../../models/quote-details/quote-de
 })
 export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy {
   quoteDetails: QuoteDetails;
-  loading: boolean;
+  loading$: Observable<boolean>;
   selectedItems: QuoteLineItem[] = [];
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -36,7 +36,6 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
     private quotesFacade: CamQuotesFacade,
     private actRoute: ActivatedRoute,
     private dialog: MatDialog,
-    private cd: ChangeDetectorRef,
     private roleToggleService: RoleToggleService
   ) {}
 
@@ -49,10 +48,7 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
       this.quoteDetails = details;
     });
 
-    this.quotesFacade.quoteDetailsLoading$.pipe(takeUntil(this.destroy$)).subscribe(loading => {
-      this.loading = loading;
-      this.cd.detectChanges();
-    });
+    this.loading$ = this.quotesFacade.quoteDetailsLoading$;
 
     this.onResize();
 
@@ -80,8 +76,6 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
     dialog.componentInstance.isMultiple = false;
     dialog.componentInstance.onChange.subscribe(({ reason }) => (this.lastRejectReason = reason));
     dialog.componentInstance.onConfirm.subscribe(result => {
-      this.loading = true;
-      this.cd.markForCheck();
       this.quotesFacade.rejectQuote(
         {
           id: this.quoteDetails.id,
@@ -93,7 +87,6 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
   }
 
   approve() {
-    this.loading = true;
     this.quotesFacade.approveQuote({
       id: this.quoteDetails.id,
       number: this.quoteDetails.camfilQuoteNumber,

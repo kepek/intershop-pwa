@@ -1,6 +1,6 @@
 import { createAction } from '@ngrx/store';
 
-import { payload } from 'ish-core/utils/ngrx-creators';
+import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
 import { QuoteDetails } from '../models/quote-details/quote-details.model';
 import { QuoteServiceRequest } from '../models/quote-service-request/quote-service-request.model';
@@ -30,12 +30,16 @@ export const approveQuoteSuccess = createAction(
   payload<{ response: QuoteServiceResponse }>()
 );
 
+export const approveQuoteError = createAction('[Cam Quotes] Approve Quote Error', httpError());
+
 export const approveQuotes = createAction('[Cam Quotes] Approve Quotes', payload<{ request: QuoteServiceRequest[] }>());
 
 export const approveQuotesSuccess = createAction(
   '[Cam Quotes] Approve Quotes Success',
   payload<{ response: QuoteServiceResponse[] }>()
 );
+
+export const approveQuotesError = createAction('[Cam Quotes] Approve Quotes Error', httpError());
 
 export const rejectQuote = createAction(
   '[Cam Quotes] Reject Quote',
@@ -47,6 +51,8 @@ export const rejectQuoteSuccess = createAction(
   payload<{ response: QuoteServiceResponse }>()
 );
 
+export const rejectQuoteError = createAction('[Cam Quotes] Reject Quote Error', httpError());
+
 export const rejectQuotes = createAction(
   '[Cam Quotes] Reject Quotes',
   payload<{ request: QuoteServiceRequest[]; reason: string }>()
@@ -56,3 +62,5 @@ export const rejectQuotesSuccess = createAction(
   '[Cam Quotes] Reject Quotes Success',
   payload<{ response: QuoteServiceResponse[] }>()
 );
+
+export const rejectQuotesError = createAction('[Cam Quotes] Reject Quotes Error', httpError());

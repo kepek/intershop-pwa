@@ -4,17 +4,19 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { forkJoin } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
-import { displaySuccessMessage } from 'ish-core/store/core/messages';
+import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
 import { createOrderSuccess } from 'ish-core/store/customer/orders';
-import { mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
+import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
 import { QuoteCreatedDialogComponent } from '../components/quote-created-dialog/quote-created-dialog.component';
 import { QuotesService } from '../services/quotes/quotes.service';
 
 import {
   approveQuote,
+  approveQuoteError,
   approveQuoteSuccess,
   approveQuotes,
+  approveQuotesError,
   approveQuotesSuccess,
   createQuoteSuccess,
   loadQuoteDetails,
@@ -22,8 +24,10 @@ import {
   loadQuotes,
   loadQuotesSuccess,
   rejectQuote,
+  rejectQuoteError,
   rejectQuoteSuccess,
   rejectQuotes,
+  rejectQuotesError,
   rejectQuotesSuccess,
 } from './cam-quotes.actions';
 
@@ -73,9 +77,22 @@ export class CamQuotesEffects {
       ofType(approveQuote),
       mapToPayload(),
       mergeMap(({ request }) =>
-        this.camQuotesSrv
-          .approveQuote(request)
-          .pipe(mergeMap(response => [approveQuoteSuccess({ response }), loadQuoteDetails({ quoteId: request.id })]))
+        this.camQuotesSrv.approveQuote(request).pipe(
+          mergeMap(response => [approveQuoteSuccess({ response }), loadQuoteDetails({ quoteId: request.id })]),
+          mapErrorToAction(approveQuoteError)
+        )
+      )
+    )
+  );
+
+  approveCamQuoteError$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(approveQuoteError),
+      map(() =>
+        displayErrorMessage({
+          message: 'camfil.quotes.quoteslist.approve_quote_error',
+          duration: 3000,
+        })
       )
     )
   );
@@ -97,8 +114,21 @@ export class CamQuotesEffects {
       mapToPayload(),
       mergeMap(({ request }) =>
         forkJoin(request.map(r => this.camQuotesSrv.approveQuote(r))).pipe(
-          mergeMap(response => [approveQuotesSuccess({ response }), loadQuotes()])
+          mergeMap(response => [approveQuotesSuccess({ response }), loadQuotes()]),
+          mapErrorToAction(approveQuotesError)
         )
+      )
+    )
+  );
+
+  approveCamQuotesError$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(approveQuotesError),
+      map(() =>
+        displayErrorMessage({
+          message: 'camfil.quotes.quoteslist.approve_quotes_error',
+          duration: 3000,
+        })
       )
     )
   );
@@ -108,9 +138,22 @@ export class CamQuotesEffects {
       ofType(rejectQuote),
       mapToPayload(),
       mergeMap(({ request, reason }) =>
-        this.camQuotesSrv
-          .rejectQuote(request, reason)
-          .pipe(mergeMap(response => [rejectQuoteSuccess({ response }), loadQuoteDetails({ quoteId: request.id })]))
+        this.camQuotesSrv.rejectQuote(request, reason).pipe(
+          mergeMap(response => [rejectQuoteSuccess({ response }), loadQuoteDetails({ quoteId: request.id })]),
+          mapErrorToAction(rejectQuoteError)
+        )
+      )
+    )
+  );
+
+  rejectCamQuoteError$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(rejectQuoteError),
+      map(() =>
+        displayErrorMessage({
+          message: 'camfil.quotes.quoteslist.reject_quote_error',
+          duration: 3000,
+        })
       )
     )
   );
@@ -138,8 +181,21 @@ export class CamQuotesEffects {
             displaySuccessMessage({
               message: 'camfil.quotes.quoteslist.reject_quotes_modal.success',
             }),
-          ])
+          ]),
+          mapErrorToAction(rejectQuotesError)
         )
+      )
+    )
+  );
+
+  rejectCamQuotesError$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(rejectQuotesError),
+      map(() =>
+        displayErrorMessage({
+          message: 'camfil.quotes.quoteslist.reject_quotes_error',
+          duration: 3000,
+        })
       )
     )
   );
