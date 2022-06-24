@@ -45,7 +45,7 @@ export class IshBasketItemsEffects extends BasketItemsEffects {
         ).pipe(
           defaultIfEmpty(),
           last(),
-          tap(info => camfilUpdateBasketItemsSuccess({ lineItemUpdates: updates, info })),
+          tap(info => this.store.dispatch(camfilUpdateBasketItemsSuccess({ lineItemUpdates: updates, info }))),
           map(info => updateBasketItemsSuccess({ info })),
           mapErrorToAction(updateBasketItemsFail)
         )
