@@ -34,7 +34,6 @@ import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.fac
 import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form/camfil-checkout-guest-form.component';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { isEqual } from 'lodash-es';
-import { TrackingFacade } from '../../extensions/tracking/facades/tracking.facade';
 
 @Component({
   templateUrl: './camfil-checkout-onestep-page.component.html',
@@ -70,8 +69,7 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
     private accountFacade: AccountFacade,
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
-    private camCardsFacade: CamCardsFacade,
-    private trackingFacade: TrackingFacade
+    private camCardsFacade: CamCardsFacade
   ) {}
 
   ngOnInit() {
@@ -105,8 +103,6 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
     this.isEmpty$ = this.allBuckets$.pipe(map(allBuckets => allBuckets?.length === 0));
 
     this.initBasket();
-
-    this.trackingFacade.trackViewCart();
   }
 
   // tslint:disable-next-line:force-jsdoc-comments

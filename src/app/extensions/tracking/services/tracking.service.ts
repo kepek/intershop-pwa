@@ -6,8 +6,9 @@ import { map, take } from 'rxjs/operators';
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
-import { Product } from 'ish-core/models/product/product.model';
-import { getProduct } from 'ish-core/store/shopping/products';
+import { ProductView } from 'ish-core/models/product-view/product-view.model';
+import { getProduct, getProducts } from 'ish-core/store/shopping/products';
+import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
 import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamCard } from '../../cam-cards/models/cam-card/cam-card.model';
@@ -27,51 +28,68 @@ declare var dataLayer: any;
  */
 @Injectable({ providedIn: 'root' })
 export class TrackingService {
-  constructor(private store: Store, private featureToggleService: FeatureToggleService) {}
+  constructor(
+    private store: Store,
+    private featureToggleService: FeatureToggleService,
+    private cookiesService: CookiesService
+  ) {}
 
   trackBeginCheckout(basket: BasketView) {
-    this.push(this.buildEventDataFromBasket(DataLayerEventType.BeginCheckout, basket));
+    this.getProductsFromBasket(basket).subscribe(products =>
+      this.push(this.buildEventDataFromBasket(DataLayerEventType.BeginCheckout, basket, products))
+    );
   }
 
   trackCartAddItem(basket: BasketView) {
-    this.push(this.buildEventDataFromBasket(DataLayerEventType.CartAddItem, basket));
+    this.getProductsFromBasket(basket).subscribe(products =>
+      this.push(this.buildEventDataFromBasket(DataLayerEventType.CartAddItem, basket, products))
+    );
   }
 
-  trackCartRemoveItem(itemId: string, basket: BasketView) {
-    const item = basket.lineItems.find(i => i.id === itemId);
-    const event: DataLayerEvent = {
-      event: DataLayerEventType.CartRemoveItem,
-      currency: basket.purchaseCurrency,
-      value: item?.totals.total.gross,
-      items: [this.getItemDataFormBasketItem(item)],
-    };
-    this.push(event);
-  }
-
-  trackCamCardCreate(camCard: CamCard) {
-    this.push(this.buildEventDataFromCamCard(DataLayerEventType.CamCardCreate, camCard));
-  }
-
-  trackCamCardEdit(camCard: CamCard) {
-    this.push(this.buildEventDataFromCamCard(DataLayerEventType.CamCardEdit, camCard));
-  }
-
-  trackCamCardDelete(camCardId: string) {
-    this.push({
-      event: DataLayerEventType.CamCardDelete,
-      item_list_id: camCardId,
-    });
+  trackCartRemoveItem(basket: BasketView) {
+    this.getProductsFromBasket(basket).subscribe(products =>
+      this.push(this.buildEventDataFromBasket(DataLayerEventType.CartRemoveItem, basket, products))
+    );
   }
 
   trackViewCart(basket: BasketView) {
     this.push(this.buildEventDataFromBasket(DataLayerEventType.CartView, basket));
   }
 
-  trackViewItem(item: Product) {
+  trackViewItem(product: ProductView) {
     const event: DataLayerEvent = {
       event: DataLayerEventType.ItemView,
-      item_list_name: item.name,
-      page_type: DataLayerPageType.ProductDetail,
+      currency: product.salePrice.currency,
+      value: product.salePrice.value,
+      items: [
+        {
+          item_id: product.sku,
+          discount: 0,
+          index: 0,
+          price: product.salePrice.value,
+          quantity: 0,
+          item_name: product.name,
+          item_brand: product.manufacturer,
+          item_category: product.defaultCategory()?.name,
+        },
+      ],
+    };
+
+    this.push(event);
+  }
+
+  trackViewItemList(item: ProductView, page: DataLayerPageType) {
+    const event: DataLayerEvent = {
+      event: DataLayerEventType.ItemListView,
+      item_list_id: page,
+      items: [
+        {
+          item_id: item.sku,
+          item_name: item.name,
+          price: item.salePrice?.value,
+          quantity: 0,
+        },
+      ],
     };
 
     this.push(event);
@@ -108,17 +126,46 @@ export class TrackingService {
     this.push(event);
   }
 
+  trackCamCardCreate(camCard: CamCard) {
+    this.getProductsFromCamCard(camCard).subscribe(products =>
+      this.push(this.buildEventDataFromCamCard(DataLayerEventType.CamCardCreate, camCard, products))
+    );
+  }
+
+  trackCamCardEdit(camCard: CamCard) {
+    this.getProductsFromCamCard(camCard).subscribe(products =>
+      this.push(this.buildEventDataFromCamCard(DataLayerEventType.CamCardEdit, camCard, products))
+    );
+  }
+
+  trackCamCardAddItem(camCard: CamCard) {
+    this.getProductsFromCamCard(camCard).subscribe(products =>
+      this.push(this.buildEventDataFromCamCard(DataLayerEventType.CamCardAddItem, camCard, products))
+    );
+  }
+
+  trackCamCardDelete(camCardId: string) {
+    this.push({
+      event: DataLayerEventType.CamCardDelete,
+      item_list_id: camCardId,
+    });
+  }
+
   /**
    * Private methods
    */
 
   private push(event) {
     try {
-      if (dataLayer && this.featureToggleService.enabled('tracking')) {
+      if (
+        dataLayer &&
+        this.featureToggleService.enabled('tracking') &&
+        this.cookiesService.cookieConsentFor('tracking')
+      ) {
         dataLayer.push(event);
       }
     } catch (err) {
-      console.error('We could not push your event. Tracking has not been initialized properly.', err);
+      console.error('We could not push your event. Tracking has not been initialized properly.', err, event);
     }
   }
 
@@ -155,34 +202,67 @@ export class TrackingService {
     return mergedItems;
   }
 
-  private buildEventDataFromBasket(eventType: DataLayerEventType, basket: BasketView): DataLayerEvent {
+  private getProductsFromBasket(basket: BasketView): Observable<ProductView[]> {
+    return this.store.pipe(select(getProducts, { skus: basket.lineItems.map(item => item.productSKU) }), take(1));
+  }
+
+  private buildEventDataFromBasket(
+    eventType: DataLayerEventType,
+    basket: BasketView,
+    products: ProductView[] = []
+  ): DataLayerEvent {
     return {
       event: eventType,
       currency: basket.purchaseCurrency,
-      value: basket.totals.total.gross,
-      items: basket.lineItems.map(item => this.getItemDataFormBasketItem(item)),
+      value: basket.lineItems.reduce((prev, curr) => prev + curr.salePrice?.net * curr.quantity.value, 0),
+      items: basket.lineItems.map(item =>
+        this.getItemDataFormBasketItem(
+          item,
+          products.find(p => p && p.sku === item.productSKU)
+        )
+      ),
     };
   }
 
-  private getItemDataFormBasketItem(item: LineItemView): DataLayerItem {
+  private getItemDataFormBasketItem(item: LineItemView, product?: ProductView): DataLayerItem {
     return {
-      item_id: item.id,
-      currency: item.price.currency,
+      item_id: item.productSKU,
       discount: 0,
       index: item.position,
-      price: item.price.gross,
+      price: product?.salePrice?.value,
       quantity: item.quantity.value,
+      item_name: product?.name,
+      item_brand: product?.manufacturer,
+      item_category: product?.defaultCategory()?.name,
     };
   }
 
-  private buildEventDataFromCamCard(eventType: DataLayerEventType, camCard: CamCard): DataLayerEvent {
-    const items: DataLayerItem[] = camCard.camCardItems
-      ? camCard.camCardItems.map(item => ({
-          item_id: item.product.sku,
-          item_name: item.product.name,
-          quantity: item.quantity,
-          index: item.position,
-        }))
+  private getProductsFromCamCard(camCard: CamCard): Observable<ProductView[]> {
+    return this.store.pipe(select(getProducts, { skus: camCard.camCardItems.map(item => item.product.sku) }), take(1));
+  }
+
+  private buildEventDataFromCamCard(
+    eventType: DataLayerEventType,
+    camCard: CamCard,
+    products: ProductView[] = []
+  ): DataLayerEvent {
+    const items = camCard.camCardItems
+      ? camCard.camCardItems.map(item => {
+          const dataLayerItem: DataLayerItem = {
+            item_id: item.product.sku,
+            discount: 0,
+            index: item.position,
+            quantity: item.quantity,
+            item_name: item.product.name,
+          };
+          const product = products ? products.find(p => p && p.sku === item.product.sku) : undefined;
+          if (product) {
+            dataLayerItem.price = product.salePrice?.value;
+            dataLayerItem.item_brand = product.manufacturer;
+            dataLayerItem.item_category = product.defaultCategory()?.name;
+          }
+          return dataLayerItem;
+        })
       : [];
     return {
       event: eventType,

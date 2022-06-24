@@ -597,9 +597,9 @@ export class BasketItemsEffects {
   );
 
   constructor(
-    private actions$: Actions,
-    private router: Router,
-    private store: Store,
-    private basketService: BasketService
+    protected actions$: Actions,
+    protected router: Router,
+    protected store: Store,
+    protected basketService: BasketService
   ) {}
 }
