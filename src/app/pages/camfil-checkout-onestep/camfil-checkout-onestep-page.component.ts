@@ -97,7 +97,8 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
 
     this.isEditable$ = this.submittedBasket$.pipe(
       startWith(false),
-      map(submittedBasket => !submittedBasket)
+      withLatestFrom(this.checkoutFacade.selectedOrder$),
+      map(([submittedBasket, order]) => !submittedBasket || order.statusCode === 'RFQ')
     );
 
     this.isEmpty$ = this.allBuckets$.pipe(map(allBuckets => allBuckets?.length === 0));

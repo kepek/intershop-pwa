@@ -42,6 +42,7 @@ import {
   getBasketInvoiceAddress,
   getBasketLastTimeProductAdded,
   getBasketLoading,
+  getBasketOrderType,
   getBasketPromotionError,
   getBasketShippingAddress,
   getBasketValidationResults,
@@ -97,7 +98,7 @@ export class CheckoutFacade {
   basketLineItems$ = this.basket$.pipe(
     map(basket => (basket && basket.lineItems && basket.lineItems.length ? basket.lineItems : undefined))
   );
-  basketOrderType$ = this.store.pipe(select(getBasketLoading));
+  basketOrderType$ = this.store.pipe(select(getBasketOrderType));
   submittedBasket$ = this.store.pipe(select(getSubmittedBasket));
   submittedBuckets$ = this.store.pipe(select(getSubmittedBuckets));
   calendarExceptions$ = this.store.pipe(select(getCalendarExceptions));

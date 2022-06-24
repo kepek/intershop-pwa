@@ -5,8 +5,8 @@ import { select } from '@ngrx/store';
 import { loadCamfilOrderIfNotLoaded } from 'camfil-pwa/store/camfil-orders';
 import { loadOrderIfNotLoaded } from 'camfil-pwa/store/customer/orders/orders.actions';
 import { getOrderEntities } from 'camfil-pwa/store/customer/orders/orders.selectors';
-import { identity, iif } from 'rxjs';
-import { filter, groupBy, map, mergeMap, throttleTime, withLatestFrom } from 'rxjs/operators';
+import { EMPTY, from, identity, iif } from 'rxjs';
+import { concatMap, filter, groupBy, map, mergeMap, throttleTime, withLatestFrom } from 'rxjs/operators';
 
 import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
@@ -75,6 +75,8 @@ export class OrdersEffects extends IshOrderEffects {
   notificationAfterOrderCreation$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createOrderSuccess),
+      mapToPayloadProperty('order'),
+      filter(order => order.statusCode !== 'RFQ'),
       map(() =>
         displaySuccessMessage({
           message: 'camfil.checkout.message.order_created',
@@ -92,6 +94,31 @@ export class OrdersEffects extends IshOrderEffects {
         })
       )
     )
+  );
+
+  continueAfterOrderCreation$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(createOrderSuccess),
+        mapToPayloadProperty('order'),
+        filter(order => !order || !order.orderCreation || order.orderCreation.status !== 'ROLLED_BACK'),
+        concatMap(order => {
+          if (
+            order.orderCreation &&
+            order.orderCreation.status === 'STOPPED' &&
+            order.orderCreation.stopAction.type === 'Redirect' &&
+            order.orderCreation.stopAction.redirectUrl
+          ) {
+            location.assign(order.orderCreation.stopAction.redirectUrl);
+            return EMPTY;
+          } else if (order.statusCode === 'RFQ') {
+            return EMPTY;
+          } else {
+            return from(this.router.navigate(['/checkout/receipt']));
+          }
+        })
+      ),
+    { dispatch: false }
   );
 
   private throttleOnBrowser() {
