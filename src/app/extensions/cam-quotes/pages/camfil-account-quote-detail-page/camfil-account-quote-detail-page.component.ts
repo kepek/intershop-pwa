@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { pluck, takeUntil } from 'rxjs/operators';
+
+import { RoleToggleService } from 'ish-core/utils/role-toggle/role-toggle.service';
 
 import { QuotesRejectDialogComponent } from '../../components/quotes-reject-dialog/quotes-reject-dialog.component';
 import { CamQuotesFacade } from '../../facades/cam-quotes.facade';
@@ -24,6 +26,8 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
 
   lastRejectReason: string;
 
+  canApprove$: Observable<boolean>;
+
   @HostListener('window:resize') onWindowsResize() {
     this.onResize();
   }
@@ -32,7 +36,8 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
     private quotesFacade: CamQuotesFacade,
     private actRoute: ActivatedRoute,
     private dialog: MatDialog,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private roleToggleService: RoleToggleService
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +55,8 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
     });
 
     this.onResize();
+
+    this.canApprove$ = this.roleToggleService.hasRole('APP_B2B_APPROVER');
   }
 
   ngOnDestroy(): void {

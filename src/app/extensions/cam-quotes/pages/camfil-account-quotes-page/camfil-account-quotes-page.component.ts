@@ -17,6 +17,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { filter, map, take, takeUntil, tap } from 'rxjs/operators';
 
+import { RoleToggleService } from 'ish-core/utils/role-toggle/role-toggle.service';
+
 import { QuotesApproveDialogComponent } from '../../components/quotes-approve-dialog/quotes-approve-dialog.component';
 import { QuotesRejectDialogComponent } from '../../components/quotes-reject-dialog/quotes-reject-dialog.component';
 import { CamQuotesFacade } from '../../facades/cam-quotes.facade';
@@ -88,13 +90,16 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
 
   lastRejectReason: string;
 
+  canApprove$: Observable<boolean>;
+
   constructor(
     private cd: ChangeDetectorRef,
     private quotesFacade: CamQuotesFacade,
     private fb: FormBuilder,
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private roleToggleService: RoleToggleService
   ) {
     this.dataSource = new MatTableDataSource<Quote>([]);
 
@@ -175,6 +180,8 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
     });
 
     this.onResize();
+
+    this.canApprove$ = this.roleToggleService.hasRole('APP_B2B_APPROVER');
   }
 
   ngAfterViewInit() {
