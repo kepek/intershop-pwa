@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { pluck, takeUntil } from 'rxjs/operators';
 
+import { RoleToggleService } from 'ish-core/utils/role-toggle/role-toggle.service';
+
 import { QuotesRejectDialogComponent } from '../../components/quotes-reject-dialog/quotes-reject-dialog.component';
 import { CamQuotesFacade } from '../../facades/cam-quotes.facade';
 import { QuoteDetails, QuoteLineItem } from '../../models/quote-details/quote-details.model';
@@ -24,11 +26,18 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
 
   lastRejectReason: string;
 
+  canApprove$: Observable<boolean>;
+
   @HostListener('window:resize') onWindowsResize() {
     this.onResize();
   }
 
-  constructor(private quotesFacade: CamQuotesFacade, private actRoute: ActivatedRoute, private dialog: MatDialog) {}
+  constructor(
+    private quotesFacade: CamQuotesFacade,
+    private actRoute: ActivatedRoute,
+    private dialog: MatDialog,
+    private roleToggleService: RoleToggleService
+  ) {}
 
   ngOnInit(): void {
     this.actRoute.params
@@ -42,6 +51,8 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
     this.loading$ = this.quotesFacade.quoteDetailsLoading$;
 
     this.onResize();
+
+    this.canApprove$ = this.roleToggleService.hasRole('APP_B2B_APPROVER');
   }
 
   ngOnDestroy(): void {
@@ -65,8 +76,6 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
     dialog.componentInstance.isMultiple = false;
     dialog.componentInstance.onChange.subscribe(({ reason }) => (this.lastRejectReason = reason));
     dialog.componentInstance.onConfirm.subscribe(result => {
-      // this.loading = true;
-      // this.cd.markForCheck();
       this.quotesFacade.rejectQuote(
         {
           id: this.quoteDetails.id,
@@ -78,7 +87,6 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
   }
 
   approve() {
-    // this.loading = true;
     this.quotesFacade.approveQuote({
       id: this.quoteDetails.id,
       number: this.quoteDetails.camfilQuoteNumber,

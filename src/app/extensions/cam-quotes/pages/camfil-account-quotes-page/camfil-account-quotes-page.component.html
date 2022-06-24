@@ -48,7 +48,7 @@
           >{{ state }}
         </mat-checkbox>
       </div>
-      <div class="table-actions">
+      <div class="table-actions" *ngIf="canApprove$ | async">
         <a mat-flat-button color="primary" (click)="approveSelectedQuotes()" [disabled]="!selectedQuotes.length">
           {{ 'camfil.quotes.quoteslist.approve_quotes' | translate }}
           ({{ selectedQuotes.length }})
