@@ -91,8 +91,6 @@ export class OrdersEffects {
           ) {
             location.assign(order.orderCreation.stopAction.redirectUrl);
             return EMPTY;
-          } else if (order.statusCode === 'RFQ') {
-            return EMPTY;
           } else {
             return from(this.router.navigate(['/checkout/receipt']));
           }
