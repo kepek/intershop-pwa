@@ -56,26 +56,30 @@ export class TrackingService {
     this.push(this.buildEventDataFromBasket(DataLayerEventType.CartView, basket));
   }
 
-  trackViewItem(product: ProductView) {
-    const event: DataLayerEvent = {
-      event: DataLayerEventType.ItemView,
-      currency: product.salePrice.currency,
-      value: product.salePrice.value,
-      items: [
-        {
-          item_id: product.sku,
-          discount: 0,
-          index: 0,
-          price: product.salePrice.value,
-          quantity: 0,
-          item_name: product.name,
-          item_brand: product.manufacturer,
-          item_category: product.defaultCategory()?.name,
-        },
-      ],
-    };
-
-    this.push(event);
+  trackViewItem(sku: string) {
+    this.getProducts([sku]).subscribe(products => {
+      if (!products || !products.length) {
+        return;
+      }
+      const product = products[0];
+      this.push({
+        event: DataLayerEventType.ItemView,
+        currency: product.salePrice.currency,
+        value: product.salePrice.value,
+        items: [
+          {
+            item_id: product.sku,
+            discount: 0,
+            index: 0,
+            price: product.salePrice.value,
+            quantity: 0,
+            item_name: product.name,
+            item_brand: product.manufacturer,
+            item_category: product.defaultCategory()?.name,
+          },
+        ],
+      });
+    });
   }
 
   trackViewItemList(item: ProductView, page: DataLayerPageType) {
@@ -202,8 +206,12 @@ export class TrackingService {
     return mergedItems;
   }
 
+  private getProducts(skus: string[]): Observable<ProductView[]> {
+    return this.store.pipe(select(getProducts, { skus }), take(1));
+  }
+
   private getProductsFromBasket(basket: BasketView): Observable<ProductView[]> {
-    return this.store.pipe(select(getProducts, { skus: basket.lineItems.map(item => item.productSKU) }), take(1));
+    return this.getProducts(basket.lineItems.map(item => item.productSKU));
   }
 
   private buildEventDataFromBasket(
@@ -238,7 +246,7 @@ export class TrackingService {
   }
 
   private getProductsFromCamCard(camCard: CamCard): Observable<ProductView[]> {
-    return this.store.pipe(select(getProducts, { skus: camCard.camCardItems.map(item => item.product.sku) }), take(1));
+    return this.getProducts(camCard.camCardItems.map(item => item.product.sku));
   }
 
   private buildEventDataFromCamCard(

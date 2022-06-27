@@ -3,10 +3,10 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { camfilUpdateBasketItemsSuccess } from 'camfil-pwa/store/customer/ish-basket/ish-basket.actions';
-import { map, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
+import { debounceTime, filter, map, tap, withLatestFrom } from 'rxjs/operators';
 
 import { BasketView } from 'ish-core/models/basket/basket.model';
-import { ofUrl } from 'ish-core/store/core/router';
+import { selectRouteParam } from 'ish-core/store/core/router';
 import {
   addItemsToBasketFromCamCardSuccess,
   deleteBasketItemSuccess,
@@ -30,17 +30,6 @@ import { TrackingService } from '../../services/tracking.service';
 @Injectable()
 export class TrackingEventsEffects {
   constructor(private actions$: Actions, private store: Store, private trackingService: TrackingService) {}
-
-  // trackBeginCheckout$ = createEffect(
-  //   () =>
-  //     this.actions$.pipe(
-  //       ofType(continueCheckout),
-  //       filter(({ payload }) => payload.targetStep === 5),
-  //       withLatestFrom(this.store.select(getCurrentBasket)),
-  //       tap(([, currentBasket]) => this.trackingService.trackBeginCheckout(currentBasket))
-  //     ),
-  //   { dispatch: false }
-  // );
 
   trackAddItemsToBasket$ = createEffect(
     () =>
@@ -109,29 +98,27 @@ export class TrackingEventsEffects {
     () =>
       this.actions$.pipe(
         ofType(routerNavigatedAction),
-        switchMapTo(
-          this.store.pipe(
-            ofUrl(/^\/checkout\/onestep/),
-            take(1),
-            select(getCurrentBasket),
-            whenTruthy(),
-            map(currentBasket => this.trackingService.trackBeginCheckout(currentBasket))
-          )
-        )
+        tap(value => console.log('route action', value)),
+        mapToPayloadProperty('routerState'),
+        filter(routerState => routerState.url === '/checkout/onestep'),
+        debounceTime(1000),
+        withLatestFrom(this.store.select(getCurrentBasket)),
+        map(([, currentBasket]) => currentBasket),
+        whenTruthy(),
+        map(currentBasket => this.trackingService.trackBeginCheckout(currentBasket))
       ),
     { dispatch: false }
   );
 
-  // trackViewItem$ = createEffect(
-  //   () =>
-  //     this.store.pipe(
-  //       select(selectRouteParam('sku')),
-  //       whenTruthy(),
-  //       withLatestFrom(this.store.pipe(select(getProductEntities))),
-  //       map(([sku, products]) => this.trackingService.trackViewItem(products[sku]))
-  //     ),
-  //   { dispatch: false }
-  // );
+  trackViewItem$ = createEffect(
+    () =>
+      this.store.pipe(
+        select(selectRouteParam('sku')),
+        whenTruthy(),
+        map(([sku, products]) => this.trackingService.trackViewItem(products[sku]))
+      ),
+    { dispatch: false }
+  );
 
   trackOrder$ = createEffect(
     () =>
