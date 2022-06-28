@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { camfilUpdateBasketItemsSuccess } from 'camfil-pwa/store/customer/ish-basket/ish-basket.actions';
-import { debounceTime, filter, map, tap, withLatestFrom } from 'rxjs/operators';
+import { debounceTime, filter, map, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
 
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { selectRouteParam } from 'ish-core/store/core/router';
@@ -29,7 +29,7 @@ import { TrackingService } from '../../services/tracking.service';
 
 @Injectable()
 export class TrackingEventsEffects {
-  constructor(private actions$: Actions, private store: Store, private trackingService: TrackingService) {}
+  constructor(private actions$: Actions, private store: Store, private trackingService: TrackingService) { }
 
   trackAddItemsToBasket$ = createEffect(
     () =>
@@ -46,9 +46,7 @@ export class TrackingEventsEffects {
     () =>
       this.actions$.pipe(
         ofType(camfilUpdateBasketItemsSuccess),
-        tap(() => console.log('updateBasketItemsSuccess')),
         withLatestFrom(this.store.select(getCurrentBasket)),
-        tap(() => console.log('getCurrentBasket')),
         map(([result, currentBasket]) => ({ updatedItems: result.payload.lineItemUpdates, currentBasket })),
         tap(updatedBasket =>
           updatedBasket.updatedItems.map(updatedItem => {
@@ -83,11 +81,10 @@ export class TrackingEventsEffects {
       this.actions$.pipe(
         ofType(deleteBasketItemSuccess),
         withLatestFrom(this.store.select(getCurrentBasket)),
+        tap(value => console.log('delete basket item', value)),
         map(([deleteItemPayload, currentBasket]) => ({
           ...currentBasket,
-          lineItems: currentBasket.lineItems
-            .filter(i => i.id === deleteItemPayload.payload.itemId)
-            .map(item => ({ ...item, quantity: { value: 0 } })),
+          lineItems: currentBasket.lineItems.filter(i => i.id === deleteItemPayload.payload.itemId)
         })),
         tap(currentBasket => this.trackingService.trackCartRemoveItem(currentBasket))
       ),
@@ -102,9 +99,9 @@ export class TrackingEventsEffects {
         mapToPayloadProperty('routerState'),
         filter(routerState => routerState.url === '/checkout/onestep'),
         debounceTime(1000),
-        withLatestFrom(this.store.select(getCurrentBasket)),
-        map(([, currentBasket]) => currentBasket),
+        switchMapTo(this.store.select(getCurrentBasket)),
         whenTruthy(),
+        take(1),
         map(currentBasket => this.trackingService.trackBeginCheckout(currentBasket))
       ),
     { dispatch: false }
