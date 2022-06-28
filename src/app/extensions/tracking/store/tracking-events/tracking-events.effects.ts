@@ -5,7 +5,7 @@ import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { camfilUpdateBasketItemsSuccess } from 'camfil-pwa/store/customer/ish-basket/ish-basket.actions';
 import { Observable } from 'rxjs';
-import { filter, map, mergeMap, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
+import { filter, map, mergeMap, skipWhile, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
 
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { selectRouteParam, selectRouter } from 'ish-core/store/core/router';
@@ -16,12 +16,15 @@ import {
   getSubmittedBasket,
 } from 'ish-core/store/customer/basket';
 import { createOrderSuccess } from 'ish-core/store/customer/orders';
+import { getSelectedProduct } from 'ish-core/store/shopping/products';
 import { mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import {
+  addBasketToNewCamCardSuccess,
   addProductToCamCardSuccess,
   createCamCardSuccess,
   deleteCamCardSuccess,
+  getCamCardDetails,
   getSelectedCamCardDetails,
   removeItemFromCamCardSuccess,
   updateCamCardProductSuccess,
@@ -129,8 +132,16 @@ export class TrackingEventsEffects {
     () =>
       this.store.pipe(
         select(selectRouteParam('sku')),
+        switchMapTo(
+          this.store.pipe(
+            select(getSelectedProduct),
+            whenTruthy(),
+            skipWhile(product => !product.salePrice),
+            take(1)
+          )
+        ),
         whenTruthy(),
-        map(([sku, products]) => this.trackingService.trackViewItem(products[sku]))
+        map(product => this.trackingService.trackViewItem(product))
       ),
     { dispatch: false }
   );
@@ -158,6 +169,19 @@ export class TrackingEventsEffects {
     { dispatch: false }
   );
 
+  trackCamCardCreateFromBasket$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(addBasketToNewCamCardSuccess),
+        mapToPayloadProperty('camCard'),
+        tap(camCard => {
+          this.trackingService.trackCamCardCreate(camCard, DataLayerPageType.Checkout);
+          this.trackingService.trackCamCardAddItem(camCard, DataLayerPageType.Checkout);
+        })
+      ),
+    { dispatch: false }
+  );
+
   trackCamCardEdit$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -174,8 +198,7 @@ export class TrackingEventsEffects {
       this.actions$.pipe(
         ofType(addProductToCamCardSuccess),
         mapToPayloadProperty('camCard'),
-        withLatestFrom(this.store.pipe(select(getSelectedCamCardDetails))),
-        map(([, camCardDetails]) => camCardDetails),
+        mergeMap(camCard => this.store.pipe(select(getCamCardDetails, { id: camCard.id }), whenTruthy(), take(1))),
         withLatestFrom(this.getPageTypeFromRouter()),
         tap(([camCard, pageType]) => this.trackingService.trackCamCardAddItem(camCard, pageType))
       ),
@@ -219,6 +242,7 @@ export class TrackingEventsEffects {
   getPageTypeFromRouter(): Observable<DataLayerPageType> {
     return this.store.select(selectRouter).pipe(
       whenTruthy(),
+      skipWhile(router => !router.state || !router.state.path),
       map(router => this.getPageTypeFromPath(router.state.path, router.state.params))
     );
   }

@@ -49,29 +49,23 @@ export class TrackingService {
     this.push(this.buildEventDataFromBasket(DataLayerEventType.CartView, basket));
   }
 
-  trackViewItem(sku: string) {
-    this.getProducts([sku]).subscribe(products => {
-      if (!products || !products.length) {
-        return;
-      }
-      const product = products[0];
-      this.push({
-        event: DataLayerEventType.ItemView,
-        currency: product.salePrice.currency,
-        value: product.salePrice.value,
-        items: [
-          {
-            item_id: product.sku,
-            discount: 0,
-            index: 0,
-            price: product.salePrice.value,
-            quantity: 0,
-            item_name: product.name,
-            item_brand: product.manufacturer,
-            item_category: product.defaultCategory()?.name,
-          },
-        ],
-      });
+  trackViewItem(item: ProductView) {
+    this.push({
+      event: DataLayerEventType.ItemView,
+      currency: item.salePrice?.currency,
+      value: item.salePrice?.value,
+      items: [
+        {
+          item_id: item.sku,
+          discount: 0,
+          index: 0,
+          price: item.salePrice?.value,
+          quantity: 0,
+          item_name: item.name,
+          item_brand: item.manufacturer,
+          item_category: item.defaultCategory()?.name,
+        },
+      ],
     });
   }
 
