@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, combineLatest } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { filter, map, skipWhile, take, tap } from 'rxjs/operators';
 
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
 import { BasketView } from 'ish-core/models/basket/basket.model';
@@ -32,7 +32,7 @@ export class TrackingService {
     private store: Store,
     private featureToggleService: FeatureToggleService,
     private cookiesService: CookiesService
-  ) {}
+  ) { }
 
   trackBeginCheckout(basket: BasketView) {
     this.getProductsFromBasket(basket).subscribe(products =>
@@ -100,34 +100,16 @@ export class TrackingService {
   }
 
   trackOrder(basket: BasketView) {
-    const event: DataLayerEvent = {
-      event: DataLayerEventType.Purchase,
-      currency: basket.purchaseCurrency,
-      purchase: {
-        products: [],
-        actionField: {
-          id: basket.id,
-          affiliation: basket.payment?.displayName,
-          revenue: basket.totals.total.gross,
-          tax: basket.totals.taxTotal.value,
-          shipping: basket.totals.shippingTotal.gross,
-          coupon: basket.promotionCodes?.toString(),
-        },
-      },
-    };
-
-    // add products
-    // tslint:disable-next-line: no-any
-    const productData: Observable<any>[] = [];
-    const mergedLineItems = this.mergeDuplicateLineItemViews(basket.lineItems);
-    mergedLineItems.map(item => productData.push(this.getProductData(item.productSKU, item.quantity.value)));
-    combineLatest(productData)
-      .pipe(take(1))
-      .subscribe((products: DataLayerProduct[]) => {
-        products.forEach(product => event.purchase.products.push(product));
-      });
-
-    this.push(event);
+    this.getProductsFromBasket(basket).subscribe(products => {
+      const event: DataLayerEvent = {
+        ...this.buildEventDataFromBasket(DataLayerEventType.Purchase, basket, products),
+        transaction_id: basket.id,
+        tax: basket.totals.taxTotal.value,
+        shipping: basket.totals.dutiesAndSurchargesTotal.net + basket.totals.shippingTotal.net,
+        value: basket.totals.total.gross
+      };
+      this.push(event);
+    });
   }
 
   trackCamCardCreate(camCard: CamCard) {
@@ -173,41 +155,10 @@ export class TrackingService {
     }
   }
 
-  private getProductData(sku: string, quantity?: number): Observable<DataLayerProduct> {
-    return this.store.pipe(select(getProduct, { sku })).pipe(
-      whenTruthy(),
-      map(product => ({
-        id: product.sku,
-        name: product.name,
-        price: product.salePrice?.value,
-        brand: product.manufacturer,
-        category: product.defaultCategory.name,
-        variant: undefined,
-        quantity,
-      }))
-    );
-  }
-
-  private mergeDuplicateLineItemViews(items: LineItemView[]): LineItemView[] {
-    const mergedItems: LineItemView[] = [];
-    items.forEach(item => {
-      if (mergedItems.some(c => c.productSKU === item.productSKU)) {
-        const targetItem = { ...mergedItems.find(c => c.productSKU === item.productSKU) };
-        const updatedItem = {
-          ...mergedItems.find(c => c.productSKU === item.productSKU),
-          quantity: { ...targetItem.quantity, value: targetItem.quantity.value + item.quantity.value },
-        };
-        const i = mergedItems.indexOf(mergedItems.find(c => c.productSKU === item.productSKU));
-        mergedItems[i] = updatedItem;
-      } else {
-        mergedItems.push(item);
-      }
-    });
-    return mergedItems;
-  }
-
   private getProducts(skus: string[]): Observable<ProductView[]> {
-    return this.store.pipe(select(getProducts, { skus }), take(1));
+    return this.store.pipe(select(getProducts, { skus }),
+      skipWhile(products => products.filter(p => !p || !p.name).length > 0),
+      take(1));
   }
 
   private getProductsFromBasket(basket: BasketView): Observable<ProductView[]> {
@@ -237,7 +188,7 @@ export class TrackingService {
       item_id: item.productSKU,
       discount: 0,
       index: item.position,
-      price: product?.salePrice?.value,
+      price: product && product.salePrice ? product.salePrice.value : item.salePrice.net,
       quantity: item.quantity.value,
       item_name: product?.name,
       item_brand: product?.manufacturer,
@@ -256,21 +207,21 @@ export class TrackingService {
   ): DataLayerEvent {
     const items = camCard.camCardItems
       ? camCard.camCardItems.map(item => {
-          const dataLayerItem: DataLayerItem = {
-            item_id: item.product.sku,
-            discount: 0,
-            index: item.position,
-            quantity: item.quantity,
-            item_name: item.product.name,
-          };
-          const product = products ? products.find(p => p && p.sku === item.product.sku) : undefined;
-          if (product) {
-            dataLayerItem.price = product.salePrice?.value;
-            dataLayerItem.item_brand = product.manufacturer;
-            dataLayerItem.item_category = product.defaultCategory()?.name;
-          }
-          return dataLayerItem;
-        })
+        const dataLayerItem: DataLayerItem = {
+          item_id: item.product.sku,
+          discount: 0,
+          index: item.position,
+          quantity: item.quantity,
+          item_name: item.product.name,
+        };
+        const product = products ? products.find(p => p && p.sku === item.product.sku) : undefined;
+        if (product) {
+          dataLayerItem.price = product.salePrice?.value;
+          dataLayerItem.item_brand = product.manufacturer;
+          dataLayerItem.item_category = product.defaultCategory()?.name;
+        }
+        return dataLayerItem;
+      })
       : [];
     return {
       event: eventType,

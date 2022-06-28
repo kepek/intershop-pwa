@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { camfilUpdateBasketItemsSuccess } from 'camfil-pwa/store/customer/ish-basket/ish-basket.actions';
-import { debounceTime, filter, map, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
+import { debounceTime, filter, map, mergeMap, skipWhile, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
 
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { selectRouteParam } from 'ish-core/store/core/router';
@@ -36,8 +36,16 @@ export class TrackingEventsEffects {
       this.actions$.pipe(
         ofType(addItemsToBasketFromCamCardSuccess),
         withLatestFrom(this.store.select(getCurrentBasket)),
-        map(([, currentBasket]) => currentBasket),
-        tap(currentBasket => this.trackingService.trackCartAddItem(currentBasket))
+        map(([, oldBasket]) => oldBasket),
+        mergeMap(oldBasket => this.store.select(getCurrentBasket).pipe(
+          whenTruthy(),
+          filter(currentBasket => !oldBasket || oldBasket.lineItems.length < currentBasket.lineItems.length),
+          take(1),
+          tap(currentBasket => this.trackingService.trackCartAddItem({
+            ...currentBasket,
+            lineItems: currentBasket.lineItems.filter(newItem => !oldBasket.lineItems.find(oldItem => oldItem.productSKU === newItem.productSKU))
+          }))
+        ))
       ),
     { dispatch: false }
   );
@@ -98,7 +106,6 @@ export class TrackingEventsEffects {
         tap(value => console.log('route action', value)),
         mapToPayloadProperty('routerState'),
         filter(routerState => routerState.url === '/checkout/onestep'),
-        debounceTime(1000),
         switchMapTo(this.store.select(getCurrentBasket)),
         whenTruthy(),
         take(1),
@@ -121,9 +128,11 @@ export class TrackingEventsEffects {
     () =>
       this.actions$.pipe(
         ofType(createOrderSuccess),
+        tap(data => console.log('order created', data)),
         withLatestFrom(this.store.select(getSubmittedBasket)),
         map(([, submittedBasket]) => submittedBasket),
         whenTruthy(),
+        tap(data => console.log('basket from order created', data)),
         tap(submittedBasket => this.trackingService.trackOrder(submittedBasket))
       ),
     { dispatch: false }

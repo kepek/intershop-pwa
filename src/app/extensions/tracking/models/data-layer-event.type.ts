@@ -53,6 +53,9 @@ export interface DataLayerEvent {
   item_list_id?: string;
   item_list_name?: string;
   page_type?: DataLayerPageType;
+  transaction_id?: string;
+  tax?: number;
+  shipping?: number;
 }
 
 export enum DataLayerEventType {
