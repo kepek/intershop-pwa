@@ -74,7 +74,12 @@ export enum DataLayerEventType {
 }
 
 export enum DataLayerPageType {
+  CamCardListing = 'cam card listing page',
+  CamCardDetail = 'cam card detail page',
+  Checkout = 'checkout page',
   ProductListing = 'product listing page',
   ProductDetail = 'product detail page',
+  QuoteListing = 'quote listing',
+  QuoteDetail = 'quote detail',
   SearchResult = 'search result page',
 }

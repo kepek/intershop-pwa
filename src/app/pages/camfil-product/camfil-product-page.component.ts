@@ -23,8 +23,6 @@ import {
 import { generateProductUrl } from 'ish-core/routing/product/product.route';
 import { whenTruthy } from 'ish-core/utils/operators';
 
-import { TrackingFacade } from '../../extensions/tracking/facades/tracking.facade';
-
 @Component({
   selector: 'camfil-product-page',
   templateUrl: './camfil-product-page.component.html',
@@ -46,11 +44,8 @@ export class CamfilProductPageComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
   retailSetParts$ = new ReplaySubject<SkuQuantityType[]>(1);
 
-  trackingDone = false;
-
   constructor(
     private shoppingFacade: ShoppingFacade,
-    private trackingFacade: TrackingFacade,
     private router: Router,
     private featureToggleService: FeatureToggleService,
     private appRef: ApplicationRef,
@@ -79,11 +74,6 @@ export class CamfilProductPageComponent implements OnInit, OnDestroy {
       this.retailSetParts$.next(
         ProductHelper.isRetailSet(product) ? product.partSKUs.map(sku => ({ sku, quantity: 1 })) : []
       );
-
-      if (!this.trackingDone) {
-        this.trackingFacade.trackProductDetails(product);
-        this.trackingDone = true;
-      }
     });
 
     this.price$ = this.product$.pipe(
