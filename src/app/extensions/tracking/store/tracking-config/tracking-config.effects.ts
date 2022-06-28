@@ -1,4 +1,3 @@
-import { isPlatformServer } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Actions, createEffect } from '@ngrx/effects';
@@ -43,7 +42,7 @@ export class TrackingConfigEffects {
 
   setGTMToken$ = createEffect(() =>
     this.actions$.pipe(
-      takeWhile(() => isPlatformServer(this.platformId) && this.featureToggleService.enabled('tracking')),
+      takeWhile(() => this.featureToggleService.enabled('tracking')),
       take(1),
       withLatestFrom(this.stateProperties.getStateOrEnvOrDefault<string>('GTM_TOKEN', 'gtmToken')),
       map(([, gtmToken]) => gtmToken),
