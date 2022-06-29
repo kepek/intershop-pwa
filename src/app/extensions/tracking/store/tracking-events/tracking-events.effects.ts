@@ -132,15 +132,15 @@ export class TrackingEventsEffects {
     () =>
       this.store.pipe(
         select(selectRouteParam('sku')),
+        whenTruthy(),
         switchMapTo(
           this.store.pipe(
             select(getSelectedProduct),
             whenTruthy(),
-            skipWhile(product => !product.salePrice),
+            skipWhile(product => !product.salePrice || !product.defaultCategory || !product.defaultCategory()),
             take(1)
           )
         ),
-        whenTruthy(),
         map(product => this.trackingService.trackViewItem(product))
       ),
     { dispatch: false }
