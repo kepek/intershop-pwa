@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { filter, map, mergeMap, skipWhile, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
 
 import { BasketView } from 'ish-core/models/basket/basket.model';
+import { ofCategoryUrl } from 'ish-core/routing/category/category.route';
 import { selectRouteParam, selectRouter } from 'ish-core/store/core/router';
 import {
   addItemsToBasketFromCamCardSuccess,
@@ -16,6 +17,7 @@ import {
   getSubmittedBasket,
 } from 'ish-core/store/customer/basket';
 import { createOrderSuccess } from 'ish-core/store/customer/orders';
+import { getSelectedCategory, loadCategorySuccess } from 'ish-core/store/shopping/categories';
 import { getSelectedProduct } from 'ish-core/store/shopping/products';
 import { mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
@@ -235,6 +237,21 @@ export class TrackingEventsEffects {
         mapToPayloadProperty('camCardId'),
         withLatestFrom(this.getPageTypeFromRouter()),
         tap(([camCardId, pageType]) => this.trackingService.trackCamCardDelete(camCardId, pageType))
+      ),
+    { dispatch: false }
+  );
+  trackViewItemList$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loadCategorySuccess),
+        switchMapTo(
+          this.store.pipe(
+            ofCategoryUrl(),
+            select(getSelectedCategory),
+            whenTruthy(),
+            map(categoryView => this.trackingService.trackViewItemList(categoryView))
+          )
+        )
       ),
     { dispatch: false }
   );

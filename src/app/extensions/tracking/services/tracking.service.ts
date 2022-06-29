@@ -5,6 +5,7 @@ import { skipWhile, take } from 'rxjs/operators';
 
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
 import { BasketView } from 'ish-core/models/basket/basket.model';
+import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { getProducts } from 'ish-core/store/shopping/products';
@@ -69,18 +70,11 @@ export class TrackingService {
     });
   }
 
-  trackViewItemList(item: ProductView, page: DataLayerPageType) {
+  trackViewItemList(item: CategoryView) {
     const event: DataLayerEvent = {
       event: DataLayerEventType.ItemListView,
-      item_list_id: page,
-      items: [
-        {
-          item_id: item.sku,
-          item_name: item.name,
-          price: item.salePrice?.value,
-          quantity: 0,
-        },
-      ],
+      item_list_id: item.uniqueId,
+      item_list_name: item.name,
     };
 
     this.push(event);
