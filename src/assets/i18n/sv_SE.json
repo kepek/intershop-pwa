@@ -515,6 +515,7 @@
   "camfil.account.apply_message": "För att få tillgång till alla kontofördelar ber vi dig att fylla i informationen nedan.",
   "camfil.account.approvallist.table.box_label": "sv_Box label",
   "camfil.account.approvallist.table.order_channel": "sv_Order channel",
+  "camfil.account.approvals.last_product_removed.text": "(sv_SE)_Last Product has been removed and approval has been deleted sucessfully",
   "camfil.account.approvals.product_added.text": "sv_Product has been added to approval successfully",
   "camfil.account.approvals.product_removed.text": "sv_Product has been removed from approval successfully",
   "camfil.account.approvals.product_validation_fail.text": "(sv_SE)_Selected item is no longer for sale",

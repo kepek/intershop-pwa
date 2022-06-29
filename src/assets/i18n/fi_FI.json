@@ -515,6 +515,7 @@
   "camfil.account.apply_message": "Täytä alla olevat tiedot, niin luomme sinulle käyttäjätilin webkauppaamme. Pakolliset kentät on merkitty tähdellä.",
   "camfil.account.approvallist.table.box_label": "fi_Box label",
   "camfil.account.approvallist.table.order_channel": "fi_Order channel",
+  "camfil.account.approvals.last_product_removed.text": "(fi_FI)_Last Product has been removed and approval has been deleted sucessfully",
   "camfil.account.approvals.product_added.text": "fi_Product has been added to approval successfully",
   "camfil.account.approvals.product_removed.text": "fi_Product has been removed from approval successfully",
   "camfil.account.approvals.product_validation_fail.text": "(fi_FI)_Selected item is no longer for sale",

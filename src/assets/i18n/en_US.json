@@ -515,6 +515,7 @@
   "camfil.account.apply_message": "To take full advantage of account features and benefits, please provide all the information below.",
   "camfil.account.approvallist.table.box_label": "Box label",
   "camfil.account.approvallist.table.order_channel": "Order channel",
+  "camfil.account.approvals.last_product_removed.text": "(en_US)_Last Product has been removed and approval has been deleted sucessfully",
   "camfil.account.approvals.product_added.text": "Product has been added to approval successfully",
   "camfil.account.approvals.product_removed.text": "Product has been removed from approval successfully",
   "camfil.account.approvals.product_validation_fail.text": "(en_US)_Selected item is no longer for sale",

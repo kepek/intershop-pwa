@@ -503,6 +503,7 @@
   "camfil.account.apply_message": "Um alle Funktionen und Vorteile Ihres Benutzerkontos nutzen zu können, geben Sie bitte alle folgenden Informationen an.",
   "camfil.account.approvallist.table.box_label": "Kartonsignierung",
   "camfil.account.approvallist.table.order_channel": "Bestellkanal",
+  "camfil.account.approvals.last_product_removed.text": "(de_DE)_Last Product has been removed and approval has been deleted sucessfully",
   "camfil.account.approvals.product_added.text": "Das Produkt wurde erfolgreich zur Genehmigung hinzugefügt",
   "camfil.account.approvals.product_removed.text": "Das Produkt wurde erfolgreich aus der Genehmigung entfernt",
   "camfil.account.approvals.product_validation_fail.text": "Das ausgewählte Produkt ist online leider nicht Verfügbar",

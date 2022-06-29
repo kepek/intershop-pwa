@@ -515,6 +515,7 @@
   "camfil.account.apply_message": "Pour profiter pleinement des caractéristiques et avantages du compte, veuillez fournir toutes les informations demandées ci-dessous.",
   "camfil.account.approvallist.table.box_label": "fr_Box label",
   "camfil.account.approvallist.table.order_channel": "fr_Order channel",
+  "camfil.account.approvals.last_product_removed.text": "(fr_FR)_Last Product has been removed and approval has been deleted sucessfully",
   "camfil.account.approvals.product_added.text": "fr_Product has been added to approval successfully",
   "camfil.account.approvals.product_removed.text": "fr_Product has been removed from approval successfully",
   "camfil.account.approvals.product_validation_fail.text": "(fr_FR)_Selected item is no longer for sale",

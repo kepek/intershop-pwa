@@ -515,6 +515,7 @@
   "camfil.account.apply_message": "Per trarre il massimo vantaggio dalle caratteristiche e dai benefici del conto, si prega di fornire tutte le informazioni qui sotto.",
   "camfil.account.approvallist.table.box_label": "Etichetta della scatola",
   "camfil.account.approvallist.table.order_channel": "Canale dell'ordine",
+  "camfil.account.approvals.last_product_removed.text": "(it_IT)_Last Product has been removed and approval has been deleted sucessfully",
   "camfil.account.approvals.product_added.text": "Il prodotto è stato aggiunto all'approvazione con successo",
   "camfil.account.approvals.product_removed.text": "Il prodotto è stato rimosso dall'approvazione con successo",
   "camfil.account.approvals.product_validation_fail.text": "(it_IT)_Selected item is no longer for sale",
