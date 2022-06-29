@@ -125,6 +125,24 @@ export const removeProductFromCamfilRequisitionFail = createAction(
   httpError()
 );
 
+export const removeLastProductFromCamfilRequisition = createAction(
+  '[Camfil Requisitions API] Remove Last Line Item From Requisition',
+  payload<{
+    lineItemId: string;
+    requisitionId?: string;
+  }>()
+);
+
+export const removeLastProductFromCamfilRequisitionSuccess = createAction(
+  '[Camfil Requisitions API] Remove Last Line Item From Requisition Success',
+  payload<{ requisitionId: string }>()
+);
+
+export const removeLastProductFromCamfilRequisitionFail = createAction(
+  '[Camfil Requisitions API] Remove Last Line Item Requisition Fail',
+  httpError()
+);
+
 export const removeMultipleProductsFromCamfilRequisition = createAction(
   '[Camfil Requisitions API] Remove Multiple Line Items From Requisition',
   payload<{

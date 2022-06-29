@@ -48,6 +48,9 @@ import {
   loadCamfilRequisitionsFail,
   loadCamfilRequisitionsSuccess,
   loadCamfilRequisitionsuccess,
+  removeLastProductFromCamfilRequisition,
+  removeLastProductFromCamfilRequisitionFail,
+  removeLastProductFromCamfilRequisitionSuccess,
   removeProductFromCamfilRequisition,
   removeProductFromCamfilRequisitionFail,
   removeProductFromCamfilRequisitionSuccess,
@@ -351,6 +354,31 @@ export class CamfilRequisitionsEffects {
           mapErrorToAction(removeProductFromCamfilRequisitionFail)
         )
       )
+    )
+  );
+
+  removeLastProductFromCamfilRequisition$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(removeLastProductFromCamfilRequisition),
+      mapToPayload(),
+      concatMap(({ lineItemId, requisitionId }) =>
+        this.requisitionsService.removeProductsFromCamfilRequisition(lineItemId, requisitionId).pipe(
+          map(() => removeLastProductFromCamfilRequisitionSuccess({ requisitionId })),
+          mapErrorToAction(removeLastProductFromCamfilRequisitionFail)
+        )
+      )
+    )
+  );
+
+  removeLastProductFromCamfilRequisitionSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(removeLastProductFromCamfilRequisitionSuccess),
+      map(() =>
+        displaySuccessMessage({
+          message: 'camfil.account.approvals.last_product_removed.text',
+        })
+      ),
+      tap(() => this.router.navigate(['/account/requisitions/approver']))
     )
   );
 

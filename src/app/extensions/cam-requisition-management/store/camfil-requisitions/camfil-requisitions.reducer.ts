@@ -23,6 +23,7 @@ import {
   loadCamfilRequisitionsFail,
   loadCamfilRequisitionsSuccess,
   loadCamfilRequisitionsuccess,
+  removeLastProductFromCamfilRequisitionSuccess,
   updateCamfilRequisition,
   updateCamfilRequisitionAddress,
   updateCamfilRequisitionAddressSuccess,
@@ -210,5 +211,10 @@ export const requisitionsReducer = createReducer(
     };
 
     return camfilRequisitionsAdapter.upsertOne(approvedRequisition, state);
+  }),
+  on(removeLastProductFromCamfilRequisitionSuccess, (state: CamfilRequisitionsState, action) => {
+    const { requisitionId } = action.payload;
+
+    return camfilRequisitionsAdapter.removeOne(requisitionId, state);
   })
 );

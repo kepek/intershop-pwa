@@ -18,6 +18,7 @@ import {
   getCamfilRequisitionsError,
   getCamfilRequisitionsLoading,
   loadCamfilRequisition,
+  removeLastProductFromCamfilRequisition,
   removeMultipleProductsFromCamfilRequisition,
   removeProductFromCamfilRequisition,
   updateCamfilRequisitionStatus,
@@ -149,6 +150,15 @@ export class CamfilRequisitionContextFacade
   removeSelectedLineItem(lineItemId: string) {
     this.store.dispatch(
       removeProductFromCamfilRequisition({
+        lineItemId,
+        requisitionId: this.get('entity', 'id'),
+      })
+    );
+  }
+
+  removeLastLineItem(lineItemId: string) {
+    this.store.dispatch(
+      removeLastProductFromCamfilRequisition({
         lineItemId,
         requisitionId: this.get('entity', 'id'),
       })

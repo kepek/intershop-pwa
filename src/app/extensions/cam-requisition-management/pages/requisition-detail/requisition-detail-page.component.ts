@@ -121,10 +121,14 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  removeSelectedLineItem(lineItemId, requisition: CamfilRequisition) {
+  removeSelectedLineItem({ lineItemId, lastItemRemoval = false }, requisition: CamfilRequisition) {
     const { approval } = requisition;
     if (this.getIsCamfilRequisitionEditable(approval)) {
-      this.context.removeSelectedLineItem(lineItemId);
+      if (lastItemRemoval) {
+        this.context.removeLastLineItem(lineItemId);
+      } else {
+        this.context.removeSelectedLineItem(lineItemId);
+      }
     }
   }
 

@@ -34,7 +34,7 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
   @Input() deviceType: DeviceType;
   @Output() checkAllLineItems = new EventEmitter<string[]>();
   @Output() removeSelectedProducts = new EventEmitter();
-  @Output() removeSelectedProduct = new EventEmitter<string>();
+  @Output() removeSelectedProduct = new EventEmitter<{ lineItemId: string; lastItemRemoval: boolean }>();
   todayDate = new Date();
   lineItemsProcessed: MatTableDataSource<LineItem>;
   lineItemIdToDelete: string;
@@ -55,6 +55,7 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
   ];
   isMobileView = false;
   editable = true;
+  removeProductText = 'camfil.checkout.order.delete_line_item.modal.subheading';
   getIsCamfilRequisitionEditable = CamfilRequisitionHelper.getIsCamfilRequisitionEditable;
 
   constructor(private shoppingFacade: ShoppingFacade, public dialog: MatDialog) {}
@@ -105,6 +106,10 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
 
   openDeleteModal(modal: CamfilSmallCtaModalComponent, lineItemId) {
     if (this.getIsCamfilRequisitionEditable(this.requisition.approval)) {
+      this.removeProductText =
+        this.lineItems?.length === 1
+          ? 'camfil.checkout.order.last_delete_line_item.modal.subheading'
+          : 'camfil.checkout.order.delete_line_item.modal.subheading';
       this.dialog.open(modal.show());
       modal.hide = () => this.dialog.closeAll();
       this.lineItemIdToDelete = lineItemId;
@@ -113,7 +118,8 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
 
   removeProduct(modal: CamfilSmallCtaModalComponent) {
     if (this.getIsCamfilRequisitionEditable(this.requisition.approval)) {
-      this.removeSelectedProduct.emit(this.lineItemIdToDelete);
+      const lastItemRemoval = this.lineItems?.length === 1;
+      this.removeSelectedProduct.emit({ lineItemId: this.lineItemIdToDelete, lastItemRemoval });
       modal.hide();
     }
   }
