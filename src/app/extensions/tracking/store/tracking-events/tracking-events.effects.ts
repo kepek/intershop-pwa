@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Params } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { camfilUpdateBasketItemsSuccess } from 'camfil-pwa/store/customer/ish-basket/ish-basket.actions';
-import { map, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { filter, map, mergeMap, skipWhile, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
 
 import { BasketView } from 'ish-core/models/basket/basket.model';
-import { ofUrl } from 'ish-core/store/core/router';
+import { selectRouteParam, selectRouter } from 'ish-core/store/core/router';
 import {
   addItemsToBasketFromCamCardSuccess,
   deleteBasketItemSuccess,
@@ -14,41 +16,52 @@ import {
   getSubmittedBasket,
 } from 'ish-core/store/customer/basket';
 import { createOrderSuccess } from 'ish-core/store/customer/orders';
+import { getSelectedProduct } from 'ish-core/store/shopping/products';
 import { mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import {
+  addBasketToNewCamCardSuccess,
   addProductToCamCardSuccess,
   createCamCardSuccess,
   deleteCamCardSuccess,
+  getCamCardDetails,
   getSelectedCamCardDetails,
   removeItemFromCamCardSuccess,
   updateCamCardProductSuccess,
   updateCamCardSuccess,
 } from '../../../cam-cards/store/cam-card';
+import { DataLayerPageType } from '../../models/data-layer-event.type';
 import { TrackingService } from '../../services/tracking.service';
 
 @Injectable()
 export class TrackingEventsEffects {
   constructor(private actions$: Actions, private store: Store, private trackingService: TrackingService) {}
 
-  // trackBeginCheckout$ = createEffect(
-  //   () =>
-  //     this.actions$.pipe(
-  //       ofType(continueCheckout),
-  //       filter(({ payload }) => payload.targetStep === 5),
-  //       withLatestFrom(this.store.select(getCurrentBasket)),
-  //       tap(([, currentBasket]) => this.trackingService.trackBeginCheckout(currentBasket))
-  //     ),
-  //   { dispatch: false }
-  // );
-
   trackAddItemsToBasket$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(addItemsToBasketFromCamCardSuccess),
         withLatestFrom(this.store.select(getCurrentBasket)),
-        map(([, currentBasket]) => currentBasket),
-        tap(currentBasket => this.trackingService.trackCartAddItem(currentBasket))
+        map(([, oldBasket]) => oldBasket),
+        mergeMap(oldBasket =>
+          this.store.select(getCurrentBasket).pipe(
+            whenTruthy(),
+            filter(currentBasket => !oldBasket || oldBasket.lineItems.length < currentBasket.lineItems.length),
+            take(1),
+            withLatestFrom(this.getPageTypeFromRouter()),
+            tap(([currentBasket, pageType]) =>
+              this.trackingService.trackCartAddItem(
+                {
+                  ...currentBasket,
+                  lineItems: currentBasket.lineItems.filter(
+                    newItem => !oldBasket.lineItems.find(oldItem => oldItem.productSKU === newItem.productSKU)
+                  ),
+                },
+                pageType
+              )
+            )
+          )
+        )
       ),
     { dispatch: false }
   );
@@ -57,9 +70,7 @@ export class TrackingEventsEffects {
     () =>
       this.actions$.pipe(
         ofType(camfilUpdateBasketItemsSuccess),
-        tap(() => console.log('updateBasketItemsSuccess')),
         withLatestFrom(this.store.select(getCurrentBasket)),
-        tap(() => console.log('getCurrentBasket')),
         map(([result, currentBasket]) => ({ updatedItems: result.payload.lineItemUpdates, currentBasket })),
         tap(updatedBasket =>
           updatedBasket.updatedItems.map(updatedItem => {
@@ -78,10 +89,10 @@ export class TrackingEventsEffects {
                 lineItems,
               };
               if (diff > 0) {
-                return this.trackingService.trackCartRemoveItem(basket);
+                return this.trackingService.trackCartRemoveItem(basket, DataLayerPageType.Checkout);
               }
 
-              this.trackingService.trackCartAddItem(basket);
+              this.trackingService.trackCartAddItem(basket, DataLayerPageType.Checkout);
             }
           })
         )
@@ -96,11 +107,9 @@ export class TrackingEventsEffects {
         withLatestFrom(this.store.select(getCurrentBasket)),
         map(([deleteItemPayload, currentBasket]) => ({
           ...currentBasket,
-          lineItems: currentBasket.lineItems
-            .filter(i => i.id === deleteItemPayload.payload.itemId)
-            .map(item => ({ ...item, quantity: { value: 0 } })),
+          lineItems: currentBasket.lineItems.filter(i => i.id === deleteItemPayload.payload.itemId),
         })),
-        tap(currentBasket => this.trackingService.trackCartRemoveItem(currentBasket))
+        tap(currentBasket => this.trackingService.trackCartRemoveItem(currentBasket, DataLayerPageType.Checkout))
       ),
     { dispatch: false }
   );
@@ -109,29 +118,33 @@ export class TrackingEventsEffects {
     () =>
       this.actions$.pipe(
         ofType(routerNavigatedAction),
-        switchMapTo(
-          this.store.pipe(
-            ofUrl(/^\/checkout\/onestep/),
-            take(1),
-            select(getCurrentBasket),
-            whenTruthy(),
-            map(currentBasket => this.trackingService.trackBeginCheckout(currentBasket))
-          )
-        )
+        mapToPayloadProperty('routerState'),
+        filter(routerState => routerState.url === '/checkout/onestep'),
+        switchMapTo(this.store.select(getCurrentBasket)),
+        whenTruthy(),
+        take(1),
+        map(currentBasket => this.trackingService.trackBeginCheckout(currentBasket))
       ),
     { dispatch: false }
   );
 
-  // trackViewItem$ = createEffect(
-  //   () =>
-  //     this.store.pipe(
-  //       select(selectRouteParam('sku')),
-  //       whenTruthy(),
-  //       withLatestFrom(this.store.pipe(select(getProductEntities))),
-  //       map(([sku, products]) => this.trackingService.trackViewItem(products[sku]))
-  //     ),
-  //   { dispatch: false }
-  // );
+  trackViewItem$ = createEffect(
+    () =>
+      this.store.pipe(
+        select(selectRouteParam('sku')),
+        whenTruthy(),
+        switchMapTo(
+          this.store.pipe(
+            select(getSelectedProduct),
+            whenTruthy(),
+            skipWhile(product => !product.salePrice || !product.defaultCategory || !product.defaultCategory()),
+            take(1)
+          )
+        ),
+        map(product => this.trackingService.trackViewItem(product))
+      ),
+    { dispatch: false }
+  );
 
   trackOrder$ = createEffect(
     () =>
@@ -150,7 +163,21 @@ export class TrackingEventsEffects {
       this.actions$.pipe(
         ofType(createCamCardSuccess),
         mapToPayloadProperty('camCard'),
-        tap(camCard => this.trackingService.trackCamCardCreate(camCard))
+        withLatestFrom(this.getPageTypeFromRouter()),
+        tap(([camCard, pageType]) => this.trackingService.trackCamCardCreate(camCard, pageType))
+      ),
+    { dispatch: false }
+  );
+
+  trackCamCardCreateFromBasket$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(addBasketToNewCamCardSuccess),
+        mapToPayloadProperty('camCard'),
+        tap(camCard => {
+          this.trackingService.trackCamCardCreate(camCard, DataLayerPageType.Checkout);
+          this.trackingService.trackCamCardAddItem(camCard, DataLayerPageType.Checkout);
+        })
       ),
     { dispatch: false }
   );
@@ -170,9 +197,10 @@ export class TrackingEventsEffects {
     () =>
       this.actions$.pipe(
         ofType(addProductToCamCardSuccess),
-        withLatestFrom(this.store.pipe(select(getSelectedCamCardDetails))),
-        map(([, camCardDetails]) => camCardDetails),
-        tap(camCard => this.trackingService.trackCamCardAddItem(camCard))
+        mapToPayloadProperty('camCard'),
+        mergeMap(camCard => this.store.pipe(select(getCamCardDetails, { id: camCard.id }), whenTruthy(), take(1))),
+        withLatestFrom(this.getPageTypeFromRouter()),
+        tap(([camCard, pageType]) => this.trackingService.trackCamCardAddItem(camCard, pageType))
       ),
     { dispatch: false }
   );
@@ -183,7 +211,8 @@ export class TrackingEventsEffects {
         ofType(updateCamCardProductSuccess),
         withLatestFrom(this.store.pipe(select(getSelectedCamCardDetails))),
         map(([, camCardDetails]) => camCardDetails),
-        tap(camCard => this.trackingService.trackCamCardEdit(camCard))
+        withLatestFrom(this.getPageTypeFromRouter()),
+        tap(([camCard, pageType]) => this.trackingService.trackCamCardEdit(camCard, pageType))
       ),
     { dispatch: false }
   );
@@ -204,8 +233,41 @@ export class TrackingEventsEffects {
       this.actions$.pipe(
         ofType(deleteCamCardSuccess),
         mapToPayloadProperty('camCardId'),
-        tap(camCardId => this.trackingService.trackCamCardDelete(camCardId))
+        withLatestFrom(this.getPageTypeFromRouter()),
+        tap(([camCardId, pageType]) => this.trackingService.trackCamCardDelete(camCardId, pageType))
       ),
     { dispatch: false }
   );
+
+  getPageTypeFromRouter(): Observable<DataLayerPageType> {
+    return this.store.select(selectRouter).pipe(
+      whenTruthy(),
+      skipWhile(router => !router.state || !router.state.path),
+      map(router => this.getPageTypeFromPath(router.state.path, router.state.params))
+    );
+  }
+
+  getPageTypeFromPath(path: string, params: Params): DataLayerPageType {
+    if (path === 'account/camcards') {
+      return DataLayerPageType.CamCardListing;
+    }
+
+    if (path === 'account/camcards/:camCardName') {
+      return DataLayerPageType.CamCardDetail;
+    }
+
+    if (path === 'account/quotes/:id') {
+      return DataLayerPageType.QuoteDetail;
+    }
+
+    if (path.includes('checkout')) {
+      return DataLayerPageType.Checkout;
+    }
+
+    if (params && params.sku) {
+      return DataLayerPageType.ProductDetail;
+    }
+
+    return DataLayerPageType.ProductListing;
+  }
 }
