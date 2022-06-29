@@ -48,6 +48,9 @@ import {
   loadCamfilRequisitionsFail,
   loadCamfilRequisitionsSuccess,
   loadCamfilRequisitionsuccess,
+  removeLastProductFromCamfilRequisition,
+  removeLastProductFromCamfilRequisitionFail,
+  removeLastProductFromCamfilRequisitionSuccess,
   removeProductFromCamfilRequisition,
   removeProductFromCamfilRequisitionFail,
   removeProductFromCamfilRequisitionSuccess,
@@ -67,9 +70,6 @@ import {
   updateCamfilRequisitionSuccess,
   updateMultipleCamfilRequisitionStatus,
   updateMultipleCamfileRequisitionStatusFail,
-  removeLastProductFromCamfilRequisitionSuccess,
-  removeLastProductFromCamfilRequisitionFail,
-  removeLastProductFromCamfilRequisition,
 } from './camfil-requisitions.actions';
 import { getSelectedCamfilRequisitionId } from './camfil-requisitions.selectors';
 

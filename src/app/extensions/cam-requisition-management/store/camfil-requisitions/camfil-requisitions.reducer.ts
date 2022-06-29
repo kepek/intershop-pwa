@@ -23,6 +23,7 @@ import {
   loadCamfilRequisitionsFail,
   loadCamfilRequisitionsSuccess,
   loadCamfilRequisitionsuccess,
+  removeLastProductFromCamfilRequisitionSuccess,
   updateCamfilRequisition,
   updateCamfilRequisitionAddress,
   updateCamfilRequisitionAddressSuccess,
@@ -37,7 +38,6 @@ import {
   updateMultipleCamfilRequisitionStatus,
   updateMultipleCamfilRequisitionStatusSuccess,
   updateMultipleCamfileRequisitionStatusFail,
-  removeLastProductFromCamfilRequisitionSuccess,
 } from './camfil-requisitions.actions';
 
 export const camfilRequisitionsAdapter = createEntityAdapter<CamfilRequisition>();
