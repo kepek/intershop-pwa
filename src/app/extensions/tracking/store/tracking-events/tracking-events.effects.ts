@@ -8,9 +8,8 @@ import { Observable } from 'rxjs';
 import { filter, map, mergeMap, skipWhile, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
 
 import { BasketView } from 'ish-core/models/basket/basket.model';
-import { selectRouteParam, selectRouter } from 'ish-core/store/core/router';
 import { ofCategoryUrl } from 'ish-core/routing/category/category.route';
-
+import { selectRouteParam, selectRouter } from 'ish-core/store/core/router';
 import {
   addItemsToBasketFromCamCardSuccess,
   deleteBasketItemSuccess,
@@ -18,8 +17,8 @@ import {
   getSubmittedBasket,
 } from 'ish-core/store/customer/basket';
 import { createOrderSuccess } from 'ish-core/store/customer/orders';
-import { getSelectedProduct } from 'ish-core/store/shopping/products';
 import { getSelectedCategory, loadCategorySuccess } from 'ish-core/store/shopping/categories';
+import { getSelectedProduct } from 'ish-core/store/shopping/products';
 import { mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import {
@@ -241,6 +240,21 @@ export class TrackingEventsEffects {
       ),
     { dispatch: false }
   );
+  trackViewItemList$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loadCategorySuccess),
+        switchMapTo(
+          this.store.pipe(
+            ofCategoryUrl(),
+            select(getSelectedCategory),
+            whenTruthy(),
+            map(categoryView => this.trackingService.trackViewItemList(categoryView))
+          )
+        )
+      ),
+    { dispatch: false }
+  );
 
   getPageTypeFromRouter(): Observable<DataLayerPageType> {
     return this.store.select(selectRouter).pipe(
@@ -273,19 +287,4 @@ export class TrackingEventsEffects {
 
     return DataLayerPageType.ProductListing;
   }
-  trackViewItemList$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(loadCategorySuccess),
-        switchMapTo(
-          this.store.pipe(
-            ofCategoryUrl(),
-            select(getSelectedCategory),
-            whenTruthy(),
-            map(categoryView => this.trackingService.trackViewItemList(categoryView))
-          )
-        )
-      ),
-    { dispatch: false }
-  );
 }
