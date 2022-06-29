@@ -108,7 +108,7 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
     if (this.getIsCamfilRequisitionEditable(this.requisition.approval)) {
       this.removeProductText =
         this.lineItems?.length === 1
-          ? 'Last product removal warning'
+          ? 'camfil.checkout.order.last_delete_line_item.modal.subheading'
           : 'camfil.checkout.order.delete_line_item.modal.subheading';
       this.dialog.open(modal.show());
       modal.hide = () => this.dialog.closeAll();

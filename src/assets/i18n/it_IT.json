@@ -928,6 +928,7 @@
   "camfil.checkout.order.delete_order.modal.no": "No",
   "camfil.checkout.order.delete_order.modal.subheading": "Sei sicuro di voler cancellare il tuo ordine?",
   "camfil.checkout.order.delete_order.modal.yes": "Sì",
+  "camfil.checkout.order.last_delete_line_item.modal.subheading": "(it_IT)_Do you want to remove last product and approval as well?",
   "camfil.checkout.order.product_not_available.text": "Il prodotto non è disponibile",
   "camfil.checkout.order_header.invoice_label.error.maxLength": "L'etichetta della fattura non deve superare i 60 caratteri.",
   "camfil.checkout.order_header.invoice_label.error.required": "Inserisci l'etichetta della fattura",

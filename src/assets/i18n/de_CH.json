@@ -916,6 +916,7 @@
   "camfil.checkout.order.delete_order.modal.no": "Nein",
   "camfil.checkout.order.delete_order.modal.subheading": "Sind Sie sicher das Sie die Bestellung löschen möchten?",
   "camfil.checkout.order.delete_order.modal.yes": "Ja",
+  "camfil.checkout.order.last_delete_line_item.modal.subheading": "(de_CH)_Do you want to remove last product and approval as well?",
   "camfil.checkout.order.product_not_available.text": "Das Produkt ist nicht verfügbar",
   "camfil.checkout.order_header.invoice_label.error.maxLength": "Die Objektbezeichnung für die Rechnung darf nicht länger sein als 60 Zeichen.",
   "camfil.checkout.order_header.invoice_label.error.required": "Bitte geben Sie eine Objektbezeichnung ein",

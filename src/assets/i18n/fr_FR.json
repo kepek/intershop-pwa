@@ -928,6 +928,7 @@
   "camfil.checkout.order.delete_order.modal.no": "Non",
   "camfil.checkout.order.delete_order.modal.subheading": "Êtes-vous sûr.e de vouloir supprimer votre commande ?",
   "camfil.checkout.order.delete_order.modal.yes": "Oui",
+  "camfil.checkout.order.last_delete_line_item.modal.subheading": "(fr_FR)_Do you want to remove last product and approval as well?",
   "camfil.checkout.order.product_not_available.text": "Le produit n’est pas disponible",
   "camfil.checkout.order_header.invoice_label.error.maxLength": "La note de facturation ne doit pas dépasser 60 caractères.",
   "camfil.checkout.order_header.invoice_label.error.required": "Veuillez saisir la note de facturation",

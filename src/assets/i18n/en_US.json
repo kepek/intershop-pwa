@@ -928,6 +928,7 @@
   "camfil.checkout.order.delete_order.modal.no": "No",
   "camfil.checkout.order.delete_order.modal.subheading": "Are you sure you want to delete your order?",
   "camfil.checkout.order.delete_order.modal.yes": "Yes",
+  "camfil.checkout.order.last_delete_line_item.modal.subheading": "(en_US)_Do you want to remove last product and approval as well?",
   "camfil.checkout.order.product_not_available.text": "Product is Not Available",
   "camfil.checkout.order_header.invoice_label.error.maxLength": "Invoice label must not exceed 60 characters.",
   "camfil.checkout.order_header.invoice_label.error.required": "Please enter invoice label",
