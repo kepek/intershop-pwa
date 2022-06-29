@@ -50,6 +50,27 @@ export class TrackingService {
     this.push(this.buildEventDataFromBasket(DataLayerEventType.CartView, basket));
   }
 
+  trackSelectItem(item: ProductView, pageType: DataLayerPageType) {
+    this.push({
+      event: DataLayerEventType.ItemSelect,
+      currency: item.salePrice?.currency,
+      value: item.salePrice?.value,
+      items: [
+        {
+          item_id: item.sku,
+          discount: 0,
+          index: 0,
+          price: item.salePrice?.value,
+          quantity: 0,
+          item_name: item.name,
+          item_brand: item.manufacturer,
+          item_category: item.defaultCategory()?.name,
+        },
+      ],
+      page_type: pageType,
+    });
+  }
+
   trackViewItem(item: ProductView) {
     this.push({
       event: DataLayerEventType.ItemView,

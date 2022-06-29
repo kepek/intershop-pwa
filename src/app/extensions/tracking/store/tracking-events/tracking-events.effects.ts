@@ -5,7 +5,7 @@ import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { camfilUpdateBasketItemsSuccess } from 'camfil-pwa/store/customer/ish-basket/ish-basket.actions';
 import { Observable } from 'rxjs';
-import { filter, map, mergeMap, skipWhile, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
+import { filter, map, mergeMap, pairwise, skipWhile, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
 
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { ofCategoryUrl } from 'ish-core/routing/category/category.route';
@@ -55,9 +55,7 @@ export class TrackingEventsEffects {
               this.trackingService.trackCartAddItem(
                 {
                   ...currentBasket,
-                  lineItems: currentBasket.lineItems.filter(
-                    newItem => !oldBasket.lineItems.find(oldItem => oldItem.productSKU === newItem.productSKU)
-                  ),
+                  lineItems: [currentBasket.lineItems[currentBasket.lineItems.length - 1]],
                 },
                 pageType
               )
@@ -126,6 +124,38 @@ export class TrackingEventsEffects {
         whenTruthy(),
         take(1),
         map(currentBasket => this.trackingService.trackBeginCheckout(currentBasket))
+      ),
+    { dispatch: false }
+  );
+
+  trackSelectItem$ = createEffect(
+    () =>
+      this.store.pipe(
+        select(selectRouter),
+        whenTruthy(),
+        pairwise(),
+        filter(
+          ([prevRoute, currentRoute]) =>
+            prevRoute &&
+            prevRoute.state &&
+            currentRoute &&
+            currentRoute.state &&
+            currentRoute.state.params &&
+            currentRoute.state.params.sku
+        ),
+        mergeMap(([prevRoute]) =>
+          this.store.pipe(
+            select(getSelectedProduct),
+            whenTruthy(),
+            skipWhile(product => !product.salePrice || !product.defaultCategory || !product.defaultCategory()),
+            take(1),
+            map(product => ({
+              product,
+              pageType: this.getPageTypeFromPath(prevRoute.state.path, prevRoute.state.params),
+            }))
+          )
+        ),
+        tap(({ product, pageType }) => this.trackingService.trackSelectItem(product, pageType))
       ),
     { dispatch: false }
   );
