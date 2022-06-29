@@ -32,7 +32,7 @@ import {
   updateCamCardProductSuccess,
   updateCamCardSuccess,
 } from '../../../cam-cards/store/cam-card';
-import { DataLayerPageType } from '../../models/data-layer-event.type';
+import { DataLayerOrderType, DataLayerPageType } from '../../models/data-layer-event.type';
 import { TrackingService } from '../../services/tracking.service';
 
 @Injectable()
@@ -49,17 +49,17 @@ export class TrackingEventsEffects {
           this.store.select(getCurrentBasket).pipe(
             whenTruthy(),
             filter(currentBasket => !oldBasket || oldBasket.lineItems.length < currentBasket.lineItems.length),
-            take(1),
-            withLatestFrom(this.getPageTypeFromRouter()),
-            tap(([currentBasket, pageType]) =>
-              this.trackingService.trackCartAddItem(
-                {
-                  ...currentBasket,
-                  lineItems: [currentBasket.lineItems[currentBasket.lineItems.length - 1]],
-                },
-                pageType
-              )
-            )
+            take(1)
+          )
+        ),
+        withLatestFrom(this.getPageTypeFromRouter()),
+        tap(([currentBasket, pageType]) =>
+          this.trackingService.trackCartAddItem(
+            {
+              ...currentBasket,
+              lineItems: [currentBasket.lineItems[currentBasket.lineItems.length - 1]],
+            },
+            pageType
           )
         )
       ),
@@ -182,10 +182,20 @@ export class TrackingEventsEffects {
     () =>
       this.actions$.pipe(
         ofType(createOrderSuccess),
-        withLatestFrom(this.store.select(getSubmittedBasket)),
-        map(([, submittedBasket]) => submittedBasket),
-        whenTruthy(),
-        tap(submittedBasket => this.trackingService.trackOrder(submittedBasket))
+        mapToPayloadProperty('order'),
+        mergeMap(order =>
+          this.store.pipe(
+            select(getSubmittedBasket),
+            take(1),
+            map(submittedBasket => ({ order, submittedBasket }))
+          )
+        ),
+        tap(({ order, submittedBasket }) =>
+          this.trackingService.trackOrder(
+            submittedBasket,
+            order.statusCode === 'RFQ' ? DataLayerOrderType.Quotation : DataLayerOrderType.Order
+          )
+        )
       ),
     { dispatch: false }
   );
