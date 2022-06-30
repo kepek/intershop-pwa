@@ -333,7 +333,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
 
     this.camCardsFacade.checkCamCardsInBasketsForAllUsers([this.camCard.id]);
     this.camCardsInBasketsForAllUsersLoading$.pipe(whenTruthy(), take(1)).subscribe(() => {
-      if (this.camCardsInBasketsForAllUsers.length) {
+      if (this.camCardsInBasketsForAllUsers?.length && checkInBasketModal?.show) {
         checkInBasketModal.show();
       } else {
         this.addItemsToCart(addToCartFlowModal);

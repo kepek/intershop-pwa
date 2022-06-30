@@ -436,7 +436,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     const ids = this.checkedCamCards.map(cc => cc.id);
     this.camCardsFacade.checkCamCardsInBasketsForAllUsers(ids);
     this.camCardsInBasketsForAllUsersLoading$.pipe(whenFalsy(), take(1)).subscribe(() => {
-      if (this.camCardsInBasketsForAllUsers.length) {
+      if (this.camCardsInBasketsForAllUsers?.length && checkInBasketModal?.show) {
         checkInBasketModal.show();
       } else {
         this.addToCart(addToCartFlowModal);
