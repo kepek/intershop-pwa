@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { skipWhile, take } from 'rxjs/operators';
+import { Observable, forkJoin, of } from 'rxjs';
+import { map, mergeMap, skipWhile, take } from 'rxjs/operators';
 
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
+import { getSelectedCategory } from 'ish-core/store/shopping/categories';
 import { getProducts } from 'ish-core/store/shopping/products';
 import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
 
@@ -182,6 +183,23 @@ export class TrackingService {
     return this.store.pipe(
       select(getProducts, { skus }),
       skipWhile(products => products.filter(p => !p || !p.name).length > 0),
+      mergeMap(products =>
+        forkJoin(
+          products.map(product => {
+            if (product.defaultCategory && product.defaultCategory()) {
+              return of(product);
+            }
+            return this.store.pipe(
+              select(getSelectedCategory),
+              take(1),
+              map(category => ({
+                ...product,
+                defaultCategory: () => category,
+              }))
+            );
+          })
+        )
+      ),
       take(1)
     );
   }
