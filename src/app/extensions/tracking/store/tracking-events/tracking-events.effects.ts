@@ -317,6 +317,10 @@ export class TrackingEventsEffects {
       return DataLayerPageType.QuoteDetail;
     }
 
+    if (path === 'search/:searchTerm') {
+      return DataLayerPageType.SearchResult;
+    }
+
     if (`${path}`.includes('checkout')) {
       return DataLayerPageType.Checkout;
     }
