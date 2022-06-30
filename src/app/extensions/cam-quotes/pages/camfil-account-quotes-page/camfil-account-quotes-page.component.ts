@@ -22,13 +22,13 @@ import { RoleToggleService } from 'ish-core/utils/role-toggle/role-toggle.servic
 import { QuotesApproveDialogComponent } from '../../components/quotes-approve-dialog/quotes-approve-dialog.component';
 import { QuotesRejectDialogComponent } from '../../components/quotes-reject-dialog/quotes-reject-dialog.component';
 import { CamQuotesFacade } from '../../facades/cam-quotes.facade';
-import { Quote, QuoteStatus as QuoteStatusEnum } from '../../models/quote/quote.model';
+import { Quote, QuoteStatus as QuoteStatusEnum, QuoteType } from '../../models/quote/quote.model';
 
 interface QuotesFilters {
   search?: string;
   customer?: string;
   requestor?: string[];
-  type?: string;
+  type?: QuoteType;
   fromDate?: Date | null;
   toDate?: Date | null;
   stateRequested?: boolean;
@@ -77,7 +77,11 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
   filtersQueryParams: {
     filter: string;
   };
-
+  types: { label: string; value: QuoteType }[] = [
+    { label: 'camfil.quotes.quoteslist.filters.type.all', value: undefined },
+    { label: 'camfil.quotes.quoteslist.filters.type.quotation', value: 'quotation' },
+    { label: 'camfil.quotes.quoteslist.filters.type.proposal', value: 'proposal' },
+  ];
   customers: string[];
   requestors: string[];
 
@@ -213,9 +217,8 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
     if (filters.requestor && filters.requestor.length > 0) {
       filteredQuotes = filteredQuotes.filter(quote => filters.requestor.includes(quote.requestedBy));
     }
-    // TODO: Currently only receiving quotations
-    if (filters.type === '3') {
-      filteredQuotes = filteredQuotes.filter(quote => quote.quotationType === 'proposal');
+    if (filters.type) {
+      filteredQuotes = filteredQuotes.filter(quote => quote.quotationType === filters.type);
     }
     if (filters.fromDate) {
       filteredQuotes = filteredQuotes.filter(quote => quote.requestedDate >= filters.fromDate);
