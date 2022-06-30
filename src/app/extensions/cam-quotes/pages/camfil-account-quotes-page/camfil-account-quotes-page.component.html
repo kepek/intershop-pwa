@@ -18,9 +18,6 @@
     <mat-form-field appearance="fill">
       <mat-label>{{ 'camfil.quotes.quoteslist.filters.type' | translate }}</mat-label>
       <mat-select formControlName="type">
-        <!-- <mat-option [ngValue]="undefined">Quotations & Proposals</mat-option>
-        <mat-option [ngValue]="">Quotations</mat-option>
-        <mat-option value="3">Proposals</mat-option> -->
         <mat-option *ngFor="let type of types" [value]="type.value">{{ type.label | translate }}</mat-option>
       </mat-select>
     </mat-form-field>
