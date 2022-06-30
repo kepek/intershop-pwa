@@ -28,7 +28,8 @@ describe('Lazy Component Schematic', () => {
       switchMap(tree =>
         schematicRunner.runSchematicAsync('component', { ...defaultOptions, name: 'extensions/ext/shared/dummy' }, tree)
       )
-      .toPromise();
+    );
+    appTree = await appTree$.toPromise();
   });
 
   it('should be created', () => {
