@@ -277,7 +277,7 @@ export class TrackingEventsEffects {
       return DataLayerPageType.QuoteDetail;
     }
 
-    if (path.includes('checkout')) {
+    if (`${path}`.includes('checkout')) {
       return DataLayerPageType.Checkout;
     }
 
