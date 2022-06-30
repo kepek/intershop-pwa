@@ -5,7 +5,7 @@ import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { camfilUpdateBasketItemsSuccess } from 'camfil-pwa/store/customer/ish-basket/ish-basket.actions';
 import { Observable } from 'rxjs';
-import { filter, map, mergeMap, skipWhile, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
+import { filter, map, mergeMap, pairwise, skipWhile, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
 
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { ofCategoryUrl } from 'ish-core/routing/category/category.route';
@@ -32,7 +32,7 @@ import {
   updateCamCardProductSuccess,
   updateCamCardSuccess,
 } from '../../../cam-cards/store/cam-card';
-import { DataLayerPageType } from '../../models/data-layer-event.type';
+import { DataLayerOrderType, DataLayerPageType } from '../../models/data-layer-event.type';
 import { TrackingService } from '../../services/tracking.service';
 
 @Injectable()
@@ -49,19 +49,17 @@ export class TrackingEventsEffects {
           this.store.select(getCurrentBasket).pipe(
             whenTruthy(),
             filter(currentBasket => !oldBasket || oldBasket.lineItems.length < currentBasket.lineItems.length),
-            take(1),
-            withLatestFrom(this.getPageTypeFromRouter()),
-            tap(([currentBasket, pageType]) =>
-              this.trackingService.trackCartAddItem(
-                {
-                  ...currentBasket,
-                  lineItems: currentBasket.lineItems.filter(
-                    newItem => !oldBasket.lineItems.find(oldItem => oldItem.productSKU === newItem.productSKU)
-                  ),
-                },
-                pageType
-              )
-            )
+            take(1)
+          )
+        ),
+        withLatestFrom(this.getPageTypeFromRouter()),
+        tap(([currentBasket, pageType]) =>
+          this.trackingService.trackCartAddItem(
+            {
+              ...currentBasket,
+              lineItems: [currentBasket.lineItems[currentBasket.lineItems.length - 1]],
+            },
+            pageType
           )
         )
       ),
@@ -130,6 +128,38 @@ export class TrackingEventsEffects {
     { dispatch: false }
   );
 
+  trackSelectItem$ = createEffect(
+    () =>
+      this.store.pipe(
+        select(selectRouter),
+        whenTruthy(),
+        pairwise(),
+        filter(
+          ([prevRoute, currentRoute]) =>
+            prevRoute &&
+            prevRoute.state &&
+            currentRoute &&
+            currentRoute.state &&
+            currentRoute.state.params &&
+            currentRoute.state.params.sku
+        ),
+        mergeMap(([prevRoute]) =>
+          this.store.pipe(
+            select(getSelectedProduct),
+            whenTruthy(),
+            skipWhile(product => !product.salePrice || !product.defaultCategory || !product.defaultCategory()),
+            take(1),
+            map(product => ({
+              product,
+              pageType: this.getPageTypeFromPath(prevRoute.state.path, prevRoute.state.params),
+            }))
+          )
+        ),
+        tap(({ product, pageType }) => this.trackingService.trackSelectItem(product, pageType))
+      ),
+    { dispatch: false }
+  );
+
   trackViewItem$ = createEffect(
     () =>
       this.store.pipe(
@@ -152,10 +182,20 @@ export class TrackingEventsEffects {
     () =>
       this.actions$.pipe(
         ofType(createOrderSuccess),
-        withLatestFrom(this.store.select(getSubmittedBasket)),
-        map(([, submittedBasket]) => submittedBasket),
-        whenTruthy(),
-        tap(submittedBasket => this.trackingService.trackOrder(submittedBasket))
+        mapToPayloadProperty('order'),
+        mergeMap(order =>
+          this.store.pipe(
+            select(getSubmittedBasket),
+            take(1),
+            map(submittedBasket => ({ order, submittedBasket }))
+          )
+        ),
+        tap(({ order, submittedBasket }) =>
+          this.trackingService.trackOrder(
+            submittedBasket,
+            order.statusCode === 'RFQ' ? DataLayerOrderType.Quotation : DataLayerOrderType.Order
+          )
+        )
       ),
     { dispatch: false }
   );
@@ -275,6 +315,10 @@ export class TrackingEventsEffects {
 
     if (path === 'account/quotes/:id') {
       return DataLayerPageType.QuoteDetail;
+    }
+
+    if (path === 'search/:searchTerm') {
+      return DataLayerPageType.SearchResult;
     }
 
     if (`${path}`.includes('checkout')) {

@@ -1,18 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { skipWhile, take } from 'rxjs/operators';
+import { Observable, forkJoin, of } from 'rxjs';
+import { map, mergeMap, skipWhile, take } from 'rxjs/operators';
 
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
+import { getSelectedCategory } from 'ish-core/store/shopping/categories';
 import { getProducts } from 'ish-core/store/shopping/products';
 import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
 
 import { CamCard } from '../../cam-cards/models/cam-card/cam-card.model';
-import { DataLayerEvent, DataLayerEventType, DataLayerItem, DataLayerPageType } from '../models/data-layer-event.type';
+import {
+  DataLayerEvent,
+  DataLayerEventType,
+  DataLayerItem,
+  DataLayerOrderType,
+  DataLayerPageType,
+} from '../models/data-layer-event.type';
 
 // tslint:disable-next-line: no-any
 declare var dataLayer: any;
@@ -50,6 +57,26 @@ export class TrackingService {
     this.push(this.buildEventDataFromBasket(DataLayerEventType.CartView, basket));
   }
 
+  trackSelectItem(item: ProductView, pageType: DataLayerPageType) {
+    this.push({
+      event: DataLayerEventType.ItemSelect,
+      currency: item.salePrice?.currency,
+      value: item.salePrice?.value,
+      items: [
+        {
+          item_id: item.sku,
+          discount: 0,
+          index: 0,
+          price: item.salePrice?.value,
+          item_name: item.name,
+          item_brand: item.manufacturer,
+          item_category: item.defaultCategory()?.name,
+        },
+      ],
+      page_type: pageType,
+    });
+  }
+
   trackViewItem(item: ProductView) {
     this.push({
       event: DataLayerEventType.ItemView,
@@ -61,7 +88,6 @@ export class TrackingService {
           discount: 0,
           index: 0,
           price: item.salePrice?.value,
-          quantity: 0,
           item_name: item.name,
           item_brand: item.manufacturer,
           item_category: item.defaultCategory()?.name,
@@ -80,7 +106,7 @@ export class TrackingService {
     this.push(event);
   }
 
-  trackOrder(basket: BasketView) {
+  trackOrder(basket: BasketView, orderType: DataLayerOrderType) {
     this.getProductsFromBasket(basket).subscribe(products => {
       const event: DataLayerEvent = {
         ...this.buildEventDataFromBasket(DataLayerEventType.Purchase, basket, products),
@@ -88,6 +114,7 @@ export class TrackingService {
         tax: basket.totals.taxTotal.value,
         shipping: basket.totals.dutiesAndSurchargesTotal.net + basket.totals.shippingTotal.net,
         value: basket.totals.total.gross,
+        order_type: orderType,
       };
       this.push(event);
     });
@@ -156,6 +183,23 @@ export class TrackingService {
     return this.store.pipe(
       select(getProducts, { skus }),
       skipWhile(products => products.filter(p => !p || !p.name).length > 0),
+      mergeMap(products =>
+        forkJoin(
+          products.map(product => {
+            if (product.defaultCategory && product.defaultCategory()) {
+              return of(product);
+            }
+            return this.store.pipe(
+              select(getSelectedCategory),
+              take(1),
+              map(category => ({
+                ...product,
+                defaultCategory: () => category,
+              }))
+            );
+          })
+        )
+      ),
       take(1)
     );
   }

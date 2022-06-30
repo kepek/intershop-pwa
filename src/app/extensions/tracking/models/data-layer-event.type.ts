@@ -56,6 +56,7 @@ export interface DataLayerEvent {
   transaction_id?: string;
   tax?: number;
   shipping?: number;
+  order_type?: DataLayerOrderType;
 }
 
 export enum DataLayerEventType {
@@ -82,4 +83,9 @@ export enum DataLayerPageType {
   QuoteListing = 'quote listing',
   QuoteDetail = 'quote detail',
   SearchResult = 'search result page',
+}
+
+export enum DataLayerOrderType {
+  Order = 'order',
+  Quotation = 'quotation',
 }
