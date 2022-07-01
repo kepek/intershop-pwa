@@ -3,7 +3,6 @@
   "id": "SchematicsAngularModel",
   "title": "PWA Model Options Schema",
   "type": "object",
-  "additionalProperties": false,
   "properties": {
     "path": {
       "type": "string",

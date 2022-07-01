@@ -35,7 +35,6 @@ export function createLazyComponent(options: Options): Rule {
     }
     const workspace = await getWorkspace(host);
     const isProject = options.path.startsWith('projects/');
-    const isShared = options.path.startsWith('src/app/shared/');
     const projectName = isProject ? options.path.split('/')[1].trim() : '';
     const project = workspace.projects.get(isProject ? options.path.split('/')[1] : options.project);
 
@@ -44,22 +43,18 @@ export function createLazyComponent(options: Options): Rule {
 
     if (
       !originalPath.endsWith('component.ts') ||
-      !(originalPath.startsWith('extensions/') || isProject || isShared) ||
+      !(originalPath.startsWith('extensions/') || isProject) ||
       !host.exists(componentPath)
     ) {
-      throw new SchematicsException(
-        'path does not point to an existing component in an extension, project or shared module'
-      );
+      throw new SchematicsException('path does not point to an existing component in an extension or project');
     }
 
     const pathSplits = originalPath.split('/');
-    const extension = isShared ? 'shared' : pathSplits[1];
+    const extension = pathSplits[1];
     const originalName = /\/([a-z0-9-]+)\.component\.ts/.exec(originalPath)[1];
     options.name = 'lazy-' + originalName;
     if (isProject) {
       options.path = `${project.sourceRoot}/app/exports`;
-    } else if (isShared) {
-      options.path = `${project.sourceRoot}/app/shell/shared`;
     } else {
       options.path = `${project.sourceRoot}/app/extensions/${extension}/exports`;
     }
@@ -132,25 +127,13 @@ export function createLazyComponent(options: Options): Rule {
 
     const gitignoreExists = host.exists(`/${options.path}/.gitignore`);
 
-    let componentImportPath: string;
-    if (isProject) {
-      componentImportPath = '../../components';
-    } else if (isShared) {
-      const pathFragments = originalPath.split('/');
-      pathFragments.pop();
-      pathFragments.pop();
-      componentImportPath = '../../../' + pathFragments.join('/');
-    } else {
-      componentImportPath = '../../shared';
-    }
-
     const operations = [];
 
-    if (process.env.CI !== 'true') {
-      if (!isShared && !exportsModuleExists) {
+    if (!options.ci) {
+      if (!exportsModuleExists) {
         operations.push(
           schematic('module', {
-            project: options.project,
+            ...options,
             name: exportsModuleName,
             flat: true,
           })
@@ -158,18 +141,16 @@ export function createLazyComponent(options: Options): Rule {
         operations.push(updateModule(options));
         operations.push(
           addExportToBarrelFile({
-            path: options.path,
+            ...options,
             artifactName: strings.classify(`${exportsModuleName}-module`),
             moduleImportPath: `/${options.path}/${exportsModuleName}.module`,
           })
         );
       }
       operations.push(addDeclarationToNgModule(options));
-      if (!isShared) {
-        operations.push(addExportToNgModule(options));
-      }
+      operations.push(addExportToNgModule(options));
       if (!gitignoreExists) {
-        operations.push(generateGitignore({ path: options.path, content: '/lazy**' }));
+        operations.push(generateGitignore({ ...options, content: '/lazy**' }));
       }
 
       if (isProject) {
@@ -199,8 +180,6 @@ export function createLazyComponent(options: Options): Rule {
             originalName,
             onChanges,
             isProject,
-            isShared,
-            componentImportPath,
           }),
           move(options.path),
           forEach(fileEntry => {
@@ -216,7 +195,8 @@ export function createLazyComponent(options: Options): Rule {
       )
     );
 
-    if (process.env.CI !== 'true') {
+    if (!options.ci) {
+      operations.push(applyLintFix());
       operations.push(applyLintFix());
     }
 

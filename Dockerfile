@@ -2,14 +2,14 @@ FROM node:14-alpine as buildstep
 WORKDIR /workspace
 COPY schematics /workspace/schematics/
 COPY package.json package-lock.json /workspace/
-RUN npm i --ignore-scripts
+RUN npm ci --prefer-offline --no-audit --ignore-scripts
 COPY projects/organization-management/src/app /workspace/projects/organization-management/src/app/
 COPY projects/requisition-management/src/app /workspace/projects/requisition-management/src/app/
 COPY projects/camfil-icons /workspace/projects/camfil-icons/
 COPY projects/camfil-pwa /workspace/projects/camfil-pwa/
 COPY src /workspace/src/
 COPY tsconfig.app.json tsconfig.base.json ngsw-config.json .browserslistrc angular.json /workspace/
-RUN npm run build:schematics && npm run synchronize-lazy-components
+RUN npm run build:schematics && npm run synchronize-lazy-components -- --ci
 RUN npm run build:icons
 ARG configuration=production
 COPY scripts /workspace/scripts/

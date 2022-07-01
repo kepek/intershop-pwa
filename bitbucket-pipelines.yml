@@ -32,7 +32,7 @@ pipelines:
             - npm run build:icons
             - npm run build:tslint-rules
             - npm run build:schematics
-            - npm run synchronize-lazy-components
+            - npm run synchronize-lazy-components -- --ci
           after-script:
             - cat $HOME/.npm/_logs/*
             - cat $(find /tmp/ng-** -name "angular-errors.log")

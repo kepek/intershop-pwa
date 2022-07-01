@@ -16,6 +16,7 @@ import {
   VariationProductView,
 } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel, ProductHelper, ProductPrices } from 'ish-core/models/product/product.model';
+import { GenerateLazyComponent } from 'ish-core/utils/module-loader/generate-lazy-component.decorator';
 import { whenTruthy } from 'ish-core/utils/operators';
 
 @Component({
@@ -33,6 +34,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
  *               class="my-class"
  * ></camfil-quick-view-modal>
  */
+@GenerateLazyComponent()
 export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data,
