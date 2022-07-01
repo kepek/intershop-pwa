@@ -12,7 +12,7 @@
   },
   "private": true,
   "scripts": {
-    "postinstall": "postinstall && npm --silent run build:tslint-rules && npm --silent run build:schematics && npm run synchronize-lazy-components && node scripts/init-local-environment && npm run --silent build:icons",
+    "postinstall": "postinstall && npm run build:tslint-rules && npm --silent run build:schematics && npm run synchronize-lazy-components && node scripts/init-local-environment && npm run --silent build:icons",
     "build:tslint-rules": "cd tslint-rules && npm run build",
     "build:schematics": "cd schematics && npm run build",
     "ng": "ng",
@@ -139,7 +139,6 @@
   "devDependencies": {
     "@angular-builders/custom-webpack": "^11.0.0",
     "@angular-builders/jest": "^11.0.0",
-    "@angular-devkit/build-angular": "~0.1100.5",
     "@angular/cli": "^11.0.3",
     "@angular/compiler-cli": "~11.0.3",
     "@angular/language-service": "~11.0.3",

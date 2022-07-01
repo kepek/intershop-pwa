@@ -2,7 +2,7 @@ FROM node:14-alpine as buildstep
 WORKDIR /workspace
 COPY schematics /workspace/schematics/
 COPY package.json package-lock.json /workspace/
-RUN npm i --ignore-scripts
+RUN npm ci --prefer-offline --no-audit --ignore-scripts
 COPY projects/organization-management/src/app /workspace/projects/organization-management/src/app/
 COPY projects/requisition-management/src/app /workspace/projects/requisition-management/src/app/
 COPY projects/camfil-icons /workspace/projects/camfil-icons/
