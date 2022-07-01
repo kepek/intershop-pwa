@@ -4,7 +4,6 @@
   "title": "PWA CMSComponent Options Schema",
   "type": "object",
   "description": "Creates a new CMS component.",
-  "additionalProperties": false,
   "properties": {
     "path": {
       "type": "string",

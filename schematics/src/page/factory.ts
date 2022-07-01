@@ -147,7 +147,7 @@ export function createPage(options: Options): Rule {
 
     operations.push(
       schematic('component', {
-        project: options.project,
+        ...options,
         name: `${options.name}-page`,
         path: `${options.path}${options.name}`,
         flat: true,

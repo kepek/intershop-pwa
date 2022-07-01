@@ -4,7 +4,6 @@
   "title": "PWA Store Group Options Schema",
   "type": "object",
   "description": "Creates a new store group.",
-  "additionalProperties": false,
   "properties": {
     "path": {
       "type": "string",

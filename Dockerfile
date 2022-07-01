@@ -9,7 +9,7 @@ COPY projects/camfil-icons /workspace/projects/camfil-icons/
 COPY projects/camfil-pwa /workspace/projects/camfil-pwa/
 COPY src /workspace/src/
 COPY tsconfig.app.json tsconfig.base.json ngsw-config.json .browserslistrc angular.json /workspace/
-RUN npm run build:schematics && npm run synchronize-lazy-components
+RUN npm run build:schematics && npm run synchronize-lazy-components -- --ci
 RUN npm run build:icons
 ARG configuration=production
 COPY scripts /workspace/scripts/
