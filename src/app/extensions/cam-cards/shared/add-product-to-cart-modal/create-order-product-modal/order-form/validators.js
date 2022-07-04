@@ -16,6 +16,10 @@ export const ADDRESS_VALIDATORS = {
       error: 'pattern',
       message: 'camfil.modal.createOrder.order-form.input.phone_number.error.pattern',
     },
+    {
+      error: 'maxlength',
+      message: 'camfil.modal.createOrder.order-form.input.phone_number.error.pattern',
+    },
   ],
   orderMark: [
     {

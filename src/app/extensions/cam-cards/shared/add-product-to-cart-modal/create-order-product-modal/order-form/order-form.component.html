@@ -54,7 +54,7 @@
     <!--phone number-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.phone_number' | translate }}</mat-label>
-      <input formControlName="phoneNumber" matInput type="tel" />
+      <input [camfilMaxLength]="'PhoneNumber'" formControlName="phoneNumber" matInput type="tel" />
       <camfil-error
         [errorValidators]="validators.phoneNumber"
         [errors]="getField('phoneNumber').errors"
