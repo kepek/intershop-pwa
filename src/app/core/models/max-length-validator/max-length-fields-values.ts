@@ -9,4 +9,5 @@ export enum MaxLengthFieldsValues {
   GoodsAccepanceNote = 60,
   AddressLineOne = 50,
   AddressLineTwo = 200,
+  PhoneNumber = 30,
 }
