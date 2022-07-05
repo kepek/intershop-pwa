@@ -196,6 +196,10 @@ export class TrackingService {
   }
 
   private getProducts(skus: string[]): Observable<ProductInfo[]> {
+    if (!skus || !skus.length) {
+      return of([]);
+    }
+
     return this.store.pipe(
       select(getProducts, { skus }),
       skipWhile(products => products.filter(p => !p || !p.name).length > 0),
