@@ -8,7 +8,7 @@ import { BasketView } from 'ish-core/models/basket/basket.model';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
-import { getSelectedCategory } from 'ish-core/store/shopping/categories';
+import { getCategory, getSelectedCategory } from 'ish-core/store/shopping/categories';
 import { getProducts } from 'ish-core/store/shopping/products';
 import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
 
@@ -23,6 +23,16 @@ import {
 
 // tslint:disable-next-line: no-any
 declare var dataLayer: any;
+
+interface CategoryInfo {
+  category: CategoryView;
+  parent?: CategoryInfo;
+}
+
+interface ProductInfo {
+  product: ProductView;
+  categoryInfo?: CategoryInfo;
+}
 
 /**
  *  Add events to dataLayer for GTM
@@ -58,42 +68,48 @@ export class TrackingService {
   }
 
   trackSelectItem(item: ProductView, pageType: DataLayerPageType) {
-    this.push({
-      event: DataLayerEventType.ItemSelect,
-      currency: item.salePrice?.currency,
-      value: item.salePrice?.value,
-      items: [
-        {
-          item_id: item.sku,
-          discount: 0,
-          index: 0,
-          price: item.salePrice?.value,
-          item_name: item.name,
-          item_brand: item.manufacturer,
-          item_category: item.defaultCategory()?.name,
-        },
-      ],
-      page_type: pageType,
-    });
+    this.getProducts([item.sku]).subscribe(([productInfo]) =>
+      this.push({
+        event: DataLayerEventType.ItemSelect,
+        currency: productInfo.product?.salePrice?.currency,
+        value: productInfo.product?.salePrice?.value,
+        items: [
+          {
+            item_id: productInfo.product?.sku,
+            discount: 0,
+            index: 0,
+            price: productInfo.product?.salePrice?.value,
+            item_name: productInfo.product?.name,
+            item_brand: productInfo.product?.manufacturer,
+            item_category: productInfo.categoryInfo?.category?.name,
+            item_category2: productInfo.categoryInfo?.parent?.category?.name,
+          },
+        ],
+        page_type: pageType,
+      })
+    );
   }
 
   trackViewItem(item: ProductView) {
-    this.push({
-      event: DataLayerEventType.ItemView,
-      currency: item.salePrice?.currency,
-      value: item.salePrice?.value,
-      items: [
-        {
-          item_id: item.sku,
-          discount: 0,
-          index: 0,
-          price: item.salePrice?.value,
-          item_name: item.name,
-          item_brand: item.manufacturer,
-          item_category: item.defaultCategory()?.name,
-        },
-      ],
-    });
+    this.getProducts([item.sku]).subscribe(([productInfo]) =>
+      this.push({
+        event: DataLayerEventType.ItemView,
+        currency: productInfo.product?.salePrice?.currency,
+        value: productInfo.product?.salePrice?.value,
+        items: [
+          {
+            item_id: productInfo.product?.sku,
+            discount: 0,
+            index: 0,
+            price: productInfo.product?.salePrice?.value,
+            item_name: productInfo.product?.name,
+            item_brand: productInfo.product?.manufacturer,
+            item_category: productInfo.categoryInfo?.category?.name,
+            item_category2: productInfo.categoryInfo?.parent?.category?.name,
+          },
+        ],
+      })
+    );
   }
 
   trackViewItemList(item: CategoryView) {
@@ -179,7 +195,7 @@ export class TrackingService {
     }
   }
 
-  private getProducts(skus: string[]): Observable<ProductView[]> {
+  private getProducts(skus: string[]): Observable<ProductInfo[]> {
     return this.store.pipe(
       select(getProducts, { skus }),
       skipWhile(products => products.filter(p => !p || !p.name).length > 0),
@@ -187,15 +203,19 @@ export class TrackingService {
         forkJoin(
           products.map(product => {
             if (product.defaultCategory && product.defaultCategory()) {
-              return of(product);
+              return this.getCategoryInfo(product.defaultCategory()).pipe(
+                map(categoryInfo => ({ product, categoryInfo }))
+              );
             }
+
             return this.store.pipe(
               select(getSelectedCategory),
               take(1),
-              map(category => ({
-                ...product,
-                defaultCategory: () => category,
-              }))
+              mergeMap(category =>
+                !category
+                  ? of({ product, categoryInfo: { category, parent: undefined } })
+                  : this.getCategoryInfo(category).pipe(map(categoryInfo => ({ product, categoryInfo })))
+              )
             );
           })
         )
@@ -204,14 +224,14 @@ export class TrackingService {
     );
   }
 
-  private getProductsFromBasket(basket: BasketView): Observable<ProductView[]> {
+  private getProductsFromBasket(basket: BasketView): Observable<ProductInfo[]> {
     return this.getProducts(basket.lineItems.map(item => item.productSKU));
   }
 
   private buildEventDataFromBasket(
     eventType: DataLayerEventType,
     basket: BasketView,
-    products: ProductView[] = [],
+    products: ProductInfo[] = [],
     pageType?: DataLayerPageType
   ): DataLayerEvent {
     return {
@@ -221,34 +241,38 @@ export class TrackingService {
       items: basket.lineItems.map(item =>
         this.getItemDataFormBasketItem(
           item,
-          products.find(p => p && p.sku === item.productSKU)
+          products.find(p => p && p.product && p.product.sku === item.productSKU)
         )
       ),
       page_type: pageType,
     };
   }
 
-  private getItemDataFormBasketItem(item: LineItemView, product?: ProductView): DataLayerItem {
+  private getItemDataFormBasketItem(item: LineItemView, productInfo?: ProductInfo): DataLayerItem {
     return {
       item_id: item.productSKU,
       discount: 0,
       index: item.position,
-      price: product && product.salePrice ? product.salePrice.value : item.salePrice.net,
+      price:
+        productInfo && productInfo.product && productInfo.product.salePrice
+          ? productInfo.product.salePrice.value
+          : item.salePrice.net,
       quantity: item.quantity.value,
-      item_name: product?.name,
-      item_brand: product?.manufacturer,
-      item_category: product?.defaultCategory()?.name,
+      item_name: productInfo?.product?.name,
+      item_brand: productInfo?.product?.manufacturer,
+      item_category: productInfo?.categoryInfo?.category?.name,
+      item_category2: productInfo?.categoryInfo?.parent?.category?.name,
     };
   }
 
-  private getProductsFromCamCard(camCard: CamCard): Observable<ProductView[]> {
+  private getProductsFromCamCard(camCard: CamCard): Observable<ProductInfo[]> {
     return this.getProducts(camCard.camCardItems.map(item => item.product.sku));
   }
 
   private buildEventDataFromCamCard(
     eventType: DataLayerEventType,
     camCard: CamCard,
-    products: ProductView[] = [],
+    products: ProductInfo[] = [],
     pageType?: DataLayerPageType
   ): DataLayerEvent {
     const items = camCard.camCardItems
@@ -260,11 +284,14 @@ export class TrackingService {
             quantity: item.quantity,
             item_name: item.product.name,
           };
-          const product = products ? products.find(p => p && p.sku === item.product.sku) : undefined;
-          if (product) {
-            dataLayerItem.price = product.salePrice?.value;
-            dataLayerItem.item_brand = product.manufacturer;
-            dataLayerItem.item_category = product.defaultCategory()?.name;
+          const productInfo = products
+            ? products.find(p => p && p.product && p.product.sku === item.product.sku)
+            : undefined;
+          if (productInfo) {
+            dataLayerItem.price = productInfo.product.salePrice?.value;
+            dataLayerItem.item_brand = productInfo.product.manufacturer;
+            dataLayerItem.item_category = productInfo.categoryInfo?.category?.name;
+            dataLayerItem.item_category2 = productInfo.categoryInfo?.parent?.category?.name;
           }
           return dataLayerItem;
         })
@@ -275,5 +302,17 @@ export class TrackingService {
       item_list_id: camCard.id,
       page_type: pageType,
     };
+  }
+
+  private getCategoryInfo(category: CategoryView): Observable<CategoryInfo> {
+    if (category.categoryPath.length > 1) {
+      return this.store.pipe(
+        select(getCategory(category.categoryPath[category.categoryPath.length - 2])),
+        take(1),
+        mergeMap(parentCategory => this.getCategoryInfo(parentCategory).pipe(map(parent => ({ category, parent }))))
+      );
+    }
+
+    return of({ category, parent: undefined });
   }
 }
