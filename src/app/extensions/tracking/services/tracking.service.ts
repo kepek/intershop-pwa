@@ -81,8 +81,8 @@ export class TrackingService {
             price: productInfo.product?.salePrice?.value,
             item_name: productInfo.product?.name,
             item_brand: productInfo.product?.manufacturer,
-            item_category: productInfo.categoryInfo?.category?.name,
-            item_category2: productInfo.categoryInfo?.parent?.category?.name,
+            item_category2: productInfo.categoryInfo?.category?.name,
+            item_category: productInfo.categoryInfo?.parent?.category?.name,
           },
         ],
         page_type: pageType,
@@ -104,8 +104,8 @@ export class TrackingService {
             price: productInfo.product?.salePrice?.value,
             item_name: productInfo.product?.name,
             item_brand: productInfo.product?.manufacturer,
-            item_category: productInfo.categoryInfo?.category?.name,
-            item_category2: productInfo.categoryInfo?.parent?.category?.name,
+            item_category2: productInfo.categoryInfo?.category?.name,
+            item_category: productInfo.categoryInfo?.parent?.category?.name,
           },
         ],
       })
@@ -264,8 +264,8 @@ export class TrackingService {
       quantity: item.quantity.value,
       item_name: productInfo?.product?.name,
       item_brand: productInfo?.product?.manufacturer,
-      item_category: productInfo?.categoryInfo?.category?.name,
-      item_category2: productInfo?.categoryInfo?.parent?.category?.name,
+      item_category2: productInfo?.categoryInfo?.category?.name,
+      item_category: productInfo?.categoryInfo?.parent?.category?.name,
     };
   }
 

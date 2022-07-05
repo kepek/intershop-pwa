@@ -278,6 +278,7 @@ export class TrackingEventsEffects {
       ),
     { dispatch: false }
   );
+
   trackViewItemList$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -287,6 +288,7 @@ export class TrackingEventsEffects {
             ofCategoryUrl(),
             select(getSelectedCategory),
             whenTruthy(),
+            take(1),
             map(categoryView => this.trackingService.trackViewItemList(categoryView))
           )
         )
