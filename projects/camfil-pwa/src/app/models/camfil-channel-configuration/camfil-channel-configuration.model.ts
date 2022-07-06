@@ -42,7 +42,8 @@ export interface CamfilChannelSettings {
   showWarningMessageForPartialDelivery: boolean;
   useHardcodedAnonymousCustomerForNonLoggedInUser: boolean;
   useHardcodedContactAnonymousCustomerForNonLoggedInUser: boolean;
-  useSecondAddressLine: boolean;
+  use2ndAddressLineInOrderForm: boolean;
+  use2ndAddressLineInCamCardForm: boolean;
   showDeliveryIntervalOnCCDetailPage: boolean;
   tracking: boolean;
 }

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockComponent, MockPipe } from 'ng-mocks';
+import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
+import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
@@ -46,6 +47,7 @@ describe('Create Product Cam Card Modal Component', () => {
         MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilLoadingComponent),
         MockComponent(ZipCodeComponent),
+        MockDirective(CamfilChannelToggleDirective),
         MockPipe(AddressSortPipe),
       ],
       imports: [CoreStoreModule.forTesting(), RouterTestingModule],

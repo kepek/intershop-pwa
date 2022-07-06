@@ -3,6 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
+import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
@@ -59,6 +60,7 @@ describe('Add Product To Cam Card Modal Component', () => {
         MockComponent(CamfilLoadingComponent),
         MockComponent(InputComponent),
         MockComponent(ZipCodeComponent),
+        MockDirective(CamfilChannelToggleDirective),
         MockDirective(ServerHtmlDirective),
         MockPipe(AddressSortPipe),
         MockPipe(CamfilSlugifyPipe),

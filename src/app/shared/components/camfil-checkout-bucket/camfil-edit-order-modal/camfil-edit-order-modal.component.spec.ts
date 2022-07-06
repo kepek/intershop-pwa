@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent, MockPipe } from 'ng-mocks';
+import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
+import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
@@ -35,6 +36,7 @@ describe('Camfil Edit Order Modal Component', () => {
         MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilLoadingComponent),
         MockComponent(ZipCodeComponent),
+        MockDirective(CamfilChannelToggleDirective),
         MockPipe(AddressSortPipe),
         MockPipe(CamfilContactSortPipe),
         OrderFormComponent,

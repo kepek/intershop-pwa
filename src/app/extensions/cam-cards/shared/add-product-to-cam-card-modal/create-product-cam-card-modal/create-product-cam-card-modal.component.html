@@ -21,7 +21,7 @@
 
 <ng-template #mainContentTemplate>
   <div class="form__wrapper" mat-dialog-content>
-    <form [formGroup]="camCardForm" class="form-horizontal border-bottom" novalidate="novalidate">
+    <form [formGroup]="camCardForm" class="form-horizontal border-bottom" novalidate="novalidate" id="camCardForm">
       <!--customer select-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-select
@@ -85,22 +85,35 @@
         <input [camfilMaxLength]="'Company'" formControlName="company" matInput type="text" />
       </mat-form-field>
 
-      <!--address-->
+      <!--addressLine1-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
-        <mat-label>{{ 'camfil.modal.createCamcard.input.address' | translate }}</mat-label>
+        <mat-label>{{ 'camfil.modal.createCamcard.input.addressLine1' | translate }}</mat-label>
         <textarea
-          formControlName="address"
-          label="camfil.modal.createCamcard.input.address"
+          formControlName="addressLine1"
+          label="camfil.modal.createCamcard.input.addressLine1"
           markRequiredLabel="off"
           matInput
           maxlength="250"
           rows="5"
         ></textarea>
         <camfil-error
-          [errorValidators]="validators.address"
-          [errors]="getField('address').errors"
-          [touched]="getField('address').touched || getField('address').dirty"
+          [errorValidators]="validators.addressLine1"
+          [errors]="getField('addressLine1').errors"
+          [touched]="getField('addressLine1').touched || getField('addressLine1').dirty"
         ></camfil-error>
+      </mat-form-field>
+
+      <!--addressLine2-->
+      <mat-form-field *camfilChannelToggle="'use2ndAddressLineInCamCardForm'" appearance="outline" class="col-sm-12 form__field">
+        <mat-label>{{ 'account.default_address.street2.label' | translate }}</mat-label>
+        <textarea
+          formControlName="addressLine2"
+          label="camfil.modal.createOrder.order-form.input.addressLine2"
+          markRequiredLabel="off"
+          matInput
+          [camfilMaxLength]="'AddressLineTwo'"
+          rows="3"
+        ></textarea>
       </mat-form-field>
 
       <!--zip code-->

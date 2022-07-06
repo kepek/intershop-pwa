@@ -31,10 +31,10 @@ export const CREATE_CAMCARD_VALIDATORS = {
       message: 'camfil.modal.createCamcard.input.company.error.required',
     },
   ],
-  address: [
+  addressLine1: [
     {
       error: 'required',
-      message: 'camfil.modal.createCamcard.input.address.error.required',
+      message: 'camfil.modal.createCamcard.input.addressLine1.error.required',
     },
   ],
   zipCode: [

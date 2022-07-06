@@ -77,20 +77,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
   primaryButton = 'camfil.account.cam_card.new_from_order.button.create.label';
   camCardTitle = 'camfil.account.cam_card.new_cam_card.text';
   maxLength = 35;
-  locations = [
-    {
-      value: 'poland',
-      viewValue: 'Poland',
-    },
-    {
-      value: 'norway',
-      viewValue: 'Norway',
-    },
-    {
-      value: 'sweden',
-      viewValue: 'Sweden',
-    },
-  ];
   errorValidator = [
     {
       error: 'required',
@@ -229,6 +215,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
       deliveryAddress: ['', [Validators.maxLength(maxL)]],
       companyName1: [''],
       addressLine1: ['', [Validators.maxLength(250)]],
+      addressLine2: ['', [Validators.maxLength(250)]],
       postalCode: ['', [Validators.required, Validators.maxLength(maxL)]],
       city: [{ value: '', disabled: true }, [Validators.maxLength(maxL)]],
       citySelect: [''],
@@ -265,7 +252,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
         nextDeliveryDate,
         reminderFlag,
       } = this.camCard;
-      const { addressLine1, postalCode, city, companyName1 } = deliveryAddress;
+      const { addressLine1, addressLine2, postalCode, city, companyName1 } = deliveryAddress;
       this.camCardForm.patchValue({
         title: name,
         customerName: customer.id,
@@ -273,6 +260,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
         invoiceMark: invoiceLabel,
         companyName1,
         addressLine1,
+        addressLine2,
         postalCode,
         city,
         lastDelivery: lastDeliveryDate ? new Date(lastDeliveryDate) : '',
@@ -309,7 +297,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
           ...this.camCard?.deliveryAddress,
           companyName1: this.camCardForm.get('companyName1').value,
           addressLine1: this.camCardForm.get('addressLine1').value,
-          addressLine2: '',
+          addressLine2: this.camCardForm.get('addressLine2').value,
           street: this.camCardForm.get('addressLine1').value,
           postalCode: this.camCardForm.get('postalCode').value,
           city: this.camCardForm.get('city').value,
@@ -353,6 +341,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
           deliveryAddress: address.id,
           companyName1,
           addressLine1: addressLine2 ? `${addressLine1} ${addressLine2}` : addressLine1,
+          addressLine2,
           postalCode,
           city,
         });

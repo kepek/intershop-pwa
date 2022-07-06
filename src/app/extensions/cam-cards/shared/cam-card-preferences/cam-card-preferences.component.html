@@ -127,9 +127,27 @@
               >
               </camfil-error>
             </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field" *camfilChannelToggle="'use2ndAddressLineInCamCardForm'">
+              <mat-label>{{ 'account.default_address.street2.label' | translate }}</mat-label>
+              <textarea
+                (change)="onBlurSubmit()"
+                formControlName="addressLine2"
+                label="camfil.modal.createOrder.order-form.input.addressLine2"
+                markRequiredLabel="off"
+                matInput
+                maxlength="250"
+                rows="5"
+              ></textarea>
+              <camfil-error
+                [errorValidators]="errorValidator"
+                [errors]="camCardForm.controls.addressLine2.errors"
+                [touched]="camCardForm.controls.addressLine2.touched"
+              >
+              </camfil-error>
+            </mat-form-field>
             <div class="row no-gutters">
               <div class="col-md-3">
-                <camfil-zip-code 
+                <camfil-zip-code
                   (submitEmitter)="onBlurSubmit()"
                   [checkOnInitObj]="camCard"
                   [errorValidator]="errorValidator"

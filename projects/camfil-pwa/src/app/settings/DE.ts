@@ -14,7 +14,8 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   filterDocsByLanguage: true,
   showAllDocsType: true,
   zipCodeRegExp: '^\\d{5}$',
-  useSecondAddressLine: true,
+  use2ndAddressLineInOrderForm: true,
+  use2ndAddressLineInCamCardForm: true,
   showDeliveryIntervalOnCCDetailPage: true,
   preventCamCardERPIdValidation: true,
 };

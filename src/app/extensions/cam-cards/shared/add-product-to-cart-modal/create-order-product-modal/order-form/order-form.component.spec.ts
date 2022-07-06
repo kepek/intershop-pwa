@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
-import { MockComponent, MockPipe } from 'ng-mocks';
+import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
@@ -34,6 +35,7 @@ describe('Order Form Component', () => {
         MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilLoadingComponent),
         MockComponent(ZipCodeComponent),
+        MockDirective(CamfilChannelToggleDirective),
         MockPipe(AddressSortPipe),
         MockPipe(CamfilContactSortPipe),
         OrderFormComponent,
@@ -52,7 +54,7 @@ describe('Order Form Component', () => {
 
     when(camCardFacadeMock.addresses$).thenReturn(of({}));
     when(camCardFacadeMock.customers$).thenReturn(of([]));
-    when(camfilConfigurationFacade.isEnabled$('useSecondAddressLine')).thenReturn(of(false));
+    when(camfilConfigurationFacade.isEnabled$('use2ndAddressLineInOrderForm')).thenReturn(of(false));
     when(camfilConfigurationFacade.zipCodeRegExp$).thenReturn(of('^\\d$'));
   });
 
