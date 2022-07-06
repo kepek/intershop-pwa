@@ -122,7 +122,8 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
       invoiceMark: [''],
       deliveryAddressSelect: ['', []],
       company: [''],
-      address: [''],
+      addressLine1: [''],
+      addressLine2: [''],
       citySelect: [''],
       zipCode: [''],
       area: [{ value: '', disabled: true }, [Validators.required]],
@@ -202,14 +203,15 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   pickAddress(event) {
     const id = event.value;
     this.addresses$.subscribe(addresses => {
-      const address = addresses[this.customerId]?.filter(element => element.id === id)[0];
-      if (address) {
+      const selectedAddress = addresses[this.customerId]?.filter(element => element.id === id)[0];
+      if (selectedAddress) {
         this.camCardForm.patchValue({
-          company: address.companyName1,
-          address: address.addressLine1,
-          zipCode: address.postalCode,
-          area: address.city,
-          countryCode: address.countryCode || this.defaultCountryCode,
+          company: selectedAddress.companyName1,
+          addressLine1: selectedAddress.addressLine1,
+          addressLine2: selectedAddress.addressLine2,
+          zipCode: selectedAddress.postalCode,
+          area: selectedAddress.city,
+          countryCode: selectedAddress.countryCode || this.defaultCountryCode,
         });
         this.zipCodeComponent.checkZipCode();
       }
@@ -231,7 +233,8 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
       deliveryAddress: {
         ...this.rootCamCardAddress,
         companyName1: this.camCardForm.get('company').value,
-        addressLine1: this.camCardForm.get('address').value,
+        addressLine1: this.camCardForm.get('addressLine1').value,
+        addressLine2: this.camCardForm.get('addressLine2').value,
         postalCode: this.camCardForm.get('zipCode').value,
         city: this.camCardForm.get('area').value,
         countryCode: this.camCardForm.get('countryCode').value || this.defaultCountryCode,

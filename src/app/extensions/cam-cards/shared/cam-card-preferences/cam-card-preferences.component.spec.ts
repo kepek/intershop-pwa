@@ -2,7 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { provideMockStore } from '@ngrx/store/testing';
-import { MockComponent, MockPipe } from 'ng-mocks';
+import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
+import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
@@ -26,6 +27,7 @@ describe('Cam Card Preferences Component', () => {
         MockComponent(CamfilCityFieldComponent),
         MockComponent(NgbCollapse),
         MockComponent(ZipCodeComponent),
+        MockDirective(CamfilChannelToggleDirective),
         MockPipe(AddressSortPipe),
       ],
       imports: [RouterTestingModule],

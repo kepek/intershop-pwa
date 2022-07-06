@@ -51,12 +51,11 @@ export class AddressMapper {
   static fromCamCard(camCard: CamCard): Address {
     if (camCard) {
       const addr = camCard.deliveryAddress;
-      const building = addr.addressLine2 ? ` / ${addr.addressLine2}` : '';
       return {
         addressName: `CamCard_${camCard.name}`,
-        companyName1: (addr.companyName1 || camCard.customer.companyName) + building,
+        companyName1: addr?.companyName1 || camCard?.customer?.companyName,
         addressLine1: addr.addressLine1,
-        addressLine2: '',
+        addressLine2: addr.addressLine2,
         postalCode: addr.postalCode,
         city: addr.city,
         countryCode: addr.countryCode,

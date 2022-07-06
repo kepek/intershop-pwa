@@ -38,7 +38,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   @Input() orderToEdit?: EditBucket;
   @Input() edit?: boolean;
   setMaxLengthValidation = ProductHelper.setMaxLengthValidation;
-  useSecondAddressLine: boolean;
+  use2ndAddressLineInOrderForm: boolean;
   maxHeight = 65;
 
   private destroy$ = new Subject<void>();
@@ -58,10 +58,10 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     this.customers$ = this.camCardsFacade.customers$;
 
     this.camfilConfigurationFacade
-      .isEnabled$('useSecondAddressLine')
+      .isEnabled$('use2ndAddressLineInOrderForm')
       .pipe(take(1))
       .subscribe(val => {
-        this.useSecondAddressLine = val;
+        this.use2ndAddressLineInOrderForm = val;
       });
 
     this.addressForm = this.fb.group({
