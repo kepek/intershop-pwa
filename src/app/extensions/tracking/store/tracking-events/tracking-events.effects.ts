@@ -52,8 +52,8 @@ export class TrackingEventsEffects {
             take(1)
           )
         ),
-        withLatestFrom(this.getPageTypeFromRouter()),
-        tap(([currentBasket, pageType]) =>
+        mergeMap(currentBasket => this.getPageTypeFromRouter().pipe(map(pageType => ({ currentBasket, pageType })))),
+        tap(({ currentBasket, pageType }) =>
           this.trackingService.trackCartAddItem(
             {
               ...currentBasket,
@@ -120,9 +120,7 @@ export class TrackingEventsEffects {
         ofType(routerNavigatedAction),
         mapToPayloadProperty('routerState'),
         filter(routerState => routerState.url === '/checkout/onestep'),
-        switchMapTo(this.store.select(getCurrentBasket)),
-        whenTruthy(),
-        take(1),
+        switchMapTo(this.store.pipe(select(getCurrentBasket), whenTruthy(), take(1))),
         map(currentBasket => this.trackingService.trackBeginCheckout(currentBasket))
       ),
     { dispatch: false }
@@ -205,8 +203,8 @@ export class TrackingEventsEffects {
       this.actions$.pipe(
         ofType(createCamCardSuccess),
         mapToPayloadProperty('camCard'),
-        withLatestFrom(this.getPageTypeFromRouter()),
-        tap(([camCard, pageType]) => this.trackingService.trackCamCardCreate(camCard, pageType))
+        mergeMap(camCard => this.getPageTypeFromRouter().pipe(map(pageType => ({ camCard, pageType })))),
+        tap(({ camCard, pageType }) => this.trackingService.trackCamCardCreate(camCard, pageType))
       ),
     { dispatch: false }
   );
@@ -241,8 +239,8 @@ export class TrackingEventsEffects {
         ofType(addProductToCamCardSuccess),
         mapToPayloadProperty('camCard'),
         mergeMap(camCard => this.store.pipe(select(getCamCardDetails, { id: camCard.id }), whenTruthy(), take(1))),
-        withLatestFrom(this.getPageTypeFromRouter()),
-        tap(([camCard, pageType]) => this.trackingService.trackCamCardAddItem(camCard, pageType))
+        mergeMap(camCard => this.getPageTypeFromRouter().pipe(map(pageType => ({ camCard, pageType })))),
+        tap(({ camCard, pageType }) => this.trackingService.trackCamCardAddItem(camCard, pageType))
       ),
     { dispatch: false }
   );
@@ -253,8 +251,8 @@ export class TrackingEventsEffects {
         ofType(updateCamCardProductSuccess),
         withLatestFrom(this.store.pipe(select(getSelectedCamCardDetails))),
         map(([, camCardDetails]) => camCardDetails),
-        withLatestFrom(this.getPageTypeFromRouter()),
-        tap(([camCard, pageType]) => this.trackingService.trackCamCardEdit(camCard, pageType))
+        mergeMap(camCard => this.getPageTypeFromRouter().pipe(map(pageType => ({ camCard, pageType })))),
+        tap(({ camCard, pageType }) => this.trackingService.trackCamCardEdit(camCard, pageType))
       ),
     { dispatch: false }
   );
@@ -275,11 +273,12 @@ export class TrackingEventsEffects {
       this.actions$.pipe(
         ofType(deleteCamCardSuccess),
         mapToPayloadProperty('camCardId'),
-        withLatestFrom(this.getPageTypeFromRouter()),
-        tap(([camCardId, pageType]) => this.trackingService.trackCamCardDelete(camCardId, pageType))
+        mergeMap(camCardId => this.getPageTypeFromRouter().pipe(map(pageType => ({ camCardId, pageType })))),
+        tap(({ camCardId, pageType }) => this.trackingService.trackCamCardDelete(camCardId, pageType))
       ),
     { dispatch: false }
   );
+
   trackViewItemList$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -289,6 +288,7 @@ export class TrackingEventsEffects {
             ofCategoryUrl(),
             select(getSelectedCategory),
             whenTruthy(),
+            take(1),
             map(categoryView => this.trackingService.trackViewItemList(categoryView))
           )
         )
@@ -300,13 +300,18 @@ export class TrackingEventsEffects {
     return this.store.select(selectRouter).pipe(
       whenTruthy(),
       skipWhile(router => !router.state || !router.state.path),
-      map(router => this.getPageTypeFromPath(router.state.path, router.state.params))
+      map(router => this.getPageTypeFromPath(router.state.path, router.state.params)),
+      take(1)
     );
   }
 
   getPageTypeFromPath(path: string, params: Params): DataLayerPageType {
     if (path === 'account/camcards') {
       return DataLayerPageType.CamCardListing;
+    }
+
+    if (path === 'account/camcards/create') {
+      return DataLayerPageType.CamCardDetail;
     }
 
     if (path === 'account/camcards/:camCardName') {
