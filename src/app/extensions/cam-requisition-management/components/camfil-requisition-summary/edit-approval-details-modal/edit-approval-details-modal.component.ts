@@ -38,7 +38,8 @@ export class EditApprovalDetailsModalComponent {
       orderMark: this.requisition.orderMark,
       deliveryAddressId: this.requisition.shippingAddress.id,
       company: this.requisition.shippingAddress ? this.requisition.shippingAddress.companyName1 : '',
-      address: this.requisition.shippingAddress ? this.requisition.shippingAddress.addressLine1 : '',
+      addressLine1: this.requisition.shippingAddress ? this.requisition.shippingAddress.addressLine1 : '',
+      addressLine2: this.requisition.shippingAddress ? this.requisition.shippingAddress.addressLine2 : '',
       zipCode: this.requisition.shippingAddress ? this.requisition.shippingAddress.postalCode : '',
       area: this.requisition.shippingAddress ? this.requisition.shippingAddress.city : '',
       info: this.requisition.info,
@@ -60,24 +61,24 @@ export class EditApprovalDetailsModalComponent {
     if (addressForm.invalid) {
       markAsDirtyRecursive(addressForm);
     } else {
-      const address = this.getUpdatedAddress();
+      const shipToAddressFull = this.getUpdatedAddress();
 
       const form = this.orderForm.addressForm;
 
       const requisition = {
         ...this.requisition,
         contactPerson: form.get('contactFull').value,
-        shipToAddressFull: address,
         orderMark: form.get('orderMark').value,
         invoiceLabel: form.get('invoiceLabel').value,
         info: form.get('info').value,
         phoneNumber: form.get('phoneNumber').value,
+        shipToAddressFull,
       };
 
       this.camRequisitionManagementFacade.updateCamfilRequisition(
         requisition,
         requisition.shipToAddressFull.id,
-        address
+        shipToAddressFull
       );
       this.hide();
     }
@@ -91,7 +92,7 @@ export class EditApprovalDetailsModalComponent {
       ...this.requisition.shippingAddress,
       firstName: contact?.firstName || this.requisition.shippingAddress.firstName,
       lastName: contact?.lastName || this.requisition.shippingAddress.lastName,
-      addressLine1: form.get('address').value,
+      addressLine1: form.get('addressLine1').value,
       addressLine2: form.get('addressLine2')?.value || '',
       postalCode: form.get('zipCode').value,
       city: form.get('area').value,

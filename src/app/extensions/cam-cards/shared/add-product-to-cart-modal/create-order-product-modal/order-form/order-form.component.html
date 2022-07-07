@@ -87,21 +87,21 @@
       <input [camfilMaxLength]="'Company'" formControlName="company" matInput type="text" />
     </mat-form-field>
 
-    <!--address-->
+    <!--addressLine1-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
-      <mat-label>{{ 'camfil.modal.createOrder.order-form.input.address' | translate }}</mat-label>
+      <mat-label>{{ 'camfil.modal.createOrder.order-form.input.addressLine1' | translate }}</mat-label>
       <textarea
-        formControlName="address"
-        label="camfil.modal.createOrder.order-form.input.address"
+        formControlName="addressLine1"
+        label="camfil.modal.createOrder.order-form.input.addressLine1"
         markRequiredLabel="off"
         matInput
         [camfilMaxLength]="'AddressLineOne'"
         rows="{{ use2ndAddressLineInOrderForm ? 3 : 5 }}"
       ></textarea>
       <camfil-error
-        [errorValidators]="validators.address"
-        [errors]="getField('address').errors"
-        [touched]="getField('address').touched || getField('address').dirty"
+        [errorValidators]="validators.addressLine1"
+        [errors]="getField('addressLine1').errors"
+        [touched]="getField('addressLine1').touched || getField('addressLine1').dirty"
       ></camfil-error>
     </mat-form-field>
 
@@ -110,7 +110,7 @@
       <mat-label>{{ 'account.default_address.street2.label' | translate }}</mat-label>
       <textarea
         formControlName="addressLine2"
-        label="camfil.modal.createOrder.order-form.input.addressLine2"
+        label="camfil.modal.createOrder.order-form.input.addressLine1Line2"
         markRequiredLabel="off"
         matInput
         [camfilMaxLength]="'AddressLineTwo'"

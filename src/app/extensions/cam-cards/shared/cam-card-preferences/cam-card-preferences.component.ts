@@ -340,7 +340,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
         this.camCardForm.patchValue({
           deliveryAddress: address.id,
           companyName1,
-          addressLine1: addressLine2 ? `${addressLine1} ${addressLine2}` : addressLine1,
+          addressLine1,
           addressLine2,
           postalCode,
           city,
