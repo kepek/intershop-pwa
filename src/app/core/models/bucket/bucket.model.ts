@@ -38,8 +38,7 @@ export interface Bucket extends BasketExtension {
 export interface EditBucket extends Bucket {
   customerId?: string;
   company?: string;
-  building?: string;
-  address?: string;
+  addressLine1?: string;
   addressLine2?: string;
   zipCode?: string;
   area?: string;

@@ -72,7 +72,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       orderMark: [this.orderToEdit?.orderMark || '', [Validators.maxLength(60)]],
       deliveryAddressSelect: [this.orderToEdit?.deliveryAddressId || '', []],
       company: [this.orderToEdit?.company || ''],
-      address: [this.orderToEdit?.address || ''],
+      addressLine1: [this.orderToEdit?.addressLine1 || ''],
       addressLine2: [this.orderToEdit?.addressLine2 || ''],
       citySelect: [],
       zipCode: [this.orderToEdit?.zipCode || ''],
@@ -111,16 +111,16 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   pickAddress(event) {
     const id = event.value;
     this.addresses$.subscribe(addresses => {
-      const address = addresses[this.customerId]?.filter(element => element.id === id)[0];
-      if (address) {
+      const selectedAddress = addresses[this.customerId]?.filter(element => element.id === id)[0];
+      if (selectedAddress) {
         this.addressForm?.patchValue({
-          company: address?.addressName,
-          address: address?.addressLine1,
-          addressLine2: address?.addressLine2,
-          zipCode: address?.postalCode,
-          area: address?.city,
-          addressFull: address,
-          goodsAcceptanceNote: address?.goodsAcceptanceNote,
+          company: selectedAddress?.addressName,
+          addressLine1: selectedAddress?.addressLine1,
+          addressLine2: selectedAddress?.addressLine2,
+          zipCode: selectedAddress?.postalCode,
+          area: selectedAddress?.city,
+          addressFull: selectedAddress,
+          goodsAcceptanceNote: selectedAddress?.goodsAcceptanceNote,
         });
         this.zipCodeComponent.checkZipCode();
       }

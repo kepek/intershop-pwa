@@ -39,13 +39,12 @@ export const ADDRESS_VALIDATORS = {
       message: 'camfil.modal.createOrder.order-form.input.company.error.required',
     },
   ],
-  address: [
+  addressLine1: [
     {
       error: 'required',
-      message: 'camfil.modal.createOrder.order-form.input.address.error.required',
+      message: 'camfil.modal.createOrder.order-form.input.addressLine1.error.required',
     },
   ],
-  building: [],
   zipCode: [
     {
       error: 'required',

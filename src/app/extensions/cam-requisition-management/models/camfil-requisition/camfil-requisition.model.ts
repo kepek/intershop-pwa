@@ -63,8 +63,7 @@ export interface CamfilRequisitionListFilter {
 export interface CamfilEditRequisition extends CamfilRequisition {
   customerId?: string;
   company?: string;
-  building?: string;
-  address?: string;
+  addressLine1?: string;
   addressLine2?: string;
   zipCode?: string;
   area?: string;

@@ -39,7 +39,7 @@ export class CamfilEditOrderModalComponent implements OnDestroy {
       orderMark: this.order.orderMark,
       deliveryAddressId: this.order.deliveryAddressId,
       company: this.order.shipToAddressFull ? this.order.shipToAddressFull.companyName1 : '',
-      address: this.order.shipToAddressFull ? this.order.shipToAddressFull.addressLine1 : '',
+      addressLine1: this.order.shipToAddressFull ? this.order.shipToAddressFull.addressLine1 : '',
       addressLine2: this.order.shipToAddressFull ? this.order.shipToAddressFull?.addressLine2 || '' : '',
       zipCode: this.order.shipToAddressFull ? this.order.shipToAddressFull.postalCode : '',
       area: this.order.shipToAddressFull ? this.order.shipToAddressFull.city : '',
@@ -54,7 +54,7 @@ export class CamfilEditOrderModalComponent implements OnDestroy {
       markAsDirtyRecursive(addressForm);
     } else {
       const basketExtension = this.getUpdatedBasketExtension();
-      const address = this.getUpdatedAddress();
+      const shipToAddressFull = this.getUpdatedAddress();
 
       const type = this.order.id.split('_')[0];
       const form = this.orderForm.addressForm;
@@ -62,14 +62,11 @@ export class CamfilEditOrderModalComponent implements OnDestroy {
       const bucket = {
         ...this.order,
         contactPerson: form.get('contactFull').value || this.order.contactPerson,
-        // shipToAddress: virtualBucket.shippingAddress?.urn,
-        shipToAddressFull: address,
         orderMark: form.get('orderMark').value,
         invoiceLabel: form.get('invoiceLabel').value,
         info: form.get('info').value,
         phoneNumber: form.get('phoneNumber').value,
-        // customer: virtualBucket.customer,
-        // shippingMethod: this.shippingMethodId,
+        shipToAddressFull,
       };
 
       type === 'emptyBucket'
@@ -78,7 +75,7 @@ export class CamfilEditOrderModalComponent implements OnDestroy {
             this.editOrder.basket,
             this.editOrder.shipToAddressFull.id,
             basketExtension,
-            address
+            shipToAddressFull
           );
 
       this.additionalActionOnSubmit();
@@ -119,7 +116,7 @@ export class CamfilEditOrderModalComponent implements OnDestroy {
       ...this.order.shipToAddressFull,
       firstName: contact?.firstName || this.order.shipToAddressFull.firstName,
       lastName: contact?.lastName || this.order.shipToAddressFull.lastName,
-      addressLine1: form.get('address').value,
+      addressLine1: form.get('addressLine1').value,
       addressLine2: form.get('addressLine2')?.value || '',
       postalCode: form.get('zipCode').value,
       city: form.get('area').value,

@@ -199,7 +199,7 @@ export class CreateOrderProductModalComponent implements OnInit, OnDestroy {
       phoneHome: '',
       shipToAddress: true,
       urn: '',
-      addressLine1: addressForm.get('address').value,
+      addressLine1: addressForm.get('addressLine1').value,
       addressLine2: addressForm.get('addressLine2')?.value || '',
       postalCode: addressForm.get('zipCode').value,
       city: addressForm.get('area').value,
