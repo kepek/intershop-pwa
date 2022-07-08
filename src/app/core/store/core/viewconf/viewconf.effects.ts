@@ -24,7 +24,7 @@ import { setBreadcrumbData, setScroll, setStickyHeader } from './viewconf.action
 
 @Injectable()
 export class ViewconfEffects {
-  constructor(private store: Store, private actions$: Actions, @Inject(PLATFORM_ID) private platformId: string) {}
+  constructor(protected store: Store, protected actions$: Actions, @Inject(PLATFORM_ID) protected platformId: string) {}
 
   toggleStickyHeader$ = createEffect(() =>
     iif(

@@ -8,13 +8,9 @@ button[ng-reflect-router-link] {
 .main-container {
   background: transparent;
 }
-
 header {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   z-index: $cover-index-header;
-  width: 100%;
   margin-bottom: 0;
   box-shadow: $header-shadow;
 
@@ -43,7 +39,6 @@ header {
     @media (max-width: $screen-xs-max) {
       flex-direction: column;
     }
-
     @media (max-width: $screen-sm-max) {
       &__first {
         height: 40px;
@@ -61,30 +56,14 @@ header {
   }
 }
 
-.wrapper {
-  padding-top: 260px;
-}
-
-.wrapper,
 .sticky-header .wrapper {
-  margin-top: 0 !important;
-}
+  margin-top: 180px;
 
-.sticky-header {
-  header {
-    position: fixed;
+  @media (max-width: $screen-sm-max) {
+    margin-top: 244px;
   }
-
-  .wrapper {
-    margin-top: 0;
-
-    @media (max-width: $screen-sm-max) {
-      margin-top: 244px;
-    }
-
-    @media (max-width: $screen-xs-max) {
-      margin-top: 140px;
-    }
+  @media (max-width: $screen-xs-max) {
+    margin-top: 140px;
   }
 }
 
