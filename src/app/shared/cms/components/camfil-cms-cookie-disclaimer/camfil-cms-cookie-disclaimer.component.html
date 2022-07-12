@@ -18,6 +18,16 @@
       >
         {{ 'cookies.banner.accept_all' | translate }}
       </button>
+      <button
+        type="button"
+        mat-flat-button
+        color="primary"
+        (click)="rejectAll()"
+        class="order-2 ml-sm-2"
+        data-testing-id="rejectAllButton"
+      >
+        {{ 'cookies.banner.reject_all' | translate }}
+      </button>
       <button type="button" mat-stroked-button color="primary" routerLink="/cookies" class="order-1 mr-sm-2">
         {{ 'cookies.banner.set_preferences' | translate }}
       </button>
