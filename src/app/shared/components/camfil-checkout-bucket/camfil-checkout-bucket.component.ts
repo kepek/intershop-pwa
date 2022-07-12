@@ -31,6 +31,7 @@ import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-ext
 import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { BucketTotal } from 'ish-core/models/bucket-total/bucket-total.model';
+import { BucketHelper } from 'ish-core/models/bucket/bucket.helper';
 import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { Channel } from 'ish-core/models/channel/channel.types';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
@@ -40,6 +41,7 @@ import { Price, PriceHelper } from 'ish-core/models/price/price.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+import { EMPTY_BUCKET_PREFIX } from 'ish-core/store/customer/basket/basket-items.effects';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
@@ -52,8 +54,8 @@ import { ORDER_HEADER_VALIDATORS } from './validators';
 @Component({
   selector: 'camfil-checkout-bucket',
   templateUrl: './camfil-checkout-bucket.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./camfil-checkout-bucket.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
@@ -281,6 +283,8 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
       this.basketAddresses = basketAddresses;
     });
+
+    this.bucket$.pipe(takeUntil(this.destroy$)).subscribe(bucket => console.log({ bucketId: bucket.id }));
   }
 
   getBoxLabel(lineItem: LineItem) {
@@ -289,6 +293,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
 
   ngOnChanges(s) {
     this.bucket$.next(this.bucket);
+
     this.shipToAddressFullId$.next(this.bucket?.shipToAddressFull?.id);
 
     if (s.bucket && this.forceUpdateForm) {
@@ -376,15 +381,16 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
 
   onBlurSubmit(field: string) {
     const formField = this.getField(field);
-    if (!formField.errors) {
-      const { basket, deliveryAddressId } = this.bucket;
 
-      const updated: BasketExtensionData = {
+    if (!formField.errors) {
+      const basketExtension = {
         ...this.currentBasketExtensions,
         [field]: formField.value,
       };
 
-      this.shoppingFacade.updateBucket(basket, deliveryAddressId, updated);
+      BucketHelper.isEmptyBucket(this.bucket)
+        ? this.checkoutFacade.updateEmptyBucket(basketExtension)
+        : this.shoppingFacade.updateBucket(this.bucket.basket, this.bucket.shipToAddressFull.id, basketExtension);
     }
   }
 
@@ -583,18 +589,16 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   updateBucketDeliveryDate(isPartial: boolean, deliveryDate: number) {
     const basketId = this.bucket.basket;
     const shipAddressId = this.bucket.deliveryAddressId;
-
     const deliveryDateValue = AttributeHelper.formatDeliveryDate(new Date(deliveryDate));
-    this.deliveryDateValue = deliveryDateValue;
-
-    this.selectedDeliveryDate = deliveryDate;
-    this.isPartialDelivery = isPartial;
-
-    const basketExtensionUpdate = {
+    const basketExtension = {
       ...this.currentBasketExtensions,
       deliveryDate: deliveryDateValue,
       isPartialDelivery: isPartial,
     };
+
+    this.deliveryDateValue = deliveryDateValue;
+    this.selectedDeliveryDate = deliveryDate;
+    this.isPartialDelivery = isPartial;
 
     if (this.modal) {
       // CAM-1504: Only display popup when bucket contains more then one line items
@@ -609,7 +613,9 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
 
     /* call c after dialog is closed either by click, backdrop click, or ESC press */
     this.dialog.afterAllClosed?.pipe(first(), takeUntil(this.destroy$))?.subscribe(() => {
-      this.shoppingFacade.updateBucket(basketId, shipAddressId, basketExtensionUpdate);
+      BucketHelper.isEmptyBucket(this.bucket)
+        ? this.checkoutFacade.updateEmptyBucket(basketExtension)
+        : this.shoppingFacade.updateBucket(basketId, shipAddressId, basketExtension);
     });
   }
 
@@ -726,9 +732,9 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   submitQuickAddProd(quickAddData: QuickAddProduct, modal: ModalAddNewProductComponent) {
     const type = this.bucket?.id?.split('_')?.[0];
     const shipToAddress = this.bucket.shipToAddress;
-
     const { sku, quantity, lineItemAttributes } = quickAddData;
-    if (this.bucket?.id && type !== 'emptyBucket' && this.bucket?.shipToAddress) {
+
+    if (this.bucket?.id && type !== EMPTY_BUCKET_PREFIX && this.bucket?.shipToAddress) {
       this.addProductToExistingOrder(sku, quantity, shipToAddress, lineItemAttributes);
     } else {
       const deliveryAddress = this.bucket.shipToAddressFull as Address;

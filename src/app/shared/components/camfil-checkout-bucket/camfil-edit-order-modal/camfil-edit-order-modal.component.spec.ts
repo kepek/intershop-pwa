@@ -53,7 +53,7 @@ describe('Camfil Edit Order Modal Component', () => {
     component = fixture.componentInstance;
     element = fixture.nativeElement;
 
-    component.order = {
+    component.bucket = {
       contactPerson: { firstName: 'test' },
       basket: 'test_basketId',
       id: 'test_id',
