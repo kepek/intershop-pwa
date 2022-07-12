@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { Bucket } from 'ish-core/models/bucket/bucket.model';
+import { EMPTY_BUCKET_PREFIX } from 'ish-core/store/customer/basket/basket-items.effects';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 @Component({
@@ -26,7 +27,7 @@ export class CamfilDeleteOrderComponent {
   deleteOrder() {
     const type = this.order.id.split('_')[0];
 
-    type === 'emptyBucket'
+    type === EMPTY_BUCKET_PREFIX
       ? this.checkoutFacade.deleteEmptyBucket(this.order.id)
       : this.checkoutFacade.deleteOrder(this.order.basket, this.order.shipToAddressFull.id);
     this.modal.hide();

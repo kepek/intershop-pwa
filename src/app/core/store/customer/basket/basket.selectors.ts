@@ -4,6 +4,7 @@ import { isEqual } from 'lodash-es';
 import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { BasketView, createBasketView } from 'ish-core/models/basket/basket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { getCustomerState } from 'ish-core/store/customer/customer-store';
 import { getOrdersLoading } from 'ish-core/store/customer/orders';
 import { getLoggedInCustomer } from 'ish-core/store/customer/user';
@@ -87,7 +88,7 @@ export const getCurrentBuckets = createSelector(getBasketState, basket => basket
 export const getEmptyBuckets = createSelector(getBasketState, basket => basket.emptyBuckets);
 
 export const getAllBuckets = createSelector(getBasketState, basket => {
-  const allBuckets = [];
+  const allBuckets: Bucket[] = [];
 
   if (basket?.emptyBuckets) {
     allBuckets.push(...basket.emptyBuckets);
@@ -99,6 +100,17 @@ export const getAllBuckets = createSelector(getBasketState, basket => {
 
   return allBuckets?.length ? allBuckets : undefined;
 });
+
+export const getBucketDetails = createSelector(
+  getAllBuckets,
+  (entities: Bucket[], props: { id: string }): Bucket => props.id && entities[props.id]
+);
+
+export const getBuckets = createSelector(
+  getAllBuckets,
+  (entities: Bucket[], props: { ids: string[] }): Bucket[] =>
+    props.ids && entities.filter(e => props.ids.includes(e.id))
+);
 
 export const getBasketEligibleShippingMethods = createSelector(
   getBasketState,

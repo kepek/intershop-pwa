@@ -90,6 +90,8 @@ import { getCurrentBasket, getCurrentBasketId } from './basket.selectors';
 
 const STANDARD_SHIPPING_METHOD = 'STD_GROUND';
 
+export const EMPTY_BUCKET_PREFIX = 'emptyBucket';
+
 @Injectable()
 export class BasketItemsEffects {
   /**
@@ -535,20 +537,19 @@ export class BasketItemsEffects {
     this.actions$.pipe(
       ofType(addItemsToBasketFromCamCard),
       mapToPayload(),
-      mergeMap(payload =>
-        this.basketService.addItemsToBasket(payload.items).pipe(
+      mergeMap(payload => {
+        const emptyBucketIds = payload.bucketIds?.filter(id => id.split('_')[0] === EMPTY_BUCKET_PREFIX);
+
+        return this.basketService.addItemsToBasket(payload.items).pipe(
           mergeMap(() => {
-            const emptyBuckets =
-              payload.bucketIds
-                ?.filter(id => id.split('_')[0] === 'emptyBucket')
-                ?.map(id => deleteEmptyBucket({ id })) || [];
-            const validBasket = emptyBuckets.length ? [validateBasket({ scopes: ['Products'] })] : [];
+            const deleteEmptyBuckets = emptyBucketIds?.map(id => deleteEmptyBucket({ id })) || [];
+            const validBasket = deleteEmptyBuckets.length ? [validateBasket({ scopes: ['Products'] })] : [];
 
             return [
               loadBasket(),
               loadBasketAddresses(),
               addItemsToBasketFromCamCardSuccess(),
-              ...emptyBuckets,
+              ...deleteEmptyBuckets,
               ...validBasket,
               displaySuccessMessage({
                 message: 'camfil.add_items_to_basket.camfil.message.success',
@@ -561,8 +562,8 @@ export class BasketItemsEffects {
               failedCamCardName: payload.camCardName,
             })
           )
-        )
-      )
+        );
+      })
     )
   );
   doubleBucketItemsQuantityItems$ = createEffect(() =>

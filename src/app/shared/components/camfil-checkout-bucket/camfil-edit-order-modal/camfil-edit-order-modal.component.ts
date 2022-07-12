@@ -6,6 +6,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Address } from 'ish-core/models/address/address.model';
 import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
+import { BucketHelper } from 'ish-core/models/bucket/bucket.helper';
 import { Bucket, EditBucket } from 'ish-core/models/bucket/bucket.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
@@ -22,7 +23,7 @@ export class CamfilEditOrderModalComponent implements OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  @Input() order?: Bucket;
+  @Input() bucket?: Bucket;
   editOrder: EditBucket;
 
   @ViewChild(OrderFormComponent) orderForm: OrderFormComponent;
@@ -32,18 +33,18 @@ export class CamfilEditOrderModalComponent implements OnDestroy {
 
   convertToFormValues() {
     return {
-      ...this.order,
-      customerId: this.order.customer ? this.order.customer.id : '',
-      invoiceLabel: this.order.invoiceLabel,
-      phoneNumber: this.order.phoneNumber,
-      orderMark: this.order.orderMark,
-      deliveryAddressId: this.order.deliveryAddressId,
-      company: this.order.shipToAddressFull ? this.order.shipToAddressFull.companyName1 : '',
-      addressLine1: this.order.shipToAddressFull ? this.order.shipToAddressFull.addressLine1 : '',
-      addressLine2: this.order.shipToAddressFull ? this.order.shipToAddressFull?.addressLine2 || '' : '',
-      zipCode: this.order.shipToAddressFull ? this.order.shipToAddressFull.postalCode : '',
-      area: this.order.shipToAddressFull ? this.order.shipToAddressFull.city : '',
-      info: this.order.info,
+      ...this.bucket,
+      customerId: this.bucket.customer ? this.bucket.customer.id : '',
+      invoiceLabel: this.bucket.invoiceLabel,
+      phoneNumber: this.bucket.phoneNumber,
+      orderMark: this.bucket.orderMark,
+      deliveryAddressId: this.bucket.deliveryAddressId,
+      company: this.bucket.shipToAddressFull ? this.bucket.shipToAddressFull.companyName1 : '',
+      addressLine1: this.bucket.shipToAddressFull ? this.bucket.shipToAddressFull.addressLine1 : '',
+      addressLine2: this.bucket.shipToAddressFull ? this.bucket.shipToAddressFull?.addressLine2 || '' : '',
+      zipCode: this.bucket.shipToAddressFull ? this.bucket.shipToAddressFull.postalCode : '',
+      area: this.bucket.shipToAddressFull ? this.bucket.shipToAddressFull.city : '',
+      info: this.bucket.info,
     };
   }
 
@@ -55,13 +56,11 @@ export class CamfilEditOrderModalComponent implements OnDestroy {
     } else {
       const basketExtension = this.getUpdatedBasketExtension();
       const shipToAddressFull = this.getUpdatedAddress();
-
-      const type = this.order.id.split('_')[0];
       const form = this.orderForm.addressForm;
 
       const bucket = {
-        ...this.order,
-        contactPerson: form.get('contactFull').value || this.order.contactPerson,
+        ...this.bucket,
+        contactPerson: form.get('contactFull').value || this.bucket.contactPerson,
         orderMark: form.get('orderMark').value,
         invoiceLabel: form.get('invoiceLabel').value,
         info: form.get('info').value,
@@ -69,7 +68,7 @@ export class CamfilEditOrderModalComponent implements OnDestroy {
         shipToAddressFull,
       };
 
-      type === 'emptyBucket'
+      BucketHelper.isEmptyBucket(bucket)
         ? this.checkoutFacade.updateEmptyBucket(bucket)
         : this.shoppingFacade.updateBucket(
             this.editOrder.basket,
@@ -94,7 +93,7 @@ export class CamfilEditOrderModalComponent implements OnDestroy {
     const customer = this.orderForm.addressForm.get('customerFull').value;
 
     return {
-      ...this.order,
+      ...this.bucket,
       customer: {
         id: customer.id,
         customerNo: customer.customerNo,
@@ -102,7 +101,7 @@ export class CamfilEditOrderModalComponent implements OnDestroy {
       },
       orderMark: form.get('orderMark').value,
       invoiceLabel: form.get('invoiceLabel').value,
-      contactPerson: form.get('contactFull').value || this.order.contactPerson,
+      contactPerson: form.get('contactFull').value || this.bucket.contactPerson,
       info: form.get('info').value,
       phoneNumber: form.get('phoneNumber').value,
     };
@@ -113,9 +112,9 @@ export class CamfilEditOrderModalComponent implements OnDestroy {
     const contact = form.get('contactFull').value;
 
     return {
-      ...this.order.shipToAddressFull,
-      firstName: contact?.firstName || this.order.shipToAddressFull.firstName,
-      lastName: contact?.lastName || this.order.shipToAddressFull.lastName,
+      ...this.bucket.shipToAddressFull,
+      firstName: contact?.firstName || this.bucket.shipToAddressFull.firstName,
+      lastName: contact?.lastName || this.bucket.shipToAddressFull.lastName,
       addressLine1: form.get('addressLine1').value,
       addressLine2: form.get('addressLine2')?.value || '',
       postalCode: form.get('zipCode').value,
