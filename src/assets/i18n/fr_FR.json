@@ -1471,6 +1471,7 @@
   "cookie.consent.option.tracking.name": "Suivi et performance",
   "cookie.preferences.heading": "Préférences en matière de cookies",
   "cookies.banner.accept_all": "Tout accepter",
+  "cookies.banner.reject_all": "Tout rejeter",
   "cookies.banner.set_preferences": "Définir les préférences",
   "cookies.banner.text": "<h4>Votre vie privée est importante pour nous</h4><p></h4><p>Ce site internet utilise des cookies et d'autres technologies permettant à notre site de rester sécurisé, de mesurer ses performances, de personnaliser son contenu et d’améliorer votre expérience sur notre site. Nous suivons donc les données relatives aux utilisateurs et à leur comportement.<br/>En confirmant \"Accepter tout\", vous acceptez l'utilisation de tous les cookies. Sélectionnez le bouton \"Définir les préférences\" pour avoir des informations complémentaires et gérer vos options. Vous trouverez des informations détaillées en consultant notre <a href=\"/fr/page/privacy-policy\">Politique de Confidentialité</a> .</p>",
   "cookies.modal.accept_all": "Tout accepter",

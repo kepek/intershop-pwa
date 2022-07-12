@@ -1471,6 +1471,7 @@
   "cookie.consent.option.tracking.name": "Tracking and Performance",
   "cookie.preferences.heading": "Cookie Preferences",
   "cookies.banner.accept_all": "Accept All",
+  "cookies.banner.reject_all": "(en_US)_Reject All",
   "cookies.banner.set_preferences": "Set Preferences",
   "cookies.banner.text": "<h4>Your privacy is important for us</h4><p>This website uses cookies and other technologies to keep our site secure, to measure the performance, to personalize the content and to improve your experience on our site. Therefore we track data about users and their behavior.<br/>By confirming \"Accept all\" you agree to the use of all cookies. Select the button \"Set Preferences\" for further details and to manage your options. More detailed information is provided in our <a href=\"/en/page/privacy-policy\">Privacy Policy</a>.</p>",
   "cookies.modal.accept_all": "Accept All",

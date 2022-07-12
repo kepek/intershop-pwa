@@ -1471,6 +1471,7 @@
   "cookie.consent.option.tracking.name": "Spårning och Prestanda",
   "cookie.preferences.heading": "Cooke alternativ",
   "cookies.banner.accept_all": "Acceptera alla",
+  "cookies.banner.reject_all": "(sv_SE)_Reject All",
   "cookies.banner.set_preferences": "Ange preferenser",
   "cookies.banner.text": "<h4>Din integritet är viktig för oss</h4><p>Den här sidan använder cookies.<br/>Genom att välja \"Acceptera alla\" godkänner du användningen av dessa. Välj \"Ange Preferenser\" för att redigera dessa. Mer information hittar du här <a href=\"/se/page/privacy-policy\">Privacy Policy</a>.</p>",
   "cookies.modal.accept_all": "Acceptera alla",

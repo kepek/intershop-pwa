@@ -1471,6 +1471,7 @@
   "cookie.consent.option.tracking.name": "Tracciamento e prestazioni",
   "cookie.preferences.heading": "Preferenze dei cookie",
   "cookies.banner.accept_all": "Accetta tutti",
+  "cookies.banner.reject_all": "(it_IT)_Reject All",
   "cookies.banner.set_preferences": "Imposta le preferenze",
   "cookies.banner.text": "<h4>La tua privacy è importante per noi</h4><p>Questo sito web utilizza i cookie e altre tecnologie per mantenere il nostro sito sicuro, per misurare le prestazioni, per personalizzare il contenuto e per migliorare la tua esperienza sul nostro sito. Per questo motivo teniamo traccia dei dati degli utenti e del loro comportamento.<br/>Confermando",
   "cookies.modal.accept_all": "Accetta tutto",
