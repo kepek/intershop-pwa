@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 import { filter, map, mergeMap, pairwise, skipWhile, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
 
 import { BasketView } from 'ish-core/models/basket/basket.model';
-import { ofCategoryUrl } from 'ish-core/routing/category/category.route';
 import { selectRouteParam, selectRouter } from 'ish-core/store/core/router';
 import {
   addItemsToBasketFromCamCardSuccess,
@@ -17,7 +16,7 @@ import {
   getSubmittedBasket,
 } from 'ish-core/store/customer/basket';
 import { createOrderSuccess } from 'ish-core/store/customer/orders';
-import { getSelectedCategory, loadCategorySuccess } from 'ish-core/store/shopping/categories';
+import { setProductListingPages } from 'ish-core/store/shopping/product-listing';
 import { getSelectedProduct } from 'ish-core/store/shopping/products';
 import { mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
@@ -32,6 +31,7 @@ import {
   updateCamCardProductSuccess,
   updateCamCardSuccess,
 } from '../../../cam-cards/store/cam-card';
+import { loadQuoteDetailsSuccess } from '../../../cam-quotes/store/cam-quotes.actions';
 import { DataLayerOrderType, DataLayerPageType } from '../../models/data-layer-event.type';
 import { TrackingService } from '../../services/tracking.service';
 
@@ -279,17 +279,59 @@ export class TrackingEventsEffects {
     { dispatch: false }
   );
 
+  // Items lists tracking
   trackViewItemList$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(loadCategorySuccess),
+        ofType(setProductListingPages),
+        whenTruthy(),
+        map(action => action.payload),
+        tap(productListingType => {
+          const products = productListingType[
+            Object.keys(productListingType).find(key => !isNaN(parseInt(key, 10)))
+          ] as string[];
+          if (!products || !products.length) {
+            return;
+          }
+
+          if (productListingType.id.type === 'category') {
+            this.trackingService.trackViewItemList(
+              products,
+              DataLayerPageType.ProductListing,
+              productListingType.id.value
+            );
+          } else if (productListingType.id.type === 'search') {
+            this.trackingService.trackViewItemList(products, DataLayerPageType.SearchResult);
+          }
+        })
+      ),
+    { dispatch: false }
+  );
+
+  trackViewItemListInQuoteDetails$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loadQuoteDetailsSuccess),
+        mapToPayloadProperty('quoteDetails'),
+        tap(quoteDetails => this.trackingService.trackViewItemListFromQuotation(quoteDetails))
+      ),
+    { dispatch: false }
+  );
+
+  trackViewItemListInCamcardDetails$ = createEffect(
+    () =>
+      this.store.pipe(
+        select(selectRouter),
+        whenTruthy(),
+        skipWhile(router => !router.state),
+        map(router => this.getPageTypeFromPath(router.state.path, router.state.params)),
+        filter(pageType => pageType === DataLayerPageType.CamCardDetail),
         switchMapTo(
           this.store.pipe(
-            ofCategoryUrl(),
-            select(getSelectedCategory),
+            select(getSelectedCamCardDetails),
             whenTruthy(),
             take(1),
-            map(categoryView => this.trackingService.trackViewItemList(categoryView))
+            tap(camCard => this.trackingService.trackViewItemListFromCamCard(camCard))
           )
         )
       ),
