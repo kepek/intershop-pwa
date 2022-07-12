@@ -13,6 +13,7 @@ import { getProducts } from 'ish-core/store/shopping/products';
 import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
 
 import { CamCard } from '../../cam-cards/models/cam-card/cam-card.model';
+import { QuoteDetails } from '../../cam-quotes/models/quote-details/quote-details.model';
 import {
   DataLayerEvent,
   DataLayerEventType,
@@ -112,14 +113,90 @@ export class TrackingService {
     );
   }
 
-  trackViewItemList(item: CategoryView) {
-    const event: DataLayerEvent = {
-      event: DataLayerEventType.ItemListView,
-      item_list_id: item.uniqueId,
-      item_list_name: item.name,
-    };
+  trackViewItemList(skus: string[], pageType: DataLayerPageType, pageId?: string) {
+    this.getProducts(skus).subscribe(products => {
+      const event: DataLayerEvent = {
+        event: DataLayerEventType.ItemListView,
+        item_list_id: pageId,
+        page_type: pageType,
+        items: products.map(productInfo => ({
+          item_id: productInfo.product?.sku,
+          discount: 0,
+          index: 0,
+          price: productInfo.product?.salePrice?.value,
+          item_name: productInfo.product?.name,
+          item_brand: productInfo.product?.manufacturer,
+          item_category2: productInfo.categoryInfo?.category?.name,
+          item_category: productInfo.categoryInfo?.parent?.category?.name,
+        })),
+      };
 
-    this.push(event);
+      this.push(event);
+    });
+  }
+
+  trackViewItemListFromQuotation(quotation: QuoteDetails) {
+    this.getProducts(quotation.items.map(item => item.productSKU)).subscribe(products => {
+      const event: DataLayerEvent = {
+        event: DataLayerEventType.ItemListView,
+        page_type: DataLayerPageType.QuoteDetail,
+        item_list_id: quotation.id,
+        item_list_name: quotation.displayName,
+        items: quotation.items.map((item, i) => {
+          const dataLayerItem: DataLayerItem = {
+            item_id: item.product.sku,
+            discount: 0,
+            index: i,
+            quantity: item.quantity?.value,
+            item_name: item.product.name,
+          };
+          const productInfo = products
+            ? products.find(p => p && p.product && p.product.sku === item.product.sku)
+            : undefined;
+          if (productInfo) {
+            dataLayerItem.price = productInfo.product.salePrice?.value;
+            dataLayerItem.item_brand = productInfo.product.manufacturer;
+            dataLayerItem.item_category = productInfo.categoryInfo?.category?.name;
+            dataLayerItem.item_category2 = productInfo.categoryInfo?.parent?.category?.name;
+          }
+          return dataLayerItem;
+        }),
+      };
+
+      this.push(event);
+    });
+  }
+
+  trackViewItemListFromCamCard(camCard: CamCard) {
+    this.getProductsFromCamCard(camCard).subscribe(products => {
+      const event: DataLayerEvent = {
+        event: DataLayerEventType.ItemListView,
+        page_type: DataLayerPageType.QuoteDetail,
+        item_list_id: camCard.id,
+        item_list_name: camCard.name,
+        items: camCard.camCardItems.map((item, i) => {
+          const dataLayerItem: DataLayerItem = {
+            item_id: item.product.sku,
+            discount: 0,
+            index: i,
+            quantity: item.quantity,
+            item_name: item.product.name,
+          };
+          const productInfo = products
+            ? products.find(p => p && p.product && p.product.sku === item.product.sku)
+            : undefined;
+          if (productInfo) {
+            dataLayerItem.price = productInfo.product.salePrice?.value;
+            dataLayerItem.item_brand = productInfo.product.manufacturer;
+            dataLayerItem.item_category = productInfo.categoryInfo?.category?.name;
+            dataLayerItem.item_category2 = productInfo.categoryInfo?.parent?.category?.name;
+          }
+          return dataLayerItem;
+        }),
+      };
+
+      this.push(event);
+    });
   }
 
   trackOrder(basket: BasketView, orderType: DataLayerOrderType) {
