@@ -68,7 +68,7 @@
           <dd class="col-6 p-0" data-testing-id="order-camfil_no">{{ bucket?.phoneNumber || '-' }}</dd>
           <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-delivery_address">
-            <camfil-address [address]="orderAddress"></camfil-address>
+            <camfil-address [address]="shipToAddress"></camfil-address>
           </dd>
           <ng-container *ngIf="!editable">
             <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.goods_mark.label' | translate }}</dt>

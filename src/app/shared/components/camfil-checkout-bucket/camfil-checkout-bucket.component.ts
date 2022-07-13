@@ -17,7 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { Observable, ReplaySubject, Subject, combineLatest } from 'rxjs';
-import { first, map, switchMap, take, takeUntil } from 'rxjs/operators';
+import { first, map, switchMap, take, takeUntil, takeWhile } from 'rxjs/operators';
 import { CamfilCheckoutGoodsAcceptanceModalComponent } from 'src/app/pages/camfil-checkout-onestep/camfil-checkout-goods-acceptance-modal/camfil-checkout-goods-acceptance-modal.component';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -82,7 +82,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   basketInvoiceAddress: Address;
   closedDates;
   calendarException = [];
-  orderAddress: Address;
   emailRecipients: string[];
   goodsAcceptanceNote: string;
   basketExtensions: BasketExtension[];
@@ -179,11 +178,10 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   }
 
   ngOnInit(): void {
-    this.orderAddress = this.shipToAddress;
+    this.createOrderForm();
 
     this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
-
     this.shipToAddressFullId$
       .pipe(
         switchMap(id =>
@@ -198,7 +196,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
         this.emailRecipients = emailRecipients;
         this.goodsAcceptanceNote = goodsAcceptanceNote;
       });
-
     this.deliveryTerm$ = combineLatest([
       this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy()),
       this.bucket$,
@@ -210,7 +207,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
           deliveryTerm?.freeShippingAllowed && bucket?.totals?.itemTotal?.net > deliveryTerm?.threshold,
       }))
     );
-
     this.deliveryPrice$ = combineLatest([this.deliveryTerm$.pipe(whenTruthy()), this.bucket$])?.pipe(
       map(([deliveryTerm, bucket]) => {
         const emptyPrice = PriceHelper.empty();
@@ -221,25 +217,29 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
         return { ...emptyPrice, value: price > 0 ? price : 0, currency };
       })
     );
+    this.calendarExceptions$
+      ?.pipe(
+        whenTruthy(),
+        takeWhile(() => !BucketHelper.isEmptyBucket(this.bucket)),
+        takeUntil(this.destroy$)
+      )
+      ?.subscribe(exceptions => {
+        this.calendarException = exceptions.map((element: { date: string }) => {
+          const date = new Date(element.date);
+          date.setHours(0, 0, 0);
+          return date.getTime();
+        });
 
-    this.calendarExceptions$?.pipe(whenTruthy(), takeUntil(this.destroy$))?.subscribe(exceptions => {
-      this.calendarException = exceptions.map((element: { date: string }) => {
-        const date = new Date(element.date);
-        date.setHours(0, 0, 0);
-        return date.getTime();
-      });
+        const deliveryDateControl = this.orderForm?.get('deliveryDate');
 
-      const deliveryDateControl = this.orderForm?.get('deliveryDate');
-
-      if (deliveryDateControl) {
-        if (!this.calendarException.length) {
-          deliveryDateControl.disable();
-        } else {
-          deliveryDateControl.enable();
+        if (deliveryDateControl) {
+          if (!this.calendarException.length) {
+            deliveryDateControl.disable();
+          } else {
+            deliveryDateControl.enable();
+          }
         }
-      }
-    });
-
+      });
     this.focusedCheckoutElement$ = this.checkoutFacade.getFocusedCheckoutElement$;
     this.focusedCheckoutElement$
       ?.pipe(takeUntil(this.destroy$))
@@ -254,7 +254,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
       this.checkoutFacade.basketInvoiceAddress$
         ?.pipe(whenTruthy(), takeUntil(this.destroy$))
         ?.subscribe(address => (this.basketInvoiceAddress = address));
-      this.initForm();
       this.handleDeliveryDateIfOutOfDate();
     }
 
@@ -283,47 +282,15 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
       this.basketAddresses = basketAddresses;
     });
-
-    this.bucket$.pipe(takeUntil(this.destroy$)).subscribe(bucket => console.log({ bucketId: bucket.id }));
   }
 
   getBoxLabel(lineItem: LineItem) {
     return lineItem?.attributes?.find(att => att.name === 'boxLabel')?.value;
   }
 
-  ngOnChanges(s) {
+  ngOnChanges() {
     this.bucket$.next(this.bucket);
-
     this.shipToAddressFullId$.next(this.bucket?.shipToAddressFull?.id);
-
-    if (s.bucket && this.forceUpdateForm) {
-      this.orderForm.patchValue({
-        orderMark: this.bucket.orderMark,
-        invoiceLabel: this.bucket.invoiceLabel,
-        info: this.bucket.info,
-      });
-      this.forceUpdateForm = false;
-    }
-
-    if (s.bucket) {
-      this.orderAddress = this.shipToAddress;
-    }
-
-    if (!s?.totalBuckets?.firstChange && s?.totalBuckets?.previousValue !== s?.totalBuckets?.currentValue) {
-      this.orderForm?.patchValue({
-        orderMark: this.bucket.orderMark,
-        invoiceLabel: this.bucket.invoiceLabel,
-        info: this.bucket.info,
-      });
-    }
-
-    const prev = s?.order?.previousValue?.deliveryDate;
-    const current = s?.order?.currentValue?.deliveryDate;
-    if (prev && current && prev !== current) {
-      this.orderForm.patchValue({
-        deliveryDate: this.toDate(this.bucket.deliveryDate),
-      });
-    }
   }
 
   ngAfterViewInit() {
@@ -363,20 +330,44 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     return !this.calendarException?.includes(date?.getTime());
   }
 
-  initForm() {
+  private createOrderForm() {
     const defaultDeliveryDate = this.setFullDeliveryDate();
 
-    this.orderForm = this.fb.group({
-      orderMark: [this.bucket.orderMark, [Validators.maxLength(60)]],
-      invoiceLabel: [this.bucket.invoiceLabel, [Validators.maxLength(60)]],
-      info: [this.bucket.info, [Validators.maxLength(150)]],
-      deliveryDate: [
-        this.bucket?.deliveryDate?.length ? this.toDate(this.bucket.deliveryDate) : defaultDeliveryDate,
-        [Validators.maxLength(35)],
-      ],
-    });
     this.selectedDeliveryDate = defaultDeliveryDate;
     this.isPartialDelivery = true;
+    this.orderForm = this.fb.group({
+      orderMark: ['', [Validators.maxLength(60)]],
+      invoiceLabel: ['', [Validators.maxLength(60)]],
+      info: ['', [Validators.maxLength(150)]],
+      deliveryDate: ['', [Validators.maxLength(35)]],
+    });
+
+    this.toggleBucketDeliveryDateFormField(this.bucket);
+
+    this.bucket$.pipe(takeUntil(this.destroy$)).subscribe(bucket => {
+      this.orderForm.patchValue({
+        orderMark: bucket.orderMark,
+        invoiceLabel: bucket.invoiceLabel,
+        info: bucket.info,
+        deliveryDate: this.toDate(bucket.deliveryDate),
+      });
+
+      this.toggleBucketDeliveryDateFormField(bucket);
+    });
+  }
+
+  private toggleBucketDeliveryDateFormField(bucket: Bucket) {
+    const deliveryDateControl = this.orderForm?.get('deliveryDate');
+
+    if (!deliveryDateControl) {
+      return;
+    }
+
+    if (BucketHelper.isEmptyBucket(bucket)) {
+      deliveryDateControl?.disable();
+    } else {
+      deliveryDateControl?.enable();
+    }
   }
 
   onBlurSubmit(field: string) {
@@ -476,9 +467,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   openEditModal(modal: CamfilEditOrderModalComponent) {
     this.dialog.open(modal.show());
     modal.hide = () => this.dialog.closeAll();
-    modal.additionalActionOnSubmit = () => {
-      this.forceUpdateForm = true;
-    };
   }
 
   setFullDeliveryDate() {
@@ -620,7 +608,12 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   }
 
   toDate(dateStr) {
+    if (!dateStr) {
+      return;
+    }
+
     const parts = dateStr.split('-');
+
     let dateString = new Date(parts[0], parts[1] - 1, parts[2]);
 
     if (this.checkIfWeekend(dateString)) {
