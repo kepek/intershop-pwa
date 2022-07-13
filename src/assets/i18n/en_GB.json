@@ -566,8 +566,8 @@
   "camfil.account.cam_card.deliveryInterval.value": {
     "=-1": "---",
     "=0": "---",
-    "=1": "1 week",
-    "other": "# weeks"
+    "=1": "1 month",
+    "other": "# months"
   },
   "camfil.account.cam_card.details.button.add_product.label": "Add new product",
   "camfil.account.cam_card.details.button.add_section.label": "Add new section",

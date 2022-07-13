@@ -541,7 +541,7 @@
   "camfil.account.cam_card.add_to_form.country": "Pays",
   "camfil.account.cam_card.add_to_form.customer_name": "Nom de client",
   "camfil.account.cam_card.add_to_form.delivery_address": "Adresse de livraison",
-  "camfil.account.cam_card.add_to_form.delivery_interval": "Intervalle de livraison",
+  "camfil.account.cam_card.add_to_form.delivery_interval": "Intervalle de livraison (mois)",
   "camfil.account.cam_card.add_to_form.delivery_time": "Délai de livraison",
   "camfil.account.cam_card.add_to_form.dialog.do_you_want": "Souhaitez-vous continuer ?",
   "camfil.account.cam_card.add_to_form.dialog.no": "Non, merci",
@@ -566,8 +566,8 @@
   "camfil.account.cam_card.deliveryInterval.value": {
     "=-1": "---",
     "=0": "---",
-    "=1": "1 semaine",
-    "other": "# semaines"
+    "=1": "1 Mois",
+    "other": "# Mois"
   },
   "camfil.account.cam_card.details.button.add_product.label": "Ajouter un nouveau produit",
   "camfil.account.cam_card.details.button.add_section.label": "Ajouter une nouvelle section",

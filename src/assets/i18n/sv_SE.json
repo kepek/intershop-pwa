@@ -541,8 +541,8 @@
   "camfil.account.cam_card.add_to_form.country": "Land",
   "camfil.account.cam_card.add_to_form.customer_name": "Kund",
   "camfil.account.cam_card.add_to_form.delivery_address": "Leveransadress",
-  "camfil.account.cam_card.add_to_form.delivery_interval": "Bytesintervall*",
-  "camfil.account.cam_card.add_to_form.delivery_time": "Bytesintervall*",
+  "camfil.account.cam_card.add_to_form.delivery_interval": "Bytesintervall (månad)",
+  "camfil.account.cam_card.add_to_form.delivery_time": "Bytesintervall",
   "camfil.account.cam_card.add_to_form.dialog.do_you_want": "Vill du fortsätta?",
   "camfil.account.cam_card.add_to_form.dialog.no": "Nej tack",
   "camfil.account.cam_card.add_to_form.dialog.other_users": "Andra användare med tillgång till det valda CamCardet kommer att påverkas",
@@ -566,8 +566,8 @@
   "camfil.account.cam_card.deliveryInterval.value": {
     "=-1": "---",
     "=0": "---",
-    "=1": "1 vecka",
-    "other": "# veckor"
+    "=1": "1 månad",
+    "other": "# månader"
   },
   "camfil.account.cam_card.details.button.add_product.label": "Lägg till ny produkt",
   "camfil.account.cam_card.details.button.add_section.label": "Lägg till ny sektion",
