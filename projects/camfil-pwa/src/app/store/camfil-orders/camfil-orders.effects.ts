@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { CamfilOrderService } from 'camfil-pwa/services/camfil-order/camfil-order.service';
 import { loadOrderIfNotLoaded } from 'camfil-pwa/store/customer/orders';
-import { identity, iif } from 'rxjs';
+import { identity } from 'rxjs';
 import {
   concatMap,
   filter,
@@ -132,14 +132,11 @@ export class CamfilOrdersEffects {
   );
 
   loadCamfilOrderForSelectedCamfilOrder$ = createEffect(() =>
-    iif(
-      () => isPlatformBrowser(this.platformId),
-      this.actions$.pipe(
-        ofType(selectCamfilOrder),
-        mapToPayloadProperty('orderId'),
-        whenTruthy(),
-        mergeMap(orderId => [loadCamfilOrder({ orderId })])
-      )
+    this.actions$.pipe(
+      ofType(selectCamfilOrder),
+      mapToPayloadProperty('orderId'),
+      whenTruthy(),
+      mergeMap(orderId => [loadCamfilOrder({ orderId })])
     )
   );
 
