@@ -39,7 +39,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   @Input() edit?: boolean;
   setMaxLengthValidation = ProductHelper.setMaxLengthValidation;
   use2ndAddressLineInOrderForm: boolean;
-  maxHeight = 65;
+  maxHeight = 55;
 
   private destroy$ = new Subject<void>();
 
@@ -215,7 +215,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
         step => window.innerHeight <= step.heightTresholdMax && window.innerHeight >= step.heightTresholdMin
       )?.heightValue;
 
-      this.maxHeight = heightValue ? heightValue : 65;
+      this.maxHeight = heightValue ? heightValue : 55;
     }
   }
 }
