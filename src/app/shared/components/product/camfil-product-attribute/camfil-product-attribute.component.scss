@@ -20,10 +20,12 @@
       margin-bottom: 0;
       margin-left: 0;
     }
+
     &__label {
       font-weight: normal;
       white-space: nowrap;
     }
+
     &__value {
       margin-right: 5px;
       margin-left: 5px;
@@ -39,7 +41,7 @@
     }
 
     &--quantity {
-      max-width: 80px;
+      max-width: 160px;
       height: 14px;
     }
 
