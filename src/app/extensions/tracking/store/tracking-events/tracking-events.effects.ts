@@ -145,7 +145,7 @@ export class TrackingEventsEffects {
           this.store.pipe(
             select(getSelectedProduct),
             whenTruthy(),
-            skipWhile(product => !product.salePrice || !product.defaultCategory || !product.defaultCategory()),
+            skipWhile(product => !product.defaultCategory || !product.defaultCategory()),
             take(1),
             map(product => ({
               product,
@@ -167,7 +167,7 @@ export class TrackingEventsEffects {
           this.store.pipe(
             select(getSelectedProduct),
             whenTruthy(),
-            skipWhile(product => !product.salePrice || !product.defaultCategory || !product.defaultCategory()),
+            skipWhile(product => !product.defaultCategory || !product.defaultCategory()),
             take(1)
           )
         ),
