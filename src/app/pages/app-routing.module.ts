@@ -86,6 +86,7 @@ const routes: Routes = [
       headerType: 'checkout',
       breadcrumbData: [{ key: 'seo.title.checkout' }],
       meta: {
+        title: 'seo.title.checkout',
         robots: 'noindex, nofollow',
       },
     },

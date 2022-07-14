@@ -12,7 +12,6 @@
         [attr.data-testing-id]="'decrease-' + controlName"
         [attr.id]="isInLineItem ? 'decrease-' + lineItemId : null"
         (focus)="setFocusedElement($event.target)"
-        (keydown)="$event.preventDefault()"
       >
         <mat-icon svgIcon="minus"></mat-icon>
       </button>
@@ -25,10 +24,10 @@
         name="value"
         placeholder="0"
         [formControlName]="controlName"
-        (keydown)="handleInput($event)"
-        (keyup)="handleInput($event)"
         [attr.id]="isInLineItem ? 'counter_value-' + lineItemId : null"
         (focus)="setFocusedElement($event.target)"
+        (keydown)="handleInputKeyboardEvent($event)"
+        (keyup)="handleInputKeyboardEvent($event)"
       />
       <button
         mat-button
@@ -39,7 +38,6 @@
         [attr.data-testing-id]="'increase-' + controlName"
         [attr.id]="isInLineItem ? 'increase-' + lineItemId : null"
         (focus)="setFocusedElement($event.target)"
-        (keydown)="$event.preventDefault()"
       >
         <mat-icon svgIcon="plus"></mat-icon>
       </button>

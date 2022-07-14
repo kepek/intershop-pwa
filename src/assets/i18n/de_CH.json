@@ -555,7 +555,7 @@
     "=-1": "=-1",
     "=0": "=0",
     "=1": "1 Monat",
-    "other": "_# Monate"
+    "other": "# Monate"
   },
   "camfil.account.cam_card.details.button.add_product.label": "Product hinzufügen",
   "camfil.account.cam_card.details.button.add_section.label": "Abschnitt hinzufügen",

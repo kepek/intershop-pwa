@@ -29,12 +29,22 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
     super(translate);
   }
 
-  handleInput(event) {
-    if (event.target.value > this.max) {
+  init() {
+    super.init();
+
+    this.formControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(formControl => {
+      console.log({ formControl });
+    });
+  }
+
+  handleInputKeyboardEvent(event: KeyboardEvent) {
+    const target = event.target as HTMLInputElement;
+
+    if (Number(target?.value || 0) > this.max) {
       this.formControl.setValue(this.max);
     }
+
     if (event.code === 'Enter' || event.code === 'NumpadEnter') {
-      event.target.blur();
       event.preventDefault();
     }
   }
