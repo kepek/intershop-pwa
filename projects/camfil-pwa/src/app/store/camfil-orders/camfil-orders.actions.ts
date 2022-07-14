@@ -31,7 +31,7 @@ export const loadCamfilOrdersSuccess = createAction(
 export const selectCamfilOrder = createAction('[Orders Camfil] Select Order', payload<{ orderId: string }>());
 
 export const loadCamfilOrderLineItems = createAction(
-  '[Order Camfil API] Load Order LineItems',
+  '[Orders Camfil API] Load Order LineItems',
   payload<{ orderId: string }>()
 );
 
@@ -43,7 +43,7 @@ export const loadCamfilOrderLineItemsSuccess = createAction(
 );
 
 export const loadCamfilOrderTrackAndTrace = createAction(
-  '[Order Camfil Internal] Load Order Track and Trace',
+  '[Orders Camfil Internal] Load Order Track and Trace',
   payload<{ orderId: string }>()
 );
 
@@ -55,7 +55,7 @@ export const loadCamfilOrderTrackAndTraceSuccess = createAction(
 );
 
 export const loadCamfilOrderAdditionalTotalCost = createAction(
-  '[Order Camfil Internal] Load Order Additional Total Cost',
+  '[Orders Camfil Internal] Load Order Additional Total Cost',
   payload<{ orderId: string }>()
 );
 
@@ -70,7 +70,7 @@ export const loadCamfilOrderAdditionalTotalCostSuccess = createAction(
 );
 
 export const cloneCamfilOrder = createAction(
-  '[Order Camfil Internal] Create order duplicate',
+  '[Orders Camfil Internal] Create order duplicate',
   payload<{ orderId: string }>()
 );
 
