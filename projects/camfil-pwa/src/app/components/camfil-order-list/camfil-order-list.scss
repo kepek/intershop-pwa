@@ -8,6 +8,7 @@
     .mat-form-field-flex {
       padding: 0.25em 0.75em 0 0.75em;
     }
+
     .mat-form-field-infix {
       padding: 0.25em 0 0.25em 0;
     }
@@ -24,18 +25,23 @@
       @media (max-width: $screen-md-max) {
         padding-right: 4px;
         text-align: left;
+
         &:first-child {
           padding-left: $space-box;
         }
+
         &:last-child {
           padding-right: $space-default;
         }
+
         .mat-sort-header-container {
           display: inline-block;
         }
+
         .mat-sort-header-content {
           text-align: left;
         }
+
         .mat-sort-header-arrow {
           margin: 0 0 $space-box-half 0;
         }
@@ -53,17 +59,53 @@ table {
     font-size: $font-size-corporate;
     color: #000;
     background-color: $greyF5;
+
+    &.mat-column-customerName {
+      width: 19%;
+    }
+
+    &.mat-column-orderNumber {
+      width: 14%;
+    }
+
+    &.mat-column-camfilNo {
+      width: 14%;
+    }
+
+    &.mat-column-orderGoodsMark {
+      width: 11%;
+    }
+
+    &.mat-column-orderDate {
+      width: 12%;
+    }
+
+    &.mat-column-deliveryDate {
+      width: 12%;
+    }
+
+    &.mat-column-orderStatus {
+      width: 6%;
+    }
+
+    &.mat-column-orderChannel {
+      width: 12%;
+    }
   }
+
   tr.orderlist-row:hover {
     cursor: pointer;
     background: $greyF5;
   }
+
   tr.orderlist-row:active {
     background: $greyEF;
   }
+
   td {
     word-break: break-word;
   }
+
   .order-list-cell__divider {
     padding-left: $space-detail-item-margin;
   }
@@ -91,6 +133,7 @@ table {
     }
   }
 }
+
 button {
   &[type='submit'] {
     position: absolute;
@@ -122,11 +165,13 @@ button {
   min-height: 80px;
   margin-bottom: -80px;
   background-color: rgb(255 255 255 / 90%);
+
   mat-stroked-button {
     padding: 0 28px;
     font-size: 12px;
   }
 }
+
 @media (min-width: $screen-md-min) {
   mat-form-field.select-filter {
     margin-right: 16px;
@@ -139,6 +184,7 @@ button {
   .mat-sort-header-arrow {
     @include table-sort-arrow;
   }
+
   div.cam-card-tooltip {
     min-width: 100px;
     max-width: 200px;
@@ -153,6 +199,7 @@ button {
   .orders-item {
     line-height: 24px;
     color: $camfil-text-color-tertiary;
+
     .row:nth-of-type(2n + 1) {
       margin-top: $space-box/2;
       margin-bottom: $space-box/2;
@@ -169,4 +216,5 @@ button {
     }
   }
 }
+
 // EOF for mobile
