@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { CamfilOrderService } from 'camfil-pwa/services/camfil-order/camfil-order.service';
 import { loadOrderIfNotLoaded } from 'camfil-pwa/store/customer/orders';
@@ -13,6 +14,7 @@ import {
   map,
   mergeMap,
   switchMap,
+  switchMapTo,
   takeWhile,
   tap,
   throttleTime,
@@ -141,13 +143,18 @@ export class CamfilOrdersEffects {
   );
 
   routeListenerForSelectingCamfilOrder$ = createEffect(() =>
-    this.store.pipe(
-      ofUrl(/^\/(account\/orders.*|checkout\/receipt)/),
-      select(selectRouteParam('orderId')),
-      withLatestFrom(this.store.pipe(select(getSelectedOrderId))),
-      filter(([fromAction, selectedOrderId]) => fromAction && fromAction !== selectedOrderId),
-      map(([orderId]) => orderId),
-      map(orderId => selectCamfilOrder({ orderId }))
+    this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      switchMapTo(
+        this.store.pipe(
+          ofUrl(/^\/(account\/orders.*|checkout\/receipt)/),
+          select(selectRouteParam('orderId')),
+          withLatestFrom(this.store.pipe(select(getSelectedOrderId))),
+          filter(([fromAction, selectedOrderId]) => fromAction && fromAction !== selectedOrderId),
+          map(([orderId]) => orderId),
+          map(orderId => selectCamfilOrder({ orderId }))
+        )
+      )
     )
   );
 
