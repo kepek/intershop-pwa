@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   line-height: 55px;
+  height: 55px;
 
   input {
     min-height: 20px;
@@ -12,5 +13,31 @@
   .form-field {
     width: auto;
     max-width: 100px;
+    height: 55px;
+
+    ::ng-deep {
+      .mat-form-field-wrapper {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        margin-top: -6px;
+
+        > .mat-form-field-flex {
+          padding-top: 0.3em;
+          padding-bottom: 0.2em;
+          margin: 0;
+          align-items: center;
+
+          > .mat-form-field-infix {
+            height: 45px;
+            border-top: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+    }
   }
 }
