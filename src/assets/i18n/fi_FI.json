@@ -1471,7 +1471,7 @@
   "cookie.consent.option.tracking.name": "Seuranta ja suorituskyky",
   "cookie.preferences.heading": "Evästeasetukset",
   "cookies.banner.accept_all": "Hyväksy kaikki",
-  "cookies.banner.reject_all": "(fi_FI)_Reject All",
+  "cookies.banner.reject_all": "Hylkää kaikki",
   "cookies.banner.set_preferences": "Määritä",
   "cookies.banner.text": "<h4>Yksityisyytesi on meille tärkeää</h4><p>Tämä verkkosivusto käyttää evästeitä ja muita tekniikoita sivuston turvassa pitämiseen, suorituskyvyn mittaamiseen, sisällön mukauttamiseen ja käyttäjäkokemuksen parantamiseen. Siksi seuraamme sivuston käyttäjien tietoja sekä heidän käyttäytymistään.<br/>Valitsemalla ”Hyväksy kaikki” hyväksyt kaikkien evästeiden käytön. Valitse ”Määritä” saadaksesi lisätietoja ja hallitaksesi vaihtoehtojasi. Lisätietoja saat <a href=\"/fi/page/privacy-policy\">tietosuojakäytännössämme</a>.</p>",
   "cookies.modal.accept_all": "Hyväksy kaikki",
