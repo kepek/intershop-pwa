@@ -190,6 +190,9 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
   show() {
     this.quantityForm?.controls.quantity.setValue(this.quantity);
     this.quantityForm?.controls.boxLabel.setValue('');
+    this.quantityForm?.controls.measurementWidth.setValue('');
+    this.quantityForm?.controls.measurementHeight.setValue('');
+    this.quantityForm?.controls.measurementDiameter.setValue('');
     this.showSuccess = false;
     this.submitted = false;
     return this.modalTemplate;
