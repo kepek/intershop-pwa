@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { Address } from 'ish-core/models/address/address.model';
 
@@ -15,7 +18,7 @@ import { Address } from 'ish-core/models/address/address.model';
   templateUrl: './camfil-address.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilAddressComponent {
+export class CamfilAddressComponent implements OnInit, OnDestroy {
   /**
    * The Address to be displayed.
    *
@@ -27,4 +30,20 @@ export class CamfilAddressComponent {
    *
    */
   @Input() displayEmail = false;
+
+  private destroy$ = new Subject();
+  channelCode: string;
+
+  constructor(private camfilConfigurationFacade: CamfilConfigurationFacade) {}
+
+  ngOnInit(): void {
+    this.camfilConfigurationFacade.channelCode$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(channelCode => (this.channelCode = channelCode));
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }
