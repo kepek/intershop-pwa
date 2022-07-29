@@ -1,9 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { MockComponent, MockPipe } from 'ng-mocks';
+import { of } from 'rxjs';
 import { OrderFormComponent } from 'src/app/extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
-import { instance, mock } from 'ts-mockito';
+import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
@@ -24,10 +27,12 @@ describe('Camfil Requisition Summary Component', () => {
   let camRequisitionManagementFacade: CamRequisitionManagementFacade;
   let translate: TranslateService;
   let toastrServiceMock: CamfilToastrService;
+  let configurationFacadeMock: CamfilConfigurationFacade;
 
   beforeEach(async () => {
     toastrServiceMock = mock(CamfilToastrService);
     camRequisitionManagementFacade = mock(CamRequisitionManagementFacade);
+    configurationFacadeMock = mock(CamfilConfigurationFacade);
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
@@ -42,6 +47,8 @@ describe('Camfil Requisition Summary Component', () => {
       providers: [
         { provide: CamRequisitionManagementFacade, useFactory: () => instance(camRequisitionManagementFacade) },
         { provide: CamfilToastrService, useFactory: () => instance(toastrServiceMock) },
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(configurationFacadeMock) },
+        provideMockStore({}),
       ],
     }).compileComponents();
   });
@@ -71,6 +78,8 @@ describe('Camfil Requisition Summary Component', () => {
       lineItemCount: 2,
       lineItems: undefined,
     } as CamfilRequisition;
+
+    when(configurationFacadeMock.channelCode$).thenReturn(of('SE'));
   });
 
   it('should be created', () => {
