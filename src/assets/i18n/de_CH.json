@@ -882,6 +882,7 @@
   "camfil.checkout.cta.goods_acceptance": "(de_CH)_Goods acceptance note",
   "camfil.checkout.cta.recipients_save": "Speichern",
   "camfil.checkout.cta.select_goods_acceptace.header": "(de_CH)_Edit goods acceptance time",
+  "camfil.checkout.cta.select_goods_acceptace.subheader": "(de_CH)_z.B. Mo.-Fr- 08:00- 16:00 / max. 60 characters",
   "camfil.checkout.cta.separate_multiple_addresses": "Trennen Sie mehrere Adressen mit einem Kommazeichen",
   "camfil.checkout.desired_delivery_date": "Gewünschtes Lieferdatum",
   "camfil.checkout.form.delivery_date": "Ausgewähltes Lieferdatum",

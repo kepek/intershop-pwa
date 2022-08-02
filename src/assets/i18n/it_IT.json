@@ -894,6 +894,7 @@
   "camfil.checkout.cta.goods_acceptance": "(it_IT)_Goods acceptance note",
   "camfil.checkout.cta.recipients_save": "Salva",
   "camfil.checkout.cta.select_goods_acceptace.header": "(it_IT)_Edit goods acceptance time",
+  "camfil.checkout.cta.select_goods_acceptace.subheader": "(it_IT)_z.B. Mo.-Fr- 08:00- 16:00 / max. 60 characters",
   "camfil.checkout.cta.separate_multiple_addresses": "Separa indirizzi multipli con un segno di virgola",
   "camfil.checkout.desired_delivery_date": "Data di consegna desiderata",
   "camfil.checkout.form.delivery_date": "Scegli la data di consegna",
