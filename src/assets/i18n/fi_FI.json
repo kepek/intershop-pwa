@@ -894,6 +894,7 @@
   "camfil.checkout.cta.goods_acceptance": "(fi_FI)_Goods acceptance note",
   "camfil.checkout.cta.recipients_save": "Tallenna",
   "camfil.checkout.cta.select_goods_acceptace.header": "(fi_FI)_Edit goods acceptance time",
+  "camfil.checkout.cta.select_goods_acceptace.subheader": "(fi_FI)_z.B. Mo.-Fr- 08:00- 16:00 / max. 60 characters",
   "camfil.checkout.cta.separate_multiple_addresses": "Erota sähköpostiosoitteet pilkulla",
   "camfil.checkout.desired_delivery_date": "Aikaisin toimituspäivä",
   "camfil.checkout.form.delivery_date": "Valittu toimituspäivä",

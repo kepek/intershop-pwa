@@ -46,6 +46,7 @@ export interface CamfilChannelSettings {
   use2ndAddressLineInCamCardForm: boolean;
   showDeliveryIntervalOnCCDetailPage: boolean;
   tracking: boolean;
+  goodsAcceptanceTimeMandatory: boolean;
 }
 
 export interface CamfilChannelConfiguration extends Partial<CamfilChannelSettings> {

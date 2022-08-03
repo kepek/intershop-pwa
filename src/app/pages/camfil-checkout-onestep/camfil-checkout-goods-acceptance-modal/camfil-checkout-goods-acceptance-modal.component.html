@@ -7,7 +7,9 @@
 <p class="text-center">
   <strong>{{ 'camfil.checkout.cta.select_goods_acceptace.header' | translate }}</strong>
 </p>
-
+<p class="text-center">
+  <span>{{ 'camfil.checkout.cta.select_goods_acceptace.subheader' | translate }}</span>
+</p>
 <form (ngSubmit)="submitEditGoodsAcceptanceTime($event)" [formGroup]="goodsAcceptanceTimeForm">
   <mat-form-field appearance="fill" class="d-block">
     <mat-label>{{ 'camfil.checkout.form.goods_acceptance_note' | translate }}</mat-label>
