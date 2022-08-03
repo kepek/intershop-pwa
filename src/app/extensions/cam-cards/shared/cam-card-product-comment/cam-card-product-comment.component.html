@@ -23,6 +23,7 @@
           matInput
           name="boxLabel"
           type="text"
+          [placeholder]="'camfil.dynamic.account.cam_card.edit.comment.' + input + '.placeholder' | translate"
         ></textarea>
       </mat-form-field>
     </ng-container>
@@ -39,10 +40,7 @@
     matTooltipClass="cam-card-tooltip"
     matTooltipPosition="below"
   >
-    <mat-icon
-      [ngClass]="{ 'color-secondary': !camCardItem?.comment?.text }"
-      class="size-24"
-      svgIcon="comment"
-    ></mat-icon>
+    <mat-icon [ngClass]="{ 'color-secondary': !camCardItem?.comment?.text }" class="size-24" svgIcon="comment">
+    </mat-icon>
   </span>
 </ng-container>
