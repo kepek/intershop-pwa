@@ -35,6 +35,7 @@ export class AccountCamCardDetailLineItemComponent implements OnInit, OnDestroy 
   get isEditMode() {
     return this.mode === 'edit';
   }
+
   @Memoize()
   get isViewMode() {
     return this.mode === 'view';

@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { IshProductsService } from 'camfil-pwa/services/ish-products/ish-products.service';
 import { difference } from 'lodash-es';
-import {exhaustMap, filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { exhaustMap, filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 
 import { ProductListingMapper } from 'ish-core/models/product-listing/product-listing.mapper';
 import { ProductsService } from 'ish-core/services/products/products.service';

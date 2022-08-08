@@ -11,7 +11,7 @@ import { Attribute } from 'ish-core/models/attribute/attribute.model';
  *   [name]="ID"
  *   [value]="sku"
  *   [itmProp]="sku">
- * </camfil-product-attribute>
+ * </camfil-product-attribute>`
  */
 
 @Component({

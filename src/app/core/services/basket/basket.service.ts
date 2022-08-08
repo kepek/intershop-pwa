@@ -1,7 +1,7 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OrderService } from 'camfil-pwa/services/ish-order/order.service';
-import { EMPTY, Observable, forkJoin, of, throwError } from 'rxjs';
+import { EMPTY, Observable, of, throwError } from 'rxjs';
 import { catchError, concatMap, map, switchMap, take } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -465,16 +465,15 @@ export class BasketService {
     });
   }
 
-  getBuckets(): Observable<Bucket[]> {
+  getBuckets(basket: Basket): Observable<Bucket[]> {
     const params = new HttpParams().set('include', 'all');
 
-    return forkJoin([
-      this.getBasket(),
-      this.apiService.get<BucketData>(`baskets/current/buckets`, {
+    return this.apiService
+      .get<BucketData>(`baskets/current/buckets`, {
         headers: this.basketHeaders,
         params,
-      }),
-    ]).pipe(map(([basket, buckets]) => BucketMapper.fromListData(buckets, basket)));
+      })
+      .pipe(map(buckets => BucketMapper.fromListData(buckets, basket)));
   }
 
   // CAMFIL

@@ -34,7 +34,7 @@ export class IshProductsService extends ProductsService {
       return throwError('getProducts() called without a skus');
     }
 
-    const params = new HttpParams().set('allImages', 'true').set('cache', 'false');
+    const params = new HttpParams().set('allImages', 'true').set('cache', 'true');
     const options: AvailableOptions = { ...this.camfilProductsOptions, params };
     const body = JSON.stringify(skus);
 

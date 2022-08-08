@@ -24,7 +24,7 @@ import { CamfilShoppingFacade } from 'camfil-pwa/facades/camfil-shopping.facade'
 import { flatten, groupBy, toArray } from 'lodash-es';
 import { Observable, ReplaySubject, Subject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, filter, map, take, takeUntil, tap } from 'rxjs/operators';
-import { Memoize, clear } from 'typescript-memoize';
+import { Memoize } from 'typescript-memoize';
 
 import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -375,7 +375,6 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
               .pipe(whenTruthy(), take(1))
               .subscribe(prices => {
                 this.productsCustomerPrices[customerId] = prices;
-                clear(['customerPrices']);
                 this.changeDetectorRefs.markForCheck();
               });
           });
@@ -383,7 +382,6 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
     }
   }
 
-  @Memoize({ tags: ['customerPrices'] })
   getCustomerPriceForSkuInCustomer(id: string, sku: string) {
     const item = this.productsCustomerPrices?.[id]?.find(prod => prod.sku === sku);
     return { listPrice: item?.listPrice, salePrice: item?.salePrice };

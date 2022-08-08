@@ -228,6 +228,10 @@ describe('Customer Store', () => {
             [Basket Internal] Load Basket
             [Products API] Load Product Success:
               product: {"name":"test","shortDescription":"test","longDescription":"...
+            [Basket API] Load Basket Success:
+              basket: {"id":"test","lineItems":[1]}
+            [Basket] Load Buckets:
+              basket: {"id":"test","lineItems":[1]}
           `);
           done();
         }, 1000);
@@ -249,8 +253,9 @@ describe('Customer Store', () => {
           [User API] Login User Success:
             customer: {"isBusinessCustomer":false,"customerNo":"test"}
             user: {"title":"","firstName":"test","lastName":"test","phoneHome"...
-          [Basket API] Check Current Basket
           [Basket API] Load Basket Success:
+            basket: {"id":"test","lineItems":[1]}
+          [Basket] Load Buckets:
             basket: {"id":"test","lineItems":[1]}
         `);
       });
@@ -264,7 +269,6 @@ describe('Customer Store', () => {
           [Basket API] Validate Basket and continue with success:
             targetRoute: "/checkout/address"
             basketValidation: {"basket":{"id":"test","lineItems":[1]},"results":{"valid":t...
-          [Basket] Load Buckets
         `);
       });
     });

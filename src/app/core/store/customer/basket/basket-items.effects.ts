@@ -401,8 +401,9 @@ export class BasketItemsEffects {
   loadBucket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadBuckets),
-      mergeMap(() =>
-        this.basketService.getBuckets().pipe(
+      mapToPayloadProperty('basket'),
+      mergeMap(basket =>
+        this.basketService.getBuckets(basket).pipe(
           mergeMap((buckets: Bucket[]) => [loadBucketsSuccess({ buckets })]),
           mapErrorToAction(loadBucketsFail)
         )

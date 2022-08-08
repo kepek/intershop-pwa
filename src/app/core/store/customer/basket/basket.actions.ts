@@ -151,13 +151,11 @@ export const updateBucketFail = createAction('[Basket] Update Bucket Fail', http
 
 export const resetProductAdded = createAction('[Basket] Reset Product Added');
 
-export const loadBuckets = createAction('[Basket] Load Buckets');
+export const loadBuckets = createAction('[Basket] Load Buckets', payload<{ basket: Basket }>());
 
-export const connectBuckets = createAction('[Basket] Connect buckets', payload<{ buckets: Bucket[] }>());
+export const loadBucketsFail = createAction('[Basket] Load Buckets Fail', httpError());
 
-export const loadBucketsSuccess = createAction('[Basket] Get Bucket Info Success', payload<{ buckets: Bucket[] }>());
-
-export const loadBucketsFail = createAction('[Basket] Get Bucket Info Fail', httpError());
+export const loadBucketsSuccess = createAction('[Basket] Load Buckets Success', payload<{ buckets: Bucket[] }>());
 
 export const addEmptyBucket = createAction('[Basket] Add Empty Bucket', payload<{ bucket: Bucket }>());
 
@@ -536,11 +534,11 @@ export const loadCustomerDeliveryTermSuccess = createAction(
   payload<{ customerId: string; term: CustomerDeliveryTerm }>()
 );
 
-export const createBasket = createAction('[Basket API] Create new Basket');
+export const createBasket = createAction('[Basket] Create Basket');
 
-export const createBasketFail = createAction('[Basket API] Create new Basket Fail', httpError());
+export const createBasketFail = createAction('[Basket API] Create Basket Fail', httpError());
 
-export const checkCurrentBasket = createAction('[Basket API] Check Current Basket');
+export const createBasketSuccess = createAction('[Basket API] Create Basket Success', payload<{ basket: Basket }>());
 
 export const getWarehouseCalendar = createAction('[Basket] Get warehouse calendar');
 

@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
-import { Product } from 'ish-core/models/product/product.model';
-import {ProductView} from "ish-core/models/product-view/product-view.model";
+import { ProductView } from 'ish-core/models/product-view/product-view.model';
 
 @Component({
   selector: 'camfil-product-title',
