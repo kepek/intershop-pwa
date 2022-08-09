@@ -74,7 +74,6 @@ export class BasketEffects {
   loadBasket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadBasket),
-      tap(x => console.log('loadBasket', x)),
       mergeMap(() =>
         this.basketService.getBasket().pipe(
           map(basket => loadBasketSuccess({ basket })),
