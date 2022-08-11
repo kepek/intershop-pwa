@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { environment } from '../../environments/environment';
-import { CamQuotesStoreModule } from '../extensions/cam-quotes/store/cam-quotes-store.module';
 
 import { ngrxStateTransfer } from './configurations/ngrx-state-transfer';
 import { ContentStoreModule } from './store/content/content-store.module';
@@ -33,7 +32,6 @@ import { ShoppingStoreModule } from './store/shopping/shopping-store.module';
     ContentStoreModule,
     HybridStoreModule,
     ShoppingStoreModule,
-    CamQuotesStoreModule,
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: ngrxStateTransfer, deps: [TransferState, Store, Actions], multi: true },

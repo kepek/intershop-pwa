@@ -1,9 +1,11 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
   Input,
   OnChanges,
   OnDestroy,
@@ -112,7 +114,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     public router: Router,
     public dialog: MatDialog,
     private authorizationToggle: AuthorizationToggleService,
-    private camfilConfigurationFacade: CamfilConfigurationFacade
+    private camfilConfigurationFacade: CamfilConfigurationFacade,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   get totalPrice(): Price {
@@ -486,7 +489,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       const targetPos = this.getTargetPosition(undefined, event.currentIndex, items, targetCamCard);
 
       // move camcard
-      const sourceCamCardId = document.getElementById(event.previousContainer.id).dataset.camCardId;
+      const sourceCamCardId = this.document.getElementById(event.previousContainer.id).dataset.camCardId;
       this.camCardsFacade.moveCamCardItem(sourceCamCardId, targetCamCard.id, event.item.data, targetPos);
     }
   }

@@ -11,6 +11,7 @@ import { CamfilCheckoutPageComponent } from './camfil-checkout-page.component';
 const camfilCheckoutPageRoutes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
     component: CamfilCheckoutPageComponent,
     children: [
       {

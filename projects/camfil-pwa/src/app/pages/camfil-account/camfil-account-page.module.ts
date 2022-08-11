@@ -10,6 +10,7 @@ import { CamfilAccountPageComponent } from './camfil-account-page.component';
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
     component: CamfilAccountPageComponent,
     data: {
       breadcrumbData: [],

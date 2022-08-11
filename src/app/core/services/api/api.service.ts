@@ -28,13 +28,15 @@ import { ApiServiceErrorHandler } from './api.service.errorhandler';
  * @param key the name of the envelope (default 'elements')
  * @returns The items of an elements array without the elements wrapper.
  */
-export function unpackEnvelope<T>(key: string = 'elements'): OperatorFunction<{}, T[]> {
-  return map(data => (!!data && !!data[key] && !!data[key].length ? data[key] : []));
+// tslint:disable-next-line: no-any - any to avoid having to type everything before
+export function unpackEnvelope<T>(key: string = 'elements'): OperatorFunction<any, T[]> {
+  return map(data => (data?.[key]?.length ? data[key] : []));
 }
 
 export interface AvailableOptions {
   params?: HttpParams;
   headers?: HttpHeaders;
+  responseType?: string;
   skipApiErrorHandling?: boolean;
   runExclusively?: boolean;
   captcha?: Captcha;
@@ -56,10 +58,10 @@ export class ApiService {
   ) {}
 
   /**
--  * sets the request header for the appropriate captcha service
--  * @param captcha captcha token for captcha V2 and V3
--  * @param captchaAction captcha action for captcha V3
--  */
+   -  * sets the request header for the appropriate captcha service
+   -  * @param captcha captcha token for captcha V2 and V3
+   -  * @param captchaAction captcha action for captcha V3
+   -  */
   private appendCaptchaTokenToHeaders(captcha: string, captchaAction: string): MonoTypeOperatorFunction<HttpHeaders> {
     return map(headers =>
       // testing token gets 'null' from captcha service, so we accept it as a valid value here
@@ -131,9 +133,7 @@ export class ApiService {
       // pgid
       this.store.pipe(
         select(getPGID),
-        map(pgid =>
-          options?.sendPGID && !!pgid ? `;pgid=${pgid}` : options?.sendSPGID && pgid ? `;spgid=${pgid}` : ''
-        )
+        map(pgid => (options?.sendPGID && pgid ? `;pgid=${pgid}` : options?.sendSPGID ? `;spgid=${pgid}` : ''))
       ),
       // remaining path
       of(path.includes('/') ? path.substr(path.indexOf('/')) : ''),
@@ -152,8 +152,9 @@ export class ApiService {
       defer(() =>
         this.constructHeaders(options).pipe(
           map(headers => ({
-            params: options?.params,
             headers,
+            params: options?.params,
+            responseType: options?.responseType,
           }))
         )
       ),
@@ -236,7 +237,7 @@ export class ApiService {
    * Pipeable operator for link translation (resolving one single link).
    * @returns The link resolved to its actual REST response data.
    */
-  resolveLink<T>(): OperatorFunction<Link, T> {
+  resolveLink<T>(options?: AvailableOptions): OperatorFunction<Link, T> {
     return stream$ =>
       stream$.pipe(
         withLatestFrom(this.store.pipe(select(getICMServerURL))),
@@ -245,7 +246,7 @@ export class ApiService {
             // check if link data is properly formatted
             () => link?.type === 'Link' && !!link.uri,
             // flat map to API request
-            this.get<T>(`${icmServerURL}/${link.uri}`),
+            this.get<T>(`${icmServerURL}/${link.uri}`, options),
             // throw if link is not properly supplied
             throwError(new Error('link was not properly formatted'))
           )
@@ -257,14 +258,14 @@ export class ApiService {
    * Pipeable operator for link translation (resolving multiple links).
    * @returns The links resolved to their actual REST response data.
    */
-  resolveLinks<T>(): OperatorFunction<Link[], T[]> {
+  resolveLinks<T>(options?: AvailableOptions): OperatorFunction<Link[], T[]> {
     return source$ =>
       source$.pipe(
         // filter for all real Link elements
         map(links => links.filter(el => el?.type === 'Link' && !!el.uri)),
         withLatestFrom(this.store.pipe(select(getICMServerURL))),
         // transform Link elements to API Observables
-        map(([links, icmServerURL]) => links.map(item => this.get<T>(`${icmServerURL}/${item.uri}`))),
+        map(([links, icmServerURL]) => links.map(item => this.get<T>(`${icmServerURL}/${item.uri}`, options))),
         // flatten to API requests O<O<T>[]> -> O<T[]>
         concatMap(obsArray => iif(() => !!obsArray.length, forkJoin(obsArray), of([])))
       );

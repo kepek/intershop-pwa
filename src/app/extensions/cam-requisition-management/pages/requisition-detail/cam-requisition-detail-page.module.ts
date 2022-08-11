@@ -9,7 +9,9 @@ import { SharedModule } from 'ish-shared/shared.module';
 import { CamRequisitionManagementModule } from '../../cam-requisition-management.module';
 import { RequisitionDetailPageComponent } from './requisition-detail-page.component';
 
-const requisitionDetailPageRoutes: Routes = [{ path: '', component: RequisitionDetailPageComponent }];
+const requisitionDetailPageRoutes: Routes = [
+  { path: '', pathMatch: 'full', component: RequisitionDetailPageComponent },
+];
 
 @NgModule({
   imports: [

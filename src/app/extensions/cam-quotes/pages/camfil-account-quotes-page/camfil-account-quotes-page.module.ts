@@ -8,6 +8,7 @@ import { CamfilAccountQuotesPageComponent } from './camfil-account-quotes-page.c
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
     component: CamfilAccountQuotesPageComponent,
   },
 ];

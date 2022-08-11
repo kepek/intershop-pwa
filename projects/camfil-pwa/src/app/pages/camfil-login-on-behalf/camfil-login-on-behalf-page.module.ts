@@ -5,7 +5,7 @@ import { SharedModule } from 'ish-shared/shared.module';
 
 import { CamfilLoginOnBehalfPageComponent } from './camfil-login-on-behalf-page.component';
 
-const routes: Routes = [{ path: '', component: CamfilLoginOnBehalfPageComponent }];
+const routes: Routes = [{ path: '', pathMatch: 'full', component: CamfilLoginOnBehalfPageComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes), SharedModule],

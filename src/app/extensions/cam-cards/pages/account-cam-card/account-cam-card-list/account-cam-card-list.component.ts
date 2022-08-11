@@ -1,10 +1,11 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Location, ViewportScroller } from '@angular/common';
+import { DOCUMENT, Location, ViewportScroller } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  Inject,
   Input,
   OnChanges,
   OnDestroy,
@@ -126,7 +127,8 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     private translate: TranslateService,
     private location: Location,
     private authorizationToggle: AuthorizationToggleService,
-    private camfilConfigurationFacade: CamfilConfigurationFacade
+    private camfilConfigurationFacade: CamfilConfigurationFacade,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   get checkedCamCards(): CamCard[] {
@@ -391,7 +393,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   goToExpandedCamCard() {
     if (this.fragment && this.camCardsProcessed?.data.length) {
-      const el = document.getElementById('camCard_' + this.fragment) as HTMLElement;
+      const el = this.document.getElementById('camCard_' + this.fragment) as HTMLElement;
       if (el) {
         const top = el.getBoundingClientRect().top - (this.isMobileView ? 0 : 130);
         this.scroller.scrollToPosition([0, top]);
@@ -402,9 +404,11 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   scrollToSelectedRow(rowId) {
-    const rowEl = document.getElementById('camCard_' + rowId) as HTMLElement;
-    const top = rowEl.getBoundingClientRect().top + window.scrollY - 132;
-    window.scrollTo({ top, behavior: 'auto' });
+    const rowEl = this.document.getElementById('camCard_' + rowId) as HTMLElement;
+    if (rowEl) {
+      const top = rowEl.getBoundingClientRect().top - (this.isMobileView ? 0 : 130);
+      this.scroller.scrollToPosition([0, top]);
+    }
   }
 
   /** addToCartItems */

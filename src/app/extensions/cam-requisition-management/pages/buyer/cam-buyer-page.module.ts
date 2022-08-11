@@ -9,7 +9,7 @@ import { SharedModule } from 'ish-shared/shared.module';
 import { CamRequisitionManagementModule } from '../../cam-requisition-management.module';
 import { BuyerPageComponent } from './buyer-page.component';
 
-const buyerPageRoutes: Routes = [{ path: '', component: BuyerPageComponent }];
+const buyerPageRoutes: Routes = [{ path: '', pathMatch: 'full', component: BuyerPageComponent }];
 
 @NgModule({
   imports: [

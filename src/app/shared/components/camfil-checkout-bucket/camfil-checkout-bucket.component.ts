@@ -1,10 +1,12 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  Inject,
   Input,
   OnChanges,
   OnDestroy,
@@ -17,7 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { Observable, ReplaySubject, Subject, combineLatest } from 'rxjs';
-import { first, map, switchMap, take, takeUntil, takeWhile } from 'rxjs/operators';
+import { map, switchMap, take, takeUntil, takeWhile } from 'rxjs/operators';
 import { CamfilCheckoutGoodsAcceptanceModalComponent } from 'src/app/pages/camfil-checkout-onestep/camfil-checkout-goods-acceptance-modal/camfil-checkout-goods-acceptance-modal.component';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -119,7 +121,8 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     private shoppingFacade: ShoppingFacade,
     private appFacade: AppFacade,
     private accountFacade: AccountFacade,
-    private camfilConfigurationFacade: CamfilConfigurationFacade
+    private camfilConfigurationFacade: CamfilConfigurationFacade,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   get isMoreThanLimit() {
@@ -296,7 +299,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   ngAfterViewInit() {
     if (this.focusedElementId) {
       const focusTimeout = setTimeout(() => {
-        const element = document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
+        const element = this.document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
         element?.focus();
       }, 300);
 
@@ -600,7 +603,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     }
 
     /* call c after dialog is closed either by click, backdrop click, or ESC press */
-    this.dialog.afterAllClosed?.pipe(first(), takeUntil(this.destroy$))?.subscribe(() => {
+    this.dialog.afterAllClosed?.pipe(take(1), takeUntil(this.destroy$))?.subscribe(() => {
       BucketHelper.isEmptyBucket(this.bucket)
         ? this.checkoutFacade.updateEmptyBucket(basketExtension)
         : this.shoppingFacade.updateBucket(basketId, shipAddressId, basketExtension);

@@ -9,6 +9,7 @@ import { CamfilAccountOrderComponent } from './camfil-account-order/camfil-accou
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
     component: CamfilAccountOrderPageComponent,
     children: [
       {

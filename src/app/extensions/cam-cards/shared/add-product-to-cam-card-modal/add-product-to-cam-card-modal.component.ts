@@ -1,8 +1,10 @@
+import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
+  Inject,
   Input,
   OnChanges,
   OnDestroy,
@@ -116,7 +118,8 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
     protected camCardsFacade: CamCardsFacade,
     protected router: Router,
     protected shoppingFacade: ShoppingFacade,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   protected init() {
@@ -374,7 +377,7 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
 
     setTimeout(() => {
       const selectedSectionId = `${slugify('new-section', '.')}.${slugify(this.camCardSelected, '.')?.toLowerCase()}`;
-      const newSegment = document.getElementById(selectedSectionId) as HTMLElement;
+      const newSegment = this.document.getElementById(selectedSectionId) as HTMLElement;
       newSegment?.focus();
       this.cdr.detectChanges();
     });

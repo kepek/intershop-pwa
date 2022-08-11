@@ -1,4 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -11,7 +11,6 @@ import {
   distinctUntilChanged,
   filter,
   groupBy,
-  last,
   map,
   mapTo,
   mergeMap,
@@ -147,7 +146,8 @@ export class CamCardEffects {
     private camCardService: CamCardService,
     private store: Store,
     private router: Router,
-    @Inject(PLATFORM_ID) private platformId: string
+    @Inject(PLATFORM_ID) private platformId: string,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   routeListenerForCamCards$ = createEffect(() =>
@@ -181,7 +181,6 @@ export class CamCardEffects {
       windowRxOperator(this.actions$.pipe(ofType(loadCamCards), debounceTime(500))),
       mergeMap(window$ =>
         window$.pipe(
-          last(),
           withLatestFrom(this.store.pipe(select(getUserAuthorized))),
           mergeMap(([includeAllCustomerCamCards, authorized]) =>
             authorized
@@ -348,7 +347,6 @@ export class CamCardEffects {
       windowRxOperator(this.actions$.pipe(ofType(loadDeliveryAddresses), debounceTime(1000))),
       mergeMap(window$ =>
         window$.pipe(
-          last(),
           withLatestFrom(this.store.pipe(select(getCustomerAddresses))),
           mergeMap(([id, savedAddresses]) =>
             savedAddresses[id]?.length
@@ -864,7 +862,7 @@ export class CamCardEffects {
             mergeMap(device =>
               fromEvent(window, 'scroll').pipe(
                 map(() => {
-                  const bar = document.getElementsByTagName('camfil-account-cam-card-toolbar')[0] as HTMLElement;
+                  const bar = this.document.getElementsByTagName('camfil-account-cam-card-toolbar')?.[0] as HTMLElement;
                   if (bar) {
                     const barBounding = bar.getBoundingClientRect();
                     if (device === 'mobile') {

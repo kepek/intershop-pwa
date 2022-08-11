@@ -5,7 +5,6 @@ import { combineLatest, Observable, Subject } from 'rxjs';
 import {
   distinctUntilChanged,
   filter,
-  first,
   map,
   startWith,
   take,
@@ -193,7 +192,7 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
         filter(methods => methods?.length === 1),
         map(methods => methods?.[0]),
         filter(pm => !pm.parameters),
-        first(),
+        take(1),
         withLatestFrom(this.checkoutFacade.basket$),
         filter(([, basket]) => !basket?.payment),
         takeUntil(this.destroy$)
@@ -205,7 +204,7 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
       .pipe(
         filter(methods => methods?.length > 1),
         map(methods => methods.find(p => p.default)),
-        first(),
+        take(1),
         withLatestFrom(this.checkoutFacade.basket$, this.isLoggedIn$),
         filter(([, basket, isLoggedIn]) => !basket?.payment && isLoggedIn),
         takeUntil(this.destroy$)

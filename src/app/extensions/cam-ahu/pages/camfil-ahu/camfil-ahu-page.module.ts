@@ -7,7 +7,7 @@ import { CamAhuModule } from '../../cam-ahu.module';
 
 import { CamfilAHUPageComponent } from './camfil-ahu-page.component';
 
-const camfilAHUPageRoutes: Routes = [{ path: '', component: CamfilAHUPageComponent }];
+const camfilAHUPageRoutes: Routes = [{ path: '', pathMatch: 'full', component: CamfilAHUPageComponent }];
 
 @NgModule({
   imports: [CamAhuModule, RouterModule.forChild(camfilAHUPageRoutes), SharedModule],

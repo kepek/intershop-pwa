@@ -24,17 +24,19 @@ export class CamfilProductTechnicalDocumentsComponent implements OnChanges, OnDe
   ngOnChanges(changes: SimpleChanges) {
     if (changes.product) {
       combineLatest([
-        this.camfilConfigurationFacade.isEnabled$('showAllDocsType').pipe(takeUntil(this.destroy$)),
-        this.camfilConfigurationFacade.isEnabled$('filterDocsByLanguage').pipe(takeUntil(this.destroy$)),
+        this.camfilConfigurationFacade.isEnabled$('showAllDocsType'),
+        this.camfilConfigurationFacade.isEnabled$('filterDocsByLanguage'),
         this.appFacade.currentLocale$,
-      ])?.subscribe(([showAllDocsType, filterDocsByLanguage, locale]) => {
-        this.productDocuments = ProductHelper.getTechnicalDocuments(
-          this.product,
-          showAllDocsType,
-          filterDocsByLanguage,
-          locale.lang
-        );
-      });
+      ])
+        .pipe(takeUntil(this.destroy$))
+        ?.subscribe(([showAllDocsType, filterDocsByLanguage, locale]) => {
+          this.productDocuments = ProductHelper.getTechnicalDocuments(
+            this.product,
+            showAllDocsType,
+            filterDocsByLanguage,
+            locale.lang
+          );
+        });
     }
   }
 

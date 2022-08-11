@@ -8,7 +8,7 @@ import { CamOrganizationManagementModule } from '../../cam-organization-manageme
 
 import { UserPageComponent } from './user-page.component';
 
-const camUserDetailPageRoutes: Routes = [{ path: '', component: UserPageComponent }];
+const camUserDetailPageRoutes: Routes = [{ path: '', pathMatch: 'full', component: UserPageComponent }];
 
 @NgModule({
   imports: [CamOrganizationManagementModule, RouterModule.forChild(camUserDetailPageRoutes), SharedModule],

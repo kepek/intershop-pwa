@@ -12,6 +12,7 @@ import { AuthGuard } from 'ish-core/guards/auth.guard';
 export const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
     canActivate: [FeatureToggleGuard, AuthGuard],
     data: {
       feature: 'camOrganizationManagement',

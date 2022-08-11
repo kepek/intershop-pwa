@@ -10,6 +10,7 @@ import { CamfilAccountQuoteDetailPageComponent } from './camfil-account-quote-de
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
     loadChildren: () =>
       import('./camfil-account-quotes-page/camfil-account-quotes-page.module').then(
         m => m.CamfilAccountQuotesPageModule

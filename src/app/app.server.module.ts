@@ -45,11 +45,19 @@ export function translateLoaderFactory() {
 }
 
 export class UniversalErrorHandler implements ErrorHandler {
-  handleError(error: Error): void {
+  handleError(error: unknown): void {
     if (error instanceof HttpErrorResponse) {
       console.error('ERROR', error.message);
-    } else {
+    } else if (error instanceof Error) {
       console.error('ERROR', error.name, error.message, error.stack?.split('\n')?.[1]?.trim());
+    } else if (typeof error === 'object') {
+      try {
+        console.error('ERROR', JSON.stringify(error));
+      } catch (_) {
+        console.error('ERROR (cannot stringify)', error);
+      }
+    } else {
+      console.error('ERROR', error);
     }
   }
 }
