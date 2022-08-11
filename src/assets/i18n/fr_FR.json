@@ -965,7 +965,7 @@
   "camfil.dynamic.account.cam_card.edit.comment.label.label": "Étiquette de carton",
   "camfil.dynamic.account.cam_card.edit.comment.label.placeholder": "(fr_FR)_Box label",
   "camfil.dynamic.account.cam_card.edit.comment.text.label": "Ajouter un commentaire",
-  "camfil.dynamic.account.cam_card.edit.comment.text.placeholder": "(fr_FR)_This text will not be read by Camfil",
+  "camfil.dynamic.account.cam_card.edit.comment.text.placeholder": "Ce commentaire ne sera pas transmis aux équipes de Camfil",
   "camfil.dynamic.account.cam_card.itemsCount": "Rangée",
   "camfil.dynamic.account.cam_card.lastDeliveryDate": "Dernière livraison",
   "camfil.dynamic.account.cam_card.name": "Nom",
