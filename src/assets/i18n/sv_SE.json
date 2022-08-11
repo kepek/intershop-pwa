@@ -965,7 +965,7 @@
   "camfil.dynamic.account.cam_card.edit.comment.label.label": "Boxetikett",
   "camfil.dynamic.account.cam_card.edit.comment.label.placeholder": "(sv_SE)_Box label",
   "camfil.dynamic.account.cam_card.edit.comment.text.label": "Lägg till kommentar",
-  "camfil.dynamic.account.cam_card.edit.comment.text.placeholder": "(sv_SE)_This text will not be read by Camfil",
+  "camfil.dynamic.account.cam_card.edit.comment.text.placeholder": "Fältet syns inte för Camfils personal",
   "camfil.dynamic.account.cam_card.itemsCount": "Rader",
   "camfil.dynamic.account.cam_card.lastDeliveryDate": "Senast beställt",
   "camfil.dynamic.account.cam_card.name": "Rubrik",
