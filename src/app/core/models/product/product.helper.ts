@@ -1,4 +1,4 @@
-import { intersection } from 'lodash-es';
+import { intersection, memoize } from 'lodash-es';
 
 import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
@@ -35,6 +35,21 @@ export type ProductPrices =
   | Partial<Pick<Product, 'salePrice' | 'listPrice'>>;
 
 export class ProductHelper {
+  static showAvailabilityDot: (product: Product) => boolean = memoize(
+    product => {
+      if (product?.attributeGroups && product?.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes]) {
+        const arrigocodeValue = product?.attributeGroups[
+          AttributeGroupTypes.ProductsListLabelAttributes
+        ].attributes.find(a => a.name?.toLowerCase() === 'arrigocode')?.value;
+
+        return arrigocodeValue === 'A1';
+      } else {
+        return false;
+      }
+    },
+    product => product.sku
+  );
+
   /**
    * Get primary product image based on image type
    * @param product   The Product for which to get the primary image
@@ -270,18 +285,6 @@ export class ProductHelper {
     return product.images
       ?.filter(image => image.typeID === ImageTypes.Badge)
       .map(badge => ProductHelper.getImageCdnUrl(product, badge.typeID, badge.viewID));
-  }
-
-  static showAvailabilityDot(product: Product) {
-    if (product?.attributeGroups && product?.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes]) {
-      const arrigocodeValue = product?.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes].attributes.find(
-        a => a.name?.toLowerCase() === 'arrigocode'
-      )?.value;
-
-      return arrigocodeValue === 'A1';
-    } else {
-      return false;
-    }
   }
 
   static getRequiresMeasurement(data: Product): boolean {

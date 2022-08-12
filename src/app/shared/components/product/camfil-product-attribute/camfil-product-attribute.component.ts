@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 
@@ -10,7 +10,7 @@ import { Attribute } from 'ish-core/models/attribute/attribute.model';
  *   [name]="ID"
  *   [value]="sku"
  *   [itmProp]="sku">
- * </camfil-product-attribute>
+ * </camfil-product-attribute>`
  */
 
 @Component({
@@ -19,7 +19,7 @@ import { Attribute } from 'ish-core/models/attribute/attribute.model';
   styleUrls: ['./camfil-product-attribute.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilProductAttributeComponent implements OnChanges {
+export class CamfilProductAttributeComponent {
   // tslint:disable-next-line:no-any
   @Input() value?: any;
   @Input() name: string;
@@ -29,24 +29,18 @@ export class CamfilProductAttributeComponent implements OnChanges {
   @Input() hideAttributeName = false;
   @Input() overflowVisible = false;
 
-  attribute: Attribute;
-
-  classObject: { [key: string]: boolean };
-
-  ngOnChanges() {
-    this.determineAttributeDetails();
-  }
-
-  private determineAttributeDetails() {
-    this.classObject = {
-      'camfil-product-attribute': true,
-      [`camfil-product-attribute--${this.identifier}`]: !!this.identifier,
-    };
-
-    this.attribute = {
+  get attribute(): Attribute {
+    return {
       name: this.name,
       value: this.value,
       type: typeof this.value === 'number' ? 'Integer' : 'String',
+    };
+  }
+
+  get classObject(): { [key: string]: boolean } {
+    return {
+      'camfil-product-attribute': true,
+      [`camfil-product-attribute--${this.identifier}`]: !!this.identifier,
     };
   }
 }

@@ -17,7 +17,7 @@ export class CamCardHelper {
   }
 
   static getRealCamCards(camCards: CamCard[]) {
-    return camCards.filter(camCard => !camCard.transient);
+    return camCards?.filter(camCard => !camCard.transient);
   }
 
   static getItems(items: CamCardItem[], onlyAvailable: boolean) {
@@ -37,13 +37,17 @@ export class CamCardHelper {
       .map(({ id }) => id);
   }
 
-  static getCamCardSkus(camCard: CamCard) {
+  static getCamCardSkus(camCard: CamCard): string[] {
+    if (!camCard) {
+      return [];
+    }
+
     return (
       [
         ...camCard.camCardItems?.map(({ product }) => product.sku),
         ...camCard.subCamCards?.reduce(
           (acc, { camCardItems }) => [...acc, ...camCardItems.map(({ product }) => product.sku)],
-          []
+          [] as string[]
         ),
       ]
         // remove duplicate skus

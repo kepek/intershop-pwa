@@ -29,14 +29,6 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
     super(translate);
   }
 
-  init() {
-    super.init();
-
-    this.formControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(formControl => {
-      console.log({ formControl });
-    });
-  }
-
   handleInputKeyboardEvent(event: KeyboardEvent) {
     const target = event.target as HTMLInputElement;
 

@@ -20,7 +20,6 @@ import {
   addPromotionCodeToBasket,
   assignBasketAddress,
   camfilDragLineItem,
-  checkCurrentBasket,
   continueCheckout,
   createBasketAddress,
   createBasketPayment,
@@ -60,7 +59,6 @@ import {
   isBasketInvoiceAndShippingAddressEqual,
   loadBasketEligiblePaymentMethods,
   loadBasketEligibleShippingMethods,
-  loadBuckets,
   loadCustomerDeliveryTerm,
   removePromotionCodeFromBasket,
   setBasketAttribute,
@@ -181,10 +179,6 @@ export class CheckoutFacade {
     this.store.dispatch(deleteBasketAttribute({ attributeName }));
   }
 
-  checkCurrentBasket() {
-    this.store.dispatch(checkCurrentBasket());
-  }
-
   eligibleShippingMethods$() {
     return this.basketLineItems$.pipe(
       whenTruthy(),
@@ -249,10 +243,6 @@ export class CheckoutFacade {
 
   updateConcardisCvcLastUpdated(paymentInstrument: PaymentInstrument) {
     this.store.dispatch(updateConcardisCvcLastUpdated({ paymentInstrument }));
-  }
-
-  loadBuckets() {
-    this.store.dispatch(loadBuckets());
   }
 
   addEmptyBucket(emptyBucket: Bucket) {

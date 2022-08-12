@@ -3,13 +3,14 @@ import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
+import { CamfilShoppingFacade } from 'camfil-pwa/facades/camfil-shopping.facade';
 import { MockComponent, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
-import { instance, mock, when } from 'ts-mockito';
+import { anything, instance, mock, when } from 'ts-mockito';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
-import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
+import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { CamfilDimensionPipe } from 'ish-core/pipes/camfil-dimension.pipe';
 import { CamfilPriceSummaryPipe } from 'ish-core/pipes/camfil-price-summary.pipe';
 import { CamfilProductAttributeValPipe } from 'ish-core/pipes/camfil-product-attribute-val';
@@ -42,10 +43,12 @@ describe('Account Cam Card Detail Line Item Component', () => {
   let element: HTMLElement;
   let appFacadeMock: AppFacade;
   let camCardsFacadeMock: CamCardsFacade;
+  let shoppingFacadeMock: CamfilShoppingFacade;
 
   beforeEach(async () => {
     appFacadeMock = mock(AppFacade);
     camCardsFacadeMock = mock(CamCardsFacade);
+    shoppingFacadeMock = mock(CamfilShoppingFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -76,10 +79,9 @@ describe('Account Cam Card Detail Line Item Component', () => {
       ],
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
       providers: [
-        { provide: CamCardsFacade, useFactory: () => instance(mock(CamCardsFacade)) },
-        { provide: ShoppingFacade, useFactory: () => instance(mock(ShoppingFacade)) },
         { provide: AppFacade, useFactory: () => instance(appFacadeMock) },
         { provide: CamCardsFacade, useFactory: () => instance(camCardsFacadeMock) },
+        { provide: CamfilShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
       ],
     }).compileComponents();
   });
@@ -91,8 +93,13 @@ describe('Account Cam Card Detail Line Item Component', () => {
 
     when(appFacadeMock.getChannel$).thenReturn(of('channel'));
     when(camCardsFacadeMock.customers$).thenReturn(of([]));
+    when(shoppingFacadeMock.getProduct$(anything(), anything())).thenReturn(
+      of({
+        sku: '123',
+      } as ProductView)
+    );
 
-    component.camCardItemData = {
+    component.camCardItem = {
       id: '1234',
       product: {
         sku: 'abcd',

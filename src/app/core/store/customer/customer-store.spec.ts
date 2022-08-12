@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { OrderService } from 'camfil-pwa/services/order/order.service';
+import { OrderService } from 'camfil-pwa/services/ish-order/order.service';
 import { EMPTY, of } from 'rxjs';
 import { anyNumber, anything, instance, mock, when } from 'ts-mockito';
 
@@ -225,7 +225,7 @@ describe('Customer Store', () => {
               info: undefined
             [Products Internal] Load Product:
               sku: "test"
-            [Basket Internal] Load Basket
+            [Basket Internal] Reload Basket
             [Products API] Load Product Success:
               product: {"name":"test","shortDescription":"test","longDescription":"...
           `);
@@ -249,8 +249,9 @@ describe('Customer Store', () => {
           [User API] Login User Success:
             customer: {"isBusinessCustomer":false,"customerNo":"test"}
             user: {"title":"","firstName":"test","lastName":"test","phoneHome"...
-          [Basket API] Check Current Basket
           [Basket API] Load Basket Success:
+            basket: {"id":"test","lineItems":[1]}
+          [Basket] Load Buckets:
             basket: {"id":"test","lineItems":[1]}
         `);
       });
@@ -264,7 +265,6 @@ describe('Customer Store', () => {
           [Basket API] Validate Basket and continue with success:
             targetRoute: "/checkout/address"
             basketValidation: {"basket":{"id":"test","lineItems":[1]},"results":{"valid":t...
-          [Basket] Load Buckets
         `);
       });
     });

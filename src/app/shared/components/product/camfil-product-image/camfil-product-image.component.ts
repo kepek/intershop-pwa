@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Memoize } from 'typescript-memoize';
 
-import { Image } from 'ish-core/models/image/image.model';
-import { Product, ProductHelper } from 'ish-core/models/product/product.model';
+import { ProductImageComponent } from 'ish-shared/components/product/product-image/product-image.component';
 
 /**
  * The Product Image Component renders the product image
@@ -16,73 +16,31 @@ import { Product, ProductHelper } from 'ish-core/models/product/product.model';
   templateUrl: './camfil-product-image.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilProductImageComponent implements OnChanges {
-  /**
-   * The product with the image information.
-   */
-  @Input() product: Product;
-  /**
-   * The image type (size), i.e. 'S' for the small image.
-   */
-  @Input() imageType: string;
-  /**
-   * The image view, e.g. 'front', 'back'.
-   */
-  @Input() imageView?: string;
-  /**
-   * The additional CSS classes for the img tag.
-   */
-  @Input() class?: string;
-  /**
-   * A custom alt text for the img tag.
-   */
-  @Input() altText?: string;
-
-  productImage: Image;
-
-  /**
-   * deferred loading flag
-   */
-  showImage = false;
-
-  constructor(private translateService: TranslateService) {}
-
-  ngOnChanges() {
-    this.productImage = this.imageView
-      ? ProductHelper.getImageByImageTypeAndImageView(this.product, this.imageType, this.imageView)
-      : ProductHelper.getPrimaryImage(this.product, this.imageType);
+export class CamfilProductImageComponent extends ProductImageComponent implements OnChanges {
+  constructor(translateService: TranslateService) {
+    super(translateService);
   }
 
-  /**
-   * Gets the image source URL from the effectiveUrl of the product image.
-   * @returns defined effectiveUrl or empty string.
-   */
+  @Input() width: number;
+  @Input() height: number;
+
+  @Memoize({ tags: ['imageSourceUrl'] })
   imageSourceUrl(): string {
-    return this.productImage && this.productImage.effectiveUrl && this.productImage.effectiveUrl.length > 0
-      ? `${this.productImage.effectiveUrl}`
-      : '/assets/img/not_available.png';
-  }
+    const url = super.imageSourceUrl();
 
-  /**
-   * Builds the alternative text from a product image.
-   * @returns Property altText or a string composed of
-   * (a) product name OR product SKU and
-   * (b) an additional defined alt text
-   * (c) image view and image type if image view is given
-   */
-  getImgAltText(): string {
-    return this.altText ? this.altText : `${this.buildProductNameOrProductSku()} ${this.buildAdditionalAltText()}`;
-  }
+    if (url.match('^(https?|file):') || !url.startsWith('/')) {
+      const urlObject = new URL(url);
+      const height = this.height?.toString() || 'auto';
+      const width = this.width?.toString() || '250';
+      const bgColor = 'transparent';
 
-  private buildProductNameOrProductSku(): string {
-    return this.product ? (this.product.name ? this.product.name : this.product.sku) : '';
-  }
+      urlObject?.searchParams?.set('height', height);
+      urlObject?.searchParams?.set('width', width);
+      urlObject?.searchParams?.set('bgcolor', bgColor);
 
-  private buildAdditionalAltText(): string {
-    return `${this.translateService.instant('product.image.text.alttext')}${this.buildAltTextForGivenImageView()}`;
-  }
+      return urlObject?.toString() || url;
+    }
 
-  private buildAltTextForGivenImageView(): string {
-    return this.imageView ? ` ${this.imageView} ${this.imageType}` : '';
+    return url;
   }
 }
