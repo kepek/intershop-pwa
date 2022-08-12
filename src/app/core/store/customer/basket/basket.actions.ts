@@ -24,6 +24,8 @@ import {
   CamCamProductsAddToCartItems,
 } from '../../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
+export const reloadBasket = createAction('[Basket Internal] Reload Basket');
+
 export const loadBasket = createAction('[Basket Internal] Load Basket');
 
 export const loadBasketByAPIToken = createAction(

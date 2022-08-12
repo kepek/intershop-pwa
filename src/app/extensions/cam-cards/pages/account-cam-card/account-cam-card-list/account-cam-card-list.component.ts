@@ -60,7 +60,7 @@ const ANIMATION_TIMEOUT = 225;
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0', opacity: '0' })),
-      state('expanded', style({ height: '*', opacity: '1' })),
+      state('expanded', style({ height: 'auto', opacity: '1' })),
       transition('expanded <=> collapsed', animate(`${ANIMATION_TIMEOUT}ms cubic-bezier(0.4, 0.0, 0.2, 1)`)),
     ]),
   ],
@@ -142,9 +142,13 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
   @Input() camCardLoading: boolean;
   @Output() addCamCard = new EventEmitter<CamCard>();
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.dataSource.sort = ms;
+  }
   basketLoading$: Observable<boolean>;
   isStickyCamCardToolbar$: Observable<boolean>;
-  dataSource = new MatTableDataSource<CamCard>([]);
+  dataSource = new MatTableDataSource<CamCard>();
   columnsToDisplay$: Observable<string[]>;
   productsChecked = {};
   isMobileView = false;
@@ -277,6 +281,8 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
 
   ngOnInit() {
     this.initColumnsToDisplay();
+    this.initDataSource();
+
     this.viewportScroller.setHistoryScrollRestoration('manual');
 
     this.isStickyCamCardToolbar$ = this.camCardsFacade.isStickyCamCardToolbar$;
@@ -331,10 +337,10 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
   }
 
   ngOnChanges() {
+    this.dataSource.data = this.realCamCards;
     this.isMobileView = this.isMobile();
     this.loading = this.camCardLoading;
     this.viewportScroller.setOffset(this.isMobileView ? [0, 0] : this.stickyCamCardToolbarHeight);
-    this.initDataSource();
   }
 
   ngOnDestroy() {

@@ -1,10 +1,20 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CamfilShoppingFacade } from 'camfil-pwa/facades/camfil-shopping.facade';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, take, takeUntil } from 'rxjs/operators';
-import { Memoize } from 'typescript-memoize';
+import { Memoize, clear } from 'typescript-memoize';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Channel } from 'ish-core/models/channel/channel.types';
@@ -23,7 +33,7 @@ import { CamCard, CamCardCustomer, CamCardItem } from '../../../models/cam-card/
   styleUrls: ['./account-cam-card-detail-line-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AccountCamCardDetailLineItemComponent implements OnInit, OnDestroy {
+export class AccountCamCardDetailLineItemComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private shoppingFacade: CamfilShoppingFacade,
     private camCardsFacade: CamCardsFacade,
@@ -86,6 +96,28 @@ export class AccountCamCardDetailLineItemComponent implements OnInit, OnDestroy 
     this.quantityValue = v;
   }
 
+  private listPriceValue: Price;
+
+  @Memoize({ tags: ['listPrice'] })
+  get listPrice() {
+    return this.listPriceValue;
+  }
+
+  set listPrice(v: Price) {
+    this.listPriceValue = v;
+  }
+
+  private salePriceValue: Price;
+
+  @Memoize({ tags: ['salePrice'] })
+  get salePrice() {
+    return this.salePriceValue;
+  }
+
+  set salePrice(v: Price) {
+    this.salePriceValue = v;
+  }
+
   ngOnInit() {
     this.initForm();
 
@@ -98,12 +130,29 @@ export class AccountCamCardDetailLineItemComponent implements OnInit, OnDestroy 
       AccountCamCardDetailLineItemComponent.REQUIRED_COMPLETENESS_LEVEL
     );
 
+    this.product$.pipe(takeUntil(this.destroy$)).subscribe(p => {
+      this.listPrice = p.listPrice;
+      this.salePrice = p.salePrice;
+    });
+
     this.updateQuantity();
 
     this.appFacade.getChannel$
       .pipe(whenTruthy(), take(1))
       // TODO (extMlk): hidePricesCamCards settings
       .subscribe(channel => (this.showPrice = channel !== Channel.SE));
+  }
+
+  ngOnChanges(c: SimpleChanges) {
+    if (c.customerPrices.previousValue?.listPrice?.value !== c.customerPrices.currentValue?.listPrice?.value) {
+      this.listPrice = this.customerPrices?.listPrice;
+      clear(['listPrice']);
+    }
+
+    if (c.customerPrices.previousValue?.salePrice?.value !== c.customerPrices.currentValue?.salePrice?.value) {
+      this.salePrice = this.customerPrices?.salePrice;
+      clear(['salePrice']);
+    }
   }
 
   ngOnDestroy() {
@@ -119,14 +168,6 @@ export class AccountCamCardDetailLineItemComponent implements OnInit, OnDestroy 
 
   changeCheck(event) {
     this.changeCheckbox.emit(event);
-  }
-
-  getListPrice(listPrice) {
-    return !!this.customers?.length && this.customerPrices?.salePrice ? this.customerPrices?.listPrice : listPrice;
-  }
-
-  getSalePrice(salePrice) {
-    return !!this.customers?.length && this.customerPrices?.salePrice ? this.customerPrices?.salePrice : salePrice;
   }
 
   @Memoize()

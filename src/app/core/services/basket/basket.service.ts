@@ -92,6 +92,8 @@ export class BasketService {
     Accept: 'application/vnd.intershop.basket.v1+json',
   });
 
+  private reloadBasketIncludes: BasketIncludeType[] = ['lineItems', 'camfilProductLineItems'];
+
   private allBasketIncludes: BasketIncludeType[] = [
     'invoiceToAddress',
     'commonShipToAddress',
@@ -130,6 +132,21 @@ export class BasketService {
     'basket_payments_paymentMethod',
     'basket_payments_paymentInstrument',
   ];
+
+  /**
+   * Get the basket for the current user.
+   * @returns         The basket.
+   */
+  reloadBasket(): Observable<Basket> {
+    const params = new HttpParams().set('include', this.reloadBasketIncludes.join());
+
+    return this.apiService
+      .get<BasketData>(`baskets/current`, {
+        headers: this.basketHeaders,
+        params,
+      })
+      .pipe(map(BasketMapper.fromData));
+  }
 
   /**
    * Get the basket for the current user.
@@ -476,6 +493,7 @@ export class BasketService {
       .pipe(map(buckets => BucketMapper.fromListData(buckets, basket)));
   }
 
+  // tslint:disable-next-line:force-jsdoc-comments
   // CAMFIL
   /**
    * Move product to another bucket and update position.

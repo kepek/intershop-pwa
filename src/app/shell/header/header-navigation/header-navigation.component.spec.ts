@@ -54,18 +54,18 @@ describe('Header Navigation Component', () => {
           <a ng-reflect-router-link="/cat/A" data-testing-id="A-link" href="/cat/A"> CAT_A </a
           ><a class="dropdown-toggle"><fa-icon ng-reflect-icon="fas,plus"></fa-icon></a
           ><ish-sub-category-navigation
+            ng-reflect-view="auto"
             ng-reflect-category-unique-id="A"
             ng-reflect-sub-categories-depth="1"
-            ng-reflect-view="auto"
           ></ish-sub-category-navigation>
         </li>
         <li class="dropdown">
-          <a ng-reflect-router-link="/cat/B" data-testing-id="B-link" style="width: 100%" href="/cat/B">
+          <a style="width: 100%" ng-reflect-router-link="/cat/B" data-testing-id="B-link" href="/cat/B">
             CAT_B
           </a>
         </li>
         <li class="dropdown">
-          <a ng-reflect-router-link="/cat/C" data-testing-id="C-link" style="width: 100%" href="/cat/C">
+          <a style="width: 100%" ng-reflect-router-link="/cat/C" data-testing-id="C-link" href="/cat/C">
             CAT_C
           </a>
         </li>

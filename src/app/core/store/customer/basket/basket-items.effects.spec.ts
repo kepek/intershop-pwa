@@ -29,9 +29,9 @@ import {
   deleteBasketItem,
   deleteBasketItemFail,
   deleteBasketItemSuccess,
-  loadBasket,
   loadBasketAddresses,
   loadBasketSuccess,
+  reloadBasket,
   updateBasketItems,
   updateBasketItemsFail,
   updateBasketItemsSuccess,
@@ -199,7 +199,7 @@ describe('Basket Items Effects', () => {
 
       const items = [{ sku: 'SKU', quantity: 1, unit: 'pcs.', addressId: 'addressId' }];
       const action = addItemsToBasketFromCamCard({ items });
-      const completion = loadBasket();
+      const completion = reloadBasket();
       const completion2 = loadBasketAddresses();
       const completion3 = addItemsToBasketFromCamCardSuccess();
       const completion4 = displaySuccessMessage({ message: 'camfil.add_items_to_basket.camfil.message.success' });
@@ -257,7 +257,7 @@ describe('Basket Items Effects', () => {
   describe('loadBasketAfterAddItemsToBasket$', () => {
     it('should map to action of type LoadBasket if AddItemsToBasketSuccess action triggered', () => {
       const action = addItemsToBasketSuccess({ info: undefined });
-      const completion = loadBasket();
+      const completion = reloadBasket();
       actions$ = hot('-a', { a: action });
       const expected$ = cold('-c', { c: completion });
 
@@ -411,7 +411,7 @@ describe('Basket Items Effects', () => {
   describe('loadBasketAfterUpdateBasketItem$', () => {
     it('should map to action of type LoadBasket if UpdateBasketItemSuccess action triggered', () => {
       const action = updateBasketItemsSuccess({ info: undefined });
-      const completion = loadBasket();
+      const completion = reloadBasket();
       actions$ = hot('-a', { a: action });
       const expected$ = cold('-c', { c: completion });
 
@@ -484,7 +484,7 @@ describe('Basket Items Effects', () => {
     it('should map to action of type LoadBasket if DeleteBasketItemSuccess action triggered', () => {
       const itemId = 'BIID';
       const action = deleteBasketItemSuccess({ itemId, info: undefined });
-      const completion = loadBasket();
+      const completion = reloadBasket();
       actions$ = hot('-a-a-a', { a: action });
       const expected$ = cold('-c-c-c', { c: completion });
 

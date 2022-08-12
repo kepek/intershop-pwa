@@ -17,7 +17,7 @@ export class CamCardHelper {
   }
 
   static getRealCamCards(camCards: CamCard[]) {
-    return camCards.filter(camCard => !camCard.transient);
+    return camCards?.filter(camCard => !camCard.transient);
   }
 
   static getItems(items: CamCardItem[], onlyAvailable: boolean) {

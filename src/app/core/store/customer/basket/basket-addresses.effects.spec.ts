@@ -28,6 +28,7 @@ import {
   deleteBasketShippingAddress,
   loadBasket,
   loadBasketAddresses,
+  reloadBasket,
   resetBasketErrors,
   updateBasket,
   updateBasketAddress,
@@ -212,7 +213,7 @@ describe('Basket Addresses Effects', () => {
       const address = BasketMockData.getAddress();
       const action = updateBasketAddress({ address });
       const completion1 = updateCustomerAddressSuccess({ address });
-      const completion2 = loadBasket();
+      const completion2 = reloadBasket();
       const completion3 = resetBasketErrors();
       actions$ = hot('-a', { a: action });
       const expected$ = cold('-(cde)', { c: completion1, d: completion2, e: completion3 });
@@ -255,7 +256,7 @@ describe('Basket Addresses Effects', () => {
       const address = BasketMockData.getAddress();
       const action = updateBasketAddress({ address });
       const completion1 = updateCustomerAddressSuccess({ address });
-      const completion2 = loadBasket();
+      const completion2 = reloadBasket();
       const completion3 = resetBasketErrors();
       const completion4 = loadBasketAddresses();
       actions$ = hot('-a', { a: action });

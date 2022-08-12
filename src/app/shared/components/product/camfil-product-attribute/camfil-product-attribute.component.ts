@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Memoize } from 'typescript-memoize';
 
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 
@@ -30,7 +29,6 @@ export class CamfilProductAttributeComponent {
   @Input() hideAttributeName = false;
   @Input() overflowVisible = false;
 
-  @Memoize({ tags: ['attribute'] })
   get attribute(): Attribute {
     return {
       name: this.name,
@@ -39,7 +37,6 @@ export class CamfilProductAttributeComponent {
     };
   }
 
-  @Memoize({ tags: ['classObject'] })
   get classObject(): { [key: string]: boolean } {
     return {
       'camfil-product-attribute': true,

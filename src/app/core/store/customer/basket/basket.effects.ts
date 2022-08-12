@@ -51,6 +51,7 @@ import {
   loadCustomerDeliveryTerm,
   loadCustomerDeliveryTermFail,
   loadCustomerDeliveryTermSuccess,
+  reloadBasket,
   resetBasketErrors,
   setBasketAttribute,
   setBasketAttributeFail,
@@ -68,6 +69,20 @@ import { getCurrentBasket, getCurrentBasketId, getCustomersDeliveryTerms } from 
 
 @Injectable()
 export class BasketEffects {
+  /**
+   * The reload basket effect.
+   */
+  reloadBasket$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(reloadBasket),
+      mergeMap(() =>
+        this.basketService.reloadBasket().pipe(
+          map(basket => loadBasketSuccess({ basket })),
+          mapErrorToAction(loadBasketFail)
+        )
+      )
+    )
+  );
   /**
    * The load basket effect.
    */
