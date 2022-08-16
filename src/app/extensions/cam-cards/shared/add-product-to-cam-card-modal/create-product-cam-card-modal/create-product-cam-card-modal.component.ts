@@ -19,6 +19,7 @@ import { take, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { Country } from 'ish-core/models/country/country.model';
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
@@ -69,6 +70,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   validators = CREATE_CAMCARD_VALIDATORS;
   addresses$: Observable<CamCardCustomersAddresses>;
   customers$: Observable<CamCardCustomer[]>;
+  countries$: Observable<Country[]>;
   customers: CamCardCustomer[];
   defaultCountryCode: string;
   showNewSegment = false;
@@ -101,6 +103,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   }
 
   initObservables() {
+    this.countries$ = this.appFacade.countries$();
     this.addresses$ = this.camCardsFacade.addresses$;
     this.customers$ = this.camCardsFacade.customers$;
   }

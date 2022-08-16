@@ -67,12 +67,12 @@ import {
   doubleBucketItemsQuantity,
   doubleBucketItemsQuantityFail,
   doubleBucketItemsQuantitySuccess,
+  loadBasket,
   loadBasketAddresses,
   loadBasketSuccess,
   loadBuckets,
   loadBucketsFail,
   loadBucketsSuccess,
-  reloadBasket,
   updateBasketAddress,
   updateBasketItemAttributes,
   updateBasketItemAttributesFail,
@@ -227,8 +227,8 @@ export class BasketItemsEffects {
         this.basketService.updateBucket(basketId, addressId, basketExtension).pipe(
           mergeMap(() =>
             address
-              ? [updateBasketAddress({ address, isBasket: true }), reloadBasket()]
-              : [updateBucketSuccess(), reloadBasket()]
+              ? [updateBasketAddress({ address, isBasket: true }), loadBasket()]
+              : [updateBucketSuccess(), loadBasket()]
           ),
           mapErrorToAction(updateBucketFail)
         )
@@ -395,15 +395,14 @@ export class BasketItemsEffects {
       ofType(addItemsToBasketSuccess, updateBasketItemsSuccess, deleteBasketItemSuccess),
       mapToPayloadProperty('info'),
       tap(info => (info && info.length && info[0].message ? this.router.navigate(['/checkout']) : undefined)),
-      mapTo(reloadBasket())
+      mapTo(loadBasket())
     )
   );
   loadBucket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadBuckets),
-      mapToPayloadProperty('basket'),
-      mergeMap(basket =>
-        this.basketService.getBuckets(basket).pipe(
+      mergeMap(() =>
+        this.basketService.getBuckets().pipe(
           mergeMap((buckets: Bucket[]) => [loadBucketsSuccess({ buckets })]),
           mapErrorToAction(loadBucketsFail)
         )
@@ -411,7 +410,7 @@ export class BasketItemsEffects {
     )
   );
   loadBasketAfterBucketChangeSuccess$ = createEffect(() =>
-    this.actions$.pipe(ofType(deleteBucketSuccess), mapTo(reloadBasket()))
+    this.actions$.pipe(ofType(deleteBucketSuccess), mapTo(loadBasket()))
   );
   addLineItemAttribute$ = createEffect(() =>
     this.actions$.pipe(
@@ -547,7 +546,7 @@ export class BasketItemsEffects {
             const validBasket = deleteEmptyBuckets.length ? [validateBasket({ scopes: ['Products'] })] : [];
 
             return [
-              reloadBasket(),
+              loadBasket(),
               loadBasketAddresses(),
               addItemsToBasketFromCamCardSuccess(),
               ...deleteEmptyBuckets,
@@ -573,7 +572,7 @@ export class BasketItemsEffects {
       mapToPayload(),
       mergeMap(({ basketId, bucketId }) =>
         this.basketService.doubleBucketItemsQuantity(basketId, bucketId).pipe(
-          mergeMap(() => [doubleBucketItemsQuantitySuccess(), reloadBasket()]),
+          mergeMap(() => [doubleBucketItemsQuantitySuccess(), loadBasket()]),
           mapErrorToAction(doubleBucketItemsQuantityFail)
         )
       )
@@ -585,7 +584,7 @@ export class BasketItemsEffects {
   loadBasketAfterLineItemAttributeChangeSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addBasketItemAttributesSuccess, updateBasketItemAttributesSuccess, deleteBasketItemAttributesSuccess),
-      mapTo(reloadBasket())
+      mapTo(loadBasket())
     )
   );
 
@@ -594,7 +593,7 @@ export class BasketItemsEffects {
       ofType(setCurrentLocale),
       withLatestFrom(this.store.pipe(select(selectUrl))),
       filter(([, url]) => url.startsWith('/checkout')),
-      mergeMap(() => [validateBasket({ scopes: ['All'] }), reloadBasket()])
+      mergeMap(() => [validateBasket({ scopes: ['All'] }), loadBasket()])
     )
   );
 

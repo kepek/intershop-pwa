@@ -1,7 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Location, ViewportScroller } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -11,6 +10,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -20,14 +20,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
-import { CamfilShoppingFacade } from 'camfil-pwa/facades/camfil-shopping.facade';
 import { flatten, groupBy, toArray } from 'lodash-es';
-import { Observable, ReplaySubject, Subject, combineLatest } from 'rxjs';
-import { distinctUntilChanged, filter, map, take, takeUntil, tap } from 'rxjs/operators';
-import { Memoize } from 'typescript-memoize';
+import { Observable, Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Address } from 'ish-core/models/address/address.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/bucket/bucket.model';
@@ -50,8 +49,6 @@ import { ImportCamCardDialogComponent } from '../../../shared/import-cam-card-di
 import { MoveCamCardDialogComponent } from '../../../shared/move-cam-card-dialog/move-cam-card-dialog.component';
 import { UserAccessCamCardDialogComponent } from '../../../shared/user-access-cam-card-dialog/user-access-cam-card-dialog.component';
 
-const ANIMATION_TIMEOUT = 225;
-
 @Component({
   selector: 'camfil-account-cam-card-list',
   templateUrl: './account-cam-card-list.component.html',
@@ -59,21 +56,73 @@ const ANIMATION_TIMEOUT = 225;
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0', opacity: '0' })),
-      state('expanded', style({ height: 'auto', opacity: '1' })),
-      transition('expanded <=> collapsed', animate(`${ANIMATION_TIMEOUT}ms cubic-bezier(0.4, 0.0, 0.2, 1)`)),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
-export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy {
+  private static CUSTOMER_ADMIN_PERMISSIONS = ['APP_B2B_MANAGE_USERS', 'APP_B2B_PURCHASE', 'APP_B2B_MANAGE_ALL_ORDERS'];
+  private static PRICE_PERMISSIONS = ['APP_B2B_VIEW_PRICES'];
+  /** The list of cam cards of the customer. */
+  @Input() camCards: CamCard[];
+  @Input() deviceType: DeviceType;
+  @Input() camCardLoading: boolean;
+  @Output() addCamCard = new EventEmitter<CamCard>();
+  @ViewChild(MatSort) sort: MatSort;
+  basketLoading$: Observable<boolean>;
+  isStickyCamCardToolbar$: Observable<boolean>;
+  camCardsProcessed: MatTableDataSource<CamCard>;
+  columnsToDisplay = [
+    'name',
+    'customer',
+    'lastDeliveryDate',
+    'deliveryInterval',
+    'nextDeliveryDate',
+    'itemsCount',
+    'edit',
+    'checkbox',
+  ];
+  expandedCamCard: CamCard | undefined;
+  productsChecked = {};
+  isMobileView = false;
+  loading = true;
+  isSubOpen = [];
+  notBuyableElemnts = [];
+  maintenance = CamCardHelper.maintenance;
+  commonShippingMethodId: string;
+  basket$: Observable<BasketView>;
+  buckets$: Observable<any[]>;
+  buckets: Bucket[];
+  basketId: string;
+  basketAddresses: Address[];
+  checkedCamCard = [];
+  isCustomerAdmin: boolean;
+  basketLoading = false;
+  totalProductsInBasket: number;
+  productAddingInProgress = false;
+  camCardsInBasketsForAllUsersLoading$: Observable<boolean>;
+  camCardsInBasketsForAllUsers: string[];
+  productsCustomerPrices: {
+    [customerId: string]: Product[];
+  };
+
+  freshErpInfo = false;
+  preventCamCardERPIdValidation = false;
+
+  private selectedCamCardCustomer: CamCardCustomer;
+  private fragment: string;
+  private destroy$ = new Subject();
+
   constructor(
     private checkoutFacade: CheckoutFacade,
-    private shoppingFacade: CamfilShoppingFacade,
+    private productFacade: ShoppingFacade,
     private camCardsFacade: CamCardsFacade,
     private changeDetectorRefs: ChangeDetectorRef,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
-    private viewportScroller: ViewportScroller,
+    private scroller: ViewportScroller,
     private translate: TranslateService,
     private location: Location,
     private authorizationToggle: AuthorizationToggleService,
@@ -102,191 +151,24 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
     );
   }
 
-  get realCamCards(): CamCard[] {
-    return CamCardHelper.getRealCamCards(this.camCards)?.map(rc => ({
-      ...rc,
-      customerNo: rc.customer.customerNo,
-    }));
-  }
+  ngOnInit() {
+    this.isMobileView = this.isMobile();
+    this.isStickyCamCardToolbar$ = this.camCardsFacade.isStickyCamCardToolbar$;
 
-  get sortQueryParams() {
-    return {
-      activeSort: this.sort?.active,
-      sortDirection: this.sort?.direction,
-    };
-  }
-
-  get camCards() {
-    return this.camCardsValue;
-  }
-
-  @Input() set camCards(camCards: CamCard[]) {
-    this.camCardsValue = camCards;
-    this.camCards$.next(camCards);
-  }
-  private get expandedCamCardId() {
-    return this.expandedCamCardValue;
-  }
-
-  private set expandedCamCardId(camCardId: string) {
-    this.expandedCamCardValue = camCardId;
-    this.expandedCamCardId$.next(camCardId);
-  }
-  private static CUSTOMER_ADMIN_PERMISSIONS = ['APP_B2B_MANAGE_USERS', 'APP_B2B_PURCHASE', 'APP_B2B_MANAGE_ALL_ORDERS'];
-  private static PRICE_PERMISSIONS = ['APP_B2B_VIEW_PRICES'];
-
-  private loadedCamCardDetailsIds: string[] = [];
-  private stickyCamCardToolbarHeight: [number, number] | (() => [number, number]) = [0, 110];
-  /** The list of cam cards of the customer. */
-  @Input() deviceType: DeviceType;
-  @Input() camCardLoading: boolean;
-  @Output() addCamCard = new EventEmitter<CamCard>();
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatSort) set matSort(ms: MatSort) {
-    this.sort = ms;
-    this.dataSource.sort = ms;
-  }
-  basketLoading$: Observable<boolean>;
-  isStickyCamCardToolbar$: Observable<boolean>;
-  dataSource = new MatTableDataSource<CamCard>();
-  columnsToDisplay$: Observable<string[]>;
-  productsChecked = {};
-  isMobileView = false;
-  loading = true;
-  isSubOpen = [];
-  notBuyableElemnts = [];
-  maintenance = CamCardHelper.maintenance;
-  commonShippingMethodId: string;
-  basket$: Observable<BasketView>;
-  buckets$: Observable<Bucket[]>;
-  buckets: Bucket[];
-  basketId: string;
-  basketAddresses: Address[];
-  checkedCamCard = [];
-  isCustomerAdmin: boolean;
-  basketLoading = false;
-  totalProductsInBasket: number;
-  productAddingInProgress = false;
-  camCardsInBasketsForAllUsersLoading$: Observable<boolean>;
-  productsLoading$: Observable<boolean>;
-  camCardsInBasketsForAllUsers: string[];
-  productsCustomerPrices: {
-    [customerId: string]: Product[];
-  };
-
-  freshErpInfo = false;
-  preventCamCardERPIdValidation = false;
-  showPrice = true;
-
-  private selectedCamCardCustomer: CamCardCustomer;
-  private destroy$ = new Subject();
-  private expandedCamCardValue: string;
-
-  camCards$ = new ReplaySubject<CamCard[]>(1);
-
-  private camCardsValue: CamCard[];
-
-  expandedCamCardId$ = new ReplaySubject<string>(1);
-
-  private initColumnsToDisplay() {
-    this.columnsToDisplay$ = this.authorizationToggle
-      .isAuthorizedToCheckArrAll(AccountCamCardListComponent.CUSTOMER_ADMIN_PERMISSIONS)
-      .pipe(
-        map(isAuthorized => {
-          const columnsToDisplay = {
-            name: true,
-            customer: true,
-            lastDeliveryDate: true,
-            deliveryInterval: true,
-            nextDeliveryDate: true,
-            itemsCount: true,
-            edit: true,
-            userAccess: false,
-            checkbox: true,
-          };
-
-          if (isAuthorized) {
-            columnsToDisplay.userAccess = true;
-          }
-
-          return Object.entries(columnsToDisplay)
-            .filter(([, value]) => value)
-            .map(([key]) => key);
-        })
-      );
-  }
-
-  private initDataSource() {
-    this.dataSource.data = this.realCamCards;
-
-    this.dataSource.sort = this.sort;
-
-    this.dataSource.filterPredicate = (data, filterString) => {
-      const filtered = this.simplifyData(filterString);
-      const additionalFields = data.camCardItems.reduce((arr, item) => {
-        const label = item.comment?.label;
-        if (label) {
-          arr.push(label);
-        }
-        return arr;
-      }, []);
-      data.subCamCards.reduce((res, el) => {
-        res.push(el.name);
-        el.camCardItems.forEach(item => (item.comment?.label ? res.push(item.comment.label) : ''));
-        return res;
-      }, additionalFields);
-      return (
-        (this.simplifyData(data.customer.companyName).indexOf(filtered) !== -1 ||
-          this.simplifyData(data.customer.customerNo).indexOf(filtered) !== -1 ||
-          this.simplifyData(data.name).indexOf(filtered) !== -1 ||
-          !!additionalFields.filter(item => this.simplifyData(item).indexOf(filtered) !== -1).length) &&
-        this.simplifyData(this.selectedCamCardCustomer?.customerNo || data?.customer?.customerNo) ===
-          this.simplifyData(data?.customer?.customerNo)
-      );
-    };
-
-    this.dataSource.sortingDataAccessor = (item, property) =>
-      property === 'customer'
-        ? item.customer.companyName
-        : property === 'name'
-        ? item[property].toLocaleLowerCase()
-        : item[property];
-
-    if (this.dataSource.sort) {
-      this.dataSource.sort.disableClear = true;
-    }
-  }
-
-  private initDataSourceSortQueryParamsObserver() {
-    this.activatedRoute.queryParams.pipe(whenTruthy()).subscribe(queryParam => {
+    this.activatedRoute.queryParams.pipe(take(1)).subscribe(queryParam => {
       if (queryParam.activeSort && queryParam.sortDirection && this.sort) {
         this.sort.active = queryParam.activeSort;
         this.sort.direction = queryParam.sortDirection;
-        this.dataSource.sort = this.sort;
+
+        this.camCardsProcessed.sort = this.sort;
       }
     });
-  }
 
-  private initRouteFragmentObserver() {
-    combineLatest([this.activatedRoute.fragment, this.camCards$])
-      .pipe(
-        filter(([camCardId, camCards]) => !!camCardId && !!camCards?.length),
-        takeUntil(this.destroy$)
-      )
-      .subscribe(([camCardId, camCards]) => {
-        const camCard = camCards.find(cc => cc.id === camCardId);
-        this.toggleCamCard(camCard);
-      });
-  }
+    this.activatedRoute.fragment.pipe(take(1)).subscribe((fragment: string) => {
+      this.fragment = fragment;
+      this.goToExpandedCamCard();
+    });
 
-  ngOnInit() {
-    this.initColumnsToDisplay();
-    this.initDataSource();
-
-    this.viewportScroller.setHistoryScrollRestoration('manual');
-
-    this.isStickyCamCardToolbar$ = this.camCardsFacade.isStickyCamCardToolbar$;
-    this.productsLoading$ = this.shoppingFacade.productsLoading$;
     this.basket$ = this.checkoutFacade.basket$;
     this.buckets$ = this.checkoutFacade.buckets$;
     this.camCardsInBasketsForAllUsersLoading$ = this.camCardsFacade.getCamCardsInBasketsForAllUsersLoading$;
@@ -308,11 +190,11 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
       this.camCardsInBasketsForAllUsers = list;
     });
 
-    this.shoppingFacade.getProductAddingError$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(error => {
+    this.productFacade.getProductAddingError$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(error => {
       if (error) {
         this.productAddingInProgress = false;
         this.changeDetectorRefs.detectChanges();
-        this.shoppingFacade.getFailedCamCardName$.pipe(whenTruthy(), take(1)).subscribe(failedName => {
+        this.productFacade.getFailedCamCardName$.pipe(whenTruthy(), take(1)).subscribe(failedName => {
           this.showErrorModal(error, failedName);
         });
       }
@@ -328,19 +210,69 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
     this.camCardsFacade.camCardAdding$.pipe(takeUntil(this.destroy$)).subscribe(value => {
       this.productAddingInProgress = value;
     });
-
-    this.initRouteFragmentObserver();
   }
 
-  ngAfterViewInit() {
-    this.initDataSourceSortQueryParamsObserver();
-  }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.camCards) {
+      if (this.camCards?.length) {
+        this.authorizationToggle
+          .isAuthorizedToCheckArrAll(AccountCamCardListComponent.CUSTOMER_ADMIN_PERMISSIONS)
+          .pipe(take(1))
+          .subscribe(p => {
+            this.isCustomerAdmin = p;
 
-  ngOnChanges() {
-    this.dataSource.data = this.realCamCards;
+            if (this.isCustomerAdmin && !this.columnsToDisplay.includes('userAccess')) {
+              this.columnsToDisplay.splice(6, 0, 'userAccess');
+            }
+            const realCamCards = CamCardHelper.getRealCamCards(this.camCards);
+            const camCardsToFilter = this.addCustomerNoToData(realCamCards);
+
+            this.camCardsProcessed = new MatTableDataSource(camCardsToFilter);
+
+            this.changeDetectorRefs.detectChanges();
+
+            this.camCardsProcessed.filterPredicate = (data, filter) => {
+              const filtered = this.simplifyData(filter);
+              const additionalFields = data.camCardItems.reduce((arr, item) => {
+                const label = item.comment?.label;
+                if (label) {
+                  arr.push(label);
+                }
+                return arr;
+              }, []);
+              data.subCamCards.reduce((res, el) => {
+                res.push(el.name);
+                el.camCardItems.forEach(item => (item.comment?.label ? res.push(item.comment.label) : ''));
+                return res;
+              }, additionalFields);
+              return (
+                (this.simplifyData(data.customer.companyName).indexOf(filtered) !== -1 ||
+                  this.simplifyData(data.customer.customerNo).indexOf(filtered) !== -1 ||
+                  this.simplifyData(data.name).indexOf(filtered) !== -1 ||
+                  !!additionalFields.filter(item => this.simplifyData(item).indexOf(filtered) !== -1).length) &&
+                this.simplifyData(this.selectedCamCardCustomer?.customerNo || data?.customer?.customerNo) ===
+                  this.simplifyData(data?.customer?.customerNo)
+              );
+            };
+
+            this.camCardsProcessed.sortingDataAccessor = (item, property) =>
+              property === 'customer'
+                ? item.customer.companyName
+                : property === 'name'
+                ? item[property].toLocaleLowerCase()
+                : item[property];
+            this.camCardsProcessed.sort = this.sort;
+            if (this.camCardsProcessed.sort) {
+              this.camCardsProcessed.sort.disableClear = true;
+            }
+            this.goToExpandedCamCard();
+            this.loading = this.camCardLoading;
+          });
+      } else {
+        this.loading = this.camCardLoading;
+      }
+    }
     this.isMobileView = this.isMobile();
-    this.loading = this.camCardLoading;
-    this.viewportScroller.setOffset(this.isMobileView ? [0, 0] : this.stickyCamCardToolbarHeight);
   }
 
   ngOnDestroy() {
@@ -348,42 +280,37 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
     this.destroy$.complete();
   }
 
-  private loadProducts(cc: CamCard) {
-    const skus = CamCardHelper.getCamCardSkus(cc);
-    return this.shoppingFacade.products$(skus);
-  }
-
-  private loadCustomerPrices() {
-    if (!this.showPrice) {
-      return;
-    }
-
+  loadCustomerPrices() {
     if (!this.productsCustomerPrices && this.camCards.length) {
       this.productsCustomerPrices = {};
       this.authorizationToggle
         .isAuthorizedToCheckArrAll(AccountCamCardListComponent.PRICE_PERMISSIONS)
-        .pipe(whenTruthy(), take(1))
-        .subscribe(() => {
-          const customersAndSkus = this.camCards.reduce((acc, cc) => {
-            const skus = CamCardHelper.getCamCardSkus(cc);
-            const currentSkus = acc?.[cc.customer.id] || [];
+        .pipe(take(1))
+        .subscribe(permitted => {
+          if (permitted) {
+            const customersAndSkus = this.camCards.reduce((acc, cc) => {
+              const skus = CamCardHelper.getCamCardSkus(cc);
+              const currentSkus = acc?.[cc.customer.id] || [];
 
-            return {
-              ...acc,
-              [cc.customer.id]: [...new Set([...currentSkus, ...skus])],
-            };
-          }, {}) as { key: string[] };
+              return {
+                ...acc,
+                [cc.customer.id]: [...new Set([...currentSkus, ...skus])],
+              };
+            }, {}) as { key: string[] };
 
-          Object.entries(customersAndSkus).forEach(([customerId, skus]) => {
-            this.shoppingFacade.loadCustomerPrices(customerId, skus);
-            this.shoppingFacade
-              .getCustomerPrices$(customerId)
-              .pipe(whenTruthy(), take(1))
-              .subscribe(prices => {
-                this.productsCustomerPrices[customerId] = prices;
-                this.changeDetectorRefs.markForCheck();
-              });
-          });
+            Object.entries(customersAndSkus).forEach(([customerId, skus]) => {
+              const { parent } = this.camCards.find(cc => cc.customer.id === customerId).customer;
+              if (!parent) {
+                this.productFacade.loadCustomerPrices(customerId, skus);
+                this.productFacade
+                  .getCustomerPrices$(customerId)
+                  .pipe(whenTruthy(), take(1))
+                  .subscribe(prices => {
+                    this.productsCustomerPrices[customerId] = prices;
+                  });
+              }
+            });
+          }
         });
     }
   }
@@ -393,8 +320,15 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
     return { listPrice: item?.listPrice, salePrice: item?.salePrice };
   }
 
-  private simplifyData(data) {
+  simplifyData(data) {
     return data?.toLowerCase()?.trim();
+  }
+
+  addCustomerNoToData(realCamCards) {
+    return realCamCards?.map(rc => ({
+      ...rc,
+      customerNo: rc.customer.customerNo,
+    }));
   }
 
   applyFilters(filterObject: { query: string; customer?: CamCardCustomer }) {
@@ -405,10 +339,9 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
     const { query, customer } = filterObject;
 
     this.selectedCamCardCustomer = customer;
-    this.dataSource.filter = query || customer?.customerNo;
+    this.camCardsProcessed.filter = query || customer?.customerNo;
   }
 
-  @Memoize()
   isMobile() {
     return this.deviceType === 'mobile'; // || this.deviceType === 'tablet';
   }
@@ -422,49 +355,23 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
     this.isSubCamCardOpen(id) ? this.isSubOpen.splice(index, 1) : this.isSubOpen.push(id);
   }
 
-  private loadCamCardDetails(camCard) {
-    return this.loadProducts(camCard).pipe(
-      filter(products => products?.length === CamCardHelper.getCamCardSkus(camCard).length),
-      distinctUntilChanged((x, y) => x.length === y.length),
-      take(1),
-      tap(() => {
-        this.loadCustomerPrices();
-      })
-    );
-  }
-
-  toggleCamCard(camCard: CamCard) {
-    if (this.isCamCardDetailsLoaded(camCard)) {
-      this.toggleCamCardHandler(camCard);
-    } else {
-      this.loadCamCardDetails(camCard).subscribe(() => {
-        this.loadedCamCardDetailsIds.push(camCard.id);
-        this.toggleCamCardHandler(camCard);
-      });
-    }
-  }
-
-  private toggleCamCardHandler(camCard: CamCard) {
-    const isExpanded = !!(this.expandedCamCardId === camCard.id);
-    const locationPath = this.location.path(false);
-
-    if (!isExpanded) {
-      this.location.replaceState(`${locationPath}#${camCard.id}`);
-      this.openSubLevels(camCard);
-      this.scrollToCamCard(camCard);
-    } else {
-      this.location.replaceState(`${locationPath}`);
-    }
-
-    this.expandedCamCardId = isExpanded ? undefined : camCard.id;
-  }
-
-  isCamCardDetailsLoaded(camCard: CamCard) {
-    return !!this.loadedCamCardDetailsIds.find(id => id === camCard.id);
+  handleExpandedCamCard(camCard: CamCard, rowId) {
+    const isExpanded = this.expandedCamCard && this.expandedCamCard.id === camCard.id;
+    this.loadCustomerPrices();
+    this.expandedCamCard = isExpanded ? undefined : camCard;
+    setTimeout(() => {
+      this.scrollToSelectedRow(rowId);
+      if (!isExpanded) {
+        this.location.replaceState(this.location.path(false) + '#' + camCard.id);
+        this.openSubLevels(camCard);
+      } else {
+        this.location.replaceState(this.location.path(false));
+      }
+    });
   }
 
   isCamCardExpanded(cc: CamCard) {
-    return cc.id === this.expandedCamCardId;
+    return cc.id === this.expandedCamCard?.id;
   }
 
   openSubLevels(camCard: CamCard) {
@@ -475,18 +382,36 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
     });
   }
 
-  private scrollToCamCard(camCard: CamCard) {
-    // this is fix for dynamic generated(loaded..?) content
-    setTimeout(() => {
-      this.viewportScroller.scrollToAnchor(camCard.id);
-    }, ANIMATION_TIMEOUT * 2);
+  expandCamCardByFragment() {
+    this.expandedCamCard = this.camCards.find((camCard: CamCard) => camCard.id === this.fragment) || undefined;
+    if (this.expandedCamCard) {
+      this.openSubLevels(this.expandedCamCard);
+    }
+  }
+
+  goToExpandedCamCard() {
+    if (this.fragment && this.camCardsProcessed?.data.length) {
+      const el = document.getElementById('camCard_' + this.fragment) as HTMLElement;
+      if (el) {
+        const top = el.getBoundingClientRect().top - (this.isMobileView ? 0 : 130);
+        this.scroller.scrollToPosition([0, top]);
+        this.expandCamCardByFragment();
+      }
+      this.loadCustomerPrices();
+    }
+  }
+
+  scrollToSelectedRow(rowId) {
+    const rowEl = document.getElementById('camCard_' + rowId) as HTMLElement;
+    const top = rowEl.getBoundingClientRect().top + window.scrollY - 132;
+    window.scrollTo({ top, behavior: 'auto' });
   }
 
   /** addToCartItems */
   handleSelectedCamCardsOnAddToCart(
     // tslint:disable-next-line:variable-name
-    checkInBasketModal: CamfilModalDialogComponent<unknown>,
-    addToCartFlowModal: CamfilModalDialogComponent<unknown>
+    checkInBasketModal: CamfilModalDialogComponent<any>,
+    addToCartFlowModal: CamfilModalDialogComponent<any>
   ) {
     const noErpIds = this.preventCamCardERPIdValidation ? [] : this.noErpIdCamCardsInSelectedProducts;
     const noPostCode = this.noPostCodeCamCardsInSelectedProducts;
@@ -519,7 +444,7 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
     });
   }
 
-  addToCart(modal: CamfilModalDialogComponent<unknown>) {
+  addToCart(modal: CamfilModalDialogComponent<any>) {
     const { notBuyableElemnts } = {
       notBuyableElemnts: this.getIncorrectCamCardsElements(),
     };
@@ -556,7 +481,7 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
 
     CamCardHelper.addToCartFromCamCards(
       this.camCardsFacade,
-      this.shoppingFacade,
+      this.productFacade,
       list,
       this.camCards,
       this.commonShippingMethodId,
@@ -565,7 +490,7 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
 
     const event = { checked: false };
     this.productAddingInProgress = true;
-    this.shoppingFacade.productAdded$.pipe(whenTruthy(), take(1)).subscribe(val => {
+    this.productFacade.productAdded$.pipe(whenTruthy(), take(1)).subscribe(val => {
       if (val) {
         this.masterToggle(event as MatCheckboxChange);
         this.productAddingInProgress = false;
@@ -574,7 +499,7 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
     });
   }
 
-  addSelectedAndFilteredItemsToCart(modal: CamfilModalDialogComponent<unknown>) {
+  addSelectedAndFilteredItemsToCart(modal: CamfilModalDialogComponent<any>) {
     // tslint:disable-next-line: ish-no-object-literal-type-assertion
     const event = { checked: false } as MatCheckboxChange;
     this.camCardsInBasketsForAllUsers.forEach(id => {
@@ -619,7 +544,7 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
 
   getIncorrectCamCardsElements() {
     return (
-      this.dataSource.data
+      this.camCardsProcessed.data
         // Checked CamCards
         .reduce((output, camcard) => {
           if (this.isCamCardChecked(camcard)) {
@@ -685,7 +610,9 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
   }
 
   isAllChecked() {
-    return this.dataSource.data.every(camCard => (camCard.itemsCount > 0 ? this.isCamCardChecked(camCard) : true));
+    return this.camCardsProcessed.data.every(camCard =>
+      camCard.itemsCount > 0 ? this.isCamCardChecked(camCard) : true
+    );
   }
 
   isCamCardIndeterminate(camCard: CamCard) {
@@ -702,6 +629,7 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
   handleProductCheck(item: CamCardItem, camCard: CamCard, event: MatCheckboxChange) {
     const productOnList = this.productsChecked[item.id];
     if (event.checked && !productOnList && item.product.available) {
+      this.loadCustomerPrices();
       const element: CamCamProductChecked = {
         camCardId: camCard.id,
         camCardErpId: !!camCard.erpId,
@@ -726,11 +654,11 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
   }
 
   masterToggle(event: MatCheckboxChange) {
-    this.dataSource.filteredData.forEach(row => {
+    this.camCardsProcessed.filteredData.forEach(row => {
       this.handleProductsCheck(row, event);
     });
 
-    this.checkedCamCard = event.checked ? this.dataSource.filteredData.map(cc => cc.id) : [];
+    this.checkedCamCard = event.checked ? this.camCardsProcessed.filteredData.map(cc => cc.id) : [];
   }
 
   camCardToggle(camCard: CamCard, event: MatCheckboxChange) {
@@ -747,6 +675,7 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
     this.handleProductCheck(item, camCard, event);
   }
 
+  // Emit camcard import
   importCamCard() {
     this.dialog.open(ImportCamCardDialogComponent, {
       width: '600px',
@@ -768,7 +697,7 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
   sortData(event) {
     if (event.active !== 'name') {
       // Divide array to arrays based on value of active sort
-      const groupedArrays = groupBy(this.dataSource.filteredData, event.active);
+      const groupedArrays = groupBy(this.camCardsProcessed.filteredData, event.active);
       // Sort each property in object by name - Ascending
       for (const property in groupedArrays) {
         if (groupedArrays.hasOwnProperty(property)) {
@@ -780,8 +709,15 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
 
       // Join results into one array
       const newGroup = flatten(toArray(groupedArrays)?.sort((a, b) => a[0][event.active] - b[0][event.active]));
-      this.dataSource.data = newGroup;
+      this.camCardsProcessed.data = newGroup;
     }
+  }
+
+  setSortParam() {
+    return {
+      activeSort: this.sort?.active,
+      sortDirection: this.sort?.direction,
+    };
   }
 
   showErrorModal(error, camCardName: string): void {
@@ -795,13 +731,5 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
   showAllCustomerCamCards(event: MatCheckboxChange) {
     this.loading = true;
     this.camCardsFacade.loadCamCards(event.checked);
-  }
-
-  trackByCamCardFn(_, cc: CamCard) {
-    return cc.id;
-  }
-
-  trackByCamCardItemFn(_, ccItem: CamCardItem) {
-    return ccItem.id;
   }
 }

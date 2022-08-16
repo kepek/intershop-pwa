@@ -16,7 +16,7 @@
     </th>
     <td mat-cell *matCellDef="let pli">
       <ng-container *ngIf="getProductInfo(pli.product.sku) | async as product">
-        <camfil-product-image [product]="product" class="product-image" imageType="images" width="40"></camfil-product-image>
+        <camfil-product-image [product]="product" class="product-image" imageType="images"></camfil-product-image>
       </ng-container>
     </td>
   </ng-container>

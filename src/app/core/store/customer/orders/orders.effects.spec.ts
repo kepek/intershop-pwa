@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action, Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
-import { OrderService } from 'camfil-pwa/services/ish-order/order.service';
+import { OrderService } from 'camfil-pwa/services/order/order.service';
 import { OrdersEffects } from 'camfil-pwa/store/customer/orders/orders.effects';
 import { cold, hot } from 'jest-marbles';
 import { Observable, noop, of, throwError } from 'rxjs';

@@ -79,6 +79,7 @@ export class CamfilRequisitionRejectDialogComponent {
   }
 
   get formDisabled() {
+    console.log();
     return this.rejectForm.invalid && this.submitted;
   }
 }

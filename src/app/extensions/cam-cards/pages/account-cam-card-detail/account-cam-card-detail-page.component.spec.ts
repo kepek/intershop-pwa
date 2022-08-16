@@ -3,12 +3,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { CamfilShoppingFacade } from 'camfil-pwa/facades/camfil-shopping.facade';
 import { MockComponent } from 'ng-mocks';
 import { EMPTY, of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
@@ -27,16 +27,13 @@ describe('Account Cam Card Detail Page Component', () => {
   let fixture: ComponentFixture<AccountCamCardDetailPageComponent>;
   let element: HTMLElement;
   let appFacade: AppFacade;
-  let shoppingFacade: CamfilShoppingFacade;
 
   beforeEach(async () => {
     const camCardsFacade = mock(CamCardsFacade);
     when(camCardsFacade.currentCamCard$).thenReturn(EMPTY);
 
     appFacade = mock(AppFacade);
-    shoppingFacade = mock(CamfilShoppingFacade);
     when(appFacade.headerType$).thenReturn(of(undefined));
-    when(shoppingFacade.productsLoading$).thenReturn(of(false));
 
     await TestBed.configureTestingModule({
       imports: [NgbPopoverModule, RouterTestingModule, TranslateModule.forRoot()],
@@ -54,7 +51,7 @@ describe('Account Cam Card Detail Page Component', () => {
       ],
       providers: [
         { provide: CamCardsFacade, useFactory: () => instance(camCardsFacade) },
-        { provide: CamfilShoppingFacade, useFactory: () => instance(shoppingFacade) },
+        { provide: ShoppingFacade, useFactory: () => instance(mock(ShoppingFacade)) },
         { provide: AppFacade, useFactory: () => instance(appFacade) },
       ],
     }).compileComponents();

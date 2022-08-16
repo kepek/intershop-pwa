@@ -25,17 +25,20 @@
             >
               <div class="d-flex align-items-center">
                 <mat-icon svgIcon="move" class="size-24 handle" cdkDragHandle></mat-icon>
-                <camfil-account-cam-card-detail-line-item
-                  [camCardItem]="item"
-                  [camCard]="camCard"
-                  [selectedItemsForm]="selectedItemsForm"
-                  [index]="i + 1"
-                  [customerPrices]="getCustomerPriceForSku(item.product.sku)"
-                  [isIntervalVisible]="isIntervalVisible$ | async"
-                  (handleUpdate)="productUpdate($event, item)"
-                  (delete)="openDeleteConfirmationDialog(productDeleteDialog, null, 'product', $event)"
-                  mode="edit"
-                ></camfil-account-cam-card-detail-line-item>
+                <ng-container *ngIf="!isNewSku(item.product.sku)">
+                  <camfil-account-cam-card-detail-line-item
+                    [camCardItemData]="item"
+                    [currentCamCard]="camCard"
+                    [selectedItemsForm]="selectedItemsForm"
+                    [index]="i + 1"
+                    [customerPrices]="getCustomerPriceForSku(item.product.sku)"
+                    [isIntervalVisible]="isIntervalVisible$ | async"
+                    (handleLoad)="productUpdate($event, item)"
+                    (handleUpdate)="productUpdate($event, item)"
+                    (delete)="openDeleteConfirmationDialog(productDeleteDialog, null, 'product', $event)"
+                    mode="edit"
+                  ></camfil-account-cam-card-detail-line-item>
+                </ng-container>
               </div>
             </div>
           </ng-container>
@@ -73,11 +76,12 @@
                   <div class="d-flex align-items-center">
                     <mat-icon svgIcon="move" class="size-24 handle" cdkDragHandle></mat-icon>
                     <camfil-account-cam-card-detail-line-item
-                      [camCardItem]="subItem"
-                      [camCard]="sub"
+                      [camCardItemData]="subItem"
+                      [currentCamCard]="sub"
                       [selectedItemsForm]="selectedItemsForm"
                       [index]="i2 + 1"
                       [customerPrices]="getCustomerPriceForSku(subItem.product.sku)"
+                      (handleLoad)="productUpdate($event, subItem)"
                       (handleUpdate)="productUpdate($event, subItem)"
                       (delete)="openDeleteConfirmationDialog(productDeleteDialog, null, 'product', $event)"
                       mode="edit"
@@ -97,7 +101,7 @@
         <div class="text-right cam-card-total" *ngIf="showPrice">
           <div class="pt-4 pb-2 px-4">
             {{ 'camfil.account.cam_card.details.total.text' | translate }}:<strong class="pl-3">{{
-            totalPrice | ishPrice
+              totalPrice | ishPrice
             }}</strong>
           </div>
         </div>
@@ -134,7 +138,7 @@
     rejectText: 'camfil.account.cancel.button.label' | translate,
     icon: 'checkmark'
   }"
->{{ 'camfil.account.cam_card.delete.sub_cam_card.do_you_really.text' | translate }}</camfil-modal-dialog
+  >{{ 'camfil.account.cam_card.delete.sub_cam_card.do_you_really.text' | translate }}</camfil-modal-dialog
 >
 
 <camfil-modal-dialog
@@ -145,7 +149,7 @@
     rejectText: 'camfil.account.cancel.button.label' | translate,
     icon: 'checkmark'
   }"
->{{ 'camfil.account.cam_card.delete.product.do_you_really.text' | translate }}</camfil-modal-dialog
+  >{{ 'camfil.account.cam_card.delete.product.do_you_really.text' | translate }}</camfil-modal-dialog
 >
 
 <camfil-modal-dialog

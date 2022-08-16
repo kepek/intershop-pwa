@@ -24,8 +24,7 @@
               "camelcase-keys",
               "slugify",
               "qs",
-              "xlsx-parse-json",
-              "typescript-memoize"
+              "xlsx-parse-json"
             ],
             "outputPath": "dist/browser",
             "index": "src/index.html",

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CamfilShoppingFacade } from 'camfil-pwa/facades/camfil-shopping.facade';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil, withLatestFrom } from 'rxjs/operators';
 
@@ -23,7 +22,6 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
   camCard$: Observable<CamCard>;
   camCardError$: Observable<HttpError>;
   camCardLoading$: Observable<boolean>;
-  productsLoading$: Observable<boolean>;
   deviceType$: Observable<DeviceType>;
 
   selectedItemsForm: FormArray;
@@ -40,15 +38,13 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
     private camCardsFacade: CamCardsFacade,
     public router: Router,
     private appFacade: AppFacade,
-    private activatedRoute: ActivatedRoute,
-    private shoppingFacade: CamfilShoppingFacade
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.camCard$ = this.camCardsFacade.currentCamCard$;
-    this.camCardError$ = this.camCardsFacade.camCardError$;
     this.camCardLoading$ = this.camCardsFacade.camCardLoading$;
-    this.productsLoading$ = this.shoppingFacade.productsLoading$;
+    this.camCardError$ = this.camCardsFacade.camCardError$;
     this.deviceType$ = this.appFacade.deviceType$;
     this.initForm();
 

@@ -22,7 +22,7 @@ export class CamCardDeliveryIntervalComponent implements OnInit {
   @Input() intervaltype = 'subCamCard';
   @Input() camCard: CamCard;
   @Input() mainDeliveryInterval?: number;
-  @Input() camCardItem?: CamCardItem;
+  @Input() camCardItemData?: CamCardItem;
   deliveryIntervalFilteredOptions$: Observable<string[]>;
   deliveryIntervalForm: FormGroup;
   deliveryIntervalOptions: string[] = [
@@ -70,8 +70,8 @@ export class CamCardDeliveryIntervalComponent implements OnInit {
         deliveryInterval: interalValue,
         nextDelivery: nextDeliveryDate ? new Date(nextDeliveryDate) : '',
       });
-    } else if (this.intervaltype === 'articleRow' && this.camCardItem) {
-      const { lastDeliveryDate, deliveryInterval } = this.camCardItem;
+    } else if (this.intervaltype === 'articleRow' && this.camCardItemData) {
+      const { lastDeliveryDate, deliveryInterval } = this.camCardItemData;
 
       const interalValue = deliveryInterval
         ? deliveryInterval
@@ -139,7 +139,7 @@ export class CamCardDeliveryIntervalComponent implements OnInit {
       });
     } else {
       const newItem = {
-        ...this.camCardItem,
+        ...this.camCardItemData,
         deliveryInterval: isNaN(this.deliveryIntervalForm.get('deliveryInterval').value)
           ? undefined
           : this.deliveryIntervalForm.get('deliveryInterval').value,

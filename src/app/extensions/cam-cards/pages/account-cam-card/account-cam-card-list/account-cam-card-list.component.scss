@@ -140,10 +140,10 @@
       }
     }
     &-row-details {
-      height: 0;
+      height: auto;
+
       &__detail {
         overflow: hidden;
-        height: 0;
       }
     }
     &-name {
