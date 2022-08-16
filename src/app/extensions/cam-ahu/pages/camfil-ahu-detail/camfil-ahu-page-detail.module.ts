@@ -10,7 +10,7 @@ import { CamfilAhuCartComponent } from './camfil-ahu-cart/camfil-ahu-cart.compon
 import { CamfilAHUPageDetailComponent } from './camfil-ahu-page-detail.component';
 import { CamfilAhuSlotsComponent } from './camfil-ahu-slots/camfil-ahu-slots.component';
 
-const camfilAHUPageRoutes: Routes = [{ path: '', pathMatch: 'full', component: CamfilAHUPageDetailComponent }];
+const camfilAHUPageRoutes: Routes = [{ path: '', component: CamfilAHUPageDetailComponent }];
 
 @NgModule({
   imports: [CamAhuModule, CamCardsModule, RouterModule.forChild(camfilAHUPageRoutes), SharedModule],

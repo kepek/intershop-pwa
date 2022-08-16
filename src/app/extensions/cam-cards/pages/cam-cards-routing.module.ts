@@ -7,7 +7,6 @@ import { FeatureToggleGuard } from 'ish-core/guards/feature-toggle.guard';
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     loadChildren: () => import('./account-cam-card/account-cam-card-page.module').then(m => m.AccountCamCardPageModule),
     canActivate: [FeatureToggleGuard, AuthGuard],
     data: { feature: 'camCards', breadcrumbData: [{ key: 'camfil.account.cam_card.link' }] },

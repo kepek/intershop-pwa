@@ -22,7 +22,7 @@ import {
   updateCamCardSuccess,
 } from './cam-card.actions';
 import {
-  getAllCamCards,
+  getCamCards,
   getCamCardDetails,
   getCamCardError,
   getCamCardLoading,
@@ -94,7 +94,7 @@ describe('Cam Card Selectors', () => {
       });
 
       it('should add cam cards to state', () => {
-        expect(getAllCamCards(store$.state)).toEqual(camCards);
+        expect(getCamCards(store$.state)).toEqual(camCards);
       });
     });
 
@@ -149,7 +149,7 @@ describe('Cam Card Selectors', () => {
       });
 
       it('should add new cam cards to state', () => {
-        expect(getAllCamCards(store$.state)).toContainEqual(camCards[0]);
+        expect(getCamCards(store$.state)).toContainEqual(camCards[0]);
       });
     });
 
@@ -204,7 +204,7 @@ describe('Cam Card Selectors', () => {
         store$.dispatch(loadCamCardSuccessAction);
         store$.dispatch(deleteCamCardSuccessAction);
 
-        expect(getAllCamCards(store$.state)).not.toContain(camCards[0]);
+        expect(getCamCards(store$.state)).not.toContain(camCards[0]);
       });
     });
 
@@ -263,7 +263,7 @@ describe('Cam Card Selectors', () => {
         store$.dispatch(loadCamCardSuccess);
         store$.dispatch(updateCamCardSuccessAction);
 
-        expect(getAllCamCards(store$.state)).toContainEqual(updated);
+        expect(getCamCards(store$.state)).toContainEqual(updated);
       });
     });
 

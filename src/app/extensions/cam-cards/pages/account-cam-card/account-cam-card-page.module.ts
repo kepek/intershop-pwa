@@ -14,7 +14,6 @@ import { CamfilCamCardsSearchComponent } from './camfil-cam-cards-search/camfil-
 const accountCamCardPageRoutes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     component: AccountCamCardPageComponent,
   },
 ];

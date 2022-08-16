@@ -10,7 +10,7 @@ import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
 import { DemoPageComponent } from './demo-page.component';
 
-const demoPageRoutes: Routes = [{ path: '', pathMatch: 'full', component: DemoPageComponent }];
+const demoPageRoutes: Routes = [{ path: '', component: DemoPageComponent }];
 
 @NgModule({
   imports: [CamAhuModule, MatDialogModule, RouterModule.forChild(demoPageRoutes), SharedModule],

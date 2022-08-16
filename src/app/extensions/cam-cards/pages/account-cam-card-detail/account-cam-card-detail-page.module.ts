@@ -14,7 +14,6 @@ import { ModalAddNewSectionComponent } from './modal-add-new-section/modal-add-n
 const accountCamCardDetailPageRoutes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     component: AccountCamCardDetailPageComponent,
   },
 ];

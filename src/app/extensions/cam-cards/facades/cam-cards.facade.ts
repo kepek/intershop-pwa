@@ -35,7 +35,7 @@ import {
   deleteSubCamCard,
   detectCamCardToolbar,
   getAddProductSuccess,
-  getAllCamCards,
+  getCamCards,
   getCamCardAdding,
   getCamCardCustomers,
   getCamCardDetails,
@@ -69,14 +69,16 @@ import {
   updateCamCardContacts,
   updateCamCardProduct,
   updateSubCamCard,
-  validateCamCardImport,
+  validateCamCardImport, getRootCamCards, getAllCamCards,
 } from '../store/cam-card';
 
 @Injectable({ providedIn: 'root' })
 export class CamCardsFacade {
   constructor(private store: Store) {}
 
-  camCard$: Observable<CamCard[]> = this.store.pipe(select(getAllCamCards));
+  allCamCards$: Observable<CamCard[]> = this.store.pipe(select(getAllCamCards));
+  camCards$: Observable<CamCard[]> = this.store.pipe(select(getCamCards));
+  rootCamCards$: Observable<CamCard[]> = this.store.pipe(select(getRootCamCards));
   currentCamCard$: Observable<CamCard> = this.store.pipe(select(getSelectedCamCardDetails));
   camCardLoading$: Observable<boolean> = this.store.pipe(select(getCamCardLoading));
   camCardAdding$: Observable<boolean> = this.store.pipe(select(getCamCardAdding));

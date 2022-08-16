@@ -64,7 +64,7 @@ describe('Product Add To Cam Card Component', () => {
     fixture = TestBed.createComponent(ProductAddToCamCardComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
-    when(camCardFacadeMock.camCard$).thenReturn(of(camCardDetails));
+    when(camCardFacadeMock.camCards$).thenReturn(of(camCardDetails));
     when(camCardFacadeMock.camCardsLoading$).thenReturn(of(false));
     when(accountFacadeMock.isLoggedIn$).thenReturn(of(false));
     component.product = { name: 'Test Product', sku: 'test sku' } as Product;

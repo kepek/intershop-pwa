@@ -10,7 +10,7 @@ import { CamRequisitionManagementModule } from '../../cam-requisition-management
 import { RequisitionDetailPageComponent } from './requisition-detail-page.component';
 
 const requisitionDetailPageRoutes: Routes = [
-  { path: '', pathMatch: 'full', component: RequisitionDetailPageComponent },
+  { path: '', component: RequisitionDetailPageComponent },
 ];
 
 @NgModule({

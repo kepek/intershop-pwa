@@ -12,7 +12,6 @@ import { CamfilUpdatePasswordComponent } from './camfil-update-password/camfil-u
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     component: CamfilRemindPasswordComponent,
   },
   {

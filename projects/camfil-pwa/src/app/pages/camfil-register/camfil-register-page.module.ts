@@ -7,7 +7,7 @@ import { CamfilApplyFormComponent } from './camfil-apply-form/camfil-apply-form.
 import { CamfilInfoSectionComponent } from './camfil-info-section/camfil-info-section.component';
 import { CamfilRegisterPageComponent } from './camfil-register-page.component';
 
-const routes: Routes = [{ path: '', pathMatch: 'full', component: CamfilRegisterPageComponent }];
+const routes: Routes = [{ path: '', component: CamfilRegisterPageComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes), SharedModule],

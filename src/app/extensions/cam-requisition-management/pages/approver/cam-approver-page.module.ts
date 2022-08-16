@@ -8,7 +8,7 @@ import { SharedModule } from 'ish-shared/shared.module';
 import { CamRequisitionManagementModule } from '../../cam-requisition-management.module';
 import { ApproverPageComponent } from './approver-page.component';
 
-const approverPageRoutes: Routes = [{ path: '', pathMatch: 'full', component: ApproverPageComponent }];
+const approverPageRoutes: Routes = [{ path: '', component: ApproverPageComponent }];
 
 @NgModule({
   imports: [CamRequisitionManagementModule, NgbNavModule, RouterModule.forChild(approverPageRoutes), SharedModule],

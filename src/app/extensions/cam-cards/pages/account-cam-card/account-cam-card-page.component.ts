@@ -39,7 +39,7 @@ export class AccountCamCardPageComponent implements OnInit {
   constructor(private camCardsFacade: CamCardsFacade, private appFacade: AppFacade) {}
 
   ngOnInit() {
-    this.camCard$ = this.camCardsFacade.camCard$;
+    this.camCard$ = this.camCardsFacade.camCards$;
     this.camCardLoading$ = this.camCardsFacade.camCardsLoading$;
     this.camCardError$ = this.camCardsFacade.camCardError$;
     this.deviceType$ = this.appFacade.deviceType$;

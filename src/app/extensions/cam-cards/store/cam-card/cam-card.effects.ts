@@ -129,7 +129,7 @@ import {
   validateCamCardImportSuccess,
 } from './cam-card.actions';
 import {
-  getAllCamCards,
+  getCamCards,
   getCamCardCustomers,
   getCamCardDetails,
   getCamCardEntities,
@@ -155,7 +155,7 @@ export class CamCardEffects {
       ofType(routerNavigatedAction),
       mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
       filter((routerState: RouterState) => /^\/(account\/camcards)/.test(routerState.url)),
-      withLatestFrom(this.store.pipe(select(getAllCamCards)), this.store.pipe(select(getCamCardCustomers))),
+      withLatestFrom(this.store.pipe(select(getCamCards)), this.store.pipe(select(getCamCardCustomers))),
       mergeMap(([, cc, customers]) =>
         cc.length && customers.length ? EMPTY : [loadCustomers(), loadCamCards({ includeAllCustomerCamCards: false })]
       )
@@ -178,21 +178,16 @@ export class CamCardEffects {
     this.actions$.pipe(
       ofType(loadCamCards),
       mapToPayloadProperty('includeAllCustomerCamCards'),
-      windowRxOperator(this.actions$.pipe(ofType(loadCamCards), debounceTime(500))),
+      withLatestFrom(this.store.pipe(select(getUserAuthorized))),
+      filter(([, authorized]) => authorized),
+      windowRxOperator(this.actions$.pipe(ofType(loadCamCards), debounceTime(1000))),
       mergeMap(window$ =>
         window$.pipe(
-          withLatestFrom(this.store.pipe(select(getUserAuthorized))),
-          mergeMap(([includeAllCustomerCamCards, authorized]) =>
-            authorized
-              ? this.camCardService.getCamCards(includeAllCustomerCamCards).pipe(
-                  map(items => {
-                    // TODO: to improve - move filter to selectors like getRootCamCards
-                    const camCards = items.filter(item => !item.rootCamCard);
-                    return loadCamCardsSuccess({ camCards });
-                  }),
-                  mapErrorToAction(loadCamCardsFail)
-                )
-              : [loadCamCardsSuccess({ camCards: [] })]
+          concatMap(([includeAllCustomerCamCards]) =>
+            this.camCardService.getCamCards(includeAllCustomerCamCards).pipe(
+              map(camCards => loadCamCardsSuccess({ camCards })),
+              mapErrorToAction(loadCamCardsFail)
+            )
           )
         )
       )

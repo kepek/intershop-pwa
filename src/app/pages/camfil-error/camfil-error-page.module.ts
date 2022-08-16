@@ -8,7 +8,7 @@ import { CamfilErrorComponent } from './camfil-error/camfil-error.component';
 import { CamfilServerErrorComponent } from './camfil-server-error/camfil-server-error.component';
 
 const camfilErrorPageRoutes: Routes = [
-  { path: '', pathMatch: 'full', component: CamfilErrorPageComponent, data: { wrapperClass: 'errorpage' } },
+  { path: '', component: CamfilErrorPageComponent, data: { wrapperClass: 'errorpage' } },
 ];
 
 @NgModule({

@@ -85,7 +85,7 @@ describe('Add Product To Cam Card Modal Component', () => {
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     when(camCardFacadeMock.currentCamCard$).thenReturn(of(camCardDetails));
-    when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
+    when(camCardFacadeMock.camCards$).thenReturn(of([camCardDetails]));
     when(camCardFacadeMock.customers$).thenReturn(of([]));
 
     component.product = { name: 'Test Product', sku: 'test sku', minOrderQuantity: 1 } as Product;

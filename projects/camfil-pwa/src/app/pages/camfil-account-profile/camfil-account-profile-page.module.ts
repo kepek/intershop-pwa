@@ -11,7 +11,7 @@ import { CamfilAccountPasswordFormComponent } from './camfil-account-password-fo
 import { CamfilAccountProfilePageComponent } from './camfil-account-profile-page.component';
 import { CamfilAccountProfileComponent } from './camfil-account-profile/camfil-account-profile.component';
 
-const routes: Routes = [{ path: '', pathMatch: 'full', component: CamfilAccountProfilePageComponent }];
+const routes: Routes = [{ path: '', component: CamfilAccountProfilePageComponent }];
 
 @NgModule({
   imports: [ReactiveFormsModule, RouterModule.forChild(routes), SharedModule, TranslateModule],

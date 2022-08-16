@@ -9,7 +9,6 @@ import { CamfilAccountOrderHistoryPageComponent } from './camfil-account-order-h
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     data: {
       breadcrumbData: [{ key: 'account.order_history.link', link: '/account/orders' }],
     },

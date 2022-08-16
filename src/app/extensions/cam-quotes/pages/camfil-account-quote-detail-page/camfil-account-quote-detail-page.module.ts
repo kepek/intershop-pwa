@@ -13,7 +13,6 @@ import { QuoteLineItemComponent } from './components/quote-line-item/quote-line-
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     component: CamfilAccountQuoteDetailPageComponent,
   },
 ];

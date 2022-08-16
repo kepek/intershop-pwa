@@ -12,7 +12,6 @@ import { CamfilLoginPageComponent } from './camfil-login-page.component';
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     component: CamfilLoginPageComponent,
     data: {
       meta: {

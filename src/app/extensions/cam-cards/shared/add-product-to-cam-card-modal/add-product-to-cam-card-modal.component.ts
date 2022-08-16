@@ -158,7 +158,7 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
   }
 
   private determineSelectOptions() {
-    this.camCardsFacade.camCard$.pipe(takeUntil(this.destroy$)).subscribe(camCards => {
+    this.camCardsFacade.camCards$.pipe(takeUntil(this.destroy$)).subscribe(camCards => {
       if (camCards && camCards.length > 0) {
         const realCamCards = CamCardHelper.getRealCamCards(camCards);
         this.camCards = realCamCards;

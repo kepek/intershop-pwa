@@ -121,7 +121,7 @@ describe('Camfil Product Add To Basket Modal Component', () => {
     component.product = { name: 'Test Product', sku: 'test sku', minOrderQuantity: 1 } as Product;
     component.quantity = 1;
 
-    when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
+    when(camCardFacadeMock.camCards$).thenReturn(of([camCardDetails]));
     when(camCardFacadeMock.virtualCamCard$).thenReturn(of(camCardDetails));
     when(checkoutFacadeMock.buckets$).thenReturn(of([]));
     when(checkoutFacadeMock.basket$).thenReturn(of(basketDetails));
