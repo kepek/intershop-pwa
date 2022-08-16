@@ -132,7 +132,6 @@
     "tslib": "^2.0.3",
     "typeface-roboto": "1.1.13",
     "typeface-roboto-condensed": "1.1.13",
-    "typescript-memoize": "^1.1.0",
     "url-polyfill": "^1.1.12",
     "xlsx-parse-json": "^3.1.1",
     "zone.js": "~0.10.2"

@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
 import { ActionReducerMap, StoreModule } from '@ngrx/store';
 import { CamfilConfigurationEffects } from 'camfil-pwa/store/camfil-configuration/camfil-configuration.effects';
-import { CamfilProductsEffects } from 'camfil-pwa/store/camfil-shopping/camfil-products/camfil-products.effects';
-import { camfilProductsReducer } from 'camfil-pwa/store/camfil-shopping/camfil-products/camfil-products.reducer';
 import { pick } from 'lodash-es';
 
 import { resetOnLogoutMeta } from 'ish-core/utils/meta-reducers';
@@ -22,16 +20,9 @@ const camfilPwaReducers: ActionReducerMap<CamfilPwaState> = {
   camfilOrders: camfilOrdersReducer,
   camfilConfiguration: camfilConfigurationReducer,
   camfilIcc: camfilIccReducer,
-  camfilProducts: camfilProductsReducer,
 };
 
-const camfilPwaEffects = [
-  CamfilUserEffects,
-  CamfilOrdersEffects,
-  CamfilConfigurationEffects,
-  CamfilIccEffects,
-  CamfilProductsEffects,
-];
+const camfilPwaEffects = [CamfilUserEffects, CamfilOrdersEffects, CamfilConfigurationEffects, CamfilIccEffects];
 
 const metaReducers = [resetOnLogoutMeta];
 

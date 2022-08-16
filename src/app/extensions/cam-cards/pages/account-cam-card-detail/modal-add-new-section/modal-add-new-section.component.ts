@@ -49,11 +49,11 @@ export class ModalAddNewSectionComponent implements OnInit, OnDestroy {
       newCamCard: ['', [Validators.required, Validators.maxLength(30)]],
     });
 
-    this.camCardsFacade.currentCamCard$.pipe(takeUntil(this.destroy$)).subscribe(camCard => {
-      if (camCard) {
-        this.rootCamCardId = camCard.id;
-        this.rootCamCardAddress = camCard.deliveryAddress;
-        this.rootCamCardCustomer = camCard.customer;
+    this.camCardsFacade.currentCamCard$.pipe(takeUntil(this.destroy$)).subscribe(currentCamCard => {
+      if (currentCamCard) {
+        this.rootCamCardId = currentCamCard.id;
+        this.rootCamCardAddress = currentCamCard.deliveryAddress;
+        this.rootCamCardCustomer = currentCamCard.customer;
       }
     });
   }

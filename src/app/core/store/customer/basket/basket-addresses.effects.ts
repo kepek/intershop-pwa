@@ -26,7 +26,6 @@ import {
   loadBasketAddresses,
   loadBasketAddressesFail,
   loadBasketAddressesSuccess,
-  reloadBasket,
   resetBasketErrors,
   updateBasket,
   updateBasketAddress,
@@ -140,7 +139,7 @@ export class BasketAddressesEffects {
           return this.addressService
             .updateCustomerAddress('-', address)
             .pipe(
-              concatMapTo([updateCustomerAddressSuccess({ address }), reloadBasket(), resetBasketErrors()]),
+              concatMapTo([updateCustomerAddressSuccess({ address }), loadBasket(), resetBasketErrors()]),
               mapErrorToAction(updateCustomerAddressFail)
             );
           // create address at basket for anonymous user
@@ -150,7 +149,7 @@ export class BasketAddressesEffects {
             .pipe(
               concatMapTo([
                 updateCustomerAddressSuccess({ address }),
-                reloadBasket(),
+                loadBasket(),
                 resetBasketErrors(),
                 loadBasketAddresses(),
               ]),

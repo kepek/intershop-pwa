@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { OrderService } from 'camfil-pwa/services/ish-order/order.service';
+import { OrderService } from 'camfil-pwa/services/order/order.service';
 import { isEqual } from 'lodash-es';
 import { EMPTY, from, iif, race } from 'rxjs';
 import {

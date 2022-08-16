@@ -60,7 +60,7 @@ export function matchProductRoute(segments: UrlSegment[]): UrlMatchResult {
 }
 
 export function generateProductUrl(product: ProductView, category?: CategoryView): string {
-  const contextCategory = category || (product && product?.defaultCategory && product.defaultCategory());
+  const contextCategory = category || (product && product.defaultCategory());
 
   if (!(product && product.sku)) {
     return '/';

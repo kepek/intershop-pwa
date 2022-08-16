@@ -28,6 +28,9 @@ export const camQuoteDetailReducer = createReducer(
     const { quoteDetails } = action.payload;
     return { ...state, quoteDetails, loading: false };
   }),
-  on(approveQuote, rejectQuote, (state: CamQuoteDetailState) => ({ ...state, loading: true })),
+  on(approveQuote, rejectQuote, (state: CamQuoteDetailState) => {
+    console.log('reducer!');
+    return { ...state, loading: true };
+  }),
   on(approveQuoteError, rejectQuoteError, (state: CamQuoteDetailState) => ({ ...state, loading: false }))
 );

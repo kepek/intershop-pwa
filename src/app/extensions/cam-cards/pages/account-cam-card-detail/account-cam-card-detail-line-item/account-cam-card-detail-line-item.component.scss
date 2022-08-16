@@ -33,8 +33,6 @@
 
   .image {
     margin: 0 $space-box;
-    width: 40px;
-    height: 40px;
   }
   ::ng-deep camfil-product-price > camfil-product-attribute,
   .attributes > camfil-product-attribute {
@@ -106,8 +104,8 @@
       max-width: 400px;
     }
     .product-image {
-      width: 40px;
-      height: 40px;
+      max-width: 40px;
+      max-height: 40px;
     }
     .form-group {
       margin-bottom: 0;

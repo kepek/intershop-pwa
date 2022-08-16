@@ -16,7 +16,7 @@ import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
 export class CamCardLastDeliveryDateComponent implements OnInit {
   @Input() lastDeliveryDateType = 'subCamCard';
   @Input() camCard: CamCard;
-  @Input() camCardItem: CamCardItem;
+  @Input() camCardItemData: CamCardItem;
   @Input() mainCCLastDeliveryDate?: string;
   lastDeliveryDate: string;
   isLastDeliveryDateVisible$: Observable<boolean>;
@@ -32,8 +32,8 @@ export class CamCardLastDeliveryDateComponent implements OnInit {
         ? this.mainCCLastDeliveryDate
         : '';
     } else {
-      lastDeliveryDate = this.camCardItem.lastDeliveryDate
-        ? this.camCardItem.lastDeliveryDate
+      lastDeliveryDate = this.camCardItemData.lastDeliveryDate
+        ? this.camCardItemData.lastDeliveryDate
         : this.camCard.lastDeliveryDate
         ? this.camCard.lastDeliveryDate
         : '';

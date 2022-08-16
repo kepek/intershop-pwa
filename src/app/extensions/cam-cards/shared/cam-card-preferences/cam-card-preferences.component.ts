@@ -20,6 +20,7 @@ import { Observable, Subject } from 'rxjs';
 import { map, startWith, take, takeUntil } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { Country } from 'ish-core/models/country/country.model';
 import { ProductHelper } from 'ish-core/models/product/product.helper';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
@@ -65,6 +66,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
   pickerNext;
   customers$: Observable<CamCardCustomer[]>;
   addresses$: Observable<CamCardCustomersAddresses>;
+  countries$: Observable<Country[]>;
   customers: CamCardCustomer[];
   defaultCountryCode: string;
   deliveryIntervalOptions: string[] = [...Array(CamCardPreferencesComponent.deliveryIntervalOptions).keys()].map(i =>
@@ -161,6 +163,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
 
   ngOnInit() {
     this.initForm();
+    this.countries$ = this.appFacade.countries$();
     this.customers$ = this.camCardsFacade.customers$;
     this.addresses$ = this.camCardsFacade.addresses$;
 

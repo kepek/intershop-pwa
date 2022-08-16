@@ -11,7 +11,7 @@ import {
   selector: 'camfil-my-page-header',
   templateUrl: './camfil-my-page-header.component.html',
   styleUrls: ['./camfil-my-page-header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class CamfilMyPageHeaderComponent implements AfterViewInit {
   constructor(private cd: ChangeDetectorRef) {}

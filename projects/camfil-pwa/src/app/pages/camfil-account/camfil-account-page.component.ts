@@ -8,7 +8,7 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 @Component({
   selector: 'camfil-account-page',
   templateUrl: './camfil-account-page.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class CamfilAccountPageComponent implements OnInit {
   deviceType$: Observable<DeviceType>;

@@ -55,6 +55,8 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
         map(availabilities => availabilities.every(({ availability }) => !!availability))
       )
       .subscribe(canReOrder => {
+        console.log({ canReOrder });
+
         if (canReOrder) {
           // API call /camfilorder/orderId Place reorder and redirect to checkout page
           this.camfilAccountFacade.cloneCamfilOrder(this.order.id);

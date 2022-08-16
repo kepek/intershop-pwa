@@ -87,7 +87,7 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
   camCards: CamCard[];
 
   currentCamCard$: Observable<CamCard>;
-  camCard: CamCard;
+  currentCamCard: CamCard;
 
   currentSubCamCardName: string;
   useSubCamCard = false;
@@ -124,9 +124,9 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
     this.determineSelectOptions();
 
     this.currentCamCard$ = this.camCardsFacade.currentCamCard$;
-    this.currentCamCard$.pipe(takeUntil(this.destroy$)).subscribe(camCard => {
-      this.camCard = camCard;
-      if (this.shouldClearNewSegment && !camCard) {
+    this.currentCamCard$.pipe(takeUntil(this.destroy$)).subscribe(currentCamCard => {
+      this.currentCamCard = currentCamCard;
+      if (this.shouldClearNewSegment && !currentCamCard) {
         this.shouldClearNewSegment = false;
         this.resetNewSegmentForm();
       }
@@ -249,8 +249,8 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
   getSelectedCamCard = camCardId => this.camCardOptions.find(camCard => camCard.value === camCardId);
 
   getSelectedCamCardItem(camCardId) {
-    const camCard = this.getSelectedCamCard(camCardId);
-    return camCard ? camCard.camCardItems : [];
+    const currentCamCard = this.getSelectedCamCard(camCardId);
+    return currentCamCard ? currentCamCard.camCardItems : [];
   }
 
   isAddedToExistingSubCamCard = () => this.segmentSelected && this.segmentSelected !== this.newSegmentValue;
@@ -389,7 +389,7 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
   }
 
   goToCamcard() {
-    const rootCamCardId = this.camCard.rootCamCard || this.camCard.id;
+    const rootCamCardId = this.currentCamCard.rootCamCard || this.currentCamCard.id;
 
     this.router.navigate([`/account/camcards/${rootCamCardId}`]);
     this.hide();

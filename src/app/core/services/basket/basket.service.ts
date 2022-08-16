@@ -1,7 +1,7 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { OrderService } from 'camfil-pwa/services/ish-order/order.service';
-import { EMPTY, Observable, of, throwError } from 'rxjs';
+import { OrderService } from 'camfil-pwa/services/order/order.service';
+import { EMPTY, Observable, forkJoin, of, throwError } from 'rxjs';
 import { catchError, concatMap, map, switchMap, take } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -92,8 +92,6 @@ export class BasketService {
     Accept: 'application/vnd.intershop.basket.v1+json',
   });
 
-  private reloadBasketIncludes: BasketIncludeType[] = ['lineItems', 'camfilProductLineItems'];
-
   private allBasketIncludes: BasketIncludeType[] = [
     'invoiceToAddress',
     'commonShipToAddress',
@@ -132,21 +130,6 @@ export class BasketService {
     'basket_payments_paymentMethod',
     'basket_payments_paymentInstrument',
   ];
-
-  /**
-   * Get the basket for the current user.
-   * @returns         The basket.
-   */
-  reloadBasket(): Observable<Basket> {
-    const params = new HttpParams().set('include', this.reloadBasketIncludes.join());
-
-    return this.apiService
-      .get<BasketData>(`baskets/current`, {
-        headers: this.basketHeaders,
-        params,
-      })
-      .pipe(map(BasketMapper.fromData));
-  }
 
   /**
    * Get the basket for the current user.
@@ -482,18 +465,18 @@ export class BasketService {
     });
   }
 
-  getBuckets(basket: Basket): Observable<Bucket[]> {
+  getBuckets(): Observable<Bucket[]> {
     const params = new HttpParams().set('include', 'all');
 
-    return this.apiService
-      .get<BucketData>(`baskets/current/buckets`, {
+    return forkJoin([
+      this.getBasket(),
+      this.apiService.get<BucketData>(`baskets/current/buckets`, {
         headers: this.basketHeaders,
         params,
-      })
-      .pipe(map(buckets => BucketMapper.fromListData(buckets, basket)));
+      }),
+    ]).pipe(map(([basket, buckets]) => BucketMapper.fromListData(buckets, basket)));
   }
 
-  // tslint:disable-next-line:force-jsdoc-comments
   // CAMFIL
   /**
    * Move product to another bucket and update position.

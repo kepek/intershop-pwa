@@ -22,6 +22,7 @@ import {
   continueCheckoutWithIssues,
   loadBasketEligiblePaymentMethods,
   loadBasketEligibleShippingMethods,
+  loadBuckets,
   startCheckout,
   startCheckoutFail,
   startCheckoutSuccess,
@@ -61,6 +62,9 @@ export class BasketValidationEffects {
         )
       )
     )
+  );
+  continueCheckoutSuccess$ = createEffect(() =>
+    this.actions$.pipe(ofType(continueCheckoutSuccess), mapToPayload(), map(loadBuckets))
   );
   /**
    * Jumps to the next checkout step after basket validation. In case of adjustments related data like product data, eligible shipping methods etc. are loaded.
