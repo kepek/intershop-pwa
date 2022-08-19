@@ -1,18 +1,18 @@
 <ul class="user-links">
   <!-- dropdown links tablet/desktop -->
-  <li class="dropdown" [matMenuTriggerFor]="menu" *ngIf="deviceType !== 'mobile'">
+  <li class="dropdown" [matMenuTriggerFor]="menu" [hidden]="deviceType === 'mobile'">
     <a>{{ 'camfil.header.dropdown.title' | translate }}</a>
     <mat-menu #menu="matMenu">
-      <ng-container *ngTemplateOutlet="dropdownLinks"></ng-container>
+      <ish-content-include includeId="camfil.include.header.dropdownLinks.pagelet2-Include"></ish-content-include>
     </mat-menu>
   </li>
 
   <!-- dropdown links mobile -->
-  <li *ngIf="deviceType === 'mobile'">
-    <ng-container *ngTemplateOutlet="dropdownLinks"></ng-container>
+  <li [hidden]="deviceType !== 'mobile'">
+    <ish-content-include includeId="camfil.include.header.dropdownLinks.pagelet2-Include"></ish-content-include>
   </li>
 
-  <li class="link-languages" *ngIf="deviceType === 'mobile'">
+  <li class="link-languages" [hidden]="deviceType !== 'mobile'">
     <camfil-language-switch
       (isClosedLangList)="toggleLang($event)"
       view="{{ deviceType === 'mobile' ? 'onMobile' : 'onMobile' }}"
@@ -27,7 +27,3 @@
     </li>
   </ng-container>
 </ul>
-
-<ng-template #dropdownLinks>
-  <ish-content-include includeId="camfil.include.header.dropdownLinks.pagelet2-Include"></ish-content-include>
-</ng-template>

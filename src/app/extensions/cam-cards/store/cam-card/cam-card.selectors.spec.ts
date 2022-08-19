@@ -22,10 +22,10 @@ import {
   updateCamCardSuccess,
 } from './cam-card.actions';
 import {
-  getCamCards,
   getCamCardDetails,
   getCamCardError,
   getCamCardLoading,
+  getCamCards,
   getSelectedCamCardDetails,
   getSelectedCamCardId,
 } from './cam-card.selectors';

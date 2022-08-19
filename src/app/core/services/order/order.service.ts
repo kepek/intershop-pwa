@@ -56,7 +56,7 @@ export class OrderService {
     const params = new HttpParams().set('include', this.allOrderIncludes.join());
 
     if (!basketId) {
-      return throwError(() => new Error('createOrder() called without basketId'));
+      return throwError('createOrder() called without basketId');
     }
 
     return this.apiService

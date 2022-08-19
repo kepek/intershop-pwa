@@ -4,18 +4,17 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { EMPTY, from } from 'rxjs';
+import { from } from 'rxjs';
 import {
-  catchError,
   concatMap,
   concatMapTo,
+  delay,
   exhaustMap,
   filter,
   map,
   mapTo,
   mergeMap,
   sample,
-  switchMap,
   takeWhile,
   tap,
   withLatestFrom,
@@ -23,10 +22,10 @@ import {
 
 import { CustomerRegistrationType } from 'ish-core/models/customer/customer.model';
 import { PaymentService } from 'ish-core/services/payment/payment.service';
-import { PersonalizationService } from 'ish-core/services/personalization/personalization.service';
 import { UserService } from 'ish-core/services/user/user.service';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
 import { selectQueryParam, selectUrl } from 'ish-core/store/core/router';
+import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import {
@@ -46,11 +45,10 @@ import {
   loginUserFail,
   loginUserSuccess,
   loginUserWithToken,
-  logoutUser,
+  personalizationStatusDetermined,
   requestPasswordReminder,
   requestPasswordReminderFail,
   requestPasswordReminderSuccess,
-  setPGID,
   updateCustomer,
   updateCustomerFail,
   updateCustomerSuccess,
@@ -65,7 +63,7 @@ import {
   updateUserSuccess,
   userErrorReset,
 } from './user.actions';
-import { getLoggedInCustomer, getLoggedInUser, getUserError } from './user.selectors';
+import { getLoggedInCustomer, getLoggedInUser, getPGID, getUserError } from './user.selectors';
 
 @Injectable()
 export class UserEffects {
@@ -74,8 +72,8 @@ export class UserEffects {
     private store$: Store,
     private userService: UserService,
     private paymentService: PaymentService,
-    private personalizationService: PersonalizationService,
     private router: Router,
+    private apiTokenService: ApiTokenService,
     @Inject(PLATFORM_ID) private platformId: string
   ) {}
 
@@ -84,7 +82,7 @@ export class UserEffects {
       ofType(loginUser),
       mapToPayloadProperty('credentials'),
       exhaustMap(credentials =>
-        this.userService.signinUser(credentials).pipe(map(loginUserSuccess), mapErrorToAction(loginUserFail))
+        this.userService.signInUser(credentials).pipe(map(loginUserSuccess), mapErrorToAction(loginUserFail))
       )
     )
   );
@@ -94,7 +92,7 @@ export class UserEffects {
       ofType(loginUserWithToken),
       mapToPayloadProperty('token'),
       exhaustMap(token =>
-        this.userService.signinUserByToken(token).pipe(map(loginUserSuccess), mapErrorToAction(loginUserFail))
+        this.userService.signInUserByToken(token).pipe(map(loginUserSuccess), mapErrorToAction(loginUserFail))
       )
     )
   );
@@ -244,24 +242,21 @@ export class UserEffects {
   loadUserByAPIToken$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadUserByAPIToken),
-      concatMap(() => this.userService.signinUserByToken().pipe(map(loginUserSuccess)))
+      concatMap(() => this.userService.signInUserByToken().pipe(map(loginUserSuccess)))
     )
   );
 
-  fetchPGID$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loginUserSuccess),
-      switchMap(() =>
-        this.personalizationService.getPGID().pipe(
-          map(pgid => setPGID({ pgid })),
-          catchError(() => EMPTY)
-        )
-      )
+  /**
+   * This effect emits the 'personalizationStatusDetermined' action once the PGID is fetched or there is no user apiToken cookie,
+   */
+  determinePersonalizationStatus$ = createEffect(() =>
+    this.store$.pipe(
+      select(getPGID),
+      map(pgid => !this.apiTokenService.hasUserApiTokenCookie() || pgid),
+      whenTruthy(),
+      delay(100),
+      map(personalizationStatusDetermined)
     )
-  );
-
-  unsetPGIDWhenLogoutUser$ = createEffect(() =>
-    this.actions$.pipe(ofType(logoutUser), mapTo(setPGID({ pgid: undefined })))
   );
 
   loadUserPaymentMethods$ = createEffect(() =>

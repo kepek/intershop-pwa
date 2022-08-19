@@ -36,7 +36,7 @@ const getCategoryIds = createSelector(getCategoryTree, tree => Object.keys(tree.
 const getProductIds = createSelector(getProductEntities, entities => Object.keys(entities));
 
 describe('Shopping Store', () => {
-  let store: StoreWithSnapshots;
+  let store$: StoreWithSnapshots;
   let router: Router;
   let categoriesServiceMock: CategoriesService;
   let productsServiceMock: ProductsService;
@@ -186,13 +186,13 @@ describe('Shopping Store', () => {
       ],
     });
 
-    store = TestBed.inject(StoreWithSnapshots);
+    store$ = TestBed.inject(StoreWithSnapshots);
     router = TestBed.inject(Router);
-    store.reset();
+    store$.reset();
   });
 
   it('should be created', () => {
-    expect(store).toBeTruthy();
+    expect(store$).toBeTruthy();
   });
 
   describe('home page', () => {
@@ -202,7 +202,7 @@ describe('Shopping Store', () => {
     }));
 
     it('should just load toplevel categories when no specific shopping page is loaded', fakeAsync(() => {
-      expect(store.actionsArray()).toMatchInlineSnapshot(`
+      expect(store$.actionsArray()).toMatchInlineSnapshot(`
         @ngrx/router-store/request:
           routerState: {"url":"","params":{},"queryParams":{},"data":{}}
           event: {"id":1,"url":"/home"}
@@ -214,30 +214,30 @@ describe('Shopping Store', () => {
           event: {"id":1,"url":"/home","urlAfterRedirects":"/home"}
       `);
 
-      expect(getCategoryIds(store.state)).toBeEmpty();
-      expect(getProductIds(store.state)).toBeEmpty();
+      expect(getCategoryIds(store$.state)).toBeEmpty();
+      expect(getProductIds(store$.state)).toBeEmpty();
     }));
 
     describe('and going to a category page', () => {
       beforeEach(fakeAsync(() => {
-        store.reset();
+        store$.reset();
         router.navigate(['/category', 'A.123']);
         tick(5000);
       }));
 
       it('should load necessary data when going to a category page', fakeAsync(() => {
-        expect(getCategoryIds(store.state)).toMatchInlineSnapshot(`
+        expect(getCategoryIds(store$.state)).toMatchInlineSnapshot(`
           Array [
             "A.123",
             "A.123.456",
             "A",
           ]
         `);
-        expect(getProductIds(store.state)).toBeEmpty();
+        expect(getProductIds(store$.state)).toBeEmpty();
       }));
 
       it('should have toplevel loading and category loading actions when going to a category page', fakeAsync(() => {
-        expect(store.actionsArray()).toMatchInlineSnapshot(`
+        expect(store$.actionsArray()).toMatchInlineSnapshot(`
           @ngrx/router-store/request:
             routerState: {"url":"/home","params":{},"queryParams":{},"data":{},"path"...
             event: {"id":2,"url":"/category/A.123"}
@@ -284,13 +284,13 @@ describe('Shopping Store', () => {
 
     describe('and looking for suggestions', () => {
       beforeEach(fakeAsync(() => {
-        store.reset();
-        store.dispatch(suggestSearch({ searchTerm: 'some' }));
+        store$.reset();
+        store$.dispatch(suggestSearch({ searchTerm: 'some' }));
         tick(5000);
       }));
 
       it('should trigger suggest actions when suggest feature is used', () => {
-        expect(store.actionsArray()).toMatchInlineSnapshot(`
+        expect(store$.actionsArray()).toMatchInlineSnapshot(`
           [Suggest Search Internal] Load Search Suggestions:
             searchTerm: "some"
           [Suggest Search API] Return Search Suggestions:
@@ -302,17 +302,17 @@ describe('Shopping Store', () => {
 
     describe('and searching for something', () => {
       beforeEach(fakeAsync(() => {
-        store.reset();
+        store$.reset();
         router.navigate(['/search', 'something']);
         tick(5000);
       }));
 
       it('should load the product for the search results', fakeAsync(() => {
-        expect(getProductIds(store.state)).toEqual(['P2']);
+        expect(getProductIds(store$.state)).toEqual(['P2']);
       }));
 
       it('should trigger required actions when searching', fakeAsync(() => {
-        expect(store.actionsArray()).toMatchInlineSnapshot(`
+        expect(store$.actionsArray()).toMatchInlineSnapshot(`
           @ngrx/router-store/request:
             routerState: {"url":"/home","params":{},"queryParams":{},"data":{},"path"...
             event: {"id":2,"url":"/search/something"}
@@ -353,13 +353,13 @@ describe('Shopping Store', () => {
 
       describe('and viewing the product', () => {
         beforeEach(fakeAsync(() => {
-          store.reset();
+          store$.reset();
           router.navigate(['/product', 'P2']);
           tick(5000);
         }));
 
         it('should reload the product data when selected', fakeAsync(() => {
-          expect(store.actionsArray()).toMatchInlineSnapshot(`
+          expect(store$.actionsArray()).toMatchInlineSnapshot(`
             @ngrx/router-store/request:
               routerState: {"url":"/search/something","params":{"searchTerm":"something...
               event: {"id":3,"url":"/product/P2"}
@@ -389,18 +389,18 @@ describe('Shopping Store', () => {
     }));
 
     it('should load necessary data when going to a category page', fakeAsync(() => {
-      expect(getCategoryIds(store.state)).toMatchInlineSnapshot(`
+      expect(getCategoryIds(store$.state)).toMatchInlineSnapshot(`
         Array [
           "A.123",
           "A.123.456",
           "A",
         ]
       `);
-      expect(getProductIds(store.state)).toBeEmpty();
+      expect(getProductIds(store$.state)).toBeEmpty();
     }));
 
     it('should have toplevel loading and category loading actions when going to a category page', fakeAsync(() => {
-      expect(store.actionsArray()).toMatchInlineSnapshot(`
+      expect(store$.actionsArray()).toMatchInlineSnapshot(`
         @ngrx/router-store/request:
           routerState: {"url":"","params":{},"queryParams":{},"data":{}}
           event: {"id":1,"url":"/category/A.123"}
@@ -440,24 +440,24 @@ describe('Shopping Store', () => {
 
     describe('and and going to compare page', () => {
       beforeEach(fakeAsync(() => {
-        store.reset();
+        store$.reset();
         router.navigate(['/compare']);
         tick(5000);
       }));
 
       it('should not load anything additionally when going to compare page', fakeAsync(() => {
-        expect(getCategoryIds(store.state)).toMatchInlineSnapshot(`
+        expect(getCategoryIds(store$.state)).toMatchInlineSnapshot(`
           Array [
             "A.123",
             "A.123.456",
             "A",
           ]
         `);
-        expect(getProductIds(store.state)).toBeEmpty();
+        expect(getProductIds(store$.state)).toBeEmpty();
       }));
 
       it('should trigger actions for deselecting category and product when no longer in category or product', fakeAsync(() => {
-        expect(store.actionsArray()).toMatchInlineSnapshot(`
+        expect(store$.actionsArray()).toMatchInlineSnapshot(`
           @ngrx/router-store/request:
             routerState: {"url":"/category/A.123","params":{"categoryUniqueId":"A.123...
             event: {"id":2,"url":"/compare"}
@@ -471,8 +471,8 @@ describe('Shopping Store', () => {
       }));
 
       it('should not have a selected product or category when redirected to error page', fakeAsync(() => {
-        expect(getSelectedCategory(store.state)).toBeUndefined();
-        expect(getSelectedProduct(store.state)).toBeUndefined();
+        expect(getSelectedCategory(store$.state)).toBeUndefined();
+        expect(getSelectedProduct(store$.state)).toBeUndefined();
       }));
     });
   });
@@ -484,18 +484,18 @@ describe('Shopping Store', () => {
     }));
 
     it('should load all products and required categories when going to a family page', fakeAsync(() => {
-      expect(getCategoryIds(store.state)).toMatchInlineSnapshot(`
+      expect(getCategoryIds(store$.state)).toMatchInlineSnapshot(`
           Array [
             "A.123.456",
             "A",
             "A.123",
           ]
         `);
-      expect(getProductIds(store.state)).toEqual(['P1', 'P2']);
+      expect(getProductIds(store$.state)).toEqual(['P1', 'P2']);
     }));
 
     it('should have all required actions when going to a family page', fakeAsync(() => {
-      expect(store.actionsArray()).toMatchInlineSnapshot(`
+      expect(store$.actionsArray()).toMatchInlineSnapshot(`
         @ngrx/router-store/request:
           routerState: {"url":"","params":{},"queryParams":{},"data":{}}
           event: {"id":1,"url":"/category/A.123.456"}
@@ -547,18 +547,18 @@ describe('Shopping Store', () => {
     }));
 
     it('should not put anything in recently viewed products when going to a family page', fakeAsync(() => {
-      expect(getRecentlyViewedProducts(store.state)).toBeEmpty();
+      expect(getRecentlyViewedProducts(store$.state)).toBeEmpty();
     }));
 
     describe('and clicking a product', () => {
       beforeEach(fakeAsync(() => {
-        store.reset();
+        store$.reset();
         router.navigate(['/category', 'A.123.456', 'product', 'P1']);
         tick(5000);
       }));
 
       it('should reload the product when selected', fakeAsync(() => {
-        expect(store.actionsArray()).toMatchInlineSnapshot(`
+        expect(store$.actionsArray()).toMatchInlineSnapshot(`
           @ngrx/router-store/request:
             routerState: {"url":"/category/A.123.456","params":{"categoryUniqueId":"A...
             event: {"id":2,"url":"/category/A.123.456/product/P1"}
@@ -579,18 +579,18 @@ describe('Shopping Store', () => {
       }));
 
       it('should add the product to recently viewed products when going to product detail page', fakeAsync(() => {
-        expect(getRecentlyViewedProducts(store.state)).toEqual(['P1']);
+        expect(getRecentlyViewedProducts(store$.state)).toEqual(['P1']);
       }));
 
       describe('and and going back to the family page', () => {
         beforeEach(fakeAsync(() => {
-          store.reset();
+          store$.reset();
           router.navigate(['/category', 'A.123.456']);
           tick(5000);
         }));
 
         it('should deselect product when navigating back', fakeAsync(() => {
-          expect(store.actionsArray()).toMatchInlineSnapshot(`
+          expect(store$.actionsArray()).toMatchInlineSnapshot(`
             @ngrx/router-store/request:
               routerState: {"url":"/category/A.123.456/product/P1","params":{"categoryU...
               event: {"id":3,"url":"/category/A.123.456"}
@@ -615,13 +615,13 @@ describe('Shopping Store', () => {
 
     describe('and searching for all products', () => {
       beforeEach(fakeAsync(() => {
-        store.reset();
+        store$.reset();
         router.navigate(['/search', 'something']);
         tick(5000);
       }));
 
       it('should load the right filters for search', fakeAsync(() => {
-        expect(store.actionsArray()).toMatchInlineSnapshot(`
+        expect(store$.actionsArray()).toMatchInlineSnapshot(`
           @ngrx/router-store/request:
             routerState: {"url":"/category/A.123.456","params":{"categoryUniqueId":"A...
             event: {"id":2,"url":"/search/something"}
@@ -662,13 +662,13 @@ describe('Shopping Store', () => {
 
       describe('and going back to family page', () => {
         beforeEach(fakeAsync(() => {
-          store.reset();
+          store$.reset();
           router.navigate(['/category', 'A.123.456']);
           tick(5000);
         }));
 
         it('should load the right filters for family page again', fakeAsync(() => {
-          expect(store.actionsArray()).toMatchInlineSnapshot(`
+          expect(store$.actionsArray()).toMatchInlineSnapshot(`
             @ngrx/router-store/request:
               routerState: {"url":"/search/something","params":{"searchTerm":"something...
               event: {"id":3,"url":"/category/A.123.456"}
@@ -704,24 +704,24 @@ describe('Shopping Store', () => {
 
     describe('and and going to compare page', () => {
       beforeEach(fakeAsync(() => {
-        store.reset();
+        store$.reset();
         router.navigate(['/compare']);
         tick(5000);
       }));
 
       it('should not load anything additionally when going to compare page', fakeAsync(() => {
-        expect(getCategoryIds(store.state)).toMatchInlineSnapshot(`
+        expect(getCategoryIds(store$.state)).toMatchInlineSnapshot(`
           Array [
             "A.123.456",
             "A",
             "A.123",
           ]
         `);
-        expect(getProductIds(store.state)).toEqual(['P1', 'P2']);
+        expect(getProductIds(store$.state)).toEqual(['P1', 'P2']);
       }));
 
       it('should trigger actions for deselecting category and product when no longer in category or product', fakeAsync(() => {
-        expect(store.actionsArray()).toMatchInlineSnapshot(`
+        expect(store$.actionsArray()).toMatchInlineSnapshot(`
           @ngrx/router-store/request:
             routerState: {"url":"/category/A.123.456","params":{"categoryUniqueId":"A...
             event: {"id":2,"url":"/compare"}
@@ -735,8 +735,8 @@ describe('Shopping Store', () => {
       }));
 
       it('should not have a selected product or category when redirected to error page', fakeAsync(() => {
-        expect(getSelectedCategory(store.state)).toBeUndefined();
-        expect(getSelectedProduct(store.state)).toBeUndefined();
+        expect(getSelectedCategory(store$.state)).toBeUndefined();
+        expect(getSelectedProduct(store$.state)).toBeUndefined();
       }));
     });
   });
@@ -748,18 +748,18 @@ describe('Shopping Store', () => {
     }));
 
     it('should load the product and its required categories when going to a product page', fakeAsync(() => {
-      expect(getCategoryIds(store.state)).toMatchInlineSnapshot(`
+      expect(getCategoryIds(store$.state)).toMatchInlineSnapshot(`
           Array [
             "A.123.456",
             "A",
             "A.123",
           ]
         `);
-      expect(getProductIds(store.state)).toEqual(['P1']);
+      expect(getProductIds(store$.state)).toEqual(['P1']);
     }));
 
     it('should trigger required load actions when going to a product page', fakeAsync(() => {
-      expect(store.actionsArray()).toMatchInlineSnapshot(`
+      expect(store$.actionsArray()).toMatchInlineSnapshot(`
         @ngrx/router-store/request:
           routerState: {"url":"","params":{},"queryParams":{},"data":{}}
           event: {"id":1,"url":"/category/A.123.456/product/P1"}
@@ -792,29 +792,29 @@ describe('Shopping Store', () => {
     }));
 
     it('should put the product to recently viewed products when going to product detail page', fakeAsync(() => {
-      expect(getRecentlyViewedProducts(store.state)).toEqual(['P1']);
+      expect(getRecentlyViewedProducts(store$.state)).toEqual(['P1']);
     }));
 
     describe('and and going back to the family page', () => {
       beforeEach(fakeAsync(() => {
-        store.reset();
+        store$.reset();
         router.navigate(['/category', 'A.123.456']);
         tick(5000);
       }));
 
       it('should load the sibling products when they are not yet loaded', fakeAsync(() => {
-        expect(getCategoryIds(store.state)).toMatchInlineSnapshot(`
+        expect(getCategoryIds(store$.state)).toMatchInlineSnapshot(`
           Array [
             "A.123.456",
             "A",
             "A.123",
           ]
         `);
-        expect(getProductIds(store.state)).toEqual(['P1', 'P2']);
+        expect(getProductIds(store$.state)).toEqual(['P1', 'P2']);
       }));
 
       it('should trigger actions for products when they are not yet loaded', fakeAsync(() => {
-        expect(store.actionsArray()).toMatchInlineSnapshot(`
+        expect(store$.actionsArray()).toMatchInlineSnapshot(`
           @ngrx/router-store/request:
             routerState: {"url":"/category/A.123.456/product/P1","params":{"categoryU...
             event: {"id":2,"url":"/category/A.123.456"}
@@ -858,30 +858,30 @@ describe('Shopping Store', () => {
       }));
 
       it('should not put anything additionally to recently viewed products when going back', fakeAsync(() => {
-        expect(getRecentlyViewedProducts(store.state)).toEqual(['P1']);
+        expect(getRecentlyViewedProducts(store$.state)).toEqual(['P1']);
       }));
     });
 
     describe('and and going to compare page', () => {
       beforeEach(fakeAsync(() => {
-        store.reset();
+        store$.reset();
         router.navigate(['/compare']);
         tick(5000);
       }));
 
       it('should not load anything additionally when going to compare page', fakeAsync(() => {
-        expect(getCategoryIds(store.state)).toMatchInlineSnapshot(`
+        expect(getCategoryIds(store$.state)).toMatchInlineSnapshot(`
           Array [
             "A.123.456",
             "A",
             "A.123",
           ]
         `);
-        expect(getProductIds(store.state)).toEqual(['P1']);
+        expect(getProductIds(store$.state)).toEqual(['P1']);
       }));
 
       it('should trigger actions for deselecting category and product when no longer in category or product', fakeAsync(() => {
-        expect(store.actionsArray()).toMatchInlineSnapshot(`
+        expect(store$.actionsArray()).toMatchInlineSnapshot(`
           @ngrx/router-store/request:
             routerState: {"url":"/category/A.123.456/product/P1","params":{"categoryU...
             event: {"id":2,"url":"/compare"}
@@ -895,8 +895,8 @@ describe('Shopping Store', () => {
       }));
 
       it('should not have a selected product or category when redirected to error page', fakeAsync(() => {
-        expect(getSelectedCategory(store.state)).toBeUndefined();
-        expect(getSelectedProduct(store.state)).toBeUndefined();
+        expect(getSelectedCategory(store$.state)).toBeUndefined();
+        expect(getSelectedProduct(store$.state)).toBeUndefined();
       }));
     });
   });
@@ -908,12 +908,12 @@ describe('Shopping Store', () => {
     }));
 
     it('should load the product ang top level categories when going to a product page', fakeAsync(() => {
-      expect(getCategoryIds(store.state)).toBeEmpty();
-      expect(getProductIds(store.state)).toEqual(['P1']);
+      expect(getCategoryIds(store$.state)).toBeEmpty();
+      expect(getProductIds(store$.state)).toEqual(['P1']);
     }));
 
     it('should trigger required load actions when going to a product page', fakeAsync(() => {
-      expect(store.actionsArray()).toMatchInlineSnapshot(`
+      expect(store$.actionsArray()).toMatchInlineSnapshot(`
         @ngrx/router-store/request:
           routerState: {"url":"","params":{},"queryParams":{},"data":{}}
           event: {"id":1,"url":"/product/P1"}
@@ -935,18 +935,18 @@ describe('Shopping Store', () => {
 
     describe('and and going to compare page', () => {
       beforeEach(fakeAsync(() => {
-        store.reset();
+        store$.reset();
         router.navigate(['/compare']);
         tick(5000);
       }));
 
       it('should not load anything additionally when going to compare page', fakeAsync(() => {
-        expect(getCategoryIds(store.state)).toBeEmpty();
-        expect(getProductIds(store.state)).toEqual(['P1']);
+        expect(getCategoryIds(store$.state)).toBeEmpty();
+        expect(getProductIds(store$.state)).toEqual(['P1']);
       }));
 
       it('should trigger actions for deselecting category and product when no longer in category or product', fakeAsync(() => {
-        expect(store.actionsArray()).toMatchInlineSnapshot(`
+        expect(store$.actionsArray()).toMatchInlineSnapshot(`
           @ngrx/router-store/request:
             routerState: {"url":"/product/P1","params":{"sku":"P1"},"queryParams":{},...
             event: {"id":2,"url":"/compare"}
@@ -960,8 +960,8 @@ describe('Shopping Store', () => {
       }));
 
       it('should not have a selected product or category when redirected to error page', fakeAsync(() => {
-        expect(getSelectedCategory(store.state)).toBeUndefined();
-        expect(getSelectedProduct(store.state)).toBeUndefined();
+        expect(getSelectedCategory(store$.state)).toBeUndefined();
+        expect(getSelectedProduct(store$.state)).toBeUndefined();
       }));
     });
   });
@@ -973,18 +973,18 @@ describe('Shopping Store', () => {
     }));
 
     it('should load only family page content and redirect to error when product was not found', fakeAsync(() => {
-      expect(getCategoryIds(store.state)).toMatchInlineSnapshot(`
+      expect(getCategoryIds(store$.state)).toMatchInlineSnapshot(`
         Array [
           "A.123.456",
           "A",
           "A.123",
         ]
       `);
-      expect(getProductIds(store.state)).toBeEmpty();
+      expect(getProductIds(store$.state)).toBeEmpty();
     }));
 
     it('should trigger required load actions when going to a product page with invalid product sku', fakeAsync(() => {
-      expect(store.actionsArray()).toMatchInlineSnapshot(`
+      expect(store$.actionsArray()).toMatchInlineSnapshot(`
         @ngrx/router-store/request:
           routerState: {"url":"","params":{},"queryParams":{},"data":{}}
           event: {"id":1,"url":"/category/A.123.456/product/P3"}
@@ -1025,12 +1025,12 @@ describe('Shopping Store', () => {
     }));
 
     it('should not have a selected product or category when redirected to error page', fakeAsync(() => {
-      expect(getSelectedCategory(store.state)).toBeUndefined();
-      expect(getSelectedProduct(store.state)).toBeUndefined();
+      expect(getSelectedCategory(store$.state)).toBeUndefined();
+      expect(getSelectedProduct(store$.state)).toBeUndefined();
     }));
 
     it('should not put anything to recently viewed products when invalid product was selected', fakeAsync(() => {
-      expect(getRecentlyViewedProducts(store.state)).toBeEmpty();
+      expect(getRecentlyViewedProducts(store$.state)).toBeEmpty();
     }));
   });
 
@@ -1041,12 +1041,12 @@ describe('Shopping Store', () => {
     }));
 
     it('should load only some categories and redirect to error when category was not found', fakeAsync(() => {
-      expect(getCategoryIds(store.state)).toBeEmpty();
-      expect(getProductIds(store.state)).toBeEmpty();
+      expect(getCategoryIds(store$.state)).toBeEmpty();
+      expect(getProductIds(store$.state)).toBeEmpty();
     }));
 
     it('should trigger required load actions when going to a category page with invalid category uniqueId', fakeAsync(() => {
-      expect(store.actionsArray()).toMatchInlineSnapshot(`
+      expect(store$.actionsArray()).toMatchInlineSnapshot(`
         @ngrx/router-store/request:
           routerState: {"url":"","params":{},"queryParams":{},"data":{}}
           event: {"id":1,"url":"/category/A.123.XXX"}
@@ -1074,8 +1074,8 @@ describe('Shopping Store', () => {
     }));
 
     it('should not have a selected product or category when redirected to error page', fakeAsync(() => {
-      expect(getSelectedCategory(store.state)).toBeUndefined();
-      expect(getSelectedProduct(store.state)).toBeUndefined();
+      expect(getSelectedCategory(store$.state)).toBeUndefined();
+      expect(getSelectedProduct(store$.state)).toBeUndefined();
     }));
   });
 
@@ -1086,11 +1086,11 @@ describe('Shopping Store', () => {
     }));
 
     it('should load the product for the search results', fakeAsync(() => {
-      expect(getProductIds(store.state)).toEqual(['P2']);
+      expect(getProductIds(store$.state)).toEqual(['P2']);
     }));
 
     it('should trigger required actions when searching', fakeAsync(() => {
-      expect(store.actionsArray()).toMatchInlineSnapshot(`
+      expect(store$.actionsArray()).toMatchInlineSnapshot(`
         @ngrx/router-store/request:
           routerState: {"url":"","params":{},"queryParams":{},"data":{}}
           event: {"id":1,"url":"/search/something"}

@@ -87,6 +87,7 @@ export class BasketService {
   /**
    * http header for Basket API v1
    */
+
   private basketHeaders = new HttpHeaders({
     'content-type': 'application/json',
     Accept: 'application/vnd.intershop.basket.v1+json',
@@ -135,6 +136,7 @@ export class BasketService {
    * Get the basket for the current user.
    * @returns         The basket.
    */
+
   getBasket(): Observable<Basket> {
     const params = new HttpParams().set('include', this.allBasketIncludes.join());
 
@@ -166,6 +168,7 @@ export class BasketService {
    * Creates a basket for the current user.
    * @returns         The basket.
    */
+
   createBasket(): Observable<Basket> {
     return this.apiService
       .post<BasketData>(
@@ -184,6 +187,7 @@ export class BasketService {
    * @param authToken       The token value of the source basket owner.
    * @returns               The merged basket.
    */
+
   mergeBasket(sourceBasketId: string, sourceBasketAuthToken: string, targetBasketId: string): Observable<Basket> {
     if (!sourceBasketId) {
       return throwError('mergeBasket() called without sourceBasketId');
@@ -216,6 +220,7 @@ export class BasketService {
    * @param body      Basket related data (invoice address, shipping address, shipping method ...), which should be changed
    * @returns         The changed basket.
    */
+
   updateBasket(body: BasketUpdateType): Observable<Basket> {
     if (!body) {
       return throwError('updateBasket() called without body');
@@ -235,6 +240,7 @@ export class BasketService {
    * @param scopes    Basket scopes which should be validated ( see also BasketValidationScopeType ), default: minimal scope (max items limit, empty basket)
    * @returns         The (adjusted) basket and the validation results.
    */
+
   validateBasket(scopes: BasketValidationScopeType[] = ['']): Observable<BasketValidation> {
     const body = {
       basket: 'current',
@@ -256,6 +262,7 @@ export class BasketService {
    * Use this method to check if the user has at least one active basket
    * @returns         An array of basket base data.
    */
+
   getBaskets(): Observable<BasketBaseData[]> {
     return this.apiService
       .get(`baskets`, {
@@ -269,6 +276,7 @@ export class BasketService {
    * @param codeStr   The code string of the promotion code that should be added to basket.
    * @returns         The info message after creation.
    */
+
   addPromotionCodeToBasket(codeStr: string): Observable<string> {
     const body = {
       code: codeStr,
@@ -285,6 +293,7 @@ export class BasketService {
    * Remove a promotion code from basket.
    * @param codeStr   The code string of the promotion code that should be removed from basket.
    */
+
   removePromotionCodeFromBasket(codeStr: string): Observable<string> {
     return this.apiService.delete(`baskets/current/promotioncodes/${codeStr}`, {
       headers: this.basketHeaders,
@@ -629,6 +638,7 @@ export class BasketService {
    * Get warehouse calendar.
    * @returns         The basket.
    */
+
   getWarehouseCalendar() {
     const currentDate = new Date();
     const futureDate = new Date();

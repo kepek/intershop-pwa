@@ -2,6 +2,7 @@ import { Auth0Config } from 'ish-core/identity-provider/auth0.identity-provider'
 import { CookieConsentOptions } from 'ish-core/models/cookies/cookies.model';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { DeviceType, ViewType } from 'ish-core/models/viewtype/viewtype.types';
+import { DataRetentionPolicy } from 'ish-core/utils/meta-reducers';
 
 import { TactonConfig } from '../app/extensions/tacton/models/tacton-config/tacton-config.model';
 
@@ -108,6 +109,9 @@ export interface Environment {
       | Auth0Config;
   };
 
+  // enable and configure data persistence for specific stores (compare, recently, tacton)
+  dataRetention: DataRetentionPolicy;
+
   /* ICC API CONFIGURATION */
 
   iccProxyURL: string;
@@ -200,6 +204,12 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
   /* GTM Config */
 
   gtmToken: undefined, // set by env variable GTM_TOKEN
+
+  dataRetention: {
+    compare: 'session',
+    recently: 60 * 24 * 7, // 1 week
+    tacton: 'forever',
+  },
 
   /* ICC API CONFIGURATION */
 

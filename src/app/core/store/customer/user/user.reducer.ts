@@ -29,7 +29,6 @@ import {
   requestPasswordReminderFail,
   requestPasswordReminderSuccess,
   resetPasswordReminder,
-  setPGID,
   updateCustomer,
   updateCustomerFail,
   updateCustomerSuccess,
@@ -102,19 +101,24 @@ export const userReducer = createReducer(
     deleteUserPaymentInstrumentFail,
     loadRolesAndPermissionsFail
   ),
-  on(loginUserSuccess, (state: UserState, action) => {
-    const customer = action.payload.customer;
-    const user = action.payload.user;
+  on(
+    loginUserSuccess,
+    (state: UserState, action): UserState => {
+      const customer = action.payload.customer;
+      const user = action.payload.user;
+      const pgid = action.payload.pgid;
 
-    return {
-      ...state,
-      authorized: true,
-      customer,
-      user,
-      loading: false,
-      error: undefined,
-    };
-  }),
+      return {
+        ...state,
+        authorized: true,
+        customer,
+        user,
+        pgid,
+        loading: false,
+        error: undefined,
+      };
+    }
+  ),
   on(loadCompanyUserSuccess, (state: UserState, action) => {
     const user = action.payload.user;
 
@@ -148,13 +152,6 @@ export const userReducer = createReducer(
       customer,
       loading: false,
       error: undefined,
-    };
-  }),
-  on(setPGID, (state: UserState, action) => {
-    const { pgid } = action.payload;
-    return {
-      ...state,
-      pgid,
     };
   }),
   on(loadUserPaymentMethodsSuccess, (state: UserState, action) => ({

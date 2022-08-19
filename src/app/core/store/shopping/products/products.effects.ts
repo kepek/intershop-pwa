@@ -32,13 +32,7 @@ import { ProductsService } from 'ish-core/services/products/products.service';
 import { getCurrentLocale, setCurrentLocale } from 'ish-core/store/core/configuration';
 import { selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
-import {
-  getLoggedInCustomer,
-  getUserLoading,
-  loginUserSuccess,
-  logoutUser,
-  setPGID,
-} from 'ish-core/store/customer/user';
+import { getLoggedInCustomer, getUserLoading, loginUserSuccess, logoutUser } from 'ish-core/store/customer/user';
 import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 import { getCategoryEntities, loadCategory } from 'ish-core/store/shopping/categories';
 import { setProductListingPages } from 'ish-core/store/shopping/product-listing';
@@ -441,9 +435,9 @@ export class ProductsEffects {
     )
   );
 
-  refreshProductsWhenUnsetPGID$ = createEffect(() =>
+  refreshProductsWhenLoginUserSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(setPGID),
+      ofType(loginUserSuccess),
       mapToPayloadProperty('pgid'),
       withLatestFrom(this.store.pipe(select(getCategoryEntities))),
       map(([, entities]) =>

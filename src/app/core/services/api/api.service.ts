@@ -2,10 +2,10 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import {
+  EMPTY,
   MonoTypeOperatorFunction,
   Observable,
   OperatorFunction,
-  Subject,
   combineLatest,
   defer,
   forkJoin,
@@ -14,21 +14,23 @@ import {
   of,
   throwError,
 } from 'rxjs';
-import { concatMap, filter, first, map, take, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, concatMap, filter, first, map, take, withLatestFrom } from 'rxjs/operators';
 
 import { Captcha } from 'ish-core/models/captcha/captcha.model';
 import { Link } from 'ish-core/models/link/link.model';
 import { getCurrentLocale, getICMServerURL, getRestEndpoint } from 'ish-core/store/core/configuration';
+import { communicationTimeoutError, serverError } from 'ish-core/store/core/error';
 import { getLoggedInCustomer, getLoggedInUser, getPGID } from 'ish-core/store/customer/user';
-
-import { ApiServiceErrorHandler } from './api.service.errorhandler';
+import { encodeResourceID } from 'ish-core/utils/url-resource-ids';
 
 /**
  * Pipeable operator for elements translation (removing the envelope).
+ *
  * @param key the name of the envelope (default 'elements')
  * @returns The items of an elements array without the elements wrapper.
  */
-// tslint:disable-next-line: no-any - any to avoid having to type everything before
+// tslint:disable-next-line:force-jsdoc-comments
+// tslint:disable-next-line:@typescript-eslint/no-explicit-any, -- any to avoid having to type everything before
 export function unpackEnvelope<T>(key: string = 'elements'): OperatorFunction<any, T[]> {
   return map(data => (data?.[key]?.length ? data[key] : []));
 }
@@ -40,7 +42,15 @@ export interface AvailableOptions {
   skipApiErrorHandling?: boolean;
   runExclusively?: boolean;
   captcha?: Captcha;
+  /**
+   * opt-in to sending pgid matrix parameter by setting it to true. As per Intershop Commerce REST api documentation ´pgid´ is the standard means
+   * to get and cache personalized content of supported REST resources (e.g. cms).
+   */
   sendPGID?: boolean;
+  /**
+   * opt-in to sending spgid matrix parameter by setting it to true. As per Intershop Commerce REST api documentation this is the special means
+   * to get and cache personalized content of the product and category API (1.x).
+   */
   sendSPGID?: boolean;
 }
 
@@ -49,13 +59,7 @@ export class ApiService {
   static TOKEN_HEADER_KEY = 'authentication-token';
   static AUTHORIZATION_HEADER_KEY = 'Authorization';
 
-  private executionBarrier$: Observable<void> | Subject<void> = of(undefined);
-
-  constructor(
-    private httpClient: HttpClient,
-    private apiServiceErrorHandler: ApiServiceErrorHandler,
-    protected store: Store
-  ) {}
+  constructor(protected httpClient: HttpClient, protected store: Store) {}
 
   /**
    -  * sets the request header for the appropriate captcha service
@@ -77,7 +81,7 @@ export class ApiService {
   /**
    * merges supplied and default headers
    */
-  private constructHeaders(options?: AvailableOptions): Observable<HttpHeaders> {
+  protected constructHeaders(options?: AvailableOptions): Observable<HttpHeaders> {
     const defaultHeaders = new HttpHeaders().set('content-type', 'application/json').set('Accept', 'application/json');
 
     return of(
@@ -95,24 +99,23 @@ export class ApiService {
     );
   }
 
+  private handleErrors<T>(dispatch: boolean): MonoTypeOperatorFunction<T> {
+    return catchError(error => {
+      if (dispatch) {
+        if (error.status === 0) {
+          this.store.dispatch(communicationTimeoutError({ error }));
+          return EMPTY;
+        } else if (error.status >= 500 && error.status < 600) {
+          this.store.dispatch(serverError({ error }));
+          return EMPTY;
+        }
+      }
+      return throwError(error);
+    });
+  }
+
   private execute<T>(options: AvailableOptions, httpCall$: Observable<T>): Observable<T> {
-    const wrappedCall$ = httpCall$.pipe(this.apiServiceErrorHandler.handleErrors(!options?.skipApiErrorHandling));
-
-    if (options?.runExclusively) {
-      // setup a barrier for other calls
-      const subject$ = new Subject<void>();
-      this.executionBarrier$ = subject$;
-      const releaseBarrier = () => {
-        subject$.next();
-        this.executionBarrier$ = of(undefined);
-      };
-
-      // release barrier on completion
-      return wrappedCall$.pipe(tap({ complete: releaseBarrier, error: releaseBarrier }));
-    } else {
-      // respect barrier
-      return this.executionBarrier$.pipe(concatMap(() => wrappedCall$));
-    }
+    return httpCall$.pipe(this.handleErrors(!options?.skipApiErrorHandling));
   }
 
   protected constructUrlForPath(path: string, options?: AvailableOptions): Observable<string> {
@@ -133,17 +136,17 @@ export class ApiService {
       // pgid
       this.store.pipe(
         select(getPGID),
-        map(pgid => (options?.sendPGID && pgid ? `;pgid=${pgid}` : options?.sendSPGID ? `;spgid=${pgid}` : ''))
+        map(pgid => (options?.sendPGID ? `;pgid=${pgid}` : options?.sendSPGID ? `;spgid=${pgid}` : ''))
       ),
       // remaining path
-      of(path.includes('/') ? path.substr(path.indexOf('/')) : ''),
+      of(path.includes('/') ? path.substring(path.indexOf('/')) : ''),
     ]).pipe(
       first(),
       map(arr => arr.join(''))
     );
   }
 
-  private constructHttpClientParams(
+  protected constructHttpClientParams(
     path: string,
     options?: AvailableOptions
   ): Observable<[string, { headers: HttpHeaders; params: HttpParams }]> {
@@ -235,6 +238,7 @@ export class ApiService {
 
   /**
    * Pipeable operator for link translation (resolving one single link).
+   *
    * @returns The link resolved to its actual REST response data.
    */
   resolveLink<T>(options?: AvailableOptions): OperatorFunction<Link, T> {
@@ -256,6 +260,7 @@ export class ApiService {
 
   /**
    * Pipeable operator for link translation (resolving multiple links).
+   *
    * @returns The links resolved to their actual REST response data.
    */
   resolveLinks<T>(options?: AvailableOptions): OperatorFunction<Link[], T[]> {
@@ -285,31 +290,39 @@ export class ApiService {
       get: <T>(path: string, options?: AvailableOptions) =>
         ids$.pipe(
           concatMap(([user, customer]) =>
-            this.get<T>(`customers/${customer.customerNo}/users/${user.login}/${path}`, options)
+            this.get<T>(`customers/${customer.customerNo}/users/${encodeResourceID(user.login)}/${path}`, options)
           )
         ),
       delete: <T>(path: string, options?: AvailableOptions) =>
         ids$.pipe(
           concatMap(([user, customer]) =>
-            this.delete<T>(`customers/${customer.customerNo}/users/${user.login}/${path}`, options)
+            this.delete<T>(`customers/${customer.customerNo}/users/${encodeResourceID(user.login)}/${path}`, options)
           )
         ),
       put: <T>(path: string, body = {}, options?: AvailableOptions) =>
         ids$.pipe(
           concatMap(([user, customer]) =>
-            this.put<T>(`customers/${customer.customerNo}/users/${user.login}/${path}`, body, options)
+            this.put<T>(`customers/${customer.customerNo}/users/${encodeResourceID(user.login)}/${path}`, body, options)
           )
         ),
       patch: <T>(path: string, body = {}, options?: AvailableOptions) =>
         ids$.pipe(
           concatMap(([user, customer]) =>
-            this.patch<T>(`customers/${customer.customerNo}/users/${user.login}/${path}`, body, options)
+            this.patch<T>(
+              `customers/${customer.customerNo}/users/${encodeResourceID(user.login)}/${path}`,
+              body,
+              options
+            )
           )
         ),
       post: <T>(path: string, body = {}, options?: AvailableOptions) =>
         ids$.pipe(
           concatMap(([user, customer]) =>
-            this.post<T>(`customers/${customer.customerNo}/users/${user.login}/${path}`, body, options)
+            this.post<T>(
+              `customers/${customer.customerNo}/users/${encodeResourceID(user.login)}/${path}`,
+              body,
+              options
+            )
           )
         ),
     };
