@@ -51,4 +51,14 @@
   </ng-container>
 </div>
 
+<camfil-modal-dialog
+  #freightCostWarningDialog
+  [options]="{
+    titleText: 'camfil.freight_cost_invalid.heading.text' | translate,
+    confirmText: 'camfil.modal.cta.button.ok' | translate
+  }"
+>
+  {{ 'camfil.freight_cost_invalid.body.text' | translate }}
+</camfil-modal-dialog>
+
 <router-outlet></router-outlet>

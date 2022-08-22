@@ -18,6 +18,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   use2ndAddressLineInCamCardForm: true,
   showDeliveryIntervalOnCCDetailPage: true,
   preventCamCardERPIdValidation: true,
+  showWarningWhenSystemCouldNotCalculateVolumeOrWeight: true,
 };
 
 export default camfilConfiguration;

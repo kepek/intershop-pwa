@@ -16,6 +16,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   filterDocsByLanguage: true,
   showAllDocsType: true,
   zipCodeRegExp: '^\\d{3}\\s*\\d{2}$',
+  showWarningWhenSystemCouldNotCalculateVolumeOrWeight: true,
 };
 
 export default camfilConfiguration;

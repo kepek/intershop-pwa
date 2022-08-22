@@ -38,6 +38,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   ],
   showDeliveryIntervalOnCCDetailPage: true,
   tracking: true,
+  showWarningWhenSystemCouldNotCalculateVolumeOrWeight: true,
 };
 
 export default camfilConfiguration;

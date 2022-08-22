@@ -53,6 +53,7 @@ import {
   getCurrentBuckets,
   getCustomersDeliveryTerms,
   getEmptyBuckets,
+  getFreightCostInvalid,
   getSubmittedAnonymousBasketExtensions,
   getSubmittedBasket,
   getSubmittedBuckets,
@@ -132,6 +133,7 @@ export class CheckoutFacade {
   getCustomersDeliveryTerms$ = this.store.pipe(select(getCustomersDeliveryTerms));
   anonymousBasketExtension$ = this.store.pipe(select(getAnonymousBasketExtensions));
   submittedAnonymousBasketExtension$ = this.store.pipe(select(getSubmittedAnonymousBasketExtensions));
+  isFreightCostInvalid$ = this.store.pipe(select(getFreightCostInvalid));
 
   // ORDERS
   private ordersError$ = this.store.pipe(select(getOrdersError));

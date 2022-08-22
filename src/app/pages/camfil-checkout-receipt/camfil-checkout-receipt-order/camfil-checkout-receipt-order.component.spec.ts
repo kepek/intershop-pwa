@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { ModalDialogLinkComponent } from 'ish-shared/components/common/modal-dialog-link/modal-dialog-link.component';
@@ -17,10 +18,11 @@ describe('Camfil Checkout Receipt Order Component', () => {
   let fixture: ComponentFixture<CamfilCheckoutReceiptOrderComponent>;
   let element: HTMLElement;
   let accountFacadeMock: AccountFacade;
+  let checkoutFacade: CheckoutFacade;
 
   beforeEach(async () => {
     accountFacadeMock = mock(AccountFacade);
-
+    checkoutFacade = mock(CheckoutFacade);
     await TestBed.configureTestingModule({
       declarations: [
         CamfilCheckoutReceiptOrderComponent,
@@ -28,7 +30,10 @@ describe('Camfil Checkout Receipt Order Component', () => {
         MockComponent(ModalDialogLinkComponent),
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
-      providers: [{ provide: AccountFacade, useFactory: () => instance(accountFacadeMock) }],
+      providers: [
+        { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
+        { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
+      ],
     }).compileComponents();
   });
 
@@ -38,6 +43,7 @@ describe('Camfil Checkout Receipt Order Component', () => {
     element = fixture.nativeElement;
     component.order = BasketMockData.getOrder();
     when(accountFacadeMock.isLoggedIn$).thenReturn(of(false));
+    when(checkoutFacade.isFreightCostInvalid$).thenReturn(of(false));
   });
 
   it('should be created', () => {

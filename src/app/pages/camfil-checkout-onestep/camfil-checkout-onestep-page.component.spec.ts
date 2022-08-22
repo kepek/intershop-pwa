@@ -24,6 +24,7 @@ import { CamfilCheckoutSummaryComponent } from 'ish-shared/components/camfil-che
 import { CamfilShoppingBucketEmptyComponent } from 'ish-shared/components/camfil-shopping-bucket-empty/camfil-shopping-bucket-empty.component';
 import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
 
@@ -140,6 +141,7 @@ describe('Camfil Checkout Onestep Page Component', () => {
         MockComponent(CamfilCheckoutSummaryComponent),
         MockComponent(CamfilCheckoutToolbarComponent),
         MockComponent(CamfilLoadingComponent),
+        MockComponent(CamfilModalDialogComponent),
         MockComponent(CamfilShoppingBucketEmptyComponent),
         MockDirective(CamfilChannelToggleDirective),
         MockDirective(CamfilCheckoutGuestFormComponent),
@@ -185,6 +187,7 @@ describe('Camfil Checkout Onestep Page Component', () => {
     when(checkoutFacade.basket$).thenReturn(of(basketDetails));
     when(checkoutFacade.submittedBasket$).thenReturn(of(undefined));
     when(checkoutFacade.submittedBuckets$).thenReturn(of(undefined));
+    when(checkoutFacade.isFreightCostInvalid$).thenReturn(of(false));
     when(checkoutFacade.eligiblePaymentMethods$()).thenReturn(of([]));
   });
 

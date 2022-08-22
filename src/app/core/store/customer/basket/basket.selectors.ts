@@ -213,3 +213,11 @@ export const getSubmittedAnonymousBasketExtensions = createSelector(
 );
 
 export const getSubmittedBuckets = createSelector(getBasketState, basket => basket.submittedBuckets);
+
+export const getFreightCostInvalid = createSelector(getBasketState, basket =>
+  basket.basket?.basketExtensions
+    ?.map(({ freightCostInvalid }) => ({
+      freightCostInvalid,
+    }))
+    .some(({ freightCostInvalid }) => freightCostInvalid)
+);
