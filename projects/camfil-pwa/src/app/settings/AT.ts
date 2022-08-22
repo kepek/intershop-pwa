@@ -17,6 +17,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showDeliveryIntervalOnCCDetailPage: true,
   preventCamCardERPIdValidation: true,
   allowToSelectGoodsAcceptanceTimes: true,
+  showWarningMessageForPartialDelivery: true,
 };
 
 export default camfilConfiguration;
