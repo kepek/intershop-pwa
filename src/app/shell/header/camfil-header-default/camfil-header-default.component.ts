@@ -53,11 +53,11 @@ export class CamfilHeaderDefaultComponent implements OnChanges {
   }
 
   get showDesktopLogoLink() {
-    return this.deviceType === 'tablet' || this.deviceType === 'desktop';
+    return !this.isSticky && (this.deviceType === 'tablet' || this.deviceType === 'desktop');
   }
 
   get showMobileLogoLink() {
-    return this.deviceType === 'mobile';
+    return this.isSticky || this.deviceType === 'mobile';
   }
 
   private toggleSpecialStatusOfSearch() {

@@ -11,6 +11,10 @@ export const { selectEntities: getCamCardEntities, selectAll } = camCardAdapter.
 
 export const getAllCamCards = selectAll;
 
+export const getCamCards = createSelector(selectAll, ccs => ccs.filter(cc => !cc.rootCamCard));
+
+export const getRootCamCards = createSelector(selectAll, ccs => ccs.filter(cc => !!cc.rootCamCard));
+
 export const getCamCardLoading = createSelector(getCamCardState, state => state.loading);
 
 export const getCamCardsLoading = createSelector(getCamCardState, state => state.camCardsLoading);

@@ -122,7 +122,7 @@ describe('Camfil Checkout Header Component', () => {
     component.basket = basket;
     component.buckets = buckets;
 
-    when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
+    when(camCardFacadeMock.camCards$).thenReturn(of([camCardDetails]));
     when(camCardFacadeMock.virtualCamCard$).thenReturn(of(camCardDetails));
     when(checkoutFacadeMock.buckets$).thenReturn(of([]));
     when(checkoutFacadeMock.basket$).thenReturn(of(basketDetails));

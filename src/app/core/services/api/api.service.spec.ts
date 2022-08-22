@@ -1,18 +1,25 @@
-import { HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Store } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { noop } from 'rxjs';
 import { anything, capture, spy, verify } from 'ts-mockito';
 
+import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { Link } from 'ish-core/models/link/link.model';
 import { Locale } from 'ish-core/models/locale/locale.model';
-import { getCurrentLocale, getICMServerURL, getRestEndpoint } from 'ish-core/store/core/configuration';
+import {
+  applyConfiguration,
+  getCurrentLocale,
+  getICMServerURL,
+  getRestEndpoint,
+} from 'ish-core/store/core/configuration';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { serverError } from 'ish-core/store/core/error';
 import { CustomerStoreModule } from 'ish-core/store/customer/customer-store.module';
 import { getPGID } from 'ish-core/store/customer/user';
+import { loadServerConfigSuccess } from 'ish-core/store/general/server-config';
 
 import { ApiService, unpackEnvelope } from './api.service';
 
@@ -21,9 +28,9 @@ import { ApiService, unpackEnvelope } from './api.service';
 
 describe('Api Service', () => {
   describe('API Service Methods', () => {
-    const REST_URL = 'http://www.example.org/WFS/site/-';
+    const REST_URL = 'http://www.example.org/WFS/site/-;loc=en_US;cur=USD';
     let apiService: ApiService;
-    let storeSpy$: Store;
+    let store$: Store;
     let httpTestingController: HttpTestingController;
 
     beforeEach(() => {
@@ -35,7 +42,8 @@ describe('Api Service', () => {
             selectors: [
               { selector: getRestEndpoint, value: 'http://www.example.org/WFS/site/-' },
               { selector: getICMServerURL, value: undefined },
-              { selector: getCurrentLocale, value: undefined },
+              // tslint:disable-next-line:ish-no-object-literal-type-assertion
+              { selector: getCurrentLocale, value: { lang: 'en_US', currency: 'USD' } as Locale },
               { selector: getPGID, value: undefined },
             ],
           }),
@@ -44,7 +52,7 @@ describe('Api Service', () => {
 
       apiService = TestBed.inject(ApiService);
       httpTestingController = TestBed.inject(HttpTestingController);
-      storeSpy$ = spy(TestBed.inject(Store));
+      store$ = spy(TestBed.inject(Store));
     });
 
     afterEach(() => {
@@ -66,18 +74,17 @@ describe('Api Service', () => {
     });
 
     it('should create Error Action if httpClient.options throws Error.', () => {
-      const statusText = 'ERROAAR';
+      const statusText = 'ERROR';
 
-      apiService.options('data').subscribe(fail, fail);
+      apiService.options('data').subscribe({ next: fail, error: fail });
       const req = httpTestingController.expectOne(`${REST_URL}/data`);
 
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation(noop);
       req.flush('err', { status: 500, statusText });
       consoleSpy.mockRestore();
 
-      verify(storeSpy$.dispatch(anything())).once();
-      // tslint:disable-next-line: no-any
-      const [action] = capture(storeSpy$.dispatch).last() as any;
+      verify(store$.dispatch(anything())).once();
+      const [action] = capture<Action & { payload: { error: HttpError } }>(store$.dispatch).last();
       expect(action.type).toEqual(serverError.type);
       expect(action.payload.error).toHaveProperty('statusText', statusText);
     });
@@ -96,18 +103,17 @@ describe('Api Service', () => {
     });
 
     it('should create Error Action if httpClient.get throws Error.', () => {
-      const statusText = 'ERROAAR';
+      const statusText = 'ERROR';
 
-      apiService.get('data').subscribe(fail, fail);
+      apiService.get('data').subscribe({ next: fail, error: fail });
       const req = httpTestingController.expectOne(`${REST_URL}/data`);
 
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation(noop);
       req.flush('err', { status: 500, statusText });
       consoleSpy.mockRestore();
 
-      verify(storeSpy$.dispatch(anything())).once();
-      // tslint:disable-next-line: no-any
-      const [action] = capture(storeSpy$.dispatch).last() as any;
+      verify(store$.dispatch(anything())).once();
+      const [action] = capture<Action & { payload: { error: HttpError } }>(store$.dispatch).last();
       expect(action.type).toEqual(serverError.type);
       expect(action.payload.error).toHaveProperty('statusText', statusText);
     });
@@ -169,7 +175,8 @@ describe('Api Service', () => {
     let httpTestingController: HttpTestingController;
     let apiService: ApiService;
 
-    const REST_URL = 'http://www.example.org/WFS/site/-';
+    const REST_URL = 'http://www.example.org/WFS/site/-;loc=en_US;cur=USD';
+    const REST_URL_PART = REST_URL.replace(/.*\/site/, 'site');
     const categoriesPath = `${REST_URL}/categories`;
     const webcamsPath = `${categoriesPath}/Cameras-Camcorders/577`;
     const webcamResponse = {
@@ -179,7 +186,7 @@ describe('Api Service', () => {
     };
     const webcamLink = {
       type: 'Link',
-      uri: 'site/-/categories/Cameras-Camcorders/577',
+      uri: webcamsPath.replace(/.*\/site/, 'site'),
     };
     const categoriesResponse = {
       elements: [webcamLink],
@@ -194,7 +201,8 @@ describe('Api Service', () => {
             selectors: [
               { selector: getRestEndpoint, value: 'http://www.example.org/WFS/site/-' },
               { selector: getICMServerURL, value: 'http://www.example.org/WFS' },
-              { selector: getCurrentLocale, value: undefined },
+              // tslint:disable-next-line:ish-no-object-literal-type-assertion
+              { selector: getCurrentLocale, value: { lang: 'en_US', currency: 'USD' } as Locale },
               { selector: getPGID, value: undefined },
             ],
           }),
@@ -277,7 +285,11 @@ describe('Api Service', () => {
         });
 
       const req = httpTestingController.expectOne(`${REST_URL}/something`);
-      req.flush([{ uri: 'site/-/dummy1' }, { type: 'Link', uri: 'site/-/dummy2' }, { type: 'Link' }] as Link[]);
+      req.flush([
+        { uri: `${REST_URL_PART}/dummy1` },
+        { type: 'Link', uri: `${REST_URL_PART}/dummy2` },
+        { type: 'Link' },
+      ] as Link[]);
 
       httpTestingController.expectNone(`${REST_URL}/dummy1`);
       httpTestingController.expectOne(`${REST_URL}/dummy2`).flush({});
@@ -319,7 +331,7 @@ describe('Api Service', () => {
           done();
         });
 
-      httpTestingController.expectOne(`${REST_URL}/something`).flush({ type: 'Link', uri: 'site/-/dummy' });
+      httpTestingController.expectOne(`${REST_URL}/something`).flush({ type: 'Link', uri: `${REST_URL_PART}/dummy` });
 
       httpTestingController.expectOne(`${REST_URL}/dummy`).flush({ data: 'dummy' });
     });
@@ -328,18 +340,55 @@ describe('Api Service', () => {
       apiService
         .get('something')
         .pipe(apiService.resolveLink())
-        .subscribe(
-          fail,
-          err => {
+        .subscribe({
+          next: fail,
+          error: err => {
             expect(err).toBeTruthy();
             done();
           },
-          fail
-        );
+          complete: fail,
+        });
 
-      httpTestingController.expectOne(`${REST_URL}/something`).flush({ uri: 'site/-/dummy' });
+      httpTestingController.expectOne(`${REST_URL}/something`).flush({ uri: `${REST_URL_PART}/dummy` });
 
       httpTestingController.expectNone(`${REST_URL}/dummy`);
+    });
+
+    it('should append additional headers when resolveLink is used with header options', () => {
+      const someHeader = { headers: new HttpHeaders({ dummy: 'linkHeaderTest' }) };
+
+      apiService
+        .get('something', someHeader)
+        .pipe(apiService.resolveLink(someHeader))
+        .subscribe({ next: fail, error: fail, complete: fail });
+
+      const req = httpTestingController.expectOne(`${REST_URL}/something`);
+      expect(req.request.headers.get('dummy')).toEqual('linkHeaderTest');
+      req.flush({ type: 'Link', uri: `${REST_URL_PART}/dummy` });
+
+      const req2 = httpTestingController.expectOne(`${REST_URL}/dummy`);
+      expect(req2.request.headers.get('dummy')).toEqual('linkHeaderTest');
+    });
+
+    it('should append additional headers to all link requests when resolveLinks is used with header options', () => {
+      const someHeader = { headers: new HttpHeaders({ dummy: 'linkHeaderTest' }) };
+
+      apiService
+        .get('something', someHeader)
+        .pipe(apiService.resolveLinks(someHeader))
+        .subscribe({ next: fail, error: fail, complete: fail });
+
+      const req = httpTestingController.expectOne(`${REST_URL}/something`);
+      expect(req.request.headers.get('dummy')).toEqual('linkHeaderTest');
+      req.flush([
+        { type: 'Link', uri: `${REST_URL_PART}/dummy1` },
+        { type: 'Link', uri: `${REST_URL_PART}/dummy2` },
+      ] as Link[]);
+
+      const req2 = httpTestingController.expectOne(`${REST_URL}/dummy1`);
+      expect(req2.request.headers.get('dummy')).toEqual('linkHeaderTest');
+      const req3 = httpTestingController.expectOne(`${REST_URL}/dummy2`);
+      expect(req3.request.headers.get('dummy')).toEqual('linkHeaderTest');
     });
   });
 
@@ -374,55 +423,58 @@ describe('Api Service', () => {
     });
 
     it('should bypass URL construction when path is an external link', () => {
-      apiService.get('http://google.de').subscribe(fail, fail, fail);
+      apiService.get('http://google.de').subscribe({ next: fail, error: fail, complete: fail });
 
       httpTestingController.expectOne('http://google.de');
     });
 
     it('should bypass URL construction when path is an external secure link', () => {
-      apiService.get('https://google.de').subscribe(fail, fail, fail);
+      apiService.get('https://google.de').subscribe({ next: fail, error: fail, complete: fail });
 
       httpTestingController.expectOne('https://google.de');
     });
 
-    it('should construct a URL based on ICM REST API when supplying a relative URL', () => {
-      apiService.get('relative').subscribe(fail, fail, fail);
+    it('should construct a URL based on ICM REST API when supplying a relative URL without sending locale or currency', () => {
+      apiService.get('relative').subscribe({ next: fail, error: fail, complete: fail });
 
-      const reqs = httpTestingController.match(x => !!x);
-      expect(reqs).toHaveLength(1);
-      expect(reqs[0].request.urlWithParams).toMatchInlineSnapshot(`"http://www.example.org/WFS/site/-/relative"`);
+      const requests = httpTestingController.match(x => !!x);
+      expect(requests).toHaveLength(1);
+      expect(requests[0].request.urlWithParams).toMatchInlineSnapshot(`"http://www.example.org/WFS/site/-/relative"`);
     });
 
     it('should include query params when supplied', () => {
       apiService
-        .get('relative', { params: new HttpParams().set('view', 'grid').set('depth', '3') })
-        .subscribe(fail, fail, fail);
+        .get('relative', {
+          params: new HttpParams().set('view', 'grid').set('depth', '3'),
+        })
+        .subscribe({ next: fail, error: fail, complete: fail });
 
-      const reqs = httpTestingController.match(x => !!x);
-      expect(reqs).toHaveLength(1);
-      expect(reqs[0].request.urlWithParams).toMatchInlineSnapshot(
+      const requests = httpTestingController.match(x => !!x);
+      expect(requests).toHaveLength(1);
+      expect(requests[0].request.urlWithParams).toMatchInlineSnapshot(
         `"http://www.example.org/WFS/site/-/relative?view=grid&depth=3"`
       );
     });
 
     it('should construct a URL based on ICM REST API when supplying a deep relative URL', () => {
-      apiService.get('very/deep/relative/url').subscribe(fail, fail, fail);
+      apiService.get('very/deep/relative/url').subscribe({ next: fail, error: fail, complete: fail });
 
-      const reqs = httpTestingController.match(x => !!x);
-      expect(reqs).toHaveLength(1);
-      expect(reqs[0].request.urlWithParams).toMatchInlineSnapshot(
+      const requests = httpTestingController.match(x => !!x);
+      expect(requests).toHaveLength(1);
+      expect(requests[0].request.urlWithParams).toMatchInlineSnapshot(
         `"http://www.example.org/WFS/site/-/very/deep/relative/url"`
       );
     });
 
     it('should include locale and currency when available in store', () => {
-      store$.overrideSelector(getCurrentLocale, { currency: 'USD', lang: 'en_US' } as Locale);
+      // tslint:disable-next-line:ish-no-object-literal-type-assertion
+      store$.overrideSelector(getCurrentLocale, { lang: 'en_US', currency: 'USD' } as Locale);
 
-      apiService.get('relative').subscribe(fail, fail, fail);
+      apiService.get('relative').subscribe({ next: fail, error: fail, complete: fail });
 
-      const reqs = httpTestingController.match(x => !!x);
-      expect(reqs).toHaveLength(1);
-      expect(reqs[0].request.urlWithParams).toMatchInlineSnapshot(
+      const requests = httpTestingController.match(x => !!x);
+      expect(requests).toHaveLength(1);
+      expect(requests[0].request.urlWithParams).toMatchInlineSnapshot(
         `"http://www.example.org/WFS/site/-;loc=en_US;cur=USD/relative"`
       );
     });
@@ -430,11 +482,11 @@ describe('Api Service', () => {
     it('should include pgid when available in store and requested', () => {
       store$.overrideSelector(getPGID, 'ASDF');
 
-      apiService.get('relative', { sendPGID: true }).subscribe(fail, fail, fail);
+      apiService.get('relative', { sendPGID: true }).subscribe({ next: fail, error: fail, complete: fail });
 
-      const reqs = httpTestingController.match(x => !!x);
-      expect(reqs).toHaveLength(1);
-      expect(reqs[0].request.urlWithParams).toMatchInlineSnapshot(
+      const requests = httpTestingController.match(x => !!x);
+      expect(requests).toHaveLength(1);
+      expect(requests[0].request.urlWithParams).toMatchInlineSnapshot(
         `"http://www.example.org/WFS/site/-/relative;pgid=ASDF"`
       );
     });
@@ -442,11 +494,11 @@ describe('Api Service', () => {
     it('should include spgid when available in store and requested', () => {
       store$.overrideSelector(getPGID, 'ASDF');
 
-      apiService.get('relative', { sendSPGID: true }).subscribe(fail, fail, fail);
+      apiService.get('relative', { sendSPGID: true }).subscribe({ next: fail, error: fail, complete: fail });
 
-      const reqs = httpTestingController.match(x => !!x);
-      expect(reqs).toHaveLength(1);
-      expect(reqs[0].request.urlWithParams).toMatchInlineSnapshot(
+      const requests = httpTestingController.match(x => !!x);
+      expect(requests).toHaveLength(1);
+      expect(requests[0].request.urlWithParams).toMatchInlineSnapshot(
         `"http://www.example.org/WFS/site/-/relative;spgid=ASDF"`
       );
     });
@@ -454,26 +506,27 @@ describe('Api Service', () => {
     it('should include pgid on first path element when available in store and requested', () => {
       store$.overrideSelector(getPGID, 'ASDF');
 
-      apiService.get('very/deep/relative', { sendPGID: true }).subscribe(fail, fail, fail);
+      apiService.get('very/deep/relative', { sendPGID: true }).subscribe({ next: fail, error: fail, complete: fail });
 
-      const reqs = httpTestingController.match(x => !!x);
-      expect(reqs).toHaveLength(1);
-      expect(reqs[0].request.urlWithParams).toMatchInlineSnapshot(
+      const requests = httpTestingController.match(x => !!x);
+      expect(requests).toHaveLength(1);
+      expect(requests[0].request.urlWithParams).toMatchInlineSnapshot(
         `"http://www.example.org/WFS/site/-/very;pgid=ASDF/deep/relative"`
       );
     });
 
     it('should include params, pgid and locale for complex example', () => {
       store$.overrideSelector(getPGID, 'ASDF');
-      store$.overrideSelector(getCurrentLocale, { currency: 'USD', lang: 'en_US' } as Locale);
+      // tslint:disable-next-line:ish-no-object-literal-type-assertion
+      store$.overrideSelector(getCurrentLocale, { lang: 'en_US', currency: 'USD' } as Locale);
 
       apiService
         .get('very/deep/relative', { sendPGID: true, params: new HttpParams().set('view', 'grid').set('depth', '3') })
-        .subscribe(fail, fail, fail);
+        .subscribe({ next: fail, error: fail, complete: fail });
 
-      const reqs = httpTestingController.match(x => !!x);
-      expect(reqs).toHaveLength(1);
-      expect(reqs[0].request.urlWithParams).toMatchInlineSnapshot(
+      const requests = httpTestingController.match(x => !!x);
+      expect(requests).toHaveLength(1);
+      expect(requests[0].request.urlWithParams).toMatchInlineSnapshot(
         `"http://www.example.org/WFS/site/-;loc=en_US;cur=USD/very;pgid=ASDF/deep/relative?view=grid&depth=3"`
       );
     });
@@ -509,8 +562,26 @@ describe('Api Service', () => {
       httpTestingController = TestBed.inject(HttpTestingController);
       store$ = TestBed.inject(MockStore);
 
-      store$.overrideSelector(getCurrentLocale, { currency: 'USD', lang: 'en_US' } as Locale);
+      store$.overrideSelector(getCurrentLocale, { lang: 'en_US', currency: 'USD' } as Locale);
       store$.overrideSelector(getPGID, 'ASDF');
+
+      store$.dispatch(
+        applyConfiguration({
+          baseURL: 'http://www.example.org',
+          server: 'WFS',
+          channel: 'site',
+        })
+      );
+      store$.dispatch(
+        loadServerConfigSuccess({
+          config: {
+            general: {
+              locales: ['en_US'],
+              currencies: ['USD'],
+            },
+          },
+        })
+      );
     });
 
     afterEach(() => {
@@ -519,7 +590,7 @@ describe('Api Service', () => {
     });
 
     it('should always have default headers', () => {
-      apiService.get('dummy').subscribe(fail, fail, fail);
+      apiService.get('dummy').subscribe({ next: fail, error: fail, complete: fail });
 
       const req = httpTestingController.expectOne(`${REST_URL}/dummy`);
       expect(req.request.headers.keys()).not.toBeEmpty();
@@ -534,7 +605,7 @@ describe('Api Service', () => {
             dummy: 'test',
           }),
         })
-        .subscribe(fail, fail, fail);
+        .subscribe({ next: fail, error: fail, complete: fail });
 
       const req = httpTestingController.expectOne(`${REST_URL}/dummy`);
       expect(req.request.headers.keys()).not.toBeEmpty();
@@ -551,7 +622,7 @@ describe('Api Service', () => {
             'content-type': 'application/xml',
           }),
         })
-        .subscribe(fail, fail, fail);
+        .subscribe({ next: fail, error: fail, complete: fail });
 
       const req = httpTestingController.expectOne(`${REST_URL}/dummy`);
       expect(req.request.headers.keys()).not.toBeEmpty();
@@ -560,36 +631,51 @@ describe('Api Service', () => {
     });
 
     it('should set Captcha V2 authorization header key when captcha is supplied without captchaAction', () => {
-      apiService.get('dummy', { captcha: { captcha: 'captchatoken' } }).subscribe(fail, fail, fail);
+      apiService.get('dummy', { captcha: { captcha: 'token' } }).subscribe({ next: fail, error: fail, complete: fail });
 
       const req = httpTestingController.expectOne(`${REST_URL}/dummy`);
       expect(req.request.headers.get(ApiService.AUTHORIZATION_HEADER_KEY)).toMatchInlineSnapshot(
-        `"CAPTCHA g-recaptcha-response=captchatoken foo=bar"`
+        `"CAPTCHA g-recaptcha-response=token foo=bar"`
       );
     });
 
     it('should set Captcha V3 authorization header key when captcha is supplied', () => {
       apiService
-        .get('dummy', { captcha: { captcha: 'captchatoken', captchaAction: 'create_account' } })
-        .subscribe(fail, fail, fail);
+        .get('dummy', { captcha: { captcha: 'token', captchaAction: 'create_account' } })
+        .subscribe({ next: fail, error: fail, complete: fail });
 
       const req = httpTestingController.expectOne(`${REST_URL}/dummy`);
       expect(req.request.headers.get(ApiService.AUTHORIZATION_HEADER_KEY)).toMatchInlineSnapshot(
-        `"CAPTCHA recaptcha_token=captchatoken action=create_account"`
+        `"CAPTCHA recaptcha_token=token action=create_account"`
       );
     });
 
     it('should not set header when captcha config object is empty', () => {
-      apiService.get('dummy', { captcha: {} }).subscribe(fail, fail, fail);
+      apiService.get('dummy', { captcha: {} }).subscribe({ next: fail, error: fail, complete: fail });
 
       const req = httpTestingController.expectOne(`${REST_URL}/dummy`);
       expect(req.request.headers.get(ApiService.AUTHORIZATION_HEADER_KEY)).toBeFalsy();
     });
+
+    it('should have default response type of "json" if no other is provided', () => {
+      apiService.get('dummy').subscribe({ next: fail, error: fail, complete: fail });
+
+      const req = httpTestingController.expectOne(`${REST_URL}/dummy`);
+      expect(req.request.responseType).toEqual('json');
+    });
+
+    it('should append specific response type of "text" if provided', () => {
+      apiService.get('dummy', { responseType: 'text' }).subscribe({ next: fail, error: fail, complete: fail });
+
+      const req = httpTestingController.expectOne(`${REST_URL}/dummy`);
+      expect(req.request.responseType).toEqual('text');
+    });
   });
 
-  describe('API Service exclusive runs', () => {
+  describe('API Service general error handling', () => {
     let apiService: ApiService;
     let httpTestingController: HttpTestingController;
+    let store$: Store;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -599,7 +685,8 @@ describe('Api Service', () => {
             selectors: [
               { selector: getICMServerURL, value: undefined },
               { selector: getRestEndpoint, value: 'http://www.example.org' },
-              { selector: getCurrentLocale, value: undefined },
+              // tslint:disable-next-line:ish-no-object-literal-type-assertion
+              { selector: getCurrentLocale, value: { lang: 'en_US', currency: 'USD' } as Locale },
               { selector: getPGID, value: undefined },
             ],
           }),
@@ -608,6 +695,7 @@ describe('Api Service', () => {
 
       apiService = TestBed.inject(ApiService);
       httpTestingController = TestBed.inject(HttpTestingController);
+      store$ = spy(TestBed.inject(Store));
     });
 
     afterEach(() => {
@@ -615,81 +703,58 @@ describe('Api Service', () => {
       httpTestingController.verify();
     });
 
-    it('should run call exclusively when asked for it', done => {
-      let syncData;
+    it('should dispatch communication timeout errors when getting status 0', done => {
+      apiService.get('route').subscribe({ next: fail, error: fail, complete: done });
 
-      apiService.get('dummy1', { runExclusively: true }).subscribe(data => {
-        expect(data).toBeTruthy();
-        syncData = data;
-      });
+      httpTestingController
+        .expectOne(() => true)
+        .flush('', {
+          status: 0,
+          statusText: 'Error',
+        });
 
-      const req1 = httpTestingController.expectOne(`http://www.example.org/dummy1`);
-
-      setTimeout(() => {
-        req1.flush('TEST1');
-      }, 2000);
-
-      apiService.get('dummy2').subscribe(data => {
-        expect(data).toBeTruthy();
-        expect(syncData).toEqual('TEST1');
-      });
-
-      apiService.get('dummy3').subscribe(data => {
-        expect(data).toBeTruthy();
-        expect(syncData).toEqual('TEST1');
-        done();
-      });
-
-      httpTestingController.verify();
-      setTimeout(() => httpTestingController.verify(), 500);
-      setTimeout(() => httpTestingController.verify(), 1000);
-      setTimeout(() => httpTestingController.verify(), 1500);
-
-      setTimeout(() => {
-        const req2 = httpTestingController.expectOne(`http://www.example.org/dummy2`);
-        req2.flush('TEST2');
-      }, 2500);
-      setTimeout(() => {
-        const req3 = httpTestingController.expectOne(`http://www.example.org/dummy3`);
-        req3.flush('TEST3');
-      }, 3000);
+      verify(store$.dispatch(anything())).once();
+      expect(capture(store$.dispatch).last()?.[0]).toMatchInlineSnapshot(`
+        [Error] Communication Timeout Error:
+          error: {"headers":{"normalizedNames":{},"lazyUpdate":null,"headers"...
+      `);
     });
 
-    it('should run calls in parallel if not explicitly run exclusively', done => {
-      let syncData;
+    it('should dispatch general errors when getting status 500', done => {
+      apiService.get('route').subscribe({ next: fail, error: fail, complete: done });
 
-      apiService.get('dummy1').subscribe(data => {
-        expect(data).toBeTruthy();
-        expect(syncData).toEqual('TEST2');
-        syncData = data;
+      httpTestingController
+        .expectOne(() => true)
+        .flush('', {
+          status: 500,
+          statusText: 'Error',
+        });
+
+      verify(store$.dispatch(anything())).once();
+      expect(capture(store$.dispatch).last()?.[0]).toMatchInlineSnapshot(`
+        [Error] Server Error (5xx):
+          error: {"headers":{"normalizedNames":{},"lazyUpdate":null,"headers"...
+      `);
+    });
+
+    it('should not dispatch errors when getting status 404', done => {
+      apiService.get('route').subscribe({
+        next: fail,
+        error: err => {
+          expect(err).toBeInstanceOf(HttpErrorResponse);
+          done();
+        },
+        complete: fail,
       });
 
-      const req1 = httpTestingController.expectOne(`http://www.example.org/dummy1`);
+      httpTestingController
+        .expectOne(() => true)
+        .flush('', {
+          status: 404,
+          statusText: 'Error',
+        });
 
-      apiService.get('dummy2').subscribe(data => {
-        expect(data).toBeTruthy();
-        syncData = data;
-      });
-
-      const req2 = httpTestingController.expectOne(`http://www.example.org/dummy2`);
-
-      apiService.get('dummy3').subscribe(data => {
-        expect(data).toBeTruthy();
-        expect(syncData).toEqual('TEST1');
-        done();
-      });
-
-      const req3 = httpTestingController.expectOne(`http://www.example.org/dummy3`);
-
-      setTimeout(() => {
-        req1.flush('TEST1');
-      }, 2000);
-      setTimeout(() => {
-        req2.flush('TEST2');
-      }, 1500);
-      setTimeout(() => {
-        req3.flush('TEST3');
-      }, 3000);
+      verify(store$.dispatch(anything())).never();
     });
   });
 });

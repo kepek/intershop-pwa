@@ -46,6 +46,11 @@ exports[`Camfil Header Default Component should render normal header adequately 
         <ish-content-include
           includeid="camfil.include.header.logo.content.pagelet2-Include"
           ng-reflect-include-id="camfil.include.header.logo.con"
+        ></ish-content-include
+        ><ish-content-include
+          includeid="camfil.include.header.mobileLogo.content.pagelet2-Include"
+          ng-reflect-include-id="camfil.include.header.mobileLo"
+          hidden=""
         ></ish-content-include>
       </div>
     </div>
@@ -114,6 +119,11 @@ exports[`Camfil Header Default Component should render normal header adequately 
         <ish-content-include
           includeid="camfil.include.header.logo.content.pagelet2-Include"
           ng-reflect-include-id="camfil.include.header.logo.con"
+        ></ish-content-include
+        ><ish-content-include
+          includeid="camfil.include.header.mobileLogo.content.pagelet2-Include"
+          ng-reflect-include-id="camfil.include.header.mobileLo"
+          hidden=""
         ></ish-content-include>
       </div>
     </div>
@@ -167,6 +177,11 @@ exports[`Camfil Header Default Component should render sticky header adequately 
       </button>
       <div class="logo-wrapper">
         <ish-content-include
+          includeid="camfil.include.header.logo.content.pagelet2-Include"
+          ng-reflect-include-id="camfil.include.header.logo.con"
+          hidden=""
+        ></ish-content-include
+        ><ish-content-include
           includeid="camfil.include.header.mobileLogo.content.pagelet2-Include"
           ng-reflect-include-id="camfil.include.header.mobileLo"
         ></ish-content-include>
@@ -224,6 +239,11 @@ exports[`Camfil Header Default Component should render sticky header adequately 
       </button>
       <div class="logo-wrapper">
         <ish-content-include
+          includeid="camfil.include.header.logo.content.pagelet2-Include"
+          ng-reflect-include-id="camfil.include.header.logo.con"
+          hidden=""
+        ></ish-content-include
+        ><ish-content-include
           includeid="camfil.include.header.mobileLogo.content.pagelet2-Include"
           ng-reflect-include-id="camfil.include.header.mobileLo"
         ></ish-content-include>
@@ -287,6 +307,11 @@ exports[`Camfil Header Default Component should render sticky header adequately 
       </button>
       <div class="logo-wrapper">
         <ish-content-include
+          includeid="camfil.include.header.logo.content.pagelet2-Include"
+          ng-reflect-include-id="camfil.include.header.logo.con"
+          hidden=""
+        ></ish-content-include
+        ><ish-content-include
           includeid="camfil.include.header.mobileLogo.content.pagelet2-Include"
           ng-reflect-include-id="camfil.include.header.mobileLo"
         ></ish-content-include>

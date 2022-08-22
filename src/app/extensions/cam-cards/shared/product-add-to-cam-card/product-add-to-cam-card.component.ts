@@ -104,7 +104,7 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
 
   protected init() {
     this.camCardsFacade.camCardsLoading$.pipe(whenFalsy(), take(1)).subscribe(() => {
-      this.camCardsFacade.camCard$
+      this.camCardsFacade.camCards$
         .pipe(first())
         .subscribe(camCards => (!camCards?.length ? this.camCardsFacade.loadCamCards() : ''));
     });

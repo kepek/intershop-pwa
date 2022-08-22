@@ -14,7 +14,7 @@ export class IdentityProviderLogoutGuard implements CanActivate {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// tslint:disable-next-line:@typescript-eslint/no-explicit-any
 function isPromise(obj: any): obj is Promise<any> {
   return !!obj && typeof obj.then === 'function';
 }

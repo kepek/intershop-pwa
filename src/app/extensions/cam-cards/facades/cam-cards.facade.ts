@@ -41,11 +41,13 @@ import {
   getCamCardDetails,
   getCamCardError,
   getCamCardLoading,
+  getCamCards,
   getCamCardsInBasketsForAllUsers,
   getCamCardsInBasketsForAllUsersLoading,
   getCamCardsLoading,
   getContactsbyCustomerId,
   getCustomerAddresses,
+  getRootCamCards,
   getSelectedCamCardDetails,
   getUserContactForCustomer,
   getValidationErrors,
@@ -76,7 +78,9 @@ import {
 export class CamCardsFacade {
   constructor(private store: Store) {}
 
-  camCard$: Observable<CamCard[]> = this.store.pipe(select(getAllCamCards));
+  allCamCards$: Observable<CamCard[]> = this.store.pipe(select(getAllCamCards));
+  camCards$: Observable<CamCard[]> = this.store.pipe(select(getCamCards));
+  rootCamCards$: Observable<CamCard[]> = this.store.pipe(select(getRootCamCards));
   currentCamCard$: Observable<CamCard> = this.store.pipe(select(getSelectedCamCardDetails));
   camCardLoading$: Observable<boolean> = this.store.pipe(select(getCamCardLoading));
   camCardAdding$: Observable<boolean> = this.store.pipe(select(getCamCardAdding));

@@ -30,7 +30,7 @@ export class CamfilFooterComponent implements OnInit, OnChanges {
     this.collapsed = this.collapsed.map(() => this.deviceType === 'mobile');
 
     if (isPlatformBrowser(this.platformId)) {
-      this.appVersion = this.transferState.get(DISPLAY_VERSION, '');
+      this.appVersion = this.transferState.get(DISPLAY_VERSION, 'development');
     }
   }
 

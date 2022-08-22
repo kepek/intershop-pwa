@@ -1,4 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -11,7 +11,6 @@ import {
   distinctUntilChanged,
   filter,
   groupBy,
-  last,
   map,
   mapTo,
   mergeMap,
@@ -130,10 +129,10 @@ import {
   validateCamCardImportSuccess,
 } from './cam-card.actions';
 import {
-  getAllCamCards,
   getCamCardCustomers,
   getCamCardDetails,
   getCamCardEntities,
+  getCamCards,
   getCustomerAddresses,
   getSelectedCamCardDetails,
   getSelectedCamCardId,
@@ -147,7 +146,8 @@ export class CamCardEffects {
     private camCardService: CamCardService,
     private store: Store,
     private router: Router,
-    @Inject(PLATFORM_ID) private platformId: string
+    @Inject(PLATFORM_ID) private platformId: string,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   routeListenerForCamCards$ = createEffect(() =>
@@ -155,7 +155,7 @@ export class CamCardEffects {
       ofType(routerNavigatedAction),
       mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
       filter((routerState: RouterState) => /^\/(account\/camcards)/.test(routerState.url)),
-      withLatestFrom(this.store.pipe(select(getAllCamCards)), this.store.pipe(select(getCamCardCustomers))),
+      withLatestFrom(this.store.pipe(select(getCamCards)), this.store.pipe(select(getCamCardCustomers))),
       mergeMap(([, cc, customers]) =>
         cc.length && customers.length ? EMPTY : [loadCustomers(), loadCamCards({ includeAllCustomerCamCards: false })]
       )
@@ -178,22 +178,16 @@ export class CamCardEffects {
     this.actions$.pipe(
       ofType(loadCamCards),
       mapToPayloadProperty('includeAllCustomerCamCards'),
-      windowRxOperator(this.actions$.pipe(ofType(loadCamCards), debounceTime(500))),
+      withLatestFrom(this.store.pipe(select(getUserAuthorized))),
+      filter(([, authorized]) => authorized),
+      windowRxOperator(this.actions$.pipe(ofType(loadCamCards), debounceTime(1000))),
       mergeMap(window$ =>
         window$.pipe(
-          last(),
-          withLatestFrom(this.store.pipe(select(getUserAuthorized))),
-          mergeMap(([includeAllCustomerCamCards, authorized]) =>
-            authorized
-              ? this.camCardService.getCamCards(includeAllCustomerCamCards).pipe(
-                  map(items => {
-                    // TODO: to improve - move filter to selectors like getRootCamCards
-                    const camCards = items.filter(item => !item.rootCamCard);
-                    return loadCamCardsSuccess({ camCards });
-                  }),
-                  mapErrorToAction(loadCamCardsFail)
-                )
-              : [loadCamCardsSuccess({ camCards: [] })]
+          concatMap(([includeAllCustomerCamCards]) =>
+            this.camCardService.getCamCards(includeAllCustomerCamCards).pipe(
+              map(camCards => loadCamCardsSuccess({ camCards })),
+              mapErrorToAction(loadCamCardsFail)
+            )
           )
         )
       )
@@ -348,7 +342,6 @@ export class CamCardEffects {
       windowRxOperator(this.actions$.pipe(ofType(loadDeliveryAddresses), debounceTime(1000))),
       mergeMap(window$ =>
         window$.pipe(
-          last(),
           withLatestFrom(this.store.pipe(select(getCustomerAddresses))),
           mergeMap(([id, savedAddresses]) =>
             savedAddresses[id]?.length
@@ -864,7 +857,7 @@ export class CamCardEffects {
             mergeMap(device =>
               fromEvent(window, 'scroll').pipe(
                 map(() => {
-                  const bar = document.getElementsByTagName('camfil-account-cam-card-toolbar')[0] as HTMLElement;
+                  const bar = this.document.getElementsByTagName('camfil-account-cam-card-toolbar')?.[0] as HTMLElement;
                   if (bar) {
                     const barBounding = bar.getBoundingClientRect();
                     if (device === 'mobile') {

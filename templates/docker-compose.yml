@@ -20,6 +20,7 @@ services:
       - PROXY_ICM=${PROXY_ICM}
       - SSR_HYBRID=true
       - GTM_TOKEN=${GTM_TOKEN}
+      - DISPLAY_VERSION="development"
       # - PROMETHEUS=on
   nginx:
     build: ../nginx

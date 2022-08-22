@@ -169,7 +169,7 @@ describe('Camfil Checkout Onestep Page Component', () => {
     when(shoppingFacadeMock.productAdded$).thenReturn(of(true));
 
     when(camCardFacadeMock.currentCamCard$).thenReturn(of(camCardDetails));
-    when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
+    when(camCardFacadeMock.camCards$).thenReturn(of([camCardDetails]));
     when(camCardFacadeMock.customers$).thenReturn(of([]));
 
     when(checkoutFacade.buckets$).thenReturn(of([]));

@@ -41,7 +41,7 @@ import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { addProductToBasket, loadBasketSuccess, startCheckout } from './basket';
 
 describe('Customer Store', () => {
-  let store: StoreWithSnapshots;
+  let store$: StoreWithSnapshots;
 
   const lineItem = {
     id: 'test',
@@ -146,7 +146,7 @@ describe('Customer Store', () => {
     when(promotionsServiceMock.getPromotion(anything())).thenReturn(of(promotion));
 
     const userServiceMock = mock(UserService);
-    when(userServiceMock.signinUser(anything())).thenReturn(of({ customer, user }));
+    when(userServiceMock.signInUser(anything())).thenReturn(of({ customer, user }));
 
     const personalizationServiceMock = mock(PersonalizationService);
     when(personalizationServiceMock.getPGID()).thenReturn(EMPTY);
@@ -192,58 +192,33 @@ describe('Customer Store', () => {
       ],
     });
 
-    store = TestBed.inject(StoreWithSnapshots);
+    store$ = TestBed.inject(StoreWithSnapshots);
   });
 
   it('should be created', () => {
-    expect(store).toBeTruthy();
+    expect(store$).toBeTruthy();
   });
 
   describe('with anonymous user', () => {
     beforeEach(() => {
-      store.dispatch(
+      store$.dispatch(
         loadProductSuccess({
           product: { sku: 'test', packingUnit: 'pcs.', completenessLevel: ProductCompletenessLevel.List } as Product,
         })
       );
-      store.dispatch(addProductToBasket({ sku: 'test', quantity: 1, shippingMethod: 'STD_GROUND' }));
-    });
-
-    describe('and without basket', () => {
-      it('should initially load basket and basketItems on product add.', done => {
-        setTimeout(() => {
-          expect(store.actionsArray(/Basket|Products/)).toMatchInlineSnapshot(`
-            [Products API] Load Product Success:
-              product: {"sku":"test","packingUnit":"pcs.","completenessLevel":2}
-            [Basket] Add Product To Basket:
-              sku: "test"
-              quantity: 1
-              shippingMethod: "STD_GROUND"
-            [Basket Internal] Add Items To Basket:
-              items: [{"sku":"test","quantity":1,"shippingMethod":"STD_GROUND","u...
-            [Basket API] Add Items To Basket Success:
-              info: undefined
-            [Products Internal] Load Product:
-              sku: "test"
-            [Basket Internal] Load Basket
-            [Products API] Load Product Success:
-              product: {"name":"test","shortDescription":"test","longDescription":"...
-          `);
-          done();
-        }, 1000);
-      });
+      store$.dispatch(addProductToBasket({ sku: 'test', quantity: 1, shippingMethod: 'STD_GROUND' }));
     });
 
     describe('and with basket', () => {
       beforeEach(() => {
-        store.dispatch(loadBasketSuccess({ basket }));
+        store$.dispatch(loadBasketSuccess({ basket }));
 
-        store.reset();
+        store$.reset();
       });
       it('should merge basket on user login.', () => {
-        store.dispatch(loginUser({ credentials: {} as Credentials }));
+        store$.dispatch(loginUser({ credentials: {} as Credentials }));
 
-        expect(store.actionsArray()).toMatchInlineSnapshot(`
+        expect(store$.actionsArray()).toMatchInlineSnapshot(`
           [User] Login User:
             credentials: {}
           [User API] Login User Success:
@@ -256,8 +231,8 @@ describe('Customer Store', () => {
       });
 
       it('should go to checkout address page after starting checkout.', () => {
-        store.dispatch(startCheckout());
-        expect(store.actionsArray()).toMatchInlineSnapshot(`
+        store$.dispatch(startCheckout());
+        expect(store$.actionsArray()).toMatchInlineSnapshot(`
           [Basket] Start the checkout process
           [Basket] Validate Basket and continue checkout:
             targetStep: 1
