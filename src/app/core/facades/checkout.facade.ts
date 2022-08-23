@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store, createSelector, select } from '@ngrx/store';
-import { getBucketGoodsAcceptanceNote } from 'camfil-pwa/store/customer/ish-basket/ish-basket-addresses.selectors';
+import { getBucketGoodsAcceptanceNote } from 'camfil-pwa/store/ish-customer/ish-basket/ish-basket-addresses.selectors';
 import { merge } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 
@@ -20,7 +20,6 @@ import {
   addPromotionCodeToBasket,
   assignBasketAddress,
   camfilDragLineItem,
-  checkCurrentBasket,
   continueCheckout,
   createBasketAddress,
   createBasketPayment,
@@ -61,7 +60,6 @@ import {
   isBasketInvoiceAndShippingAddressEqual,
   loadBasketEligiblePaymentMethods,
   loadBasketEligibleShippingMethods,
-  loadBuckets,
   loadCustomerDeliveryTerm,
   removePromotionCodeFromBasket,
   setBasketAttribute,
@@ -183,10 +181,6 @@ export class CheckoutFacade {
     this.store.dispatch(deleteBasketAttribute({ attributeName }));
   }
 
-  checkCurrentBasket() {
-    this.store.dispatch(checkCurrentBasket());
-  }
-
   eligibleShippingMethods$() {
     return this.basketLineItems$.pipe(
       whenTruthy(),
@@ -251,10 +245,6 @@ export class CheckoutFacade {
 
   updateConcardisCvcLastUpdated(paymentInstrument: PaymentInstrument) {
     this.store.dispatch(updateConcardisCvcLastUpdated({ paymentInstrument }));
-  }
-
-  loadBuckets() {
-    this.store.dispatch(loadBuckets());
   }
 
   addEmptyBucket(emptyBucket: Bucket) {

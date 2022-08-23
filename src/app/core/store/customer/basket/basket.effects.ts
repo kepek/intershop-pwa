@@ -1,46 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { combineLatest, forkJoin, iif, of } from 'rxjs';
-import {
-  concatMap,
-  concatMapTo,
-  debounceTime,
-  distinctUntilChanged,
-  filter,
-  map,
-  mapTo,
-  mergeMap,
-  sample,
-  startWith,
-  switchMap,
-  take,
-  tap,
-  withLatestFrom,
-} from 'rxjs/operators';
+import { concatMap, filter, map, mapTo, mergeMap, take, tap, withLatestFrom } from 'rxjs/operators';
 
-import { Basket } from 'ish-core/models/basket/basket.model';
 import { BasketService } from 'ish-core/services/basket/basket.service';
-import { RouterState } from 'ish-core/store/core/router/router.reducer';
-import { setCheckoutFocusedElement } from 'ish-core/store/core/viewconf/viewconf.actions';
-import { createUser, loadUserByAPIToken, loginUser, loginUserSuccess } from 'ish-core/store/customer/user';
 import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
-import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
+import { mapErrorToAction, mapToPayloadProperty } from 'ish-core/utils/operators';
 
 import {
-  camfilDragLineItem,
-  camfilDragLineItemFail,
-  camfilDragLineItemSuccess,
-  checkCurrentBasket,
   createBasket,
-  deleteBasketAttribute,
-  deleteBasketAttributeFail,
-  deleteBasketAttributeSuccess,
-  focusedCheckoutElement,
-  getWarehouseCalendar,
-  getWarehouseCalendarSuccess,
+  createBasketFail,
+  createBasketSuccess,
   loadBasket,
   loadBasketByAPIToken,
   loadBasketEligibleShippingMethods,
@@ -48,15 +19,7 @@ import {
   loadBasketEligibleShippingMethodsSuccess,
   loadBasketFail,
   loadBasketSuccess,
-  loadBuckets,
-  loadBucketsSuccess,
-  loadCustomerDeliveryTerm,
-  loadCustomerDeliveryTermFail,
-  loadCustomerDeliveryTermSuccess,
   resetBasketErrors,
-  setBasketAttribute,
-  setBasketAttributeFail,
-  setBasketAttributeSuccess,
   submitBasket,
   submitBasketFail,
   submitBasketSuccess,
@@ -66,15 +29,13 @@ import {
   updateBasketShippingMethod,
   validateBasket,
 } from './basket.actions';
-import {
-  getCurrentBasket,
-  getCurrentBasketId,
-  getCustomersDeliveryTerms,
-  getSubmittedBasketId,
-} from './basket.selectors';
+import { getCurrentBasket, getCurrentBasketId } from './basket.selectors';
 
 @Injectable()
 export class BasketEffects {
+  /**
+   * The load basket effect.
+   */
   /**
    * The load basket effect.
    */
@@ -82,8 +43,8 @@ export class BasketEffects {
     this.actions$.pipe(
       ofType(loadBasket),
       mergeMap(() =>
-        forkJoin([this.basketService.getBasket(), this.basketService.getBuckets()]).pipe(
-          mergeMap(([basket, buckets]) => [loadBasketSuccess({ basket }), loadBucketsSuccess({ buckets })]),
+        this.basketService.getBasket().pipe(
+          map(basket => loadBasketSuccess({ basket })),
           mapErrorToAction(loadBasketFail)
         )
       )
@@ -152,6 +113,8 @@ export class BasketEffects {
   /**
    * Add or update an attribute at the basket.
    */
+  // tslint:disable-next-line:force-jsdoc-comments no-commented-out-code
+  /*
   setCustomAttributeToBasket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(setBasketAttribute),
@@ -165,9 +128,12 @@ export class BasketEffects {
       )
     )
   );
+  */
   /**
    * Delete an attribute from the basket. If the attribute doesn't exist, ignore it and return with the success action.
    */
+  // tslint:disable-next-line:force-jsdoc-comments no-commented-out-code
+  /*
   deleteCustomAttributeFromBasket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteBasketAttribute),
@@ -188,9 +154,42 @@ export class BasketEffects {
   /**
    * loading and handling merges of the users baskets, when the user logs in
    */
+  // tslint:disable-next-line:force-jsdoc-comments no-commented-out-code
+  /*
   loadOrMergeBasketAfterLogin$ = createEffect(() =>
-    this.actions$.pipe(ofType(loginUserSuccess), map(checkCurrentBasket))
+    this.actions$.pipe(
+      ofType(loginUserSuccess),
+      withLatestFrom(this.anonymousBasket$),
+      switchMap(([, [sourceBasketId, sourceApiToken]]) =>
+        this.basketService.getBaskets().pipe(
+          switchMap(baskets => {
+            if (sourceBasketId) {
+              // anonymous basket exists -> get or create user basket and merge anonymous basket into it
+              return iif(
+                () => !!baskets.length,
+                this.basketService.getBasket(),
+                this.basketService.createBasket()
+              ).pipe(
+                switchMap(newOrCurrentUserBasket =>
+                  this.basketService
+                    .mergeBasket(sourceBasketId, sourceApiToken, newOrCurrentUserBasket.id)
+                    .pipe(map(basket => mergeBasketSuccess({ basket })))
+                ),
+                mapErrorToAction(mergeBasketFail)
+              );
+            } else if (baskets.length) {
+              // no anonymous basket exists and user already has a basket -> load it
+              return of(loadBasket());
+            } else {
+              // no anonymous or user basket -> do nothing
+              return EMPTY;
+            }
+          })
+        )
+      )
+    )
   );
+  */
   /**
    * Trigger ResetBasketErrors after the user navigated to another basket/checkout route
    * Add queryParam error=true to the route to prevent resetting errors.
@@ -227,112 +226,31 @@ export class BasketEffects {
       )
     )
   );
-  camfilDragLineItem$ = createEffect(() =>
+  createBasket$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(camfilDragLineItem),
-      mapToPayload(),
-      mergeMap(payload =>
-        this.basketService.camfilDragLineItem(payload.basketId, payload.updatedLineItem, payload.targetBucket).pipe(
-          mergeMap(updatedBasket => [camfilDragLineItemSuccess({ updatedBasket }), loadBuckets()]),
-          mapErrorToAction(camfilDragLineItemFail)
-        )
-      )
-    )
-  );
-  loadCustomerDeliveryTerm$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadCustomerDeliveryTerm),
-      mapToPayload(),
-      withLatestFrom(this.store.select(getCustomersDeliveryTerms)),
-      filter(([{ customerId }, terms]) => !terms[customerId]),
-      concatMap(([{ customerId }]) =>
-        this.basketService.loadCustomerDeliveryTerm(customerId).pipe(
-          mergeMap(term => [loadCustomerDeliveryTermSuccess({ customerId, term })]),
-          mapErrorToAction(loadCustomerDeliveryTermFail)
-        )
-      )
-    )
-  );
-  createBasket$ = createEffect(() => this.actions$.pipe(ofType(createBasket), map(checkCurrentBasket)));
-
-  // CAMFIL
-  getWarehouseCalendar$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(getWarehouseCalendar),
+      ofType(createBasket),
       mergeMap(() =>
-        this.basketService.getWarehouseCalendar().pipe(
-          map((dates: []) => getWarehouseCalendarSuccess({ dates })),
-          mapErrorToAction(loadBasketFail)
+        this.basketService.createBasket().pipe(
+          map(basket => createBasketSuccess({ basket })),
+          mapErrorToAction(createBasketFail)
         )
       )
-    )
-  );
-  setCheckoutFocusedElement$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(focusedCheckoutElement),
-      debounceTime(300),
-      distinctUntilChanged(),
-      mapToPayload(),
-      map(setCheckoutFocusedElement)
     )
   );
   /**
    * dummy effect keeping the anonymous basket with the corresponding apiToken for the basket merge call
    */
+  // tslint:disable-next-line:force-jsdoc-comments no-commented-out-code
+  /*
   private anonymousBasket$ = createEffect(
     () =>
       combineLatest([this.store.pipe(select(getCurrentBasketId)), this.apiTokenService.apiToken$]).pipe(
-        sample(this.actions$.pipe(ofType(loginUser, createUser, loadUserByAPIToken))),
+        sample(this.actions$.pipe(ofType(loginUser, loadUserByAPIToken))),
         startWith([undefined, undefined])
       ),
     { dispatch: false }
   );
-  checkCurrentBasket$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(checkCurrentBasket),
-      withLatestFrom(this.anonymousBasket$),
-      switchMap(([, [sourceBasketId]]) =>
-        this.basketService.getBaskets().pipe(
-          switchMap(baskets => {
-            if (sourceBasketId) {
-              // anonymous basket exists -> get or create user basket and merge anonymous basket into it
-              return iif(
-                () => !!baskets.length,
-                this.basketService.getBasket(),
-                this.basketService.createBasket()
-              ).pipe(
-                map(basket => loadBasketSuccess({ basket })),
-                mapErrorToAction(loadBasketFail)
-              );
-            } else if (baskets.length) {
-              // basket exists and user (both logged in & anonymous) already has a basket -> load it
-              return of(loadBasket());
-            } else {
-              // is logged user but does not have basket -> create basket
-              return this.basketService.createBasket().pipe(
-                map(basket => loadBasketSuccess({ basket })),
-                mapErrorToAction(loadBasketFail)
-              );
-            }
-          })
-        )
-      )
-    )
-  );
-
-  createBasketWhenLeavingCheckoutConfirmationPage$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(routerNavigatedAction),
-      mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
-      filter(
-        (routerState: RouterState) => !/^\/(basket|checkout.*)/.test(routerState.url) && !routerState.queryParams?.error
-      ),
-      withLatestFrom(this.store.pipe(select(getSubmittedBasketId)), this.store.pipe(select(getCurrentBasketId))),
-      filter(([, submittedBasket, basket]) => !submittedBasket || !basket),
-      map(createBasket)
-    )
-  );
-
+ */
   validateBasketAfterLoadBasketSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadBasketSuccess),
@@ -346,6 +264,7 @@ export class BasketEffects {
   constructor(
     private actions$: Actions,
     private basketService: BasketService,
+    // @ts-ignore // TODO (extMlk): remove @ts-ignore when in use
     private apiTokenService: ApiTokenService,
     private router: Router,
     private store: Store
@@ -355,7 +274,10 @@ export class BasketEffects {
    * @param basket
    * @param attributeName
    */
+  // tslint:disable-next-line:force-jsdoc-comments no-commented-out-code
+  /*
   private basketContainsAttribute(basketOrError: Basket, attributeName: string): boolean {
     return !!basketOrError?.attributes?.find(attr => attr.name === attributeName);
   }
+  */
 }

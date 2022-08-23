@@ -1,4 +1,4 @@
-import { EMPTY_BUCKET_PREFIX } from 'ish-core/store/customer/basket/basket-items.effects';
+import { EMPTY_BUCKET_PREFIX } from 'camfil-pwa/store/ish-customer/ish-basket/ish-basket.effects';
 
 import { Bucket } from './bucket.model';
 

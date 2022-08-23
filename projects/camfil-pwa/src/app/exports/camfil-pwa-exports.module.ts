@@ -1,30 +1,36 @@
 import { NgModule } from '@angular/core';
 import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
-import { CheckoutFacade as CamfilCheckoutFacade } from 'camfil-pwa/facades/checkout.facade';
-import { OrderService as CamfilOrderService } from 'camfil-pwa/services/order/order.service';
-import { IshBasketAddressesEffects } from 'camfil-pwa/store/customer/ish-basket/ish-basket-addresses.effects';
-import { IshBasketItemsEffects } from 'camfil-pwa/store/customer/ish-basket/ish-basket-items.effects';
-import { OrdersEffects as CamfilOrderEffects } from 'camfil-pwa/store/customer/orders/orders.effects';
-import { ViewconfEffects as CamfilViewconfEffects } from 'camfil-pwa/store/viewconf/viewconf.effects';
+import { IshCheckoutFacade } from 'camfil-pwa/facades/ish-checkout.facade';
+import { IshBasketService } from 'camfil-pwa/services/ish-basket/ish-basket.service';
+import { IshOrderService } from 'camfil-pwa/services/ish-order/ish-order.service';
+import { IshBasketAddressesEffects } from 'camfil-pwa/store/ish-customer/ish-basket/ish-basket-addresses.effects';
+import { IshBasketItemsEffects } from 'camfil-pwa/store/ish-customer/ish-basket/ish-basket-items.effects';
+import { IshBasketEffects } from 'camfil-pwa/store/ish-customer/ish-basket/ish-basket.effects';
+import { IshOrdersEffects } from 'camfil-pwa/store/ish-customer/ish-orders/ish-orders.effects';
+import { IshViewconfEffects } from 'camfil-pwa/store/ish-viewconf/ish-viewconf.effects';
 
-import { CheckoutFacade as IshCheckoutFacade } from 'ish-core/facades/checkout.facade';
-import { OrderService as IshOrderService } from 'ish-core/services/order/order.service';
-import { ViewconfEffects as IshViewconfEffects } from 'ish-core/store/core/viewconf/viewconf.effects';
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { BasketService } from 'ish-core/services/basket/basket.service';
+import { OrderService as OrderService } from 'ish-core/services/order/order.service';
+import { ViewconfEffects } from 'ish-core/store/core/viewconf/viewconf.effects';
 import { BasketAddressesEffects } from 'ish-core/store/customer/basket/basket-addresses.effects';
 import { BasketItemsEffects } from 'ish-core/store/customer/basket/basket-items.effects';
-import { OrdersEffects as IshOrderEffects } from 'ish-core/store/customer/orders/orders.effects';
+import { BasketEffects } from 'ish-core/store/customer/basket/basket.effects';
+import { OrdersEffects } from 'ish-core/store/customer/orders/orders.effects';
 
 @NgModule({
   imports: [],
   declarations: [CamfilChannelToggleDirective],
   exports: [CamfilChannelToggleDirective],
   providers: [
-    { provide: IshOrderService, useClass: CamfilOrderService },
-    { provide: IshCheckoutFacade, useClass: CamfilCheckoutFacade },
-    { provide: IshOrderEffects, useClass: CamfilOrderEffects },
     { provide: BasketAddressesEffects, useClass: IshBasketAddressesEffects },
+    { provide: BasketEffects, useClass: IshBasketEffects },
     { provide: BasketItemsEffects, useClass: IshBasketItemsEffects },
-    { provide: IshViewconfEffects, useClass: CamfilViewconfEffects },
+    { provide: BasketService, useClass: IshBasketService },
+    { provide: CheckoutFacade, useClass: IshCheckoutFacade },
+    { provide: OrderService, useClass: IshOrderService },
+    { provide: OrdersEffects, useClass: IshOrdersEffects },
+    { provide: ViewconfEffects, useClass: IshViewconfEffects },
   ],
 })
 export class CamfilPwaExportsModule {}

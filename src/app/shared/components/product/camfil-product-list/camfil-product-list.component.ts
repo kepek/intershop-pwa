@@ -5,7 +5,6 @@ import { take, takeUntil } from 'rxjs/operators';
 import { PRODUCT_LISTING_ITEMS_PER_PAGE } from 'ish-core/configurations/injection-keys';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
-import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Category } from 'ish-core/models/category/category.model';
 import { DeviceType, ViewType } from 'ish-core/models/viewtype/viewtype.types';
@@ -44,7 +43,6 @@ export class CamfilProductListComponent implements OnInit {
   constructor(
     private shoppingFacade: ShoppingFacade,
     private appFacade: AppFacade,
-    private checkoutFacade: CheckoutFacade,
     private accountFacade: AccountFacade,
     @Inject(PRODUCT_LISTING_ITEMS_PER_PAGE) private itemsPerPage: number
   ) {}
@@ -59,7 +57,6 @@ export class CamfilProductListComponent implements OnInit {
 
   ngOnInit(): void {
     this.accountFacade.user$.pipe(whenTruthy(), take(1), takeUntil(this.destroy$)).subscribe(() => {
-      this.checkoutFacade.loadBuckets();
       this.shoppingFacade.loadBasketAddresses();
     });
 

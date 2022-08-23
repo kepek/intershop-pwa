@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { EMPTY_BUCKET_PREFIX } from 'camfil-pwa/store/ish-customer/ish-basket/ish-basket.effects';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { Bucket } from 'ish-core/models/bucket/bucket.model';
-import { EMPTY_BUCKET_PREFIX } from 'ish-core/store/customer/basket/basket-items.effects';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 @Component({

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CheckoutFacade as CamfilCheckoutFacade } from 'camfil-pwa/facades/checkout.facade';
+import { IshCheckoutFacade } from 'camfil-pwa/facades/ish-checkout.facade';
 import { MockComponent, MockDirective } from 'ng-mocks';
 import { of } from 'rxjs';
 import { LazyCamfilCheckoutReceiptRequisitionComponent } from 'src/app/extensions/cam-requisition-management/exports/lazy-camfil-checkout-receipt-requisition/lazy-camfil-checkout-receipt-requisition.component';
@@ -18,7 +18,7 @@ describe('Camfil Checkout Receipt Page Component', () => {
   let component: CamfilCheckoutReceiptPageComponent;
   let fixture: ComponentFixture<CamfilCheckoutReceiptPageComponent>;
   let element: HTMLElement;
-  let camfilCheckoutFacade: CamfilCheckoutFacade;
+  let ishCheckoutFacade: IshCheckoutFacade;
 
   const selectedOrder: Order = {
     id: '1',
@@ -54,7 +54,7 @@ describe('Camfil Checkout Receipt Page Component', () => {
   };
 
   beforeEach(async () => {
-    camfilCheckoutFacade = mock(CamfilCheckoutFacade);
+    ishCheckoutFacade = mock(IshCheckoutFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -66,7 +66,7 @@ describe('Camfil Checkout Receipt Page Component', () => {
         MockDirective(AuthorizationToggleDirective),
         MockDirective(NotAuthorizationToggleDirective),
       ],
-      providers: [{ provide: CamfilCheckoutFacade, useFactory: () => instance(camfilCheckoutFacade) }],
+      providers: [{ provide: IshCheckoutFacade, useFactory: () => instance(ishCheckoutFacade) }],
     }).compileComponents();
   });
 
@@ -75,9 +75,9 @@ describe('Camfil Checkout Receipt Page Component', () => {
     component = fixture.componentInstance;
     element = fixture.nativeElement;
 
-    when(camfilCheckoutFacade.selectedOrder$).thenReturn(of(selectedOrder));
-    when(camfilCheckoutFacade.basketLoading$).thenReturn(of(false));
-    when(camfilCheckoutFacade.submittedBasket$).thenReturn(of(undefined));
+    when(ishCheckoutFacade.selectedOrder$).thenReturn(of(selectedOrder));
+    when(ishCheckoutFacade.basketLoading$).thenReturn(of(false));
+    when(ishCheckoutFacade.submittedBasket$).thenReturn(of(undefined));
   });
 
   it('should be created', () => {

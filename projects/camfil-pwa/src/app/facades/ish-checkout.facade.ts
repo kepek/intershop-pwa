@@ -1,10 +1,10 @@
 // tslint:disable: ish-ordered-imports project-structure
-import { CheckoutFacade as IshCheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { getOrder, loadOrder } from 'ish-core/store/customer/orders';
 import { select, Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { Address } from 'ish-core/models/address/address.model';
-import { camfilUpdateBasketAddress } from 'camfil-pwa/store/customer/ish-basket/ish-basket.actions';
+import { camfilUpdateBasketAddress } from 'camfil-pwa/store/ish-customer/ish-basket/ish-basket.actions';
 import { combineLatest } from 'rxjs';
 import { CamfilConfigurationFacade } from './camfil-configuration.facade';
 import { getAllBuckets, getCurrentBasket, getCurrentBuckets } from 'ish-core/store/customer/basket';
@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 import { BasketSurchargeHelper } from 'ish-core/models/basket-surcharge/basket-surcharge.helper';
 
 @Injectable({ providedIn: 'root' })
-export class CheckoutFacade extends IshCheckoutFacade {
+export class IshCheckoutFacade extends CheckoutFacade {
   constructor(protected store: Store, private camfilConfigurrationFacade: CamfilConfigurationFacade) {
     super(store);
   }

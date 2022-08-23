@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/cor
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
-import { CheckoutFacade as CamfilCheckoutFacade } from 'camfil-pwa/facades/checkout.facade';
+import { IshCheckoutFacade } from 'camfil-pwa/facades/ish-checkout.facade';
 import { take } from 'rxjs/operators';
 
 import { Address } from 'ish-core/models/address/address.model';
@@ -19,7 +19,7 @@ export class CamfilCheckoutGoodsAcceptanceModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<CamfilCheckoutGoodsAcceptanceModalComponent>,
-    private checkoutFacade: CamfilCheckoutFacade,
+    private checkoutFacade: IshCheckoutFacade,
     private camfilConfigurationFacade: CamfilConfigurationFacade,
     @Inject(MAT_DIALOG_DATA) public bucketAddress: Address
   ) {}

@@ -6,8 +6,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action, Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
-import { OrderService } from 'camfil-pwa/services/order/order.service';
-import { OrdersEffects } from 'camfil-pwa/store/customer/orders/orders.effects';
+import { IshOrderService } from 'camfil-pwa/services/ish-order/ish-order.service';
+import { IshOrdersEffects } from 'camfil-pwa/store/ish-customer/ish-orders/ish-orders.effects';
 import { cold, hot } from 'jest-marbles';
 import { Observable, noop, of, throwError } from 'rxjs';
 import { toArray } from 'rxjs/operators';
@@ -44,8 +44,8 @@ import {
 
 describe('Orders Effects', () => {
   let actions$: Observable<Action>;
-  let effects: OrdersEffects;
-  let orderServiceMock: OrderService;
+  let effects: IshOrdersEffects;
+  let orderServiceMock: IshOrderService;
   let featureToggleServiceMock: FeatureToggleService;
   let store$: Store;
   let location: Location;
@@ -58,7 +58,7 @@ describe('Orders Effects', () => {
   const orders = [order, { id: '2', documentNo: '00000002' }] as Order[];
 
   beforeEach(() => {
-    orderServiceMock = mock(OrderService);
+    orderServiceMock = mock(IshOrderService);
     when(orderServiceMock.getOrders()).thenReturn(of(orders));
     when(orderServiceMock.getOrder(anyString())).thenReturn(of(order));
     when(orderServiceMock.getOrderByToken(anyString(), anyString())).thenReturn(of(order));
@@ -85,14 +85,14 @@ describe('Orders Effects', () => {
         TranslateModule.forRoot(),
       ],
       providers: [
-        OrdersEffects,
+        IshOrdersEffects,
         provideMockActions(() => actions$),
-        { provide: OrderService, useFactory: () => instance(orderServiceMock) },
+        { provide: IshOrderService, useFactory: () => instance(orderServiceMock) },
         { provide: FeatureToggleService, useFactory: () => instance(featureToggleServiceMock) },
       ],
     });
 
-    effects = TestBed.inject(OrdersEffects);
+    effects = TestBed.inject(IshOrdersEffects);
     store$ = TestBed.inject(Store);
     location = TestBed.inject(Location);
     router = TestBed.inject(Router);
