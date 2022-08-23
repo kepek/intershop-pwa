@@ -1,6 +1,6 @@
 // tslint:disable: ish-ordered-imports project-structure ban-specific-imports
 
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import {
   distinctUntilChanged,
@@ -33,13 +33,14 @@ import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.fac
 import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form/camfil-checkout-guest-form.component';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { isEqual } from 'lodash-es';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 @Component({
   templateUrl: './camfil-checkout-onestep-page.component.html',
   styleUrls: ['./camfil-checkout-onestep-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
+export class CamfilCheckoutOnestepPageComponent implements OnInit, AfterViewInit, OnDestroy {
   basket$: Observable<BasketView>;
   basketError$: Observable<HttpError>;
   basketLoading$: Observable<boolean>;
@@ -57,11 +58,13 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
   submittedBuckets$: Observable<Bucket[]>;
   basketTotals$: Observable<BasketTotal>;
   validationResults$: Observable<BasketValidationResultType>;
+  isFreightCostInvalid$: Observable<boolean>;
 
   private isValid = false;
   private destroy$ = new Subject<void>();
 
   @ViewChild('guestForm') guestForm: CamfilCheckoutGuestFormComponent;
+  @ViewChild('freightCostWarningDialog') freightCostWarningDialog: CamfilModalDialogComponent<unknown>;
 
   constructor(
     private appFacade: AppFacade,
@@ -84,6 +87,7 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
     this.submittedBasket$ = this.checkoutFacade.submittedBasket$;
     this.submittedBuckets$ = this.checkoutFacade.submittedBuckets$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
+    this.isFreightCostInvalid$ = this.checkoutFacade.isFreightCostInvalid$;
 
     this.basket$ = this.checkoutFacade.basket$;
 
@@ -105,16 +109,22 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
     this.initBasket();
   }
 
-  // tslint:disable-next-line:force-jsdoc-comments
-  // only rerender the whole bucket when number of included lineItems changes
-  trackByLineItems(_, bucket: Bucket): number {
-    return bucket.lineItems.length;
+  ngAfterViewInit() {
+    this.isFreightCostInvalid$.pipe(takeUntil(this.destroy$)).subscribe(isFreightCostInvalid => {
+      this.freightCostWarningDialog?.[isFreightCostInvalid ? 'show' : 'hide']();
+    });
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
     this.checkoutFacade.setCheckoutFocusedElement('');
+  }
+
+  // tslint:disable-next-line:force-jsdoc-comments
+  // only rerender the whole bucket when number of included lineItems changes
+  trackByLineItems(_, bucket: Bucket): number {
+    return bucket.lineItems.length;
   }
 
   updateBasketPaymentMethod(paymentName: string) {

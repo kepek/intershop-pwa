@@ -2,9 +2,9 @@
   <camfil-cam-card-modal
     [customHeaderTemplate]="defaultHeader"
     [mainContentTemplate]="defaultTemplate"
-    [primaryButtonTitle]="options.confirmText"
+    [primaryButtonTitle]="options?.confirmText"
     (primaryButtonClicked)="confirm()"
-    [secondaryButtonTitle]="options.rejectText"
+    [secondaryButtonTitle]="options?.rejectText"
     (secondaryButtonClicked)="hide()"
     [secondaryDisabled]="options?.confirmDisabled"
     (hiddenClicked)="hide()"

@@ -18,6 +18,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   preventCamCardERPIdValidation: true,
   allowToSelectGoodsAcceptanceTimes: true,
   showWarningMessageForPartialDelivery: true,
+  showWarningWhenSystemCouldNotCalculateVolumeOrWeight: true,
 };
 
 export default camfilConfiguration;

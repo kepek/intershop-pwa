@@ -47,6 +47,7 @@ export interface CamfilChannelSettings {
   showDeliveryIntervalOnCCDetailPage: boolean;
   tracking: boolean;
   goodsAcceptanceTimeMandatory: boolean;
+  showWarningWhenSystemCouldNotCalculateVolumeOrWeight: boolean;
 }
 
 export interface CamfilChannelConfiguration extends Partial<CamfilChannelSettings> {

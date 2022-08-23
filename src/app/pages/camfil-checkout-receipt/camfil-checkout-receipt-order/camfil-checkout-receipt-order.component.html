@@ -8,6 +8,10 @@
     </h1>
   </div>
 
+  <p *ngIf="isFreightCostInvalid$ | async">
+    {{ 'camfil.freight_cost_invalid.receipt.text' | translate }}
+  </p>
+
   <p *ngIf="order?.statusCode === 'PENDING'" class="alert alert-info">
     {{ 'checkout.receipt.order_pending.message' | translate }}
   </p>
