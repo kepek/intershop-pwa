@@ -4,6 +4,7 @@ import { Observable, forkJoin, of } from 'rxjs';
 import { map, mergeMap, skipWhile, take } from 'rxjs/operators';
 
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
+import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
@@ -205,7 +206,7 @@ export class TrackingService {
         ...this.buildEventDataFromBasket(DataLayerEventType.Purchase, basket, products),
         transaction_id: basket.id,
         tax: basket.totals.taxTotal.value,
-        shipping: basket.totals.dutiesAndSurchargesTotal.net + basket.totals.shippingTotal.net,
+        shipping: this.extractShippingCosts(basket.totals),
         value: basket.totals.total.gross,
         order_type: orderType,
       };
@@ -395,5 +396,16 @@ export class TrackingService {
     }
 
     return of({ category, parent: undefined });
+  }
+
+  private extractShippingCosts(totals: BasketTotal) {
+    let shipping = 0;
+    if (totals.dutiesAndSurchargesTotal) {
+      shipping += totals.dutiesAndSurchargesTotal.net;
+    }
+    if (totals.shippingTotal) {
+      shipping += totals.shippingTotal.net;
+    }
+    return shipping;
   }
 }
