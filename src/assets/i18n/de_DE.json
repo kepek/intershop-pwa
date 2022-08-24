@@ -893,6 +893,7 @@
   "camfil.checkout.free_delivery": "Versandkostenfrei",
   "camfil.checkout.free_delivery.threshold": "Gemäß den Lieferbedingungen haben Sie noch {{0}} bis zum kostenlosen Versand.",
   "camfil.checkout.gdpr_form.gdpr.error.required": "Bitte stimmen Sie der Datenschutzbestimmung zu, indem Sie das Kontrollkästchen aktivieren.",
+  "camfil.checkout.goods_acceptance_time.error.required": "(de_DE)_Goods acceptance time must be filled.",
   "camfil.checkout.guest_form.company_name": "Firma",
   "camfil.checkout.guest_form.delivery_info": "Information zur Lieferung",
   "camfil.checkout.guest_form.email_address": "E-Mail-Adresse",

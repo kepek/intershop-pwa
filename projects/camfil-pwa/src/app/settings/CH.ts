@@ -16,6 +16,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   use2ndAddressLineInCamCardForm: true,
   preventCamCardERPIdValidation: true,
   showWarningWhenSystemCouldNotCalculateVolumeOrWeight: true,
+  allowToSelectGoodsAcceptanceTimes: true,
 };
 
 export default camfilConfiguration;
