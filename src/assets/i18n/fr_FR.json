@@ -905,6 +905,7 @@
   "camfil.checkout.free_delivery": "Expédition gratuite",
   "camfil.checkout.free_delivery.threshold": "Selon les conditions de livraison, il vous reste {{0}} pour la livraison gratuite.",
   "camfil.checkout.gdpr_form.gdpr.error.required": "Veuillez consentir au RGPD en cochant la case correspondante",
+  "camfil.checkout.goods_acceptance_time.error.required": "(fr_FR)_Goods acceptance time must be filled.",
   "camfil.checkout.guest_form.company_name": "Nom de société",
   "camfil.checkout.guest_form.delivery_info": "Informations sur la livraison",
   "camfil.checkout.guest_form.email_address": "Adresse e-mail",

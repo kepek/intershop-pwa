@@ -905,6 +905,7 @@
   "camfil.checkout.free_delivery": "Fraktfritt!",
   "camfil.checkout.free_delivery.threshold": "Handla för ytterligare {{0}} för att få fri frakt!",
   "camfil.checkout.gdpr_form.gdpr.error.required": "sv_Please consent to GDPR by checking the checkbox.",
+  "camfil.checkout.goods_acceptance_time.error.required": "(sv_SE)_Goods acceptance time must be filled.",
   "camfil.checkout.guest_form.company_name": "sv_Company Name",
   "camfil.checkout.guest_form.delivery_info": "sv_Delivery info",
   "camfil.checkout.guest_form.email_address": "sv_Email address",

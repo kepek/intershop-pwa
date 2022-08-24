@@ -905,6 +905,7 @@
   "camfil.checkout.free_delivery": "Spedizione gratuita",
   "camfil.checkout.free_delivery.threshold": "Secondo i termini di consegna hai {{0}} lasciato alla spedizione gratuita.",
   "camfil.checkout.gdpr_form.gdpr.error.required": "Si prega di acconsentire al GDPR selezionando la casella di controllo.",
+  "camfil.checkout.goods_acceptance_time.error.required": "(it_IT)_Goods acceptance time must be filled.",
   "camfil.checkout.guest_form.company_name": "Nome dell'azienda",
   "camfil.checkout.guest_form.delivery_info": "Informazioni sulla consegna",
   "camfil.checkout.guest_form.email_address": "Indirizzo e-mail",

@@ -905,6 +905,7 @@
   "camfil.checkout.free_delivery": "Rahtivapaa toimitus",
   "camfil.checkout.free_delivery.threshold": "Toimitusehtojen mukaan sinulla on {{0}} jäljellä ilmaiseen toimitukseen.",
   "camfil.checkout.gdpr_form.gdpr.error.required": "fi_Please consent to GDPR by checking the checkbox.",
+  "camfil.checkout.goods_acceptance_time.error.required": "(fi_FI)_Goods acceptance time must be filled.",
   "camfil.checkout.guest_form.company_name": "fi_Company Name",
   "camfil.checkout.guest_form.delivery_info": "fi_Delivery info",
   "camfil.checkout.guest_form.email_address": "fi_Email address",
