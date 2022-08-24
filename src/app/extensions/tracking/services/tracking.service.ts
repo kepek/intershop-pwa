@@ -262,7 +262,7 @@ export class TrackingService {
   private push(event) {
     try {
       if (
-        dataLayer &&
+        typeof dataLayer !== 'undefined' &&
         this.featureToggleService.enabled('tracking') &&
         this.cookiesService.cookieConsentFor('tracking')
       ) {
