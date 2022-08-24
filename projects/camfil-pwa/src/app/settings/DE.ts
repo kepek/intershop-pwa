@@ -19,6 +19,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showDeliveryIntervalOnCCDetailPage: true,
   preventCamCardERPIdValidation: true,
   showWarningWhenSystemCouldNotCalculateVolumeOrWeight: true,
+  goodsAcceptanceTimeMandatory: true,
 };
 
 export default camfilConfiguration;

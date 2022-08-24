@@ -2,8 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { provideMockStore } from '@ngrx/store/testing';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { CheckoutFacade } from 'camfil-pwa/facades/checkout.facade';
-import { instance, mock } from 'ts-mockito';
+import { of } from 'rxjs';
+import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
@@ -15,9 +17,11 @@ describe('Camfil Checkout Goods Acceptance Modal Component', () => {
   let fixture: ComponentFixture<CamfilCheckoutGoodsAcceptanceModalComponent>;
   let element: HTMLElement;
   let checkoutFacadeMock: CheckoutFacade;
+  let camfilConfigurationFacade: CamfilConfigurationFacade;
 
   beforeEach(async () => {
     checkoutFacadeMock = mock(CheckoutFacade);
+    camfilConfigurationFacade = mock(CamfilConfigurationFacade);
     await TestBed.configureTestingModule({
       declarations: [
         CamfilCheckoutGoodsAcceptanceModalComponent,
@@ -29,6 +33,7 @@ describe('Camfil Checkout Goods Acceptance Modal Component', () => {
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacade) },
         provideMockStore(),
       ],
     }).compileComponents();
@@ -38,6 +43,8 @@ describe('Camfil Checkout Goods Acceptance Modal Component', () => {
     fixture = TestBed.createComponent(CamfilCheckoutGoodsAcceptanceModalComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+
+    when(camfilConfigurationFacade.isEnabled$('goodsAcceptanceTimeMandatory')).thenReturn(of(false));
   });
 
   it('should be created', () => {

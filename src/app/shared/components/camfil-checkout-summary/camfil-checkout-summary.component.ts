@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -24,12 +24,13 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
   styleUrls: ['./camfil-checkout-summary.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryComponent {
+export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryComponent implements OnDestroy {
   @Input() purchaseCurrency: string;
   @Input() editable: boolean;
   @Output() submit = new EventEmitter<string>();
 
-  @ViewChild(CamfilSmallCtaModalComponent) gdprErrorModal: CamfilSmallCtaModalComponent;
+  @ViewChild('gdprModal') gdprErrorModal: CamfilSmallCtaModalComponent;
+  @ViewChild('goodsAcceptanceTimeModal') goodsAcceptanceTimeModal: CamfilSmallCtaModalComponent;
 
   bucketsVolumeDiscounts$: Observable<Price>;
   validationResults$: Observable<BasketValidationResultType>;
@@ -45,6 +46,8 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
 
   private destroy$ = new Subject();
 
+  private isGoodsAcceptanceTimeValid = true;
+
   constructor(
     protected accountFacade: AccountFacade,
     private checkoutFacade: CheckoutFacade,
@@ -56,6 +59,10 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     private dialog: MatDialog
   ) {
     super(accountFacade);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
   }
 
   init() {
@@ -79,26 +86,29 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
       this.roleToggleService.hasRole('APP_B2B_REQUEST_QUOTATION'),
       this.camfilConfigurationFacade.isEnabled$('allowQuotes'),
     ]).pipe(map(([hasRequestRole, isQuotesModuleEnabled]) => hasRequestRole && isQuotesModuleEnabled));
+
+    this.checkoutFacade.basket$
+      .pipe(
+        withLatestFrom(this.camfilConfigurationFacade.isEnabled$('goodsAcceptanceTimeMandatory')),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        ([basket, isMandatory]) =>
+          (this.isGoodsAcceptanceTimeValid = !(isMandatory && !basket?.commonShipToAddress?.goodsAcceptanceNote))
+      );
   }
 
-  submitOrder() {
-    this.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
-      if (isLoggedIn) {
-        this.submit.emit();
-      } else if (this.guestGdprForm?.valid) {
-        this.submit.emit();
-      } else {
-        this.openGDPRErrorModal();
-      }
-    });
-  }
+  submitOrder(orderType?: string) {
+    if (!this.isGoodsAcceptanceTimeValid) {
+      this.openGoodsAcceptanceTimeModal();
+      return;
+    }
 
-  requestQuote() {
     this.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
-        this.submit.emit('RFQ');
+        this.submit.emit(orderType);
       } else if (this.guestGdprForm?.valid) {
-        this.submit.emit('RGQ');
+        this.submit.emit(orderType);
       } else {
         this.openGDPRErrorModal();
       }
@@ -129,6 +139,13 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     const gdprErrorDialogModal = this.dialog.open(this.gdprErrorModal?.show());
     this.gdprErrorModal.hide = () => {
       gdprErrorDialogModal.close();
+    };
+  }
+
+  private openGoodsAcceptanceTimeModal() {
+    const modal = this.dialog.open(this.goodsAcceptanceTimeModal?.show());
+    this.goodsAcceptanceTimeModal.hide = () => {
+      modal.close();
     };
   }
 }
