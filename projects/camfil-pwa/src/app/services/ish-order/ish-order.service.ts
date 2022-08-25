@@ -10,11 +10,11 @@ import { concatMap, map, withLatestFrom } from 'rxjs/operators';
 
 import { OrderData } from 'ish-core/models/order/order.interface';
 import { ApiService } from 'ish-core/services/api/api.service';
-import { OrderService as IshOrderService } from 'ish-core/services/order/order.service';
+import { OrderService } from 'ish-core/services/order/order.service';
 import { getCurrentLocale } from 'ish-core/store/core/configuration';
 
 @Injectable({ providedIn: 'root' })
-export class OrderService extends IshOrderService {
+export class IshOrderService extends OrderService {
   constructor(protected apiService: ApiService, protected store: Store, protected camfilUrlService: CamfilUrlService) {
     super(apiService, store);
   }

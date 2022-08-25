@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { CamfilOrderService } from 'camfil-pwa/services/camfil-order/camfil-order.service';
-import { loadOrderIfNotLoaded } from 'camfil-pwa/store/customer/orders';
+import { loadOrderIfNotLoaded } from 'camfil-pwa/store/ish-customer/ish-orders';
 import { identity } from 'rxjs';
 import {
   concatMap,

@@ -3,7 +3,7 @@ import { Params } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { camfilUpdateBasketItemsSuccess } from 'camfil-pwa/store/customer/ish-basket/ish-basket.actions';
+import { camfilUpdateBasketItemsSuccess } from 'camfil-pwa/store/ish-customer/ish-basket/ish-basket.actions';
 import { Observable } from 'rxjs';
 import { filter, map, mergeMap, pairwise, skipWhile, switchMapTo, take, tap, withLatestFrom } from 'rxjs/operators';
 

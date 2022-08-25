@@ -1,44 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
-import { EMPTY } from 'rxjs';
-import { concatMapTo, map, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { map, mergeMap, withLatestFrom } from 'rxjs/operators';
 
-import { Address } from 'ish-core/models/address/address.model';
 import { AddressService } from 'ish-core/services/address/address.service';
 import { BasketService, BasketUpdateType } from 'ish-core/services/basket/basket.service';
-import {
-  createCustomerAddressFail,
-  deleteCustomerAddressFail,
-  deleteCustomerAddressSuccess,
-  updateCustomerAddressFail,
-  updateCustomerAddressSuccess,
-} from 'ish-core/store/customer/addresses';
+import { createCustomerAddressFail } from 'ish-core/store/customer/addresses';
 import { getLoggedInCustomer } from 'ish-core/store/customer/user';
-import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
+import { mapErrorToAction, mapToPayload } from 'ish-core/utils/operators';
 
-import {
-  assignBasketAddress,
-  createBasketAddress,
-  createBasketAddressSuccess,
-  deleteBasketShippingAddress,
-  loadBasket,
-  loadBasketAddresses,
-  loadBasketAddressesFail,
-  loadBasketAddressesSuccess,
-  resetBasketErrors,
-  updateBasket,
-  updateBasketAddress,
-} from './basket.actions';
-import { getCurrentBasketId } from './basket.selectors';
+import { assignBasketAddress, createBasketAddress, createBasketAddressSuccess, updateBasket } from './basket.actions';
 
 @Injectable()
 export class BasketAddressesEffects {
   constructor(
-    protected actions$: Actions,
-    protected store: Store,
-    protected basketService: BasketService,
-    protected addressService: AddressService
+    private actions$: Actions,
+    private store: Store,
+    private basketService: BasketService,
+    private addressService: AddressService
   ) {}
 
   /**
@@ -126,16 +105,16 @@ export class BasketAddressesEffects {
   /**
    * Updates an address (basket or customer) and reloads the basket in case of success.
    */
+  // tslint:disable-next-line:force-jsdoc-comments no-commented-out-code
+  /*
   updateBasketAddress$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateBasketAddress),
-      mapToPayload(),
+      mapToPayloadProperty('address'),
       withLatestFrom(this.store.pipe(select(getLoggedInCustomer))),
-      mergeMap(([payload, customer]) => {
-        const { address } = payload;
-
+      mergeMap(([address, customer]) => {
         // create address at customer for logged in user
-        if (customer && !payload.isBasket) {
+        if (customer) {
           return this.addressService
             .updateCustomerAddress('-', address)
             .pipe(
@@ -147,22 +126,20 @@ export class BasketAddressesEffects {
           return this.basketService
             .updateBasketAddress(address)
             .pipe(
-              concatMapTo([
-                updateCustomerAddressSuccess({ address }),
-                loadBasket(),
-                resetBasketErrors(),
-                loadBasketAddresses(),
-              ]),
+              concatMapTo([updateCustomerAddressSuccess({ address }), loadBasket(), resetBasketErrors()]),
               mapErrorToAction(updateCustomerAddressFail)
             );
         }
       })
     )
   );
+  */
 
   /**
    * Deletes a basket shipping address and reloads the basket in case of success.
    */
+  // tslint:disable-next-line:force-jsdoc-comments no-commented-out-code
+  /*
   deleteBasketShippingAddress$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteBasketShippingAddress),
@@ -177,19 +154,5 @@ export class BasketAddressesEffects {
       )
     )
   );
-
-  loadBasketAddresses$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadBasketAddresses),
-      withLatestFrom(this.store.pipe(select(getCurrentBasketId))),
-      mergeMap(([, basket]) =>
-        basket
-          ? this.basketService.getBasketAddresses().pipe(
-              mergeMap((basketAddresses: Address[]) => [loadBasketAddressesSuccess({ basketAddresses })]),
-              mapErrorToAction(loadBasketAddressesFail)
-            )
-          : EMPTY
-      )
-    )
-  );
+  */
 }

@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { provideMockStore } from '@ngrx/store/testing';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
-import { CheckoutFacade } from 'camfil-pwa/facades/checkout.facade';
+import { IshCheckoutFacade } from 'camfil-pwa/facades/ish-checkout.facade';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
@@ -16,11 +16,11 @@ describe('Camfil Checkout Goods Acceptance Modal Component', () => {
   let component: CamfilCheckoutGoodsAcceptanceModalComponent;
   let fixture: ComponentFixture<CamfilCheckoutGoodsAcceptanceModalComponent>;
   let element: HTMLElement;
-  let checkoutFacadeMock: CheckoutFacade;
+  let checkoutFacadeMock: IshCheckoutFacade;
   let camfilConfigurationFacade: CamfilConfigurationFacade;
 
   beforeEach(async () => {
-    checkoutFacadeMock = mock(CheckoutFacade);
+    checkoutFacadeMock = mock(IshCheckoutFacade);
     camfilConfigurationFacade = mock(CamfilConfigurationFacade);
     await TestBed.configureTestingModule({
       declarations: [
@@ -32,7 +32,7 @@ describe('Camfil Checkout Goods Acceptance Modal Component', () => {
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
-        { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
+        { provide: IshCheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
         { provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacade) },
         provideMockStore(),
       ],

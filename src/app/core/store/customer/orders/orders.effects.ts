@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { OrderService } from 'camfil-pwa/services/order/order.service';
+import { IshOrderService } from 'camfil-pwa/services/ish-order/ish-order.service';
 import { isEqual } from 'lodash-es';
 import { EMPTY, from, iif, race } from 'rxjs';
 import {
@@ -49,7 +49,7 @@ import { getOrder, getSelectedOrder, getSelectedOrderId } from './orders.selecto
 export class OrdersEffects {
   constructor(
     protected actions$: Actions,
-    protected orderService: OrderService,
+    protected orderService: IshOrderService,
     protected router: Router,
     @Inject(PLATFORM_ID) protected platformId: string,
     protected store: Store,

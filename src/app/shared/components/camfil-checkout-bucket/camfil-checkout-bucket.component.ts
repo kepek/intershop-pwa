@@ -18,6 +18,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
+import { EMPTY_BUCKET_PREFIX } from 'camfil-pwa/store/ish-customer/ish-basket/ish-basket.effects';
 import { Observable, ReplaySubject, Subject, combineLatest } from 'rxjs';
 import { map, switchMap, take, takeUntil, takeWhile } from 'rxjs/operators';
 import { CamfilCheckoutGoodsAcceptanceModalComponent } from 'src/app/pages/camfil-checkout-onestep/camfil-checkout-goods-acceptance-modal/camfil-checkout-goods-acceptance-modal.component';
@@ -43,7 +44,6 @@ import { Price, PriceHelper } from 'ish-core/models/price/price.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
-import { EMPTY_BUCKET_PREFIX } from 'ish-core/store/customer/basket/basket-items.effects';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 

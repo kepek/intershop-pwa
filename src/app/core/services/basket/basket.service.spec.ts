@@ -1,5 +1,5 @@
 import { HttpHeaders } from '@angular/common/http';
-import { OrderService } from 'camfil-pwa/services/order/order.service';
+import { IshOrderService } from 'camfil-pwa/services/ish-order/ish-order.service';
 import { of, throwError } from 'rxjs';
 import { anyString, anything, capture, instance, mock, verify, when } from 'ts-mockito';
 
@@ -14,7 +14,7 @@ import { BasketItemUpdateType, BasketService } from './basket.service';
 describe('Basket Service', () => {
   let basketService: BasketService;
   let apiService: ApiService;
-  let orderService: OrderService;
+  let orderService: IshOrderService;
   let appFacade: AppFacade;
 
   const basketMockData = {
@@ -53,7 +53,7 @@ describe('Basket Service', () => {
 
   beforeEach(() => {
     apiService = mock(ApiService);
-    orderService = mock(OrderService);
+    orderService = mock(IshOrderService);
     appFacade = mock(AppFacade);
     // @ts-ignore
     basketService = new BasketService(instance(apiService), instance(orderService));

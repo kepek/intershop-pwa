@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { CheckoutFacade as CamfilCheckoutFacade } from 'camfil-pwa/facades/checkout.facade';
+import { IshCheckoutFacade } from 'camfil-pwa/facades/ish-checkout.facade';
 import { Order } from 'camfil-pwa/models/order/order.model';
 import { Observable } from 'rxjs';
 
@@ -19,7 +19,7 @@ export class CamfilCheckoutReceiptPageComponent implements OnInit {
   submittedBuckets$: Observable<Bucket[]>;
   basketError$: Observable<HttpError>;
 
-  constructor(private checkoutFacade: CamfilCheckoutFacade) {}
+  constructor(private checkoutFacade: IshCheckoutFacade) {}
 
   ngOnInit() {
     this.order$ = this.checkoutFacade.selectedOrder$;

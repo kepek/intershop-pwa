@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { createEffect, ofType } from '@ngrx/effects';
 import { select } from '@ngrx/store';
 import { loadCamfilOrderIfNotLoaded } from 'camfil-pwa/store/camfil-orders';
-import { loadOrderIfNotLoaded } from 'camfil-pwa/store/customer/orders/orders.actions';
-import { getOrderEntities } from 'camfil-pwa/store/customer/orders/orders.selectors';
+import { loadOrderIfNotLoaded } from 'camfil-pwa/store/ish-customer/ish-orders/ish-orders.actions';
+import { getOrderEntities } from 'camfil-pwa/store/ish-customer/ish-orders/ish-orders.selectors';
 import { EMPTY, from, identity, iif } from 'rxjs';
 import { concatMap, filter, groupBy, map, mergeMap, throttleTime, withLatestFrom } from 'rxjs/operators';
 
@@ -22,7 +22,7 @@ import { OrdersEffects as IshOrderEffects } from 'ish-core/store/customer/orders
 import { mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 @Injectable()
-export class OrdersEffects extends IshOrderEffects {
+export class IshOrdersEffects extends IshOrderEffects {
   loadOrderIfNotLoaded$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadOrderIfNotLoaded),

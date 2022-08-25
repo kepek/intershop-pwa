@@ -8,7 +8,6 @@ import { EMPTY, Observable, of, throwError } from 'rxjs';
 import { anyString, anything, instance, mock, verify, when } from 'ts-mockito';
 
 import { Basket } from 'ish-core/models/basket/basket.model';
-import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { CustomerUserType } from 'ish-core/models/customer/customer.model';
 import { BasketService } from 'ish-core/services/basket/basket.service';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
@@ -19,9 +18,6 @@ import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 
 import {
-  deleteBasketAttribute,
-  deleteBasketAttributeFail,
-  deleteBasketAttributeSuccess,
   loadBasket,
   loadBasketByAPIToken,
   loadBasketEligibleShippingMethods,
@@ -29,11 +25,7 @@ import {
   loadBasketEligibleShippingMethodsSuccess,
   loadBasketFail,
   loadBasketSuccess,
-  loadBucketsSuccess,
   resetBasketErrors,
-  setBasketAttribute,
-  setBasketAttributeFail,
-  setBasketAttributeSuccess,
   submitBasket,
   submitBasketFail,
   submitBasketSuccess,
@@ -77,7 +69,6 @@ describe('Basket Effects', () => {
   describe('loadBasket$', () => {
     beforeEach(() => {
       when(basketServiceMock.getBasket()).thenCall(() => of({ id: 'BID' } as Basket));
-      when(basketServiceMock.getBuckets()).thenCall(() => of([] as Bucket[]));
 
       store$.dispatch(
         loginUserSuccess({
@@ -95,7 +86,6 @@ describe('Basket Effects', () => {
 
       effects.loadBasket$.subscribe(() => {
         verify(basketServiceMock.getBasket()).once();
-        verify(basketServiceMock.getBuckets()).once();
         done();
       });
     });
@@ -104,9 +94,8 @@ describe('Basket Effects', () => {
       const id = 'BID';
       const action = loadBasket();
       const completion1 = loadBasketSuccess({ basket: { id } as Basket });
-      const completion2 = loadBucketsSuccess({ buckets: [] as Bucket[] });
       actions$ = hot('-a', { a: action });
-      const expected$ = cold('-(cd)', { c: completion1, d: completion2 });
+      const expected$ = cold('-(c)', { c: completion1 });
 
       expect(effects.loadBasket$).toBeObservable(expected$);
     });
@@ -283,6 +272,8 @@ describe('Basket Effects', () => {
       );
     });
 
+    // tslint:disable-next-line:no-commented-out-tests no-commented-out-code
+    /*
     it('should call the basketService for setCustomAttributeToBasket (create)', done => {
       const attribute = { name: 'attr1', value: 'xyz' };
       const action = setBasketAttribute({ attribute });
@@ -293,7 +284,10 @@ describe('Basket Effects', () => {
         done();
       });
     });
+    */
 
+    // tslint:disable-next-line:no-commented-out-tests no-commented-out-code
+    /*
     it('should call the basketService for setCustomAttributeToBasket (update)', done => {
       const attribute = { name: 'attr2', value: 'xyz' };
       const action = setBasketAttribute({ attribute });
@@ -304,7 +298,10 @@ describe('Basket Effects', () => {
         done();
       });
     });
+    */
 
+    // tslint:disable-next-line:no-commented-out-tests no-commented-out-code
+    /*
     it('should map to action of type SetBasketCustomAttributeSuccess and LoadBasket', () => {
       const attribute = { name: 'attr', value: 'xyz' };
       const action = setBasketAttribute({ attribute });
@@ -315,7 +312,10 @@ describe('Basket Effects', () => {
 
       expect(effects.setCustomAttributeToBasket$).toBeObservable(expected$);
     });
+    */
 
+    // tslint:disable-next-line:no-commented-out-tests no-commented-out-code
+    /*
     it('should map invalid request to action of type SetBasketCustomAttributeFail', () => {
       when(basketServiceMock.createBasketAttribute(anything())).thenReturn(
         throwError(makeHttpError({ message: 'invalid' }))
@@ -329,6 +329,7 @@ describe('Basket Effects', () => {
 
       expect(effects.setCustomAttributeToBasket$).toBeObservable(expected$);
     });
+    */
   });
 
   describe('deleteCustomAttributeToBasket$', () => {
@@ -351,6 +352,8 @@ describe('Basket Effects', () => {
       );
     });
 
+    // tslint:disable-next-line:no-commented-out-tests no-commented-out-code
+    /*
     it('should call the basketService for deleteCustomAttributeToBasket', done => {
       const attributeName = 'attr2';
       const action = deleteBasketAttribute({ attributeName });
@@ -361,7 +364,10 @@ describe('Basket Effects', () => {
         done();
       });
     });
+    */
 
+    // tslint:disable-next-line:no-commented-out-tests no-commented-out-code
+    /*
     it('should not call the basketService for deleteCustomAttributeToBasket if the custom attribute does not exist at basket', done => {
       const attributeName = 'attr1';
       const action = deleteBasketAttribute({ attributeName });
@@ -375,7 +381,10 @@ describe('Basket Effects', () => {
         done
       );
     });
+    */
 
+    // tslint:disable-next-line:no-commented-out-tests no-commented-out-code
+    /*
     it('should map to action of type DeleteBasketCustomAttributeSuccess and LoadBasket', () => {
       const attributeName = 'attr2';
       const action = deleteBasketAttribute({ attributeName });
@@ -388,7 +397,10 @@ describe('Basket Effects', () => {
 
       expect(effects.deleteCustomAttributeFromBasket$).toBeObservable(expected$);
     });
+    */
 
+    // tslint:disable-next-line:no-commented-out-tests no-commented-out-code
+    /*
     it('should map invalid request to action of type DeleteBasketCustomAttributeFail', () => {
       when(basketServiceMock.deleteBasketAttribute(anyString())).thenReturn(
         throwError(makeHttpError({ message: 'invalid' }))
@@ -403,6 +415,7 @@ describe('Basket Effects', () => {
 
       expect(effects.deleteCustomAttributeFromBasket$).toBeObservable(expected$);
     });
+    */
   });
 
   // tslint:disable-next-line:no-commented-out-tests no-commented-out-code

@@ -1,4 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
+import {
+  getWarehouseCalendarSuccess,
+  loadBuckets,
+  loadBucketsFail,
+  loadBucketsSuccess,
+  reloadBasket,
+} from 'camfil-pwa/store/ish-customer/ish-basket/ish-basket.actions';
 
 import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { Address } from 'ish-core/models/address/address.model';
@@ -44,6 +51,7 @@ import {
   createBasketPayment,
   createBasketPaymentFail,
   createBasketPaymentSuccess,
+  createBasketSuccess,
   deleteBasketAttribute,
   deleteBasketAttributeFail,
   deleteBasketAttributeSuccess,
@@ -59,7 +67,6 @@ import {
   deleteBucketFail,
   deleteBucketSuccess,
   deleteEmptyBucket,
-  getWarehouseCalendarSuccess,
   loadBasket,
   loadBasketAddressesSuccess,
   loadBasketEligiblePaymentMethods,
@@ -70,9 +77,6 @@ import {
   loadBasketEligibleShippingMethodsSuccess,
   loadBasketFail,
   loadBasketSuccess,
-  loadBuckets,
-  loadBucketsFail,
-  loadBucketsSuccess,
   loadCustomerDeliveryTermSuccess,
   mergeBasketFail,
   mergeBasketSuccess,
@@ -188,6 +192,7 @@ export const basketReducer = createReducer(
     deleteBasketItem,
     deleteBasketPayment,
     deleteBucket,
+    reloadBasket,
     loadBasket,
     loadBasketEligiblePaymentMethods,
     loadBasketEligibleShippingMethods,
@@ -378,20 +383,25 @@ export const basketReducer = createReducer(
     ...state,
     productAdded: false,
   })),
-  on(mergeBasketSuccess, loadBasketSuccess, (state: BasketState, action) => {
-    const basket = {
-      ...action.payload.basket,
-    };
+  on(
+    loadBasketSuccess,
+    createBasketSuccess,
+    mergeBasketSuccess,
+    (state, action): BasketState => {
+      const basket = {
+        ...action.payload.basket,
+      };
 
-    return {
-      ...state,
-      basket,
-      loading: false,
-      error: undefined,
-      submittedBasket: undefined,
-      submittedBuckets: undefined,
-    };
-  }),
+      return {
+        ...state,
+        basket,
+        loading: false,
+        error: undefined,
+        submittedBasket: undefined,
+        submittedBuckets: undefined,
+      };
+    }
+  ),
   on(startCheckoutSuccess, continueCheckoutSuccess, continueCheckoutWithIssues, (state: BasketState, action) => {
     const validation = action.payload.basketValidation;
     const basket = validation && validation.results.adjusted && validation.basket ? validation.basket : state.basket;

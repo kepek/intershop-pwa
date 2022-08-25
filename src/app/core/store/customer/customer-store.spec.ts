@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { OrderService } from 'camfil-pwa/services/order/order.service';
+import { IshOrderService } from 'camfil-pwa/services/ish-order/ish-order.service';
 import { EMPTY, of } from 'rxjs';
 import { anyNumber, anything, instance, mock, when } from 'ts-mockito';
 
@@ -152,7 +152,7 @@ describe('Customer Store', () => {
     when(personalizationServiceMock.getPGID()).thenReturn(EMPTY);
 
     const filterServiceMock = mock(FilterService);
-    const orderServiceMock = mock(OrderService);
+    const orderServiceMock = mock(IshOrderService);
     const authorizationServiceMock = mock(AuthorizationService);
 
     TestBed.configureTestingModule({
@@ -179,7 +179,7 @@ describe('Customer Store', () => {
         { provide: AddressService, useFactory: () => instance(mock(AddressService)) },
         { provide: BasketService, useFactory: () => instance(basketServiceMock) },
         { provide: PaymentService, useFactory: () => instance(mock(PaymentService)) },
-        { provide: OrderService, useFactory: () => instance(orderServiceMock) },
+        { provide: IshOrderService, useFactory: () => instance(orderServiceMock) },
         { provide: CategoriesService, useFactory: () => instance(categoriesServiceMock) },
         { provide: ProductsService, useFactory: () => instance(productsServiceMock) },
         { provide: PromotionsService, useFactory: () => instance(promotionsServiceMock) },
@@ -224,9 +224,6 @@ describe('Customer Store', () => {
           [User API] Login User Success:
             customer: {"isBusinessCustomer":false,"customerNo":"test"}
             user: {"title":"","firstName":"test","lastName":"test","phoneHome"...
-          [Basket API] Check Current Basket
-          [Basket API] Load Basket Success:
-            basket: {"id":"test","lineItems":[1]}
         `);
       });
 
@@ -239,7 +236,6 @@ describe('Customer Store', () => {
           [Basket API] Validate Basket and continue with success:
             targetRoute: "/checkout/address"
             basketValidation: {"basket":{"id":"test","lineItems":[1]},"results":{"valid":t...
-          [Basket] Load Buckets
         `);
       });
     });
