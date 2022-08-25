@@ -9,6 +9,7 @@ import { RoleToggleService } from 'ish-core/utils/role-toggle/role-toggle.servic
 import { QuotesRejectDialogComponent } from '../../components/quotes-reject-dialog/quotes-reject-dialog.component';
 import { CamQuotesFacade } from '../../facades/cam-quotes.facade';
 import { QuoteDetails, QuoteLineItem } from '../../models/quote-details/quote-details.model';
+import { QuoteStatus } from '../../models/quote/quote.model';
 
 @Component({
   selector: 'camfil-camfil-account-quote-detail-page',
@@ -27,6 +28,7 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
   lastRejectReason: string;
 
   canApprove$: Observable<boolean>;
+  isAppoveEnabled: boolean;
 
   @HostListener('window:resize') onWindowsResize() {
     this.onResize();
@@ -46,6 +48,8 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
 
     this.quotesFacade.quoteDetails$.pipe(takeUntil(this.destroy$)).subscribe(details => {
       this.quoteDetails = details;
+      this.isAppoveEnabled =
+        this.quoteDetails?.status === QuoteStatus.Received || this.quoteDetails?.status === QuoteStatus.Requested;
     });
 
     this.loading$ = this.quotesFacade.quoteDetailsLoading$;
@@ -71,6 +75,10 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
   }
 
   reject() {
+    if (!this.isAppoveEnabled) {
+      return;
+    }
+
     const dialog = this.dialog.open(QuotesRejectDialogComponent);
     dialog.componentInstance.reason = this.lastRejectReason;
     dialog.componentInstance.isMultiple = false;
@@ -87,6 +95,10 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
   }
 
   approve() {
+    if (!this.isAppoveEnabled) {
+      return;
+    }
+
     this.quotesFacade.approveQuote({
       id: this.quoteDetails.id,
       number: this.quoteDetails.camfilQuoteNumber,

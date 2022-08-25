@@ -15,10 +15,10 @@
     </div>
 
     <div class="right-items" *ngIf="canApprove$ | async">
-      <a mat-stroked-button color="primary" (click)="reject()">
+      <a mat-stroked-button color="primary" (click)="reject()" [disabled]="!isAppoveEnabled">
         {{ 'camfil.quotes.quote_detail.reject_quote' | translate }}
       </a>
-      <a mat-flat-button color="primary" (click)="approve()">
+      <a mat-flat-button color="primary" (click)="approve()" [disabled]="!isAppoveEnabled">
         {{ 'camfil.quotes.quote_detail.approve_quote' | translate }}
       </a>
     </div>
