@@ -351,7 +351,10 @@ export class AccountCamCardPdfComponent implements OnInit {
         this.priceSummaryPipe.transform(this.products[el.product.sku].salePrice, el.quantity)?.value ||
         0;
       this.sumPrice[id].value = (this.sumPrice[id].value || 0) + price;
-      return this.pdfProductRow(camCard, el, i, showPrice);
+      const productName = this.products?.[el?.product?.sku]?.name;
+      const camCardItemProduct = { ...el.product, name: productName };
+      const camCardItem = { ...el, product: camCardItemProduct };
+      return this.pdfProductRow(camCard, camCardItem, i, showPrice);
     });
   }
 
