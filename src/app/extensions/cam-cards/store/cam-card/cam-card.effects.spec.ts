@@ -31,6 +31,7 @@ import {
   deleteCamCard,
   deleteCamCardFail,
   deleteCamCardSuccess,
+  loadCamCardIfNotLoaded,
   loadCamCards,
   loadCamCardsFail,
   loadCamCardsSuccess,
@@ -540,28 +541,27 @@ describe('Cam Card Effects', () => {
     });
   });
 
+  describe('selectCamCard$', () => {
+    it('should fire loadCamCardIfNotLoaded if an order is selected that is not yet loaded', () => {
+      const camCardId = '123';
+      const action = selectCamCard({ camCardId });
+      const completion = loadCamCardIfNotLoaded({ camCardId });
+      actions$ = hot('-a-a-a', { a: action });
+      const expected$ = cold('-c-c-c', { c: completion });
+
+      expect(effects.loadOrderForSelectedCamCard$).toBeObservable(expected$);
+    });
+  });
+
   describe('routeListenerForSelectedCamCard$', () => {
     it('should map to action of type SelectCamCard', done => {
       router.navigateByUrl('/account/camcards/.SKsEQAE4FIAAAFuNiUBWx0d');
 
       effects.routeListenerForSelectedCamCard$.subscribe(action => {
         expect(action).toMatchInlineSnapshot(`
-          [Cam Cards API] Load Cam Card If Not Loaded:
-            camCardId: ".SKsEQAE4FIAAAFuNiUBWx0d"
           [Cam Cards Internal] Select Cam Card:
             camCardId: ".SKsEQAE4FIAAAFuNiUBWx0d"
         `);
-        done();
-      });
-    });
-  });
-
-  describe('routeListenerForCamCards$', () => {
-    xit('should call CamCardsService after route has been matched', done => {
-      router.navigateByUrl('/account/camcards');
-
-      effects.routeListenerForCamCards$.subscribe(action => {
-        expect(action.type).toEqual(loadCamCards.type);
         done();
       });
     });

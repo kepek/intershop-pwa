@@ -15,13 +15,11 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { take, takeUntil, takeWhile } from 'rxjs/operators';
 
-import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Country } from 'ish-core/models/country/country.model';
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';
-import { whenTruthy } from 'ish-core/utils/operators';
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
@@ -84,7 +82,6 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private camCardsFacade: CamCardsFacade,
     private appFacade: AppFacade,
-    private accountFacade: AccountFacade,
     private cdr: ChangeDetectorRef,
     private camfilConfigurationFacade: CamfilConfigurationFacade
   ) {}
@@ -144,16 +141,15 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   }
 
   initCustomers() {
-    this.accountFacade.user$.pipe(whenTruthy(), take(1)).subscribe(() => {
-      this.customers$.pipe(takeUntil(this.destroy$)).subscribe(customers => {
+    this.customers$
+      .pipe(
+        takeWhile(() => !this.customers?.length),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(customers => {
         this.customers = customers;
         this.setDefaultCustomer();
-
-        if (!customers.length) {
-          this.camCardsFacade.loadCustomers();
-        }
       });
-    });
   }
 
   init() {
@@ -182,7 +178,6 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
       this.camCardForm.patchValue({
         customerSelect: id,
       });
-      this.pickCustomer({ value: id });
     }
   }
 
@@ -192,12 +187,6 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
       this.newSubCamCardInput?.nativeElement.focus();
       this.cdr.detectChanges();
     });
-  }
-
-  pickCustomer(event) {
-    if (event.value) {
-      this.camCardsFacade.getDeliveryAddress(event.value);
-    }
   }
 
   pickAddress(event) {

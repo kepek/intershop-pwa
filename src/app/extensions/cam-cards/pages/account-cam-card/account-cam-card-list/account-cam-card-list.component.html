@@ -276,8 +276,8 @@
 <ng-template #camCardRow let-camCard="camCard">
   <cdk-virtual-scroll-viewport
     autosize
-    [minBufferPx]="800"
-    [maxBufferPx]="1600"
+    [minBufferPx]="600"
+    [maxBufferPx]="1200"
     [style.height.px]="containerSize(camCard?.camCardItems?.length)"
   >
     <div

@@ -38,6 +38,8 @@ import {
   camfilDragLineItem,
   camfilDragLineItemFail,
   camfilDragLineItemSuccess,
+  createBasketFail,
+  createBasketSuccess,
   deleteBasketAttribute,
   deleteBasketAttributeFail,
   deleteBasketAttributeSuccess,
@@ -221,8 +223,8 @@ export class IshBasketEffects extends BasketEffects {
             } else {
               // is logged user but does not have basket -> create basket
               return this.ishBasketService.createBasket().pipe(
-                map(basket => loadBasketSuccess({ basket })),
-                mapErrorToAction(loadBasketFail)
+                map(basket => createBasketSuccess({ basket })),
+                mapErrorToAction(createBasketFail)
               );
             }
           })

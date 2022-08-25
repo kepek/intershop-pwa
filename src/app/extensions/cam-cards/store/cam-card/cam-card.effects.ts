@@ -15,6 +15,7 @@ import {
   mapTo,
   mergeMap,
   reduce,
+  take,
   tap,
   throttleTime,
   window as windowRxOperator,
@@ -164,7 +165,8 @@ export class CamCardEffects {
       filter(
         (routerState: RouterState) => /^\/(account\/camcards)/.test(routerState.url) && !routerState.params.camCardName
       ),
-      mergeMap(() => [loadCustomers(), loadCamCards({ includeAllCustomerCamCards: false })])
+      take(1),
+      mergeMap(() => [loadCamCards({ includeAllCustomerCamCards: false })])
     )
   );
 
@@ -339,6 +341,14 @@ export class CamCardEffects {
           )
         )
       )
+    )
+  );
+
+  loadDeliveryAddressesForAllCustomers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCustomersSuccess),
+      mapToPayloadProperty('customers'),
+      mergeMap(customers => [...customers.map(customer => loadDeliveryAddresses({ id: customer.id }))])
     )
   );
 
@@ -832,11 +842,23 @@ export class CamCardEffects {
     )
   );
 
+  loadOrderForSelectedCamCard$ = createEffect(() =>
+    iif(
+      () => isPlatformBrowser(this.platformId),
+      this.actions$.pipe(
+        ofType(selectCamCard),
+        mapToPayloadProperty('camCardId'),
+        whenTruthy(),
+        map(camCardId => loadCamCardIfNotLoaded({ camCardId }))
+      )
+    )
+  );
+
   routeListenerForSelectedCamCard$ = createEffect(() =>
     this.store.pipe(
       select(selectRouteParam('camCardName')),
       distinctCompareWith(this.store.pipe(select(getSelectedCamCardId))),
-      mergeMap(camCardId => [loadCamCardIfNotLoaded({ camCardId }), selectCamCard({ camCardId })])
+      map(camCardId => selectCamCard({ camCardId }))
     )
   );
 

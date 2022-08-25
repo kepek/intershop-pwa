@@ -185,7 +185,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
         this.camCardForm.patchValue({
           customerName: customers[0].id,
         });
-        this.pickCustomer({ value: customers[0].id });
       }
       this.customers = customers;
     });
@@ -238,9 +237,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
 
   patchForm() {
     if (this.camCard) {
-      if (this.addresses$ === undefined) {
-        this.camCardsFacade.getDeliveryAddress(this.camCard.customer.id);
-      }
       const {
         name,
         customer,
@@ -322,12 +318,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
 
   dateToSend(date) {
     return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toJSON();
-  }
-
-  pickCustomer(event) {
-    if (event.value) {
-      this.camCardsFacade.getDeliveryAddress(event.value);
-    }
   }
 
   pickAddress(event) {

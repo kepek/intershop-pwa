@@ -204,19 +204,7 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, AfterViewInit
         filter(pm => !pm.parameters),
         take(1),
         withLatestFrom(this.checkoutFacade.basket$),
-        filter(([, basket]) => !basket?.payment),
-        takeUntil(this.destroy$)
-      )
-      .subscribe(([pm]) => this.updateBasketPaymentMethod(pm.id));
-
-    // if there is more than one eligible payment method set default as per configuration for logged in user
-    this.paymentMethods$
-      .pipe(
-        filter(methods => methods?.length > 1),
-        map(methods => methods.find(p => p.default)),
-        take(1),
-        withLatestFrom(this.checkoutFacade.basket$, this.isLoggedIn$),
-        filter(([, basket, isLoggedIn]) => !basket?.payment && isLoggedIn),
+        filter(([, basket]) => basket?.id && !basket?.payment),
         takeUntil(this.destroy$)
       )
       .subscribe(([pm]) => this.updateBasketPaymentMethod(pm.id));

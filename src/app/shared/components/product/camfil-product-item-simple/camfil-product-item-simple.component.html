@@ -10,7 +10,7 @@
         [routerLink]="product | ishProductRoute: category"
         class="product-image-box"
       >
-        <camfil-product-image [product]="product" class="product-image" imageType="S"></camfil-product-image>
+        <camfil-product-image width="40" [product]="product" class="product-image" imageType="S"></camfil-product-image>
       </a>
       <camfil-product-title
         *ngIf="configuration.displayName"
@@ -130,6 +130,7 @@
         class="product-image-box"
       >
         <camfil-product-image
+          width="40"
           [product]="product"
           class="product-image"
           imageType="images"
