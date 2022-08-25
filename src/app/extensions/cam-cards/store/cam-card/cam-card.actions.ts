@@ -343,7 +343,7 @@ export const updateContactsWhileMoveCamCardFail = createAction(
 
 export const removeItemFromCamCardFail = createAction('[Cam Cards API] Remove Item from Cam Card Fail', httpError());
 
-export const selectCamCard = createAction('[Cam Cards Internal] Select Cam Card', payload<{ id: string }>());
+export const selectCamCard = createAction('[Cam Cards Internal] Select Cam Card', payload<{ camCardId: string }>());
 
 export const unselectCamCard = createAction('[Cam Cards Internal] Unselect Cam Card');
 

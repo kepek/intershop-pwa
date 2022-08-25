@@ -20,7 +20,7 @@ export class AccountCamCardPageComponent implements OnInit {
   /**
    * The list of cam cards of the customer.
    */
-  camCard$: Observable<CamCard[]>;
+  camCards$: Observable<CamCard[]>;
   /**
    * Indicator for loading state of cam cards
    */
@@ -39,7 +39,7 @@ export class AccountCamCardPageComponent implements OnInit {
   constructor(private camCardsFacade: CamCardsFacade, private appFacade: AppFacade) {}
 
   ngOnInit() {
-    this.camCard$ = this.camCardsFacade.camCards$;
+    this.camCards$ = this.camCardsFacade.camCards$;
     this.camCardLoading$ = this.camCardsFacade.camCardsLoading$;
     this.camCardError$ = this.camCardsFacade.camCardError$;
     this.deviceType$ = this.appFacade.deviceType$;

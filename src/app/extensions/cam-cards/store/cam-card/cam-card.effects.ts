@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { EMPTY, fromEvent, identity, iif } from 'rxjs';
+import { fromEvent, identity, iif } from 'rxjs';
 import {
   concatMap,
   debounceTime,
@@ -28,7 +28,7 @@ import { RouterState } from 'ish-core/store/core/router/router.reducer';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
 import { getSubmittedBasket } from 'ish-core/store/customer/basket';
 import { createOrderSuccess } from 'ish-core/store/customer/orders';
-import { getUserAuthorized } from 'ish-core/store/customer/user';
+import { getUserAuthorized, loginUserSuccess } from 'ish-core/store/customer/user';
 import {
   distinctCompareWith,
   mapErrorToAction,
@@ -129,10 +129,8 @@ import {
   validateCamCardImportSuccess,
 } from './cam-card.actions';
 import {
-  getCamCardCustomers,
   getCamCardDetails,
   getCamCardEntities,
-  getCamCards,
   getCustomerAddresses,
   getSelectedCamCardDetails,
   getSelectedCamCardId,
@@ -150,27 +148,35 @@ export class CamCardEffects {
     @Inject(DOCUMENT) private document: Document
   ) {}
 
+  loadCamfilCustomersAfterLogin$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loginUserSuccess),
+      mapToPayload(),
+      filter(payload => payload.customer.isBusinessCustomer),
+      mapTo(loadCustomers())
+    )
+  );
+
   routeListenerForCamCards$ = createEffect(() =>
     this.actions$.pipe(
       ofType(routerNavigatedAction),
       mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
-      filter((routerState: RouterState) => /^\/(account\/camcards)/.test(routerState.url)),
-      withLatestFrom(this.store.pipe(select(getCamCards)), this.store.pipe(select(getCamCardCustomers))),
-      mergeMap(([, cc, customers]) =>
-        cc.length && customers.length ? EMPTY : [loadCustomers(), loadCamCards({ includeAllCustomerCamCards: false })]
-      )
+      filter(
+        (routerState: RouterState) => /^\/(account\/camcards)/.test(routerState.url) && !routerState.params.camCardName
+      ),
+      mergeMap(() => [loadCustomers(), loadCamCards({ includeAllCustomerCamCards: false })])
     )
   );
 
   /**
    * Reload CamCards after a creation or update to ensure integrity with server
    */
-  reloadCamCards$ = createEffect(() =>
+  reloadCamCard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateCamCardSuccess, createCamCardSuccess),
       mapToPayloadProperty('camCard'),
       filter(camCard => camCard && !!camCard.id),
-      mapTo(loadCamCards({ includeAllCustomerCamCards: false }))
+      map(camCard => loadCamCard({ camCardId: camCard.id }))
     )
   );
 
@@ -212,6 +218,7 @@ export class CamCardEffects {
       ofType(loadCamCardIfNotLoaded),
       mapToPayload(),
       withLatestFrom(this.store.pipe(select(getCamCardEntities))),
+      filter(([{ camCardId }, entities]) => camCardId && !entities[camCardId]),
       groupBy(([{ camCardId }]) => camCardId),
       mergeMap(group$ =>
         group$.pipe(
@@ -493,7 +500,7 @@ export class CamCardEffects {
           .pipe(
             mergeMap(camCard => [
               addProductToCamCardSuccess({ camCard }),
-              selectCamCard({ id: payload.refreshCamCardId }),
+              selectCamCard({ camCardId: payload.refreshCamCardId }),
             ]),
             mapErrorToAction(addProductToCamCardFail)
           )
@@ -515,9 +522,9 @@ export class CamCardEffects {
                     message: 'camfil.modal.addNewProduct.confirmation',
                     messageParams: { 0: sku },
                   }),
-                  selectCamCard({ id: camCard.id }),
+                  selectCamCard({ camCardId: camCard.id }),
                 ]
-              : [addProductToCamCardSuccess({ camCard }), selectCamCard({ id: camCard.id })]
+              : [addProductToCamCardSuccess({ camCard }), selectCamCard({ camCardId: camCard.id })]
           ),
           mapErrorToAction(addProductToCamCardFail)
         )
@@ -570,13 +577,13 @@ export class CamCardEffects {
               ? [
                   addProductToCamCard(addProductPayload),
                   createCamCardSuccess({ camCard }),
-                  selectCamCard({ id: camCard.id }),
+                  selectCamCard({ camCardId: camCard.id }),
                   editCamCard({ camCardId: camCard.id }),
                 ]
               : [
                   addProductToCamCard(addProductPayload),
                   createCamCardSuccess({ camCard }),
-                  selectCamCard({ id: camCard.id }),
+                  selectCamCard({ camCardId: camCard.id }),
                 ];
           }),
           mapErrorToAction(addProductToCamCardFail)
@@ -629,7 +636,7 @@ export class CamCardEffects {
                 sku: payload.sku,
                 quantity: payload.quantity,
               }),
-              selectCamCard({ id: camCard.id }),
+              selectCamCard({ camCardId: camCard.id }),
             ]),
             mapErrorToAction(createCamCardFail)
           )
@@ -829,13 +836,13 @@ export class CamCardEffects {
     this.store.pipe(
       select(selectRouteParam('camCardName')),
       distinctCompareWith(this.store.pipe(select(getSelectedCamCardId))),
-      map(id => selectCamCard({ id }))
+      mergeMap(camCardId => [loadCamCardIfNotLoaded({ camCardId }), selectCamCard({ camCardId })])
     )
   );
 
   setCamCardBreadcrumb$ = createEffect(() =>
     this.store.pipe(
-      ofUrl(/^\/account\/.*/),
+      ofUrl(/^\/account\/camcards\/.*/),
       select(getSelectedCamCardDetails),
       whenTruthy(),
       map(camCards =>

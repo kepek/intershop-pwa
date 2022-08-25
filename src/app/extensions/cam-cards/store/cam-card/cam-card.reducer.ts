@@ -379,11 +379,11 @@ export const camCardReducer = createReducer(
     selected: undefined,
   })),
   on(selectCamCard, (state: CamCardState, action) => {
-    const { id } = action.payload;
+    const { camCardId } = action.payload;
 
     return {
       ...state,
-      selected: id,
+      selected: camCardId,
     };
   }),
   on(setStickyCamCardToolbar, (state: CamCardState, action) => ({

@@ -274,18 +274,29 @@
 </mat-card>
 
 <ng-template #camCardRow let-camCard="camCard">
-  <div *ngFor="let camCardItem of camCard.camCardItems; index as i" class="cam-card-product">
-    <camfil-account-cam-card-detail-line-item
-      mode="view"
-      [index]="i + 1"
-      [currentCamCard]="camCard"
-      [camCardItemData]="camCardItem"
-      [showCheckbox]="!maintenance(camCard, ['INACTIVE'])"
-      [checked]="isProductChecked(camCardItem.id)"
-      [customerPrices]="getCustomerPriceForSkuInCustomer(camCard.customer.id, camCardItem.product.sku)"
-      (changeCheckbox)="handleProductCheckbox(camCardItem, camCard, $event)"
-    ></camfil-account-cam-card-detail-line-item>
-  </div>
+  <cdk-virtual-scroll-viewport
+    autosize
+    [minBufferPx]="800"
+    [maxBufferPx]="1600"
+    [style.height.px]="containerSize(camCard?.camCardItems?.length)"
+  >
+    <div
+      *cdkVirtualFor="let camCardItem of camCard.camCardItems; index as i; trackBy: trackBy"
+      [style.minHeight.px]="itemSize"
+      class="cam-card-product"
+    >
+      <camfil-account-cam-card-detail-line-item
+        mode="view"
+        [index]="i + 1"
+        [currentCamCard]="camCard"
+        [camCardItemData]="camCardItem"
+        [showCheckbox]="!maintenance(camCard, ['INACTIVE'])"
+        [checked]="isProductChecked(camCardItem.id)"
+        [customerPrices]="getCustomerPriceForSkuInCustomer(camCard.customer.id, camCardItem.product.sku)"
+        (changeCheckbox)="handleProductCheckbox(camCardItem, camCard, $event)"
+      ></camfil-account-cam-card-detail-line-item>
+    </div>
+  </cdk-virtual-scroll-viewport>
 </ng-template>
 
 <ng-template #editIcon let-camCard="camCard">
