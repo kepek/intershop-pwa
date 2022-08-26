@@ -117,7 +117,7 @@
                 label="camfil.account.cam_card.add_to_form.address"
                 markRequiredLabel="off"
                 matInput
-                maxlength="250"
+                maxlength="50"
                 rows="5"
               ></textarea>
               <camfil-error
@@ -127,7 +127,11 @@
               >
               </camfil-error>
             </mat-form-field>
-            <mat-form-field appearance="fill" class="form-field" *camfilChannelToggle="'use2ndAddressLineInCamCardForm'">
+            <mat-form-field
+              appearance="fill"
+              class="form-field"
+              *camfilChannelToggle="'use2ndAddressLineInCamCardForm'"
+            >
               <mat-label>{{ 'account.default_address.street2.label' | translate }}</mat-label>
               <textarea
                 (change)="onBlurSubmit()"
@@ -135,7 +139,7 @@
                 label="camfil.modal.createOrder.order-form.input.addressLine1"
                 markRequiredLabel="off"
                 matInput
-                maxlength="250"
+                maxlength="200"
                 rows="5"
               ></textarea>
               <camfil-error
