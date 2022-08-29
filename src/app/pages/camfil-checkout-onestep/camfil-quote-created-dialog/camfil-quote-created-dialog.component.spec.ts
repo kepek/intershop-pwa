@@ -3,16 +3,16 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { QuoteCreatedDialogComponent } from './quote-created-dialog.component';
+import { CamfilQuoteCreatedDialogComponent } from './camfil-quote-created-dialog.component';
 
-describe('Quote Created Dialog Component', () => {
-  let component: QuoteCreatedDialogComponent;
-  let fixture: ComponentFixture<QuoteCreatedDialogComponent>;
+describe('Camfil Quote Created Dialog Component', () => {
+  let component: CamfilQuoteCreatedDialogComponent;
+  let fixture: ComponentFixture<CamfilQuoteCreatedDialogComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [QuoteCreatedDialogComponent],
+      declarations: [CamfilQuoteCreatedDialogComponent],
       imports: [NgbModalModule, RouterTestingModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: [] },
@@ -22,7 +22,7 @@ describe('Quote Created Dialog Component', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(QuoteCreatedDialogComponent);
+    fixture = TestBed.createComponent(CamfilQuoteCreatedDialogComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

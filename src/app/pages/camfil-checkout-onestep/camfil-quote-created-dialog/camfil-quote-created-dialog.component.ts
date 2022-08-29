@@ -3,12 +3,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'camfil-quote-created-dialog',
-  templateUrl: './quote-created-dialog.component.html',
+  templateUrl: './camfil-quote-created-dialog.component.html',
 })
-export class QuoteCreatedDialogComponent implements OnInit {
+export class CamfilQuoteCreatedDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { title: string },
-    private dialogRef: MatDialogRef<QuoteCreatedDialogComponent>
+    private dialogRef: MatDialogRef<CamfilQuoteCreatedDialogComponent>
   ) {}
 
   ngOnInit(): void {}

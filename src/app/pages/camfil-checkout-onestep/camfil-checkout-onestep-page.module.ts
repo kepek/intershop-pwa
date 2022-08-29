@@ -20,6 +20,7 @@ import { CheckoutPaymentPageModule } from '../checkout-payment/checkout-payment-
 import { CamfilCheckoutOnestepPageComponent } from './camfil-checkout-onestep-page.component';
 import { CamfilCheckoutAddEmailRecipientModalComponent } from './camfil-checkout-add-email-recipient-modal/camfil-checkout-add-email-recipient-modal.component';
 import { CamfilCheckoutGoodsAcceptanceModalComponent } from './camfil-checkout-goods-acceptance-modal/camfil-checkout-goods-acceptance-modal.component';
+import { CamfilQuoteCreatedDialogComponent } from './camfil-quote-created-dialog/camfil-quote-created-dialog.component';
 
 const exportedComponents = [
   CamfilCheckoutAddEmailRecipientModalComponent,
@@ -31,6 +32,7 @@ const exportedComponents = [
   CamfilPaymentConcardisCreditCardComponent,
   CamfilPaymentConcardisCreditcardCvcDetailComponent,
   CamfilPaymentConcardisDirectdebitComponent,
+  CamfilQuoteCreatedDialogComponent,
   CreateNewCamcardComponent,
   CreateOrderButtonComponent,
   PrintOrderComponent,
