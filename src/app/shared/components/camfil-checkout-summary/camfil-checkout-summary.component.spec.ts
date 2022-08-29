@@ -82,12 +82,7 @@ describe('Camfil Checkout Summary Component', () => {
     when(shoppingFacade.productsReadyToPlaceOrder$).thenReturn(of(true));
     when(accountFacade.isLoggedIn$).thenReturn(of(false));
     when(camfilConfigurationFacade.isEnabled$('goodsAcceptanceTimeMandatory')).thenReturn(of(false));
-    when(checkoutFacade.basket$).thenReturn(
-      of({
-        id: '',
-        totals: undefined,
-      })
-    );
+    when(shoppingFacade.basketAddresses$).thenReturn(of([]));
   });
 
   it('should be created', () => {

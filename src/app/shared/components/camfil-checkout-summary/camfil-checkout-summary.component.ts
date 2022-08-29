@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { Observable, Subject, combineLatest } from 'rxjs';
-import { map, startWith, take, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { map, skipWhile, startWith, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -87,14 +87,15 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
       this.camfilConfigurationFacade.isEnabled$('allowQuotes'),
     ]).pipe(map(([hasRequestRole, isQuotesModuleEnabled]) => hasRequestRole && isQuotesModuleEnabled));
 
-    this.checkoutFacade.basket$
+    this.shoppingFacade.basketAddresses$
       .pipe(
+        skipWhile(addresses => !addresses || !addresses.length),
+        map(addresses => addresses[0]),
         withLatestFrom(this.camfilConfigurationFacade.isEnabled$('goodsAcceptanceTimeMandatory')),
         takeUntil(this.destroy$)
       )
       .subscribe(
-        ([basket, isMandatory]) =>
-          (this.isGoodsAcceptanceTimeValid = !(isMandatory && !basket?.commonShipToAddress?.goodsAcceptanceNote))
+        ([address, isMandatory]) => (this.isGoodsAcceptanceTimeValid = !(isMandatory && !address?.goodsAcceptanceNote))
       );
   }
 
