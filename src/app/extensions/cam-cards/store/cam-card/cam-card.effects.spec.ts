@@ -31,6 +31,7 @@ import {
   deleteCamCard,
   deleteCamCardFail,
   deleteCamCardSuccess,
+  loadCamCardIfNotLoaded,
   loadCamCards,
   loadCamCardsFail,
   loadCamCardsSuccess,
@@ -350,7 +351,7 @@ describe('Cam Card Effects', () => {
     xit('should map to actions of type AddProductToCamCardSuccess', () => {
       const action = addProductToCamCard(payload);
       const completion1 = addProductToCamCardSuccess({ camCard: camCards[0] });
-      const completion2 = selectCamCard({ id: camCards[0].id });
+      const completion2 = selectCamCard({ camCardId: camCards[0].id });
       actions$ = hot('-a----a----a', { a: action });
       const expected$ = cold('-(cd)-(cd)-(cd)', { c: completion1, d: completion2 });
       expect(effects.addProductToCamCard$).toBeObservable(expected$);
@@ -416,7 +417,7 @@ describe('Cam Card Effects', () => {
       const action = addProductToNewCamCard(payload);
       const completion1 = createCamCardSuccess({ camCard });
       const completion2 = addProductToCamCard({ camCardId: camCard.id, sku: payload.sku });
-      const completion3 = selectCamCard({ id: camCard.id });
+      const completion3 = selectCamCard({ camCardId: camCard.id });
       actions$ = hot('-a-----a-----a', { a: action });
       const expected$ = cold('-(bcd)-(bcd)-(bcd)', { b: completion1, c: completion2, d: completion3 });
       expect(effects.addProductToNewCamCard$).toBeObservable(expected$);
@@ -540,6 +541,18 @@ describe('Cam Card Effects', () => {
     });
   });
 
+  describe('selectCamCard$', () => {
+    it('should fire loadCamCardIfNotLoaded if an order is selected that is not yet loaded', () => {
+      const camCardId = '123';
+      const action = selectCamCard({ camCardId });
+      const completion = loadCamCardIfNotLoaded({ camCardId });
+      actions$ = hot('-a-a-a', { a: action });
+      const expected$ = cold('-c-c-c', { c: completion });
+
+      expect(effects.loadOrderForSelectedCamCard$).toBeObservable(expected$);
+    });
+  });
+
   describe('routeListenerForSelectedCamCard$', () => {
     it('should map to action of type SelectCamCard', done => {
       router.navigateByUrl('/account/camcards/.SKsEQAE4FIAAAFuNiUBWx0d');
@@ -547,19 +560,8 @@ describe('Cam Card Effects', () => {
       effects.routeListenerForSelectedCamCard$.subscribe(action => {
         expect(action).toMatchInlineSnapshot(`
           [Cam Cards Internal] Select Cam Card:
-            id: ".SKsEQAE4FIAAAFuNiUBWx0d"
+            camCardId: ".SKsEQAE4FIAAAFuNiUBWx0d"
         `);
-        done();
-      });
-    });
-  });
-
-  describe('routeListenerForCamCards$', () => {
-    xit('should call CamCardsService after route has been matched', done => {
-      router.navigateByUrl('/account/camcards');
-
-      effects.routeListenerForCamCards$.subscribe(action => {
-        expect(action.type).toEqual(loadCamCards.type);
         done();
       });
     });
@@ -568,7 +570,7 @@ describe('Cam Card Effects', () => {
   describe('setCamCardBreadcrumb$', () => {
     beforeEach(() => {
       store$.dispatch(loadCamCardsSuccess({ camCards }));
-      store$.dispatch(selectCamCard({ id: camCards[0].id }));
+      store$.dispatch(selectCamCard({ camCardId: camCards[0].id }));
     });
 
     it('should set the breadcrumb of the selected Cam Card when on account url', done => {

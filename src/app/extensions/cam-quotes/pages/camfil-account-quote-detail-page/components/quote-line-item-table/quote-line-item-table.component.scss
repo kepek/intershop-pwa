@@ -33,8 +33,9 @@
     }
 
     .product-image {
-      max-width: 40px;
-      max-height: 40px;
+      display: inline-block;
+      width: 40px;
+      height: 40px;
     }
 
     .quick-view {

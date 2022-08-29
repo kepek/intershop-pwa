@@ -59,7 +59,6 @@ import {
   loadCamCards,
   loadContactsByCustomer,
   loadCustomers,
-  loadDeliveryAddresses,
   moveCamCard,
   moveCamCardItem,
   moveItemToCamCard,
@@ -148,10 +147,6 @@ export class CamCardsFacade {
 
   clearVirtualCamCard() {
     this.store.dispatch(clearVirtualCamCard());
-  }
-
-  getDeliveryAddress(id) {
-    this.store.dispatch(loadDeliveryAddresses({ id }));
   }
 
   addBasketToNewCamCard(camCards: CamCard): void | HttpError {

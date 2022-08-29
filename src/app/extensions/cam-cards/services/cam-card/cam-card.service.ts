@@ -271,26 +271,6 @@ export class CamCardService {
   }
 
   /**
-   * Get customers available for current user.
-   * @returns             The created cam_cards.
-   * @deprecated
-   */
-  // TODO: verify if needed / deprecated
-  createDeliveryAddress(): Observable<void> {
-    return this.apiService.get('camfilcustomers');
-  }
-
-  /**
-   * Get customers available for current user.
-   * @returns             The created cam_cards.
-   * @deprecated
-   */
-  // TODO: verify if needed / deprecated
-  updateDeliveryAddress(): Observable<void> {
-    return this.apiService.get('camfilcustomers');
-  }
-
-  /**
    * Adds a product to the cam cards with the given id and reloads the cam_cards.
    * @param camCardId
    * @param sku           The product sku.

@@ -6,7 +6,7 @@
     <ng-container *ngIf="isViewMode">{{ index }}</ng-container>
     <div class="d-flex align-items-center">
       <a [routerLink]="product | ishProductRoute" class="image ml-0 mx-md-3">
-        <camfil-product-image [product]="product" class="product-image" imageType="images"></camfil-product-image>
+        <camfil-product-image width="40" [product]="product" class="product-image" imageType="images"></camfil-product-image>
       </a>
       <div class="my-2 my-md-0">
         <div class="d-flex flex-row">

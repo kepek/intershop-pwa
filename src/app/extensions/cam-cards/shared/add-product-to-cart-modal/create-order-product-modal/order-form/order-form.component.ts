@@ -128,7 +128,6 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   }
 
   pickCustomer(event) {
-    this.camCardsFacade.getDeliveryAddress(event.value);
     const selectedCustomer = this.customersArr?.find(customer => customer.id === event.value);
     this.addressForm?.patchValue({ customerFull: selectedCustomer });
     this.updateContacts(event);
@@ -178,7 +177,6 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     if (customersArr?.length === 1) {
       defaultCustomerId = customersArr[0].id;
       this.updateContacts({ value: defaultCustomerId });
-      this.camCardsFacade.getDeliveryAddress(defaultCustomerId);
     }
 
     return defaultCustomerId;

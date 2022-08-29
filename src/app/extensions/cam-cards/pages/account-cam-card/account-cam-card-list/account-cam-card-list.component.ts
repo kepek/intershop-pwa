@@ -64,6 +64,42 @@ import { UserAccessCamCardDialogComponent } from '../../../shared/user-access-ca
   ],
 })
 export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy {
+  constructor(
+    private checkoutFacade: CheckoutFacade,
+    private productFacade: ShoppingFacade,
+    private camCardsFacade: CamCardsFacade,
+    private changeDetectorRefs: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private activatedRoute: ActivatedRoute,
+    private scroller: ViewportScroller,
+    private translate: TranslateService,
+    private location: Location,
+    private authorizationToggle: AuthorizationToggleService,
+    private camfilConfigurationFacade: CamfilConfigurationFacade,
+    @Inject(DOCUMENT) private document: Document
+  ) {}
+
+  get checkedCamCards(): CamCard[] {
+    return this.camCards ? this.camCards.filter(camCard => this.isCamCardChecked(camCard)) : [];
+  }
+
+  get noErpIdCamCardsInSelectedProducts() {
+    return (
+      this.camCards?.filter(
+        cc => !cc.erpId && Object.values(this.productsChecked)?.find((p: CamCamProductChecked) => cc.id === p.camCardId)
+      ) || []
+    );
+  }
+
+  get noPostCodeCamCardsInSelectedProducts() {
+    return (
+      this.camCards?.filter(
+        cc =>
+          (!cc.deliveryAddress.postalCode || !cc.deliveryAddress.city) &&
+          Object.values(this.productsChecked)?.find((p: CamCamProductChecked) => cc.id === p.camCardId)
+      ) || []
+    );
+  }
   private static CUSTOMER_ADMIN_PERMISSIONS = ['APP_B2B_MANAGE_USERS', 'APP_B2B_PURCHASE', 'APP_B2B_MANAGE_ALL_ORDERS'];
   private static PRICE_PERMISSIONS = ['APP_B2B_VIEW_PRICES'];
   /** The list of cam cards of the customer. */
@@ -116,42 +152,9 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   private fragment: string;
   private destroy$ = new Subject();
 
-  constructor(
-    private checkoutFacade: CheckoutFacade,
-    private productFacade: ShoppingFacade,
-    private camCardsFacade: CamCardsFacade,
-    private changeDetectorRefs: ChangeDetectorRef,
-    public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute,
-    private scroller: ViewportScroller,
-    private translate: TranslateService,
-    private location: Location,
-    private authorizationToggle: AuthorizationToggleService,
-    private camfilConfigurationFacade: CamfilConfigurationFacade,
-    @Inject(DOCUMENT) private document: Document
-  ) {}
+  numberOfVisibleLineItems = 10;
 
-  get checkedCamCards(): CamCard[] {
-    return this.camCards ? this.camCards.filter(camCard => this.isCamCardChecked(camCard)) : [];
-  }
-
-  get noErpIdCamCardsInSelectedProducts() {
-    return (
-      this.camCards?.filter(
-        cc => !cc.erpId && Object.values(this.productsChecked)?.find((p: CamCamProductChecked) => cc.id === p.camCardId)
-      ) || []
-    );
-  }
-
-  get noPostCodeCamCardsInSelectedProducts() {
-    return (
-      this.camCards?.filter(
-        cc =>
-          (!cc.deliveryAddress.postalCode || !cc.deliveryAddress.city) &&
-          Object.values(this.productsChecked)?.find((p: CamCamProductChecked) => cc.id === p.camCardId)
-      ) || []
-    );
-  }
+  itemSize = 80;
 
   ngOnInit() {
     this.isMobileView = this.isMobile();
@@ -735,5 +738,23 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   showAllCustomerCamCards(event: MatCheckboxChange) {
     this.loading = true;
     this.camCardsFacade.loadCamCards(event.checked);
+  }
+
+  private isMoreThanLimit(containerSize: number) {
+    return containerSize >= this.numberOfVisibleLineItems;
+  }
+
+  containerSize(quntity: number) {
+    let containerSize = quntity * this.itemSize;
+
+    if (this.isMoreThanLimit(quntity)) {
+      containerSize = this.numberOfVisibleLineItems * this.itemSize;
+    }
+
+    return containerSize;
+  }
+
+  trackBy(_, camCardItem: CamCardItem) {
+    return camCardItem.id;
   }
 }

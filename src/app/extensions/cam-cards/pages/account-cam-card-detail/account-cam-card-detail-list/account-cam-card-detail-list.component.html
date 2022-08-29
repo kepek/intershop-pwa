@@ -16,13 +16,22 @@
           [cdkDropListData]="camCard.camCardItems"
           (cdkDropListDropped)="drop($event, camCard)"
         >
-          <ng-container *ngFor="let item of camCard.camCardItems; index as i">
+          <cdk-virtual-scroll-viewport
+            autosize
+            [minBufferPx]="600"
+            [maxBufferPx]="1200"
+            [style.height.px]="containerSize(camCard?.camCardItems?.length)"
+          >
             <div
-              class="list-item-row list-item-row-big"
-              [ngStyle]="{ order: item.position }"
-              [cdkDragData]="item"
-              cdkDrag
+              *cdkVirtualFor="let item of camCard.camCardItems; index as i; trackBy: trackBy"
+              [style.minHeight.px]="itemSize"
             >
+              <div
+                class="list-item-row list-item-row-big"
+                [ngStyle]="{ order: item.position }"
+                [cdkDragData]="item"
+                cdkDrag
+              >
               <div class="d-flex align-items-center">
                 <mat-icon svgIcon="move" class="size-24 handle" cdkDragHandle></mat-icon>
                 <ng-container *ngIf="!isNewSku(item.product.sku)">
@@ -40,8 +49,9 @@
                   ></camfil-account-cam-card-detail-line-item>
                 </ng-container>
               </div>
-            </div>
-          </ng-container>
+              </div>
+              </div>
+          </cdk-virtual-scroll-viewport>
         </div>
         <div *ngFor="let sub of camCard.subCamCards">
           <div

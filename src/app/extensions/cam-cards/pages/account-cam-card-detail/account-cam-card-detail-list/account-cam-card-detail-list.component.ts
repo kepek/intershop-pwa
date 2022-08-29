@@ -68,6 +68,43 @@ export interface InvalidProducts {
   ],
 })
 export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnDestroy {
+  constructor(
+    private translate: TranslateService,
+    private camCardsFacade: CamCardsFacade,
+    private shoppingFacade: ShoppingFacade,
+    private checkoutFacade: CheckoutFacade,
+    private appFacade: AppFacade,
+    private changeDetectorRefs: ChangeDetectorRef,
+    public router: Router,
+    public dialog: MatDialog,
+    private authorizationToggle: AuthorizationToggleService,
+    private camfilConfigurationFacade: CamfilConfigurationFacade,
+    @Inject(DOCUMENT) private document: Document
+  ) {}
+
+  get totalPrice(): Price {
+    if (!this.showPrice) {
+      return;
+    }
+    const list = Object.values(this.priceSum);
+    const currency = list.length ? list.find(([item]) => item.currency)[0]?.currency : '';
+    const value = list.reduce((res, [item, , qty]) => res + (item?.value || 0) * qty, 0);
+    return { value, type: 'Money', currency };
+  }
+
+  get handleModalTexts() {
+    const type =
+      this.modalType === 'noErpNoAddress'
+        ? this.camCard.erpId
+          ? 'with_no_completed_address'
+          : 'no_erp_id'
+        : 'invalid_measurements';
+    return {
+      titleText: `camfil.dynamic.cam_card.${type}.header`,
+      confirmText: `camfil.dynamic.cam_card.${type}.btn`,
+      content: `camfil.dynamic.cam_card.${type}.text`,
+    };
+  }
   @Input() deviceType: DeviceType;
   @Input() camCard: CamCard;
   @Input() selectedItemsForm: FormArray;
@@ -104,29 +141,9 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   isIntervalVisible = false;
   private destroy$ = new Subject();
 
-  constructor(
-    private translate: TranslateService,
-    private camCardsFacade: CamCardsFacade,
-    private shoppingFacade: ShoppingFacade,
-    private checkoutFacade: CheckoutFacade,
-    private appFacade: AppFacade,
-    private changeDetectorRefs: ChangeDetectorRef,
-    public router: Router,
-    public dialog: MatDialog,
-    private authorizationToggle: AuthorizationToggleService,
-    private camfilConfigurationFacade: CamfilConfigurationFacade,
-    @Inject(DOCUMENT) private document: Document
-  ) {}
+  numberOfVisibleLineItems = 10;
 
-  get totalPrice(): Price {
-    if (!this.showPrice) {
-      return;
-    }
-    const list = Object.values(this.priceSum);
-    const currency = list.length ? list.find(([item]) => item.currency)[0]?.currency : '';
-    const value = list.reduce((res, [item, , qty]) => res + (item?.value || 0) * qty, 0);
-    return { value, type: 'Money', currency };
-  }
+  itemSize = 80;
 
   ngOnInit(): void {
     this.isMobileView = this.isMobile();
@@ -278,20 +295,6 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       quantity: item.quantity,
       boxLabel: CamCardHelper.handleBoxLabelToOrderItem(parent, item),
       measurement: item.measurement,
-    };
-  }
-
-  get handleModalTexts() {
-    const type =
-      this.modalType === 'noErpNoAddress'
-        ? this.camCard.erpId
-          ? 'with_no_completed_address'
-          : 'no_erp_id'
-        : 'invalid_measurements';
-    return {
-      titleText: `camfil.dynamic.cam_card.${type}.header`,
-      confirmText: `camfil.dynamic.cam_card.${type}.btn`,
-      content: `camfil.dynamic.cam_card.${type}.text`,
     };
   }
 
@@ -500,5 +503,23 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     const { sku, quantity, boxLabel, measurements } = quickAddData;
     const rootCamCardId = this.camCard?.id;
     this.camCardsFacade.addProductToCamCard(rootCamCardId, sku, quantity, boxLabel, measurements, 0, true);
+  }
+
+  private isMoreThanLimit(containerSize: number) {
+    return containerSize >= this.numberOfVisibleLineItems;
+  }
+
+  containerSize(quntity: number) {
+    let containerSize = quntity * this.itemSize;
+
+    if (this.isMoreThanLimit(quntity)) {
+      containerSize = this.numberOfVisibleLineItems * this.itemSize;
+    }
+
+    return containerSize;
+  }
+
+  trackBy(_, camCardItem: CamCardItem) {
+    return camCardItem.id;
   }
 }

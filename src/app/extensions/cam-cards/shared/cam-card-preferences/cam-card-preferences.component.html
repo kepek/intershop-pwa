@@ -32,7 +32,6 @@
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.customer_name' | translate }}</mat-label>
               <mat-select
                 (change)="onBlurSubmit()"
-                (selectionChange)="pickCustomer($event)"
                 formControlName="customerName"
               >
                 <mat-option>--</mat-option>

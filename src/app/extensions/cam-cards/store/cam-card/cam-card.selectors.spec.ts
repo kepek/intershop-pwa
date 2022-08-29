@@ -291,7 +291,7 @@ describe('Cam Card Selectors', () => {
 
   describe('Get Selected Cam Card', () => {
     const loadCamCardsSuccessActions = loadCamCardsSuccess({ camCards });
-    const selectCamCardAction = selectCamCard({ id: camCards[1].id });
+    const selectCamCardAction = selectCamCard({ camCardId: camCards[1].id });
 
     beforeEach(() => {
       store$.dispatch(loadCamCardsSuccessActions);
