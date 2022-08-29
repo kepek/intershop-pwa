@@ -3,6 +3,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import {
+  debounceTime,
   distinctUntilChanged,
   filter,
   map,
@@ -34,6 +35,8 @@ import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form/c
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { isEqual } from 'lodash-es';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { CamfilQuoteCreatedDialogComponent } from './camfil-quote-created-dialog/camfil-quote-created-dialog.component';
 
 @Component({
   templateUrl: './camfil-checkout-onestep-page.component.html',
@@ -71,7 +74,8 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, AfterViewInit
     private accountFacade: AccountFacade,
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
-    private camCardsFacade: CamCardsFacade
+    private camCardsFacade: CamCardsFacade,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -105,6 +109,18 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, AfterViewInit
     );
 
     this.isEmpty$ = this.allBuckets$.pipe(map(allBuckets => allBuckets?.length === 0));
+
+    this.submittedBasket$
+      .pipe(
+        startWith(false),
+        whenTruthy(),
+        withLatestFrom(this.checkoutFacade.selectedOrder$),
+        map(([, order]) => order),
+        filter(order => order.statusCode === 'RFQ'),
+        debounceTime(500),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(() => this.dialog.open(CamfilQuoteCreatedDialogComponent));
 
     this.initBasket();
   }

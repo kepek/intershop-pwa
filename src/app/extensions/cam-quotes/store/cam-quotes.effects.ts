@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { forkJoin } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
@@ -8,7 +7,6 @@ import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/
 import { createOrderSuccess } from 'ish-core/store/customer/orders';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
-import { QuoteCreatedDialogComponent } from '../components/quote-created-dialog/quote-created-dialog.component';
 import { QuotesService } from '../services/quotes/quotes.service';
 
 import {
@@ -33,7 +31,7 @@ import {
 
 @Injectable()
 export class CamQuotesEffects {
-  constructor(private actions$: Actions, private camQuotesSrv: QuotesService, private dialog: MatDialog) {}
+  constructor(private actions$: Actions, private camQuotesSrv: QuotesService) {}
 
   loadCamQuotes$ = createEffect(() =>
     this.actions$.pipe(
@@ -61,15 +59,6 @@ export class CamQuotesEffects {
       filter(order => order && order.statusCode === 'RFQ'),
       map(createQuoteSuccess)
     )
-  );
-
-  showLightboxAfterQuoteCreated$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(createQuoteSuccess),
-        map(() => this.dialog.open(QuoteCreatedDialogComponent))
-      ),
-    { dispatch: false }
   );
 
   approveCamQuote$ = createEffect(() =>
