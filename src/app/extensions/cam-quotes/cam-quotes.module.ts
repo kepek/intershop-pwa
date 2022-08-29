@@ -7,9 +7,10 @@ import { QuoteCreatedDialogComponent } from './components/quote-created-dialog/q
 import { QuotesApproveDialogComponent } from './components/quotes-approve-dialog/quotes-approve-dialog.component';
 import { QuotesRejectDialogComponent } from './components/quotes-reject-dialog/quotes-reject-dialog.component';
 import { CamQuotesRoutingModule } from './pages/cam-quotes-routing.module';
+import { CamQuotesStoreModule } from './store/cam-quotes-store.module';
 
 @NgModule({
-  imports: [CamQuotesRoutingModule, SharedModule],
+  imports: [CamQuotesRoutingModule, CamQuotesStoreModule, SharedModule],
   exports: [SharedModule],
   declarations: [
     ConfirmDialogComponent,
