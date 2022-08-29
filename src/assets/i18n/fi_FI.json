@@ -1526,6 +1526,8 @@
   "inplace_edit.cancel": "Peruuta",
   "inplace_edit.click_to_edit": "Muokkaa napsauttamalla",
   "inplace_edit.save": "Tallenna",
+  "locale.de_AT.long": "Deutsch",
+  "locale.de_AT.short": "de",
   "locale.de_CH.long": "Deutsch",
   "locale.de_CH.short": "de",
   "locale.de_DE.long": "Deutsch",
