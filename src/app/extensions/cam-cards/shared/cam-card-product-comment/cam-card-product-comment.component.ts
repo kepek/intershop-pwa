@@ -13,7 +13,7 @@ import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamCardProductCommentComponent implements OnInit, OnDestroy {
-  @Input() currentCamCard?: CamCard;
+  @Input() camCard?: CamCard;
   @Input() camCardItem: CamCardItem;
   @Input() mode: 'edit' | 'view';
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
@@ -52,7 +52,7 @@ export class CamCardProductCommentComponent implements OnInit, OnDestroy {
     const newValue = target.value;
     if (newValue && newValue !== oldValue) {
       const newItem = { ...this.camCardItem, comment: { ...this.commentForm.value } };
-      this.camCardsFacade.updateCamCardProduct(this.currentCamCard.rootCamCard, this.currentCamCard.id, newItem);
+      this.camCardsFacade.updateCamCardProduct(this.camCard.rootCamCard, this.camCard.id, newItem);
     }
   }
 

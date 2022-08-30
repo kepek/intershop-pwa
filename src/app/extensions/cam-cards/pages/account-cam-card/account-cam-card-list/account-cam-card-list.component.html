@@ -284,10 +284,11 @@
       class="cam-card-product"
     >
       <camfil-account-cam-card-detail-line-item
+        *ngIf="isCamCardExpanded(camCard)"
         mode="view"
         [index]="i + 1"
-        [currentCamCard]="camCard"
-        [camCardItemData]="camCardItem"
+        [camCard]="camCard"
+        [camCardItem]="camCardItem"
         [showCheckbox]="!maintenance(camCard, ['INACTIVE'])"
         [checked]="isProductChecked(camCardItem.id)"
         [customerPrices]="getCustomerPriceForSkuInCustomer(camCard.customer.id, camCardItem.product.sku)"
