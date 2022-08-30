@@ -1236,6 +1236,7 @@
   "camfil.quotes.quote_detail.expiration_date": "Expiration date",
   "camfil.quotes.quote_detail.note": "Note to customer service",
   "camfil.quotes.quote_detail.phone_notification": "Phone notification",
+  "camfil.quotes.quote_detail.proposal_number": "(fr_FR)_Camfil proposal number",
   "camfil.quotes.quote_detail.quotation_number": "Camfil quotation number",
   "camfil.quotes.quote_detail.reference": "Quotation reference",
   "camfil.quotes.quote_detail.reject_quote": "Reject Quote",

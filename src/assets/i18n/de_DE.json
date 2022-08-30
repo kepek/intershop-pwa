@@ -1224,6 +1224,7 @@
   "camfil.quotes.quote_detail.expiration_date": "Ablaufdatum",
   "camfil.quotes.quote_detail.note": "Hinweis für den Kundenservice",
   "camfil.quotes.quote_detail.phone_notification": "Telefonische Benachrichtigung",
+  "camfil.quotes.quote_detail.proposal_number": "(de_DE)_Camfil proposal number",
   "camfil.quotes.quote_detail.quotation_number": "Camfil Angebotsnummer",
   "camfil.quotes.quote_detail.reference": "Angebotsreferenz",
   "camfil.quotes.quote_detail.reject_quote": "Angebot ablehnen",
