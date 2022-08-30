@@ -36,6 +36,7 @@ describe('Camfil Configuration Effects', () => {
   };
 
   const configuration: CamfilChannelConfiguration = {
+    lang: 'sv_SE',
     languages: ['sv_SE', 'en_GB'],
     zipCodeRegExp: '^\\d$',
     channelCode: 'SE',

@@ -10,10 +10,10 @@
     lang: de_DE
   - baseHref: /ch
     channel: Camfil-CamfilCH-Site
-    lang: de_CH
+    lang: de_DE
   - baseHref: /at
     channel: Camfil-CamfilAT-Site
-    lang: de_AT
+    lang: de_DE
   - baseHref: /se
     channel: Camfil-CamfilSE-Site
     lang: sv_SE

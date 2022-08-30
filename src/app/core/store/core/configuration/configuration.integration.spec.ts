@@ -124,8 +124,7 @@ describe('Configuration Integration', () => {
     expect(location.path()).toMatchInlineSnapshot(`"/home"`);
     expect(getCurrentLocale(store$.state)).toMatchInlineSnapshot(`
       Object {
-        "currency": "EUR",
-        "lang": "de_DE",
+        "lang": "en_US",
       }
     `);
   }));
@@ -133,18 +132,15 @@ describe('Configuration Integration', () => {
   it('should have a default locale on startup in state', fakeAsync(() => {
     expect(getCurrentLocale(store$.state)).toMatchInlineSnapshot(`
       Object {
-        "currency": "EUR",
         "lang": "en_US",
       }
     `);
     expect(getAvailableLocales(store$.state)).toMatchInlineSnapshot(`
       Array [
         Object {
-          "currency": "EUR",
           "lang": "en_US",
         },
         Object {
-          "currency": "EUR",
           "lang": "de_DE",
         },
       ]

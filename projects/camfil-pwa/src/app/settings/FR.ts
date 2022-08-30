@@ -3,6 +3,7 @@ import { CamfilChannelConfiguration } from 'camfil-pwa/models/camfil-channel-con
 import { BasketSurchargeTypes } from 'ish-core/models/basket-surcharge/basket-surcharge.types';
 
 const camfilConfiguration: CamfilChannelConfiguration = {
+  lang: 'fr_FR',
   languages: ['fr_FR', 'en_GB'],
   continueShoppingUrl: '/home',
   channelCode: 'FR',

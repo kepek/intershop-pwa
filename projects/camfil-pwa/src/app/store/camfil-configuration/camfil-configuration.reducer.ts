@@ -21,6 +21,7 @@ export const initialState: CamfilConfigurationState = {
   initialized: false,
   loading: false,
   error: undefined,
+  lang: undefined,
   languages: undefined,
   channelCode: undefined,
   currency: undefined,

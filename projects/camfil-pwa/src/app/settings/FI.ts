@@ -2,6 +2,7 @@
 import { CamfilChannelConfiguration } from 'camfil-pwa/models/camfil-channel-configuration/camfil-channel-configuration.model';
 
 const camfilConfiguration: CamfilChannelConfiguration = {
+  lang: 'fi_FI',
   languages: ['fi_FI', 'en_GB'],
   continueShoppingUrl: '/account/camcards',
   channelCode: 'FI',
