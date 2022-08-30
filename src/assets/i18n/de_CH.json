@@ -1224,6 +1224,7 @@
   "camfil.quotes.quote_detail.expiration_date": "(de_CH)_Expiration date",
   "camfil.quotes.quote_detail.note": "(de_CH)_Note to customer service",
   "camfil.quotes.quote_detail.phone_notification": "(de_CH)_Phone notification",
+  "camfil.quotes.quote_detail.proposal_number": "(de_CH)_Camfil proposal number",
   "camfil.quotes.quote_detail.quotation_number": "(de_CH)_Camfil quotation number",
   "camfil.quotes.quote_detail.reference": "(de_CH)_Quotation reference",
   "camfil.quotes.quote_detail.reject_quote": "(de_CH)_Reject Quote",

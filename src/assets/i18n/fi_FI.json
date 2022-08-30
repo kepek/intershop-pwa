@@ -1236,6 +1236,7 @@
   "camfil.quotes.quote_detail.expiration_date": "(fi_FI)_Expiration date",
   "camfil.quotes.quote_detail.note": "(fi_FI)_Note to customer service",
   "camfil.quotes.quote_detail.phone_notification": "(fi_FI)_Phone notification",
+  "camfil.quotes.quote_detail.proposal_number": "(fi_FI)_Camfil proposal number",
   "camfil.quotes.quote_detail.quotation_number": "(fi_FI)_Camfil quotation number",
   "camfil.quotes.quote_detail.reference": "(fi_FI)_Quotation reference",
   "camfil.quotes.quote_detail.reject_quote": "(fi_FI)_Reject Quote",

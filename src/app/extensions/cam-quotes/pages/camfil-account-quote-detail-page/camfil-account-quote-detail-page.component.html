@@ -7,7 +7,10 @@
       </a>
 
       <h1>
-        {{ 'camfil.quotes.quote_detail.quotation_number' | translate }}:
+        <ng-container *ngIf="!isProposal; else proposalTitle">
+          {{ 'camfil.quotes.quote_detail.quotation_number' | translate }}:
+        </ng-container>
+        <ng-template #proposalTitle> {{ 'camfil.quotes.quote_detail.proposal_number' | translate }}: </ng-template>
         <span>{{ quoteDetails?.camfilQuoteNumber }}</span>
       </h1>
 
