@@ -435,7 +435,6 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
     if (!isExpanded) {
       this.location.replaceState(`${locationPath}#${camCard.id}`);
       this.openSubLevels(camCard);
-      this.scrollToCamCard(camCard);
     } else {
       this.location.replaceState(`${locationPath}`);
     }
@@ -457,13 +456,6 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
         this.isSubOpen.push(sub.id);
       }
     });
-  }
-
-  private scrollToCamCard(camCard: CamCard) {
-    // this is fix for dynamic generated(loaded..?) content
-    setTimeout(() => {
-      this.viewportScroller.scrollToAnchor(camCard.id);
-    }, ANIMATION_TIMEOUT * 2);
   }
 
   /** addToCartItems */
