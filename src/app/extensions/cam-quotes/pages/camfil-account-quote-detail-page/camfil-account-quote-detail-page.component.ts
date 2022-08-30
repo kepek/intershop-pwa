@@ -29,6 +29,7 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
 
   canApprove$: Observable<boolean>;
   isAppoveEnabled: boolean;
+  isProposal: boolean;
 
   @HostListener('window:resize') onWindowsResize() {
     this.onResize();
@@ -50,6 +51,7 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
       this.quoteDetails = details;
       this.isAppoveEnabled =
         this.quoteDetails?.status === QuoteStatus.Received || this.quoteDetails?.status === QuoteStatus.Requested;
+      this.isProposal = this.quoteDetails?.quotationType === 'proposal';
     });
 
     this.loading$ = this.quotesFacade.quoteDetailsLoading$;
