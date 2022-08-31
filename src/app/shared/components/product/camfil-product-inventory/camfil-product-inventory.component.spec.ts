@@ -45,9 +45,4 @@ describe('Camfil Product Inventory Component', () => {
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
   });
-
-  it('should throw an error if input parameter product is not set properly', () => {
-    component.product = undefined;
-    expect(() => fixture.detectChanges()).toThrow();
-  });
 });
