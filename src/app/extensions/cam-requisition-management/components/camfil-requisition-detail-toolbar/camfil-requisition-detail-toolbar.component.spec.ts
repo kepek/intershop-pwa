@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, MockDirective } from 'ng-mocks';
 import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 import { ModalAddNewProductComponent } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 import { ArticleDetailsComponent } from 'src/app/extensions/cam-cards/shared/add-product-to-cam-card-modal/article-details/article-details.component';
 import { instance, mock } from 'ts-mockito';
 
+import { CamfilAuthorizationToggleDirective } from 'ish-core/directives/camfil-authorization-toggle.directive';
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
@@ -35,6 +36,7 @@ describe('Camfil Requisition Detail Toolbar Component', () => {
         MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductQuantityComponent),
         MockComponent(CamfilSmallCtaModalComponent),
+        MockDirective(CamfilAuthorizationToggleDirective),
         ModalAddNewProductComponent,
       ],
     })

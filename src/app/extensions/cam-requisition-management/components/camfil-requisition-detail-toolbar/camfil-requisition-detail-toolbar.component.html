@@ -12,6 +12,7 @@
     {{ 'camfil.account.requisitions.approvals.add_row.button' | translate }}
   </button>
   <button
+    *camfilIsAuthorizedTo="['APP_B2B_MANAGE_USERS', 'APP_B2B_ORDER_APPROVAL']"
     type="button"
     mat-stroked-button
     class="mr-2"
