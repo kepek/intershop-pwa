@@ -46,6 +46,7 @@ describe('Camfil Checkout Onestep Page Component', () => {
   let actions$: Observable<Action>;
 
   const configuration: CamfilChannelConfiguration = {
+    lang: 'sv_SE',
     languages: ['sv_SE', 'en_GB'],
     zipCodeRegExp: '^\\d$',
     channelCode: 'SE',

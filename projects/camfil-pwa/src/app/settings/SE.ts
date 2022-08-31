@@ -2,6 +2,7 @@
 import { CamfilChannelConfiguration } from 'camfil-pwa/models/camfil-channel-configuration/camfil-channel-configuration.model';
 
 const camfilConfiguration: CamfilChannelConfiguration = {
+  lang: 'sv_SE',
   languages: ['sv_SE', 'en_GB'],
   continueShoppingUrl: '/account/camcards',
   channelCode: 'SE',

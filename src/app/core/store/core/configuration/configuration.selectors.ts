@@ -58,11 +58,11 @@ export const getCountryCodeByChannel = createSelector(
 );
 
 export const getCurrentLocale = createSelector(
-  getLang,
   getAvailableLocales,
+  getLang,
   getCountryCodeByChannel,
   getServerConfigParameter<string>('general.defaultLocale'),
-  (lang, availableLocales, countryCode, defaultLocale) =>
+  (availableLocales, lang, countryCode, defaultLocale) =>
     availableLocales?.find(l => l.lang === lang) ??
     availableLocales?.find(l => l.value === countryCode?.toLowerCase()) ??
     availableLocales?.find(l => l.lang === defaultLocale) ??

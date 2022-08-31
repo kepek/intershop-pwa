@@ -10,6 +10,10 @@ import { CamfilChannelConfigurationHelper } from 'camfil-pwa/models/camfil-chann
 
 import { applyConfiguration, setCurrentLocale } from './configuration.actions';
 import channelSettings from 'camfil-pwa/settings';
+import {
+  CamfilChannelConfiguration,
+  CamfilLang,
+} from 'camfil-pwa/models/camfil-channel-configuration/camfil-channel-configuration.model';
 
 export interface ConfigurationState {
   baseURL?: string;
@@ -40,19 +44,27 @@ const initialState: ConfigurationState = {
   _deviceType: environment.defaultDeviceType,
 };
 
-const overrideLocalesCurrency = (state: ConfigurationState) => {
-  const settings = CamfilChannelConfigurationHelper.getSettingsByChannelName(channelSettings, state.channel);
+const overrideConfiguration = (state: ConfigurationState, extraConfiguration?: Partial<CamfilChannelConfiguration>) => {
+  const settings = {
+    ...CamfilChannelConfigurationHelper.getSettingsByChannelName(channelSettings, state.channel),
+    ...extraConfiguration,
+  };
 
-  if (settings?.currency && state?.locales?.length) {
-    const locales = state.locales.map(locale => ({
-      ...locale,
-      currency: settings.currency,
-    }));
+  const lang = settings.lang;
 
-    return { locales };
-  }
+  const locales = state?.locales?.map(locale => {
+    if (locale.lang === settings.lang) {
+      return {
+        ...locale,
+        currency: settings.currency,
+        lang: settings.lang,
+      };
+    }
 
-  return {};
+    return locale;
+  });
+
+  return { ...state, lang, locales };
 };
 
 export const configurationReducer = createReducer(
@@ -63,14 +75,16 @@ export const configurationReducer = createReducer(
       ...action.payload,
     };
 
-    return {
-      ...newState,
-      ...overrideLocalesCurrency(newState),
-    };
+    return overrideConfiguration(newState);
   }),
   on(setCurrentLocale, (state: ConfigurationState, action) => {
-    const { lang } = action.payload;
+    const newState = {
+      ...state,
+      ...action.payload,
+    };
 
-    return { ...state, lang };
+    const lang = action.payload?.lang as CamfilLang;
+
+    return overrideConfiguration(newState, { lang });
   })
 );
