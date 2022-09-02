@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { PdfHelper } from 'src/app/extensions/cam-pdf/models/pdf.helper';
+import { DataToPdf } from 'src/app/extensions/cam-pdf/models/pdf.interface';
 import { CamPdfService } from 'src/app/extensions/cam-pdf/services/cam-pdf/cam-pdf.service';
 
 import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
@@ -121,7 +122,7 @@ export class PrintOrderComponent implements OnInit {
     });
   }
 
-  buildPdfData() {
+  buildPdfData(): DataToPdf {
     const skus = this.buckets.reduce(
       (acc, { lineItems }) => [
         ...acc,
