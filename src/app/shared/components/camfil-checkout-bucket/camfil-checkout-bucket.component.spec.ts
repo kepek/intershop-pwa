@@ -166,6 +166,7 @@ describe('Camfil Checkout Bucket Component', () => {
     when(accountFacadeMock.isLoggedIn$).thenReturn(of(false));
     when(appFacadeMock.getChannel$).thenReturn(of('SE'));
     when(camfilConfigurationFacadeMock.isEnabled$('showWarningMessageForPartialDelivery')).thenReturn(of(false));
+    when(accountFacadeMock.addresses$()).thenReturn(of([]));
   });
 
   it('should be created', () => {
