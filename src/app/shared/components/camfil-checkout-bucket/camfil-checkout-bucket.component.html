@@ -43,11 +43,9 @@
 <ng-template #orderHeader>
   <div class="d-inline-flex">
     <strong *ngIf="bucket">
-      {{ 'camfil.checkout.order' | translate }} {{ !!totalBuckets ? index + ' / ' + totalBuckets : '' }}</strong
-    >
-    <span class="order-number" data-id-id="order-number"
-      >{{ bucket?.customer?.customerNo }}, {{ bucket?.customer?.companyName }}</span
-    >
+      {{ 'camfil.checkout.order' | translate }} {{ !!totalBuckets ? index + ' / ' + totalBuckets : '' }}</strong>
+    <span class="order-number" data-id-id="order-number">{{ bucket?.customer?.customerNo }}, {{
+      bucket?.customer?.companyName }}</span>
   </div>
 </ng-template>
 
@@ -95,6 +93,10 @@
                 {{ bucket?.deliveryDate || '-' | ishDate }}
               </dd>
             </ng-template>
+            <ng-container *ngIf="bucketAddress?.goodsAcceptanceNote">
+              <dt class="col-6 p-0">{{ 'camfil.checkout.cta.goods_acceptance' | translate }}</dt>
+              <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ bucketAddress?.goodsAcceptanceNote }}</dd>
+            </ng-container>
           </ng-container>
         </dl>
         <ng-container *ngIf="emailRecipients?.length">
@@ -104,10 +106,8 @@
               <div *ngFor="let recipient of emailRecipients">
                 <button class="recipient-button d-flex align-items-center" color="primary" mat-stroked-button>
                   {{ recipient }}
-                  <span
-                    (click)="removeSelectedRecipient(recipient)"
-                    class="delete-recipient-icon-wrapper d-inline-flex align-items-center justify-content-center"
-                  >
+                  <span (click)="removeSelectedRecipient(recipient)"
+                    class="delete-recipient-icon-wrapper d-inline-flex align-items-center justify-content-center">
                     <mat-icon>close</mat-icon>
                   </span>
                 </button>
@@ -131,46 +131,27 @@
           <div class="mat-form-field__wrapper">
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.checkout.form.order_mark' | translate }}</mat-label>
-              <input
-                (change)="onBlurSubmit('orderMark')"
-                (focus)="setFocusedElement($event.target)"
-                [camfilMaxLength]="'OrderMark'"
-                [id]="'orderMark-' + bucket.id"
-                formControlName="orderMark"
-                label="camfil.checkout.form.order_mark"
-                matInput
-              />
+              <input (change)="onBlurSubmit('orderMark')" (focus)="setFocusedElement($event.target)"
+                [camfilMaxLength]="'OrderMark'" [id]="'orderMark-' + bucket.id" formControlName="orderMark"
+                label="camfil.checkout.form.order_mark" matInput />
             </mat-form-field>
           </div>
 
           <div class="mat-form-field__wrapper">
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.checkout.form.invoice_mark' | translate }}</mat-label>
-              <input
-                (change)="onBlurSubmit('invoiceLabel')"
-                (focus)="setFocusedElement($event.target)"
-                [camfilMaxLength]="'InvoiceLabel'"
-                [id]="'invoiceLabel-' + bucket.id"
-                formControlName="invoiceLabel"
-                label="camfil.checkout.form.invoice_mark"
-                matInput
-              />
+              <input (change)="onBlurSubmit('invoiceLabel')" (focus)="setFocusedElement($event.target)"
+                [camfilMaxLength]="'InvoiceLabel'" [id]="'invoiceLabel-' + bucket.id" formControlName="invoiceLabel"
+                label="camfil.checkout.form.invoice_mark" matInput />
             </mat-form-field>
           </div>
 
           <div class="mat-form-field__wrapper">
             <mat-form-field appearance="fill">
               <mat-label>{{ 'camfil.checkout.form.delivery_date' | translate }}</mat-label>
-              <input
-                (dateChange)="changeDeliveryDate($event)"
-                [matDatepickerFilter]="filterDates.bind(this)"
-                [matDatepicker]="pickerLast"
-                [min]="firstAvailableDelivery"
-                [value]="orderFullDeliveryDate"
-                [readonly]="true"
-                formControlName="deliveryDate"
-                matInput
-              />
+              <input (dateChange)="changeDeliveryDate($event)" [matDatepickerFilter]="filterDates.bind(this)"
+                [matDatepicker]="pickerLast" [min]="firstAvailableDelivery" [value]="orderFullDeliveryDate"
+                [readonly]="true" formControlName="deliveryDate" matInput />
               <mat-datepicker-toggle [for]="pickerLast" matSuffix>
                 <mat-icon matDatepickerToggleIcon svgIcon="calendar"></mat-icon>
               </mat-datepicker-toggle>
@@ -201,25 +182,19 @@
               </a>
             </li>
             <li>
-              <button
-                (click)="doubleArticlesQuantity()"
-                [disabled]="!bucket.lineItems?.length"
+              <button (click)="doubleArticlesQuantity()" [disabled]="!bucket.lineItems?.length"
                 [ngClass]="{ 'mat-button-disabled': !bucket.lineItems?.length }"
-                class="mat-button mat-button-base double-qty-btn"
-              >
-                <mat-icon
-                  [ngClass]="{ 'mat-icon-no-color': !bucket.lineItems?.length }"
-                  class="double-add-icon"
-                  svgIcon="copy"
-                ></mat-icon>
+                class="mat-button mat-button-base double-qty-btn">
+                <mat-icon [ngClass]="{ 'mat-icon-no-color': !bucket.lineItems?.length }" class="double-add-icon"
+                  svgIcon="copy"></mat-icon>
                 {{ 'camfil.checkout.cta.double_quantity' | translate }}
               </button>
             </li>
             <li>
               <a (click)="openEditModal(editModal)">
                 <mat-icon class="edit-icon" svgIcon="edit"></mat-icon>
-                {{ 'camfil.checkout.cta.edit_details' | translate }}</a
-              >
+                {{ 'camfil.checkout.cta.edit_details' | translate }}
+              </a>
             </li>
             <li>
               <camfil-delete-order [order]="bucket"></camfil-delete-order>
@@ -234,20 +209,11 @@
 
           <mat-form-field appearance="fill" class="form-field">
             <mat-label>{{ 'camfil.checkout.form.note' | translate }}</mat-label>
-            <textarea
-              (change)="onBlurSubmit('info')"
-              (focus)="setFocusedElement($event.target)"
-              [camfilMaxLength]="'CustomerNote'"
-              [id]="'info-' + bucket.id"
-              formControlName="info"
-              label="camfil.checkout.form.note"
-              matInput
-            ></textarea>
-            <camfil-error
-              [errorValidators]="validators.info"
-              [errors]="getField('info').errors"
-              [touched]="getField('info').touched || getField('info').dirty"
-            ></camfil-error>
+            <textarea (change)="onBlurSubmit('info')" (focus)="setFocusedElement($event.target)"
+              [camfilMaxLength]="'CustomerNote'" [id]="'info-' + bucket.id" formControlName="info"
+              label="camfil.checkout.form.note" matInput></textarea>
+            <camfil-error [errorValidators]="validators.info" [errors]="getField('info').errors"
+              [touched]="getField('info').touched || getField('info').dirty"></camfil-error>
           </mat-form-field>
         </div>
       </div>
@@ -280,50 +246,30 @@
     <!-- Cost Summary -->
     <div *ngIf="bucket">
       <div class="section cost-summary float-right box-shadow--dark mat-elevation-z">
-        <camfil-checkout-bucket-summary
-          [totals]="bucket.totals"
-          cssClass="row dl-horizontal mb-0"
-        ></camfil-checkout-bucket-summary>
+        <camfil-checkout-bucket-summary [totals]="bucket.totals" cssClass="row dl-horizontal mb-0">
+        </camfil-checkout-bucket-summary>
       </div>
     </div>
   </ng-container>
 </ng-template>
 
 <ng-template #bucketListItem let-i="i" let-item="item">
-  <camfil-checkout-line-item
-    (openDeleteModalAction)="changeScrollIndex()"
-    [basketId]="bucket?.basket"
-    [bucketId]="bucket?.id"
-    [deviceType]="deviceType$ | async"
-    [index]="i + 1"
-    [editable]="editable"
-    [draggable]="editable"
-    [isPartialDelivery]="isPartialDelivery"
-    [lineItem]="item"
-    [orderDeliveryDate]="deliveryDate"
-  ></camfil-checkout-line-item>
+  <camfil-checkout-line-item (openDeleteModalAction)="changeScrollIndex()" [basketId]="bucket?.basket"
+    [bucketId]="bucket?.id" [deviceType]="deviceType$ | async" [index]="i + 1" [editable]="editable"
+    [draggable]="editable" [isPartialDelivery]="isPartialDelivery" [lineItem]="item" [orderDeliveryDate]="deliveryDate">
+  </camfil-checkout-line-item>
 </ng-template>
 
 <ng-template #orderList>
   <!-- Line Items -->
-  <div
-    (cdkDropListDropped)="drop($event, bucket)"
-    [cdkDropListData]="bucket.lineItems"
-    cdkDropList
-    class="bucket_list-container"
-  >
+  <div (cdkDropListDropped)="drop($event, bucket)" [cdkDropListData]="bucket.lineItems" cdkDropList
+    class="bucket_list-container">
     <ng-container *ngIf="editable; else notEditableTemplate">
       <cdk-virtual-scroll-viewport autosize [minBufferPx]="1500" [maxBufferPx]="3500" [style.height.px]="containerSize">
-        <div
-          *cdkVirtualFor="let item of bucket.lineItems; index as i; trackBy: trackBy"
-          [style.minHeight.px]="itemSize"
-        >
-          <div
-            [cdkDragData]="item"
-            [cdkDragDisabled]="!editable"
-            [ngClass]="{ 'list-item-row list-item-row-big': (isLoggedIn$ | async) }"
-            cdkDrag
-          >
+        <div *cdkVirtualFor="let item of bucket.lineItems; index as i; trackBy: trackBy"
+          [style.minHeight.px]="itemSize">
+          <div [cdkDragData]="item" [cdkDragDisabled]="!editable"
+            [ngClass]="{ 'list-item-row list-item-row-big': (isLoggedIn$ | async) }" cdkDrag>
             <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>
           </div>
         </div>
@@ -331,10 +277,8 @@
     </ng-container>
     <ng-template #notEditableTemplate>
       <div *ngFor="let item of bucket.lineItems; index as i; trackBy: trackBy">
-        <div
-          [ngClass]="{ 'list-item-row list-item-row-big': (isLoggedIn$ | async) }"
-          class="px-4 py-1 line-item-container"
-        >
+        <div [ngClass]="{ 'list-item-row list-item-row-big': (isLoggedIn$ | async) }"
+          class="px-4 py-1 line-item-container">
           <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>
         </div>
       </div>
@@ -342,20 +286,13 @@
   </div>
 </ng-template>
 
-<camfil-modal-add-new-product
-  #addNewProductModal
-  [addToOrder]="true"
-  (submitProductAdd)="submitQuickAddProd($event, addNewProductModal)"
->
+<camfil-modal-add-new-product #addNewProductModal [addToOrder]="true"
+  (submitProductAdd)="submitQuickAddProd($event, addNewProductModal)">
 </camfil-modal-add-new-product>
 
 <camfil-edit-order-modal #editModal [bucket]="bucket"></camfil-edit-order-modal>
 
-<camfil-small-cta-modal
-  actionButtonTitle="{{ 'camfil.checkout.create_new_order.temporary_order.ok' | translate }}"
-  actionTitle="{{ modalDeliveryText | translate }}"
-  icon="calendar"
-  onlyAccept="true"
-  [pageletIds]="pageletIds$ | async"
->
+<camfil-small-cta-modal actionButtonTitle="{{ 'camfil.checkout.create_new_order.temporary_order.ok' | translate }}"
+  actionTitle="{{ modalDeliveryText | translate }}" icon="calendar" onlyAccept="true"
+  [pageletIds]="pageletIds$ | async">
 </camfil-small-cta-modal>

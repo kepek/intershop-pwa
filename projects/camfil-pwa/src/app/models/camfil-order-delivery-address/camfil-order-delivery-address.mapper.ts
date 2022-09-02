@@ -17,6 +17,7 @@ export class CamfilOrderDeliveryAddressMapper {
         deliveryAddressZipCode: orderData.deliveryAddressZipCode,
         deliveryAddressCity: orderData.deliveryAddressCity,
         deliveryAddressCountryCode: orderData.deliveryAddressCountryCode,
+        deliveryAddressGoodsAcceptanceNote: orderData.goodsAcceptanceNote,
       };
     }
   }
@@ -29,6 +30,7 @@ export class CamfilOrderDeliveryAddressMapper {
         addressLine2: deliveryAddress.deliveryAddressAddressOptional || '',
         postalCode: deliveryAddress.deliveryAddressZipCode,
         city: deliveryAddress.deliveryAddressCity,
+        goodsAcceptanceNote: deliveryAddress.deliveryAddressGoodsAcceptanceNote,
 
         // not used, but required for "Address" type
         id: '',
