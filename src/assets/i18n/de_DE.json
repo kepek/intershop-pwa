@@ -882,7 +882,7 @@
   "camfil.checkout.cta.goods_acceptance": "Warenannahmezeiten",
   "camfil.checkout.cta.recipients_save": "Speichern",
   "camfil.checkout.cta.select_goods_acceptace.header": "Warenannahmezeiten",
-  "camfil.checkout.cta.select_goods_acceptace.subheader": "(de_DE)_z.B. Mo.-Fr- 08:00- 16:00 / max. 60 characters",
+  "camfil.checkout.cta.select_goods_acceptace.subheader": "z.B. Mo.-Fr- 08:00- 16:00 / max. 60 characters",
   "camfil.checkout.cta.separate_multiple_addresses": "Trennen Sie mehrere Adressen mit einem Kommazeichen",
   "camfil.checkout.desired_delivery_date": "Gewünschtes Versanddatum",
   "camfil.checkout.form.delivery_date": "Ausgewähltes Lieferdatum",
