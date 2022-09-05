@@ -94,6 +94,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   hideRecipientButton = false;
   itemSize = 100;
   basketAddresses: Address[];
+  bucketAddress: Address;
 
   calendarExceptions$: Observable<[]>;
   emailRecipients$: Observable<string[]>;
@@ -285,6 +286,15 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
       this.basketAddresses = basketAddresses;
     });
+
+    if (!this.editable) {
+      this.accountFacade
+        .addresses$()
+        .pipe(take(1))
+        .subscribe(addresses => {
+          this.bucketAddress = addresses.find(a => a.id === this.bucket?.deliveryAddressId);
+        });
+    }
   }
 
   getBoxLabel(lineItem: LineItem) {

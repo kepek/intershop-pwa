@@ -31,4 +31,5 @@ export interface CamfilOrderData extends Pick<BasketBaseData, 'surcharges'> {
   totalPriceAfterDiscountExVAT: number;
   volumeDiscount: number;
   customerDepartment: string;
+  goodsAcceptanceNote: string;
 }

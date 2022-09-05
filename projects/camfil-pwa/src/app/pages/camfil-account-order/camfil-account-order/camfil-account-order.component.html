@@ -1,12 +1,7 @@
 <div class="d-flex justify-content-between py-3">
   <div>
-    <a
-      color="primary"
-      data-testing-id="orders-link"
-      mat-stroked-button
-      queryParamsHandling="preserve"
-      routerLink="/account/orders"
-    >
+    <a color="primary" data-testing-id="orders-link" mat-stroked-button queryParamsHandling="preserve"
+      routerLink="/account/orders">
       <mat-icon class="mt-n1">arrow_left</mat-icon>
       {{ 'account.orderdetails.links.return_to_orders' | translate }}
     </a>
@@ -60,6 +55,12 @@
             <ng-template #orderDeliveryDate>{{ order.deliveryDate | ishDate }}</ng-template>
           </ng-container>
         </dd>
+        <ng-container *ngIf="order.commonDeliveryAddress?.goodsAcceptanceNote">
+          <dt class="col-6 p-0">{{ 'camfil.checkout.cta.goods_acceptance' | translate }}</dt>
+          <dd class="col-6 p-0" data-testing-id="order-deliveryGoodsAcceptanceNote">
+            {{ order.commonDeliveryAddress?.goodsAcceptanceNote }}
+          </dd>
+        </ng-container>
       </dl>
     </div>
     <div class="order-summary-info col-sm-6" data-testing-id="order-summary-info">
@@ -82,16 +83,9 @@
         </dd>
       </dl>
       <ng-container *ngIf="order?.trackAndTrace">
-        <a
-          class="btn-track-order float-right mr-n4"
-          color="primary"
-          data-testing-id="orders-link"
-          href="{{ order.trackAndTrace.link }}"
-          mat-stroked-button
-          target="_blank"
-        >
-          {{ 'camfil.account.orderdetails.links.track_order' | translate }}</a
-        >
+        <a class="btn-track-order float-right mr-n4" color="primary" data-testing-id="orders-link"
+          href="{{ order.trackAndTrace.link }}" mat-stroked-button target="_blank">
+          {{ 'camfil.account.orderdetails.links.track_order' | translate }}</a>
       </ng-container>
     </div>
   </div>
@@ -99,12 +93,8 @@
 
 <ng-container *ngIf="order">
   <!-- Line Items -->
-  <camfil-line-item-table
-    *ngIf="order?.lineItems?.length > 0"
-    [deviceType]="deviceType"
-    [lineItems]="order?.lineItems"
-    lineItemViewType="simple"
-  ></camfil-line-item-table>
+  <camfil-line-item-table *ngIf="order?.lineItems?.length > 0" [deviceType]="deviceType" [lineItems]="order?.lineItems"
+    lineItemViewType="simple"></camfil-line-item-table>
   <!-- Cost Summary -->
   <mat-card *ngIf="order" class="mb-3 box-shadow--dark mat-elevation-z clearfix">
     <div class="section cost-summary float-right box-shadow--dark mat-elevation-z">
@@ -154,11 +144,8 @@
   </mat-card>
 </ng-container>
 
-<camfil-small-cta-modal
-  actionButtonTitle="{{ 'camfil.checkout.create_new_order.temporary_order.ok' | translate }}"
-  actionTitle="{{ 'camfil.modal.place_reorder_fail.text' | translate }}"
-  onlyAccept="true"
->
+<camfil-small-cta-modal actionButtonTitle="{{ 'camfil.checkout.create_new_order.temporary_order.ok' | translate }}"
+  actionTitle="{{ 'camfil.modal.place_reorder_fail.text' | translate }}" onlyAccept="true">
 </camfil-small-cta-modal>
 
 <camfil-loading *ngIf="orderLoading$ | async"></camfil-loading>

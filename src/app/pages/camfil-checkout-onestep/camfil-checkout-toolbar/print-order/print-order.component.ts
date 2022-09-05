@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { forkJoin } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { PdfHelper } from 'src/app/extensions/cam-pdf/models/pdf.helper';
 import { DataToPdf } from 'src/app/extensions/cam-pdf/models/pdf.interface';
@@ -8,6 +9,7 @@ import { CamPdfService } from 'src/app/extensions/cam-pdf/services/cam-pdf/cam-p
 
 import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Bucket } from 'ish-core/models/bucket/bucket.model';
@@ -37,6 +39,7 @@ export class PrintOrderComponent implements OnInit {
     private productFacade: ShoppingFacade,
     private pdfService: CamPdfService,
     private accountFacade: AccountFacade,
+    private checkoutFacade: CheckoutFacade,
     public dialog: MatDialog,
     private translate: TranslateService,
     private authorizationToggle: AuthorizationToggleService
@@ -63,6 +66,7 @@ export class PrintOrderComponent implements OnInit {
   productsInfo: {
     [sku: string]: PdfProductInfo;
   } = {};
+  goodsAcceptanceNotes: string[];
 
   texts = {
     orderHeader: this.translate.instant('camfil.checkout.order'),
@@ -84,6 +88,7 @@ export class PrintOrderComponent implements OnInit {
     info: this.translate.instant('camfil.account.pdf.information'),
     contactPerson: this.translate.instant('camfil.account.pdf.contact_person'),
     deliveryDays: this.translate.instant('camfil.account.pdf.deliver_days'),
+    goodsAcceptanceNote: this.translate.instant('camfil.checkout.cta.goods_acceptance'),
   };
 
   ngOnInit() {
@@ -106,6 +111,18 @@ export class PrintOrderComponent implements OnInit {
   }
 
   handlePrint() {
+    forkJoin(
+      this.buckets.map(bucket =>
+        this.checkoutFacade.getBucketGoodsAcceptanceNote$(bucket.shipToAddressFull.id).pipe(take(1))
+      )
+    ).subscribe(goodsAcceptanceNotes => {
+      this.goodsAcceptanceNotes = goodsAcceptanceNotes;
+
+      this.pdfService.printPdf(this.buildPdfData());
+    });
+  }
+
+  buildPdfData(): DataToPdf {
     const skus = this.buckets.reduce(
       (acc, { lineItems }) => [
         ...acc,
@@ -128,9 +145,7 @@ export class PrintOrderComponent implements OnInit {
     const styles = PdfHelper.pdfStyles();
     const images = PdfHelper.pdfImages();
     const content = this.preparePdfContent();
-    const data: DataToPdf = { content, styles, images, showFooter: false };
-
-    this.pdfService.printPdf(data);
+    return { content, styles, images, showFooter: false };
   }
 
   preparePdfContent() {
@@ -163,6 +178,7 @@ export class PrintOrderComponent implements OnInit {
     const orderNo = `${idx + 1}/${this.buckets?.length}`;
     const { customerNo, companyName, department } = customer;
     const infoParts = [customerNo, companyName, department].filter(Boolean);
+    const goodsAcceptanceNote = this.goodsAcceptanceNotes[idx];
 
     const title = `${this.texts.orderHeader} ${orderNo} - ${infoParts.join(', ')}`;
     return [
@@ -197,6 +213,9 @@ export class PrintOrderComponent implements OnInit {
                 [this.texts.orderMark, { text: bucket.orderMark || '---', bold: true }],
                 [this.texts.phoneNumber, { text: bucket.phoneNumber || '---', bold: true }],
                 [this.texts.info, { text: bucket.info || '---', bold: true }],
+                ...(goodsAcceptanceNote
+                  ? [[this.texts.goodsAcceptanceNote, { text: goodsAcceptanceNote, bold: true }]]
+                  : []),
               ],
             },
             widths: ['*', 'auto'],
