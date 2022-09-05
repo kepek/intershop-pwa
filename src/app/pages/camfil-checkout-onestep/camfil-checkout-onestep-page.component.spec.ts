@@ -190,6 +190,7 @@ describe('Camfil Checkout Onestep Page Component', () => {
     when(checkoutFacade.submittedBuckets$).thenReturn(of(undefined));
     when(checkoutFacade.isFreightCostInvalid$).thenReturn(of(false));
     when(checkoutFacade.eligiblePaymentMethods$()).thenReturn(of([]));
+    when(checkoutFacade.calculatedBasket$).thenReturn(of(true));
   });
 
   it('should be created', () => {

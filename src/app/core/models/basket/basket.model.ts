@@ -32,6 +32,7 @@ export interface AbstractBasket<T> {
   attributes?: Attribute[];
   externalOrderReference?: string;
   volumeDiscount?: Price;
+  calculated?: boolean;
 }
 
 export interface Basket extends AbstractBasket<LineItem> {}

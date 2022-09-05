@@ -94,6 +94,7 @@ export class BasketMapper {
       approval: data.approval,
       attributes: data.attributes,
       externalOrderReference: data.externalOrderReference,
+      calculated: data.calculated,
     };
   }
 

@@ -85,6 +85,7 @@ describe('Camfil Requisition Mapper', () => {
           "basketExtensions": undefined,
           "bucketId": undefined,
           "buckets": undefined,
+          "calculated": true,
           "commonShipToAddress": undefined,
           "commonShippingMethod": undefined,
           "creationDate": 76543627,

@@ -221,3 +221,5 @@ export const getFreightCostInvalid = createSelector(getBasketState, basket =>
     }))
     .some(({ freightCostInvalid }) => freightCostInvalid)
 );
+
+export const getCalculatedBasket = createSelector(getCurrentBasket, basket => basket && basket.calculated);
