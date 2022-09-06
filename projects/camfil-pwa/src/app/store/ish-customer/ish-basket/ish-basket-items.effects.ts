@@ -302,10 +302,12 @@ export class IshBasketItemsEffects extends BasketItemsEffects {
     this.ishActions$.pipe(
       ofType(addItemsToBasketFromCamCard),
       mapToPayload(),
-      mergeMap(payload => {
+      withLatestFrom(this.ishStore.pipe(select(selectUrl))),
+      mergeMap(([payload, url]) => {
+        const isOnestepCheckout = url.startsWith('/checkout/onestep');
         const emptyBucketIds = payload.bucketIds?.filter(id => id.split('_')[0] === EMPTY_BUCKET_PREFIX);
 
-        return this.ishBasketService.addItemsToBasket(payload.items).pipe(
+        return this.ishBasketService.addItemsToBasket(payload.items, isOnestepCheckout).pipe(
           mergeMap(() => {
             const deleteEmptyBuckets = emptyBucketIds?.map(id => deleteEmptyBucket({ id })) || [];
             const validBasket = deleteEmptyBuckets.length ? [validateBasket({ scopes: ['Products'] })] : [];

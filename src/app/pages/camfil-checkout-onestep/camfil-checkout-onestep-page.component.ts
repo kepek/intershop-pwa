@@ -79,50 +79,62 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, AfterViewInit
   ) {}
 
   ngOnInit() {
-    this.basketError$ = this.checkoutFacade.basketError$;
+    this.checkoutFacade.updateCalculatedBasket(true);
+
     this.basketLoading$ = this.checkoutFacade.basketLoading$;
-    this.buckets$ = this.checkoutFacade.buckets$;
-    this.checkoutStep$ = this.checkoutFacade.checkoutStep$;
-    this.emptyBuckets$ = this.checkoutFacade.emptyBuckets$;
     this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
-    this.ordersLoading$ = this.checkoutFacade.ordersLoading$;
-    this.paymentMethods$ = this.checkoutFacade.eligiblePaymentMethods$();
-    this.priceType$ = this.checkoutFacade.priceType$;
-    this.submittedBasket$ = this.checkoutFacade.submittedBasket$;
-    this.submittedBuckets$ = this.checkoutFacade.submittedBuckets$;
-    this.validationResults$ = this.checkoutFacade.basketValidationResults$;
+    this.basketError$ = this.checkoutFacade.basketError$;
     this.isFreightCostInvalid$ = this.checkoutFacade.isFreightCostInvalid$;
+    this.ordersLoading$ = this.checkoutFacade.ordersLoading$;
 
-    this.basket$ = this.checkoutFacade.basket$;
-
-    this.basketTotals$ = this.basket$.pipe(
-      withLatestFrom(this.appFacade.getCurrencyByChannel$),
-      map(([basket, currency]) => (basket?.totals?.itemTotal ? basket.totals : BasketMockData.getEmptyTotals(currency)))
-    );
-
-    this.allBuckets$ = this.checkoutFacade.allBuckets$;
-
-    this.isEditable$ = this.submittedBasket$.pipe(
-      startWith(false),
-      withLatestFrom(this.checkoutFacade.selectedOrder$),
-      map(([submittedBasket, order]) => !submittedBasket || order.statusCode === 'RFQ')
-    );
-
-    this.isEmpty$ = this.allBuckets$.pipe(map(allBuckets => allBuckets?.length === 0));
-
-    this.submittedBasket$
+    this.checkoutFacade.calculatedBasket$
       .pipe(
-        startWith(false),
-        whenTruthy(),
-        withLatestFrom(this.checkoutFacade.selectedOrder$),
-        map(([, order]) => order),
-        filter(order => order.statusCode === 'RFQ'),
-        debounceTime(500),
-        takeUntil(this.destroy$)
+        filter(cal => cal),
+        take(1)
       )
-      .subscribe(() => this.dialog.open(CamfilQuoteCreatedDialogComponent));
+      .subscribe(() => {
+        this.buckets$ = this.checkoutFacade.buckets$;
+        this.checkoutStep$ = this.checkoutFacade.checkoutStep$;
+        this.emptyBuckets$ = this.checkoutFacade.emptyBuckets$;
+        this.paymentMethods$ = this.checkoutFacade.eligiblePaymentMethods$();
+        this.priceType$ = this.checkoutFacade.priceType$;
+        this.submittedBasket$ = this.checkoutFacade.submittedBasket$;
+        this.submittedBuckets$ = this.checkoutFacade.submittedBuckets$;
+        this.validationResults$ = this.checkoutFacade.basketValidationResults$;
 
-    this.initBasket();
+        this.basket$ = this.checkoutFacade.basket$;
+
+        this.basketTotals$ = this.basket$.pipe(
+          withLatestFrom(this.appFacade.getCurrencyByChannel$),
+          map(([basket, currency]) =>
+            basket?.totals?.itemTotal ? basket.totals : BasketMockData.getEmptyTotals(currency)
+          )
+        );
+
+        this.allBuckets$ = this.checkoutFacade.allBuckets$;
+
+        this.isEditable$ = this.submittedBasket$.pipe(
+          startWith(false),
+          withLatestFrom(this.checkoutFacade.selectedOrder$),
+          map(([submittedBasket, order]) => !submittedBasket || order.statusCode === 'RFQ')
+        );
+
+        this.isEmpty$ = this.allBuckets$.pipe(map(allBuckets => allBuckets?.length === 0));
+
+        this.submittedBasket$
+          .pipe(
+            startWith(false),
+            whenTruthy(),
+            withLatestFrom(this.checkoutFacade.selectedOrder$),
+            map(([, order]) => order),
+            filter(order => order.statusCode === 'RFQ'),
+            debounceTime(500),
+            takeUntil(this.destroy$)
+          )
+          .subscribe(() => this.dialog.open(CamfilQuoteCreatedDialogComponent));
+
+        this.initBasket();
+      });
   }
 
   ngAfterViewInit() {

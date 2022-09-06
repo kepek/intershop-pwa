@@ -248,7 +248,8 @@ export class IshBasketService extends BasketService {
       shippingMethod?: string;
       shipToAddress?: string;
       lineItemAttributes?: Attribute[];
-    }[]
+    }[],
+    calculated?: boolean
   ): Observable<BasketInfo[]> {
     if (!items) {
       return throwError('addItemsToBasket() called without items');
@@ -264,6 +265,7 @@ export class IshBasketService extends BasketService {
         shipToAddress: item.shipToAddress,
         shippingMethod: item.shippingMethod,
         attributes,
+        calculated: !!calculated,
       };
     });
 
