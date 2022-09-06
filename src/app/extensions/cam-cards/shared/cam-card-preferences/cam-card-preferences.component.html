@@ -116,8 +116,8 @@
                 label="camfil.account.cam_card.add_to_form.address"
                 markRequiredLabel="off"
                 matInput
-                maxlength="50"
                 rows="5"
+                [camfilMaxLength]="'AddressLineOne'"
               ></textarea>
               <camfil-error
                 [errorValidators]="errorValidator"
@@ -138,8 +138,8 @@
                 label="camfil.modal.createOrder.order-form.input.addressLine1"
                 markRequiredLabel="off"
                 matInput
-                maxlength="200"
                 rows="5"
+                [camfilMaxLength]="'AddressLineTwo'"
               ></textarea>
               <camfil-error
                 [errorValidators]="errorValidator"
