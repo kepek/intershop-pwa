@@ -911,7 +911,7 @@
   "camfil.checkout.new_camcard.button.create": "CamCard erstellen",
   "camfil.checkout.new_camcard.header": "{{0}} neue CamCards werden aus Ihren Bestellungen erstellt",
   "camfil.checkout.number_of_orders": "Anzahl der Bestellungen",
-  "camfil.checkout.number_of_products": "Anzahl der Produkte",
+  "camfil.checkout.number_of_products": "Menge der Produkte",
   "camfil.checkout.order": "Bestellung",
   "camfil.checkout.order.approve_line_item.modal.subheading": "Möchten Sie diese Auftragszeile bestätigen?",
   "camfil.checkout.order.delete_line_item.modal.subheading": "Möchten Sie diese Auftragszeile löschen?",
