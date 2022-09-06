@@ -64,7 +64,7 @@ function calculatePageIndices(currentPage: number, itemCount: number, itemsPerPa
 }
 
 const createView = (data: ProductListingType, itemsPerPage): ProductListingView => {
-  const lastPage = data ? data.pages[data.pages.length - 1] : NaN;
+  const lastPage = data?.pages?.[data.pages.length - 1] || NaN;
   const firstPage = (data && data.pages && data.pages[0]) || NaN;
   return {
     products: once(() => (data ? mergeAllPages(data) : [])),
