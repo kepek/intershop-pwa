@@ -11,6 +11,8 @@ import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { ModalDialogLinkComponent } from 'ish-shared/components/common/modal-dialog-link/modal-dialog-link.component';
 
+import { CamCardsFacade } from '../../../extensions/cam-cards/facades/cam-cards.facade';
+
 import { CamfilCheckoutReceiptOrderComponent } from './camfil-checkout-receipt-order.component';
 
 describe('Camfil Checkout Receipt Order Component', () => {
@@ -19,10 +21,12 @@ describe('Camfil Checkout Receipt Order Component', () => {
   let element: HTMLElement;
   let accountFacadeMock: AccountFacade;
   let checkoutFacade: CheckoutFacade;
+  let camCardFacadeMock: CamCardsFacade;
 
   beforeEach(async () => {
     accountFacadeMock = mock(AccountFacade);
     checkoutFacade = mock(CheckoutFacade);
+    camCardFacadeMock = mock(CamCardsFacade);
     await TestBed.configureTestingModule({
       declarations: [
         CamfilCheckoutReceiptOrderComponent,
@@ -33,6 +37,7 @@ describe('Camfil Checkout Receipt Order Component', () => {
       providers: [
         { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
+        { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
       ],
     }).compileComponents();
   });
