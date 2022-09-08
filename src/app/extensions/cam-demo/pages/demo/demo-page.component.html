@@ -1259,7 +1259,7 @@
 
         <section class="example-section">
           <mat-checkbox [(ngModel)]="slider.thumbLabel" class="example-margin" color="primary"
-          >Show thumb label
+            >Show thumb label
           </mat-checkbox>
         </section>
 
@@ -1300,7 +1300,7 @@
           (change)="slider.checked = !slider.checked"
           [checked]="slider.checked"
           [disabled]="slider.disabled"
-        >Slide me!
+          >Slide me!
         </mat-slide-toggle>
       </mat-card-content>
     </mat-card>
@@ -1346,5 +1346,16 @@
       <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
     </button>
     <!-- /Material Fab-->
+  </div>
+</mat-sidenav-container>
+
+<hr />
+
+<mat-sidenav-container>
+  <div class="demo-content">
+    <h1>Useful things ;)</h1>
+    <mat-card>
+      <button (click)="removeCart()">remove current cart</button>
+    </mat-card>
   </div>
 </mat-sidenav-container>

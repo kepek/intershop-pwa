@@ -12,11 +12,13 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { completeIconSet } from 'camfil-icons';
+import { CamfilPwaFacade } from 'camfil-pwa/facades/camfil-pwa.facade';
 import { Observable } from 'rxjs';
 import { map, startWith, take, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 import { Locale } from 'ish-core/models/locale/locale.model';
@@ -91,7 +93,9 @@ export class DemoPageComponent extends CamAhuAbstractComponent implements AfterV
     protected scroller: ViewportScroller,
     protected accountFacade: AccountFacade,
     protected ahuFacade: CamAhuFacade,
-    private appFacade: AppFacade
+    private appFacade: AppFacade,
+    private camfilAccountFacade: CamfilPwaFacade,
+    private checkoutFacade: CheckoutFacade
   ) {
     super(router, fb, scroller, ahuFacade, accountFacade);
 
@@ -326,5 +330,16 @@ export class DemoPageComponent extends CamAhuAbstractComponent implements AfterV
 
   iconSnippetSnackbar() {
     this.snackBar.open('Icon snippet has been copied to your clipboard.', 'OK');
+  }
+
+  removeCart() {
+    this.checkoutFacade.basket$
+      .pipe(
+        take(1),
+        map(({ id }) => id)
+      )
+      .subscribe(id => {
+        this.camfilAccountFacade.deleteBasket$(id);
+      });
   }
 }

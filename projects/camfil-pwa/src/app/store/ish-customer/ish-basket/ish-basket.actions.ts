@@ -42,3 +42,5 @@ export const loadBucketsSuccess = createAction('[Basket] Load Buckets Success', 
 export const connectBuckets = createAction('[Basket] Connect buckets', payload<{ buckets: Bucket[] }>());
 
 export const noop = createAction('[Camfil] NOOP');
+
+export const deleteBasket = createAction('[Basket] Delete Basket', payload<{ basketId: string }>());
