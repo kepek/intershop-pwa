@@ -1,10 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, take, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { AppFacade } from 'ish-core/facades/app.facade';
+import { Channel } from 'ish-core/models/channel/channel.types';
 import { User } from 'ish-core/models/user/user.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 @Component({
   selector: 'camfil-login-status',
@@ -18,14 +21,26 @@ export class CamfilLoginStatusComponent implements OnInit, OnDestroy {
 
   user$: Observable<User>;
 
-  returnUrl = '/home';
+  returnUrl: string;
+  returnUrlChange: boolean;
 
   private destroy$ = new Subject();
 
-  constructor(private accountFacade: AccountFacade, private router: Router, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private accountFacade: AccountFacade,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private appFacade: AppFacade
+  ) {}
 
   ngOnInit() {
     this.user$ = this.accountFacade.user$;
+
+    // TODO: based on Channel because camfilConfiguration is not updated after logout
+    this.appFacade.getChannel$?.pipe(whenTruthy(), take(1)).subscribe(channel => {
+      this.returnUrlChange = channel === Channel.FI;
+    });
+
     this.router?.events
       ?.pipe(
         filter((event: RouterEvent) => event instanceof NavigationEnd),
@@ -41,7 +56,7 @@ export class CamfilLoginStatusComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe(url => {
-        this.returnUrl = url;
+        this.returnUrl = this.returnUrlChange && ['/home'].includes(url) ? '/account/camcards' : url;
         this.cdr.detectChanges();
       });
   }
