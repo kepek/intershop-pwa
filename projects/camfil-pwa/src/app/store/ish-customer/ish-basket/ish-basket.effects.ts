@@ -22,7 +22,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { BasketService } from 'ish-core/services/basket/basket.service';
-import { displaySuccessMessage } from 'ish-core/store/core/messages';
+import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
 import { setCheckoutFocusedElement } from 'ish-core/store/core/viewconf';
 import {
   addProductToBasket,
@@ -68,7 +68,7 @@ import { loginUserSuccess } from 'ish-core/store/customer/user/user.actions';
 import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, mapToProperty } from 'ish-core/utils/operators';
 
-import { loadBuckets, loadBucketsFail, loadBucketsSuccess, reloadBasket } from './ish-basket.actions';
+import { deleteBasket, loadBuckets, loadBucketsFail, loadBucketsSuccess, reloadBasket } from './ish-basket.actions';
 
 export const STANDARD_SHIPPING_METHOD = 'STD_GROUND';
 
@@ -274,6 +274,26 @@ export class IshBasketEffects extends BasketEffects {
         displaySuccessMessage({
           message: 'camfil.order_delete.confirmation',
         })
+      )
+    )
+  );
+  deleteBasket$ = createEffect(() =>
+    this.ishActions$.pipe(
+      ofType(deleteBasket),
+      mapToPayload(),
+      concatMap(payload =>
+        this.ishBasketService.deleteBasket(payload.basketId).pipe(
+          map(() =>
+            displaySuccessMessage({
+              message: `camfil delete Basket ${payload.basketId} confirmation - !RELOAD PAGE!`,
+            })
+          ),
+          mapErrorToAction(() =>
+            displayErrorMessage({
+              message: 'deleteBasket error',
+            })
+          )
+        )
       )
     )
   );

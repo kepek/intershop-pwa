@@ -319,4 +319,10 @@ export class IshBasketService extends BasketService {
 
     return this.ishApiService.get<CustomerDeliveryTerm>(`camfilcustomers/${customerId}/deliveryterm`);
   }
+
+  deleteBasket(basketId: string) {
+    return this.ishApiService.delete(`baskets/${basketId}`, {
+      headers: this.ishBasketHeaders,
+    });
+  }
 }

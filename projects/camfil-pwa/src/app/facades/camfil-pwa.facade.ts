@@ -29,6 +29,7 @@ import {
   resetUsernameReminder,
   updateCustomerUserPreferredLanguage,
 } from 'camfil-pwa/store/camfil-user';
+import { deleteBasket } from 'camfil-pwa/store/ish-customer/ish-basket/ish-basket.actions';
 import { first } from 'rxjs/operators';
 
 // tslint:disable:member-ordering
@@ -100,5 +101,11 @@ export class CamfilPwaFacade {
 
   updateCustomerUserPreferredLanguage$(subject: CamfilLangSubject) {
     this.store.dispatch(updateCustomerUserPreferredLanguage(subject));
+  }
+
+  // basket
+
+  deleteBasket$(basketId: string) {
+    this.store.dispatch(deleteBasket({ basketId }));
   }
 }
