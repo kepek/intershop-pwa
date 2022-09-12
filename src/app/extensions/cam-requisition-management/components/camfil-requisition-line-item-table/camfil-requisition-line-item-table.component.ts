@@ -69,6 +69,17 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
   ngOnChanges(changes: SimpleChanges) {
     if (changes.lineItems) {
       this.lineItemsProcessed = new MatTableDataSource(this.lineItems);
+
+      // cleanUp Checked for APPROVED or ORDERED items
+      setTimeout(() => {
+        this.lineItemsChecked.forEach(el => {
+          const item = this.lineItems.find(({ id }) => id === el);
+          if (['APPROVED', 'ORDERED'].includes(item?.requisitionLineItemStatus)) {
+            // tslint:disable-next-line: ish-no-object-literal-type-assertion
+            this.toggleLineItemCheck(item, { checked: false } as MatCheckboxChange);
+          }
+        });
+      });
     }
     this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
   }
@@ -80,7 +91,7 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
   toggleAllLineItems(event: MatCheckboxChange) {
     if (event.checked) {
       const lineItemsChecked = this.lineItems
-        .filter(li => li.requisitionLineItemStatus !== 'APPROVED')
+        .filter(li => !['APPROVED', 'ORDERED'].includes(li.requisitionLineItemStatus))
         .map(lineItem => lineItem.id);
       this.checkAllLineItems.emit([...lineItemsChecked]);
     } else {
