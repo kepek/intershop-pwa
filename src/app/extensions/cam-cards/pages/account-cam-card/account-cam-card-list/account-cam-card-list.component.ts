@@ -148,6 +148,7 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
 
   @ViewChild(MatSort) sort: MatSort;
 
+  addToCartProcess: boolean;
   basket$: Observable<BasketView>;
   basketAddresses: Address[];
   basketId: string;
@@ -510,6 +511,7 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
   }
 
   addSelectedItemsToCart() {
+    this.addToCartProcess = true;
     const list = Object.values(this.productsChecked).reduce((acc, val: CamCamProductChecked) => {
       const key = val.camCardRoot || val.camCardId;
       const products = acc[key]?.products || [];
@@ -521,6 +523,8 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
     }, {}) as CamCamProductsAddToCart;
 
     if (!Object.keys(list).length) {
+      this.productAddingInProgress = false;
+      this.addToCartProcess = false;
       return;
     }
 
@@ -545,18 +549,22 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
       if (val) {
         this.masterToggle(event as MatCheckboxChange);
         this.productAddingInProgress = false;
+        this.addToCartProcess = false;
         this.changeDetectorRefs.detectChanges();
       }
     });
   }
 
   addSelectedAndFilteredItemsToCart(modal: CamfilModalDialogComponent<unknown>) {
-    // tslint:disable-next-line: ish-no-object-literal-type-assertion
-    const event = { checked: false } as MatCheckboxChange;
-    this.camCardsInBasketsForAllUsers.forEach(id => {
-      const camCard = this.camCards.find(cc => cc.id === id);
-      this.camCardToggle(camCard, event);
-    });
+    if (!this.addToCartProcess) {
+      // tslint:disable-next-line: ish-no-object-literal-type-assertion
+      const event = { checked: false } as MatCheckboxChange;
+      this.camCardsInBasketsForAllUsers.forEach(id => {
+        const camCard = this.camCards.find(cc => cc.id === id);
+        this.camCardToggle(camCard, event);
+      });
+    }
+
     this.addToCart(modal);
   }
 
