@@ -24,7 +24,7 @@ const getProductListingSettings = createSelector(getProductListingState, state =
 const { selectEntities: getProductListingEntities } = adapter.getSelectors(getProductListingState);
 
 function mergeAllPages(data: ProductListingType) {
-  return flatten(data.pages.map(page => data[page]));
+  return flatten(data?.pages?.map(page => data[page]) || []);
 }
 
 function calculatePageIndices(currentPage: number, itemCount: number, itemsPerPage: number) {
@@ -81,7 +81,7 @@ const createView = (data: ProductListingType, itemsPerPage): ProductListingView 
     allPagesAvailable: once(() =>
       !data ? false : range(1, Math.ceil(data.itemCount / itemsPerPage) + 1).every(idx => !!data[idx])
     ),
-    empty: () => !data || data.pages.length === 0,
+    empty: () => !data?.pages || data.pages.length === 0,
   };
 };
 

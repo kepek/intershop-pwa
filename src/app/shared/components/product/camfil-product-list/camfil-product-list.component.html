@@ -1,5 +1,5 @@
 <div class="product-list row">
-  <div *ngIf="!products.length && !(listingLoading$ | async)" class="p-4 bg-secondary w-100">
+  <div *ngIf="!products?.length && !(listingLoading$ | async)" class="p-4 bg-secondary w-100">
     {{ 'search.noresult.filtered_products.message' | translate }}
   </div>
   <ng-container *ngIf="showLoader()">
@@ -26,7 +26,7 @@
     </ng-container>
   </ng-container>
 
-  <div *ngIf="products.length > minForBottomLoading && listingLoading$ | async" class="col-12">
+  <div *ngIf="(products?.length || 0) > minForBottomLoading && listingLoading$ | async" class="col-12">
     <camfil-loading [standalone]="true"></camfil-loading>
   </div>
 </div>
