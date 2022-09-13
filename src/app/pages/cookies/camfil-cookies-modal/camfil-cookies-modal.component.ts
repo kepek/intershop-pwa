@@ -41,13 +41,14 @@ export class CamfilCookiesModalComponent implements OnInit {
 
   acceptAll() {
     this.cookiesService.setCookiesConsentForAll();
+    window.location.reload();
   }
 
   submit() {
     this.cookiesService.setCookiesConsentFor(
       Object.keys(this.selectedIds).reduce((acc, x) => (this.selectedIds[x] ? acc.push(x) && acc : acc), [])
     );
-
+    window.location.reload();
     this.close.emit();
   }
 
