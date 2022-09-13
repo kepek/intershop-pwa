@@ -85,6 +85,7 @@ export class CamfilCmsCookieDisclaimerComponent implements CMSComponent, OnInit 
   acceptAll() {
     this.transitionBanner = 'bottom-out';
     this.cookiesService.setCookiesConsentForAll();
+    window.location.reload();
   }
 
   rejectAll() {
