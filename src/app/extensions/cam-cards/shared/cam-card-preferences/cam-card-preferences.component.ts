@@ -260,7 +260,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
         postalCode,
         city,
         lastDelivery: lastDeliveryDate ? new Date(lastDeliveryDate) : '',
-        deliveryInterval: deliveryInterval === 0 ? '' : deliveryInterval,
+        deliveryInterval: deliveryInterval || '',
         nextDelivery: nextDeliveryDate ? new Date(nextDeliveryDate) : '',
         reminder: reminderFlag,
       });
@@ -302,8 +302,8 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
         nextDeliveryDate: nextDelivery ? this.dateToSend(nextDelivery) : '',
         lastDeliveryDate: lastDelivery ? this.dateToSend(lastDelivery) : '',
         deliveryInterval: isNaN(this.camCardForm.get('deliveryInterval').value)
-          ? undefined
-          : this.camCardForm.get('deliveryInterval').value,
+          ? 0
+          : +this.camCardForm.get('deliveryInterval').value,
         reminderFlag: this.camCardForm.get('reminder').value,
       });
     } else {
