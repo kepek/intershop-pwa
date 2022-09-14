@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
@@ -34,7 +25,7 @@ import { APPLY_VALIDATORS } from './validators';
   styleUrls: ['./camfil-apply-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilApplyFormComponent implements OnInit, OnChanges {
+export class CamfilApplyFormComponent implements OnInit {
   @Input() error: HttpError;
   @Input() preferredTitles: string[];
 
@@ -51,7 +42,6 @@ export class CamfilApplyFormComponent implements OnInit, OnChanges {
   validators = APPLY_VALIDATORS;
 
   channel: string;
-  titles: string[];
   hideTitleField = false;
 
   private destroy$ = new Subject();
@@ -78,17 +68,9 @@ export class CamfilApplyFormComponent implements OnInit, OnChanges {
         // TODO (extMlk): hideTitleFieldOnRegisterForm setting
         this.hideTitleField = true;
       }
-
-      this.combineTitles();
     });
 
     this.createApplyForm();
-  }
-
-  ngOnChanges(changes) {
-    if (changes.preferredTitles) {
-      this.combineTitles();
-    }
   }
 
   private createApplyForm(): void {
@@ -159,10 +141,5 @@ export class CamfilApplyFormComponent implements OnInit, OnChanges {
 
   get formDisabled() {
     return this.form.invalid && this.submitted;
-  }
-
-  combineTitles() {
-    // Get only 2 first titles for DE channel
-    this.titles = this.channel === Channel.DE ? this.preferredTitles.slice(0, 2) : [...this.preferredTitles];
   }
 }
