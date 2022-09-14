@@ -35,16 +35,22 @@ export class CamfilChannelToggleDirective implements OnDestroy {
     });
   }
 
-  @Input() set camfilChannelToggle(channelSetting: CamfilChannelSetting) {
+  @Input() set camfilChannelToggle(channelSetting: CamfilChannelSetting | 'always' | 'never') {
     // end previous subscription and subscribe to new permission
     if (this.subscription) {
       // tslint:disable-next-line: ban
       this.subscription.unsubscribe();
     }
-    this.subscription = this.camfilConfigurationFacade
-      .isEnabled$(channelSetting)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({ next: val => this.enabled$.next(val) });
+    if (channelSetting === 'always') {
+      this.enabled$.next(true);
+    } else if (channelSetting === 'never') {
+      this.enabled$.next(false);
+    } else {
+      this.subscription = this.camfilConfigurationFacade
+        .isEnabled$(channelSetting as CamfilChannelSetting)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({ next: val => this.enabled$.next(val) });
+    }
   }
 
   ngOnDestroy(): void {

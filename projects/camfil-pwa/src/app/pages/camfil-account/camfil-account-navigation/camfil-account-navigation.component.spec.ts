@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { MockComponent } from 'ng-mocks';
+import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
+import { MockComponent, MockDirective } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
@@ -21,7 +22,11 @@ describe('Camfil Account Navigation Component', () => {
   beforeEach(async () => {
     accountFacadeMock = mock(AccountFacade);
     await TestBed.configureTestingModule({
-      declarations: [CamfilAccountNavigationComponent, MockComponent(CamfilLoadingComponent)],
+      declarations: [
+        CamfilAccountNavigationComponent,
+        MockComponent(CamfilLoadingComponent),
+        MockDirective(CamfilChannelToggleDirective),
+      ],
       imports: [
         AuthorizationToggleModule.forTesting('APP_B2B_MANAGE_USERS'),
         FeatureToggleModule.forTesting('quoting', 'orderTemplates'),

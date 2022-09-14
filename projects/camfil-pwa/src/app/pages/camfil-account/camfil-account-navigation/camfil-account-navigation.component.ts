@@ -66,6 +66,11 @@ export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, 
       localizationKey: 'camfil.account.requisitions.approval.requests',
       feature: 'camRequisitionManagement',
     },
+    '/account/quotes': {
+      localizationKey: 'account.quotes.link',
+      permissions: ['APP_B2B_MANAGE_ALL_ORDERS', 'APP_B2B_MANAGE_OWN_ORDERS'],
+      channelSetting: 'allowQuotes',
+    },
     '/logout': { localizationKey: 'account.navigation.logout.link' },
   };
   permissions: string[] = [];
