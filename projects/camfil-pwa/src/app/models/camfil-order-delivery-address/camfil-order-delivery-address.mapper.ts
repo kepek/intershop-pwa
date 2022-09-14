@@ -30,6 +30,7 @@ export class CamfilOrderDeliveryAddressMapper {
         addressLine2: deliveryAddress.deliveryAddressAddressOptional || '',
         postalCode: deliveryAddress.deliveryAddressZipCode,
         city: deliveryAddress.deliveryAddressCity,
+        countryCode: deliveryAddress.deliveryAddressCountryCode || '',
         goodsAcceptanceNote: deliveryAddress.deliveryAddressGoodsAcceptanceNote,
 
         // not used, but required for "Address" type
@@ -39,7 +40,6 @@ export class CamfilOrderDeliveryAddressMapper {
         firstName: '',
         lastName: '',
         country: '',
-        countryCode: '',
         phoneHome: '',
         invoiceToAddress: undefined,
         shipToAddress: undefined,
