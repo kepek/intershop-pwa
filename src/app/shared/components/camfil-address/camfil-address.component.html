@@ -15,7 +15,9 @@
     <ng-container *ngIf="address.addressLine3">{{ address.addressLine3 }}<br /></ng-container>
   </ng-template>
 
-  <ng-container *ngIf="address.countryCode === 'DE' || address.countryCode === 'FR'; else displayPostalCodeAfterCity">
+  <ng-container
+    *ngIf="['DE', 'AT', 'FR'].includes(address.countryCode || channelCode); else displayPostalCodeAfterCity"
+  >
     <ng-container *ngIf="address.postalCode">{{ address.postalCode }}&nbsp;</ng-container>
     <ng-container *ngIf="address.city">{{ address.city }}</ng-container>
     <br />
@@ -37,7 +39,6 @@
   </ng-container>
 
   <ng-container *ngIf="address.country">{{ address.country }}<br /></ng-container>
-  <ng-container *ngIf="!address.country && address.countryCode">{{ address.countryCode }}<br /></ng-container>
 
   <ng-container *ngIf="address.phoneHome">{{ address.phoneHome }}<br /></ng-container>
   <ng-container *ngIf="displayEmail && address.email">{{ address.email }}<br /></ng-container>
