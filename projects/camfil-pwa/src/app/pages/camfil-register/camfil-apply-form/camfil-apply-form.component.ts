@@ -41,6 +41,7 @@ export class CamfilApplyFormComponent implements OnInit {
 
   validators = APPLY_VALIDATORS;
 
+  channel: string;
   hideTitleField = false;
 
   private destroy$ = new Subject();
@@ -59,8 +60,10 @@ export class CamfilApplyFormComponent implements OnInit {
     // toggles business / private customer registration
     this.businessCustomerRegistration = this.featureToggle.enabled('businessCustomerRegistration');
 
-    // Hide title field for FI channel
     this.appFacade.getChannel$?.pipe(whenTruthy(), take(1)).subscribe(channel => {
+      this.channel = channel;
+
+      // Hide title field for FI channel
       if (channel === Channel.FI) {
         // TODO (extMlk): hideTitleFieldOnRegisterForm setting
         this.hideTitleField = true;

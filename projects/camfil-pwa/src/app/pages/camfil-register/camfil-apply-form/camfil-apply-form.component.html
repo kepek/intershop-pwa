@@ -10,9 +10,11 @@
     <mat-form-field appearance="fill" class="form-field" *ngIf="!hideTitleField">
       <mat-label>{{ 'camfil.account.apply_form.title' | translate }}</mat-label>
       <mat-select formControlName="title">
-        <mat-option *ngFor="let title of preferredTitles" [value]="title">
-          {{ title | slugify: 'camfil.dynamic.salutation' | translate }}
-        </mat-option>
+        <ng-container *ngFor="let title of preferredTitles; let i = index">
+          <mat-option *ngIf="channel !== 'DE' || i < 2" [value]="title">
+            {{ title | slugify: 'camfil.dynamic.salutation' | translate }}
+          </mat-option>
+        </ng-container>
       </mat-select>
     </mat-form-field>
 
