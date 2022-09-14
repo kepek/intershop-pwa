@@ -49,6 +49,7 @@ describe('Camfil Checkout Receipt Order Component', () => {
     component.order = BasketMockData.getOrder();
     when(accountFacadeMock.isLoggedIn$).thenReturn(of(false));
     when(checkoutFacade.isFreightCostInvalid$).thenReturn(of(false));
+    when(checkoutFacade.submittedBuckets$).thenReturn(of([]));
   });
 
   it('should be created', () => {

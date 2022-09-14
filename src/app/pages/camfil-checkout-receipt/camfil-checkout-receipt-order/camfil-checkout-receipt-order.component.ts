@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 import { MatDialog } from '@angular/material/dialog';
 import { Order } from 'camfil-pwa/models/order/order.model';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { debounceTime, filter, map, take } from 'rxjs/operators';
 import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -36,33 +36,38 @@ export class CamfilCheckoutReceiptOrderComponent implements OnInit {
     this.isFreightCostInvalid$ = this.checkoutFacade.isFreightCostInvalid$;
 
     if (this.order) {
-      setTimeout(() => {
-        this.showCreateCamCardModal();
-      }, 1000);
+      this.checkoutFacade.submittedBuckets$
+        .pipe(
+          debounceTime(1000),
+          take(1),
+          map(buckets => buckets.filter(b => !b.createdFromCamCardId)),
+          filter(buckets => buckets.length > 0)
+        )
+        .subscribe(buckets => {
+          this.showCreateCamCardsModal(buckets);
+        });
     }
   }
 
-  showCreateCamCardModal() {
+  showCreateCamCardsModal(buckets: Bucket[]) {
     this.dialog
       .open(CamfilCheckoutReceiptCreateCamCardDialogComponent)
       .afterClosed()
       .subscribe(result => {
         if (result) {
-          this.createCamCards();
+          this.createCamCardsFromBuckets(buckets);
         }
       });
   }
 
-  createCamCards() {
-    this.checkoutFacade.submittedBuckets$.pipe(take(1)).subscribe(buckets => {
-      const camCards = this.createCamCardsFromBuckets(buckets);
-      camCards.forEach(camCard => {
-        this.camCardsFacade.addBasketToNewCamCard(camCard);
-      });
+  createCamCardsFromBuckets(buckets: Bucket[]) {
+    const camCards = this.buildCamCards(buckets);
+    camCards.forEach(camCard => {
+      this.camCardsFacade.addBasketToNewCamCard(camCard);
     });
   }
 
-  createCamCardsFromBuckets(buckets: Bucket[]): CamCard[] {
+  buildCamCards(buckets: Bucket[]): CamCard[] {
     return buckets.map(bucket => {
       const name = this.getNewName(bucket.orderMark);
       const { addressLine1, addressLine2, city, countryCode, postalCode } = bucket.shipToAddressFull;
