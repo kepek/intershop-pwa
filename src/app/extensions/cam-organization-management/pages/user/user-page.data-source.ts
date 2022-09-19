@@ -11,7 +11,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
 @Component({ template: '' })
 // tslint:disable-next-line: component-creation-test
 export abstract class UserPageDataSourceComponent implements OnInit, AfterViewInit, OnDestroy {
-  constructor(private organizationFacade: CamOrganizationManagementFacade) {}
+  constructor(private organizationFacade: CamOrganizationManagementFacade) { }
 
   private destroy$ = new Subject();
 
@@ -22,6 +22,8 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
   context$: Observable<{ customer: CamfilB2bCustomer; user: CamfilB2bUser }>;
   validRoles = true;
 
+  approverUsers$: Observable<CamfilB2bUser[]>;
+
   // tslint:disable-next-line:no-empty
   ngOnInit() {
     this.customer$ = this.organizationFacade.selectedCustomer$.pipe(whenTruthy(), take(1));
@@ -31,10 +33,12 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
     this.userId$ = this.organizationFacade.selectedUserId$.pipe(whenTruthy(), take(1));
 
     this.context$ = combineLatest([this.customer$, this.user$]).pipe(map(([customer, user]) => ({ customer, user })));
+
+    this.approverUsers$ = this.organizationFacade.getOrganizationUsers$().pipe(map(users => users.filter(u => u.roleIDs.includes('APP_B2B_APPROVER'))));
   }
 
   // tslint:disable-next-line:no-empty
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   ngOnDestroy() {
     this.destroy$.next();

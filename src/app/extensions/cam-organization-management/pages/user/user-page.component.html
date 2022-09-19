@@ -1,12 +1,8 @@
 <ng-template #userHeader>
   <camfil-my-page-header>
     <ng-container slot="back">
-      <button
-        mat-stroked-button
-        [routerLink]="['/account/organization']"
-        queryParamsHandling="preserve"
-        color="primary"
-      >
+      <button mat-stroked-button [routerLink]="['/account/organization']" queryParamsHandling="preserve"
+        color="primary">
         <mat-icon class="mt-n1">arrow_left</mat-icon>
         {{ 'camfil.account.organization.user_management.back_to_list' | translate }}
       </button>
@@ -23,13 +19,10 @@
 </ng-template>
 
 <ng-template #userDetails>
-  <camfil-organization-user-details-form
-    [customer]="selectedCustomer$() | async"
-    [user]="selectedUser$() | async"
+  <camfil-organization-user-details-form [customer]="selectedCustomer$() | async" [user]="selectedUser$() | async"
     (changeUser)="onUpdateSelectedCustomerUserDetails($event)"
     (changeUserActive)="onUpdateSelectedCustomerUserActive($event)"
-    (changeUserPassword)="onUpdateSelectedCustomerUserPassword()"
-  ></camfil-organization-user-details-form>
+    (changeUserPassword)="onUpdateSelectedCustomerUserPassword()"></camfil-organization-user-details-form>
 </ng-template>
 
 <ng-template #userCustomersContacts>
@@ -38,14 +31,24 @@
       {{ 'camfil.account.organization.edit_user.customers.header.text' | translate }}
     </h2>
     <div class="section__content">
-      <camfil-organization-user-customer-contact-form
-        *ngFor="let customer of customers$() | async"
-        [customer]="customer"
-        [user]="selectedUser$() | async"
+      <camfil-organization-user-customer-contact-form *ngFor="let customer of customers$() | async"
+        [customer]="customer" [user]="selectedUser$() | async"
         [staticCustomers]="selectedUserStaticCustomers$() | async"
         (disconnectUserFromCustomer)="onDisconnectUserFromCustomer($event)"
-        (connectContactWithUserAndCustomer)="onConnectContactWithUserAndCustomer($event)"
-      ></camfil-organization-user-customer-contact-form>
+        (connectContactWithUserAndCustomer)="onConnectContactWithUserAndCustomer($event)">
+      </camfil-organization-user-customer-contact-form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #userApprovers>
+  <div class="section section--customers">
+    <h2 class="section__title">
+      Approvers
+    </h2>
+    <div class="section__content">
+      <camfil-organization-user-approvers [user]="selectedUser$() | async" [approverUsers]="approverUsers$ | async">
+      </camfil-organization-user-approvers>
     </div>
   </div>
 </ng-template>
@@ -59,12 +62,9 @@
       <p *ngIf="!validRoles" class="mt-4 text-danger">
         {{ 'camfil.account.organization.edit_user.roles.validation.text' | translate }}
       </p>
-      <camfil-organization-user-roles-form
-        [roles]="roles$() | async"
-        [staticRoles]="selectedUserStaticRoles$() | async"
+      <camfil-organization-user-roles-form [roles]="roles$() | async" [staticRoles]="selectedUserStaticRoles$() | async"
         [selectedRoles]="selectedUserRoles$() | async"
-        (selectCustomerUserRoles)="onUpdateSelectedCustomerUserRoles($event)"
-      ></camfil-organization-user-roles-form>
+        (selectCustomerUserRoles)="onUpdateSelectedCustomerUserRoles($event)"></camfil-organization-user-roles-form>
     </div>
   </div>
 </ng-template>
@@ -80,6 +80,7 @@
   <div class="row no-gutters">
     <div class="col-sm-7 col-12">
       <ng-container *ngTemplateOutlet="userCustomersContacts"></ng-container>
+      <ng-container *ngTemplateOutlet="userApprovers"></ng-container>
     </div>
     <div class="col-sm-5 col-12">
       <ng-container *ngTemplateOutlet="userRoles"></ng-container>

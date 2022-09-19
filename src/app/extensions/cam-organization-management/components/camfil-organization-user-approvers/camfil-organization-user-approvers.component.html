@@ -1,0 +1,16 @@
+<mat-card class="mat-elevation-z box-shadow mb-2" [class.is-parent]="customer?.parent">
+  <mat-card-content [formGroup]="form">
+    <div class="d-flex justify-content-between align-items-center">
+      <mat-form-field appearance="fill">
+        <mat-label>
+          {{ 'camfil.account.organization.edit_user.form.customerContactSelect.label' | translate }}
+        </mat-label>
+        <mat-select color="primary" formControlName="approvers" [multiple]="true">
+          <mat-option *ngFor="let approverUser of approverUsers" [value]="approverUser.id">
+            {{ approverUser.firstName }} {{ approverUser.lastName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+</mat-card>
