@@ -870,7 +870,7 @@
   "camfil.approval.detailspage.edit.permission_denied.text": "fr_Access denied - you did not submit this order approval request",
   "camfil.approval.detailspage.order.approval_id": "fr_Approval number:",
   "camfil.approval_list.back_to_my_pages.text": "fr_Back to My Pages",
-  "camfil.cam_card.product.comment.label": "Étiquette de carton",
+  "camfil.cam_card.product.comment.label": "Marquage produit (option)",
   "camfil.cam_card.product.id.label": "Référence article",
   "camfil.cam_card.product.list_price.label": "Tarif",
   "camfil.cam_card.product.measurements.label": "Dimensions",
