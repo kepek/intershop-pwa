@@ -38,6 +38,7 @@ export interface QuoteDetailsData {
       longDescription: string;
       available: boolean;
     };
+    deliveryDate: number;
   }[];
   deliveryAddress: AddressData;
   erpnumber: string;

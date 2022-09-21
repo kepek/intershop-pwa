@@ -42,6 +42,7 @@ export class QuoteLineItemTableComponent implements OnInit, OnChanges, AfterView
     'thumbnail',
     'sku',
     'articleName',
+    'deliveryDate',
     'originPrice',
     'customerPrice',
     'qty',

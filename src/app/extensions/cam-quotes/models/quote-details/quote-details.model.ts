@@ -20,6 +20,7 @@ export interface QuoteLineItem {
     longDescription: string;
     available: boolean;
   };
+  deliveryDate?: Date;
 }
 
 export interface QuoteDetails {
