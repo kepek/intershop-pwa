@@ -23,6 +23,7 @@ export interface CamfilOrderData extends Pick<BasketBaseData, 'surcharges'> {
   deliveryAddressZipCode: string;
   deliveryAddressCity: string;
   deliveryAddressCountryCode?: string;
+  deliveryAddressCountry?: string;
   phoneNotification: string;
   taxAmount: number;
   totalCustomerPriceSum: number;

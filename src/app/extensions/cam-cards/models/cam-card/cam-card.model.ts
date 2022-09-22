@@ -146,6 +146,7 @@ export interface CamCardImportValidationResponse {
   deliveryAddressBuilding?: string;
   deliveryAddressCity?: string;
   deliveryAddressCountryCode?: string;
+  deliveryAddressCountry?: string;
   deliveryAddressStreet?: string;
   deliveryAddressZipCode?: string;
   deliveryInterval?: number;

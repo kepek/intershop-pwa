@@ -6,5 +6,6 @@ export interface CamfilOrderDeliveryAddressData {
   deliveryAddressZipCode: string;
   deliveryAddressCity: string;
   deliveryAddressCountryCode?: string;
+  deliveryAddressCountry?: string;
   deliveryAddressGoodsAcceptanceNote?: string;
 }
