@@ -8,6 +8,7 @@ import { anything, mock, when } from 'ts-mockito';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
+import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { CamfilProductImageComponent } from 'ish-shared/components/product/camfil-product-image/camfil-product-image.component';
 
 import { QuoteLineItemTableComponent } from './quote-line-item-table.component';
@@ -24,7 +25,12 @@ describe('Quote Line Item Table Component', () => {
     when(shoppingFacade.product$(anything(), anything())).thenReturn(of({} as ProductView));
 
     await TestBed.configureTestingModule({
-      declarations: [MockComponent(CamfilProductImageComponent), MockPipe(PricePipe), QuoteLineItemTableComponent],
+      declarations: [
+        MockComponent(CamfilProductImageComponent),
+        MockPipe(DatePipe),
+        MockPipe(PricePipe),
+        QuoteLineItemTableComponent,
+      ],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: [] },
         { provide: MatDialogRef, useValue: {} },
