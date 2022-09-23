@@ -43,7 +43,11 @@ export class QuoteDetailsMapper {
               value: item.totalPrice.value / item.quantity.value,
             };
           }
-          return item;
+          const deliveryDate = item.deliveryDate ? new Date(item.deliveryDate) : undefined;
+          return {
+            ...item,
+            deliveryDate,
+          };
         }),
         deliveryAddress: data.deliveryAddress ? AddressMapper.fromData(data.deliveryAddress) : undefined,
         quotationReference: data.quotationReference,
