@@ -57,7 +57,7 @@
       {{ 'camfil.checkout.desired_delivery_date' | translate }}
     </th>
     <td mat-cell *matCellDef="let pli">
-      <span *ngIf="pli.deliveryDate">{{ pli.deliveryDate | date }}</span>
+      <span *ngIf="pli.deliveryDate">{{ pli.deliveryDate | ishDate }}</span>
       <span *ngIf="!pli.deliveryDate">-</span>
     </td>
   </ng-container>
