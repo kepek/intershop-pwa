@@ -15,6 +15,7 @@ export class CamfilCheckoutHeaderComponent implements OnInit, OnChanges {
   @Input() basket: BasketView;
   @Input() buckets: Bucket[];
   @Input() editable: boolean;
+  @Input() calculatedBasket: boolean;
 
   isLoggedIn$: Observable<boolean>;
 

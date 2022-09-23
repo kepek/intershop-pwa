@@ -7,9 +7,10 @@ import { Address } from 'ish-core/models/address/address.model';
 import { camfilUpdateBasketAddress } from 'camfil-pwa/store/ish-customer/ish-basket/ish-basket.actions';
 import { combineLatest } from 'rxjs';
 import { CamfilConfigurationFacade } from './camfil-configuration.facade';
-import { getAllBuckets, getCurrentBasket, getCurrentBuckets } from 'ish-core/store/customer/basket';
+import { getAllBuckets, getCurrentBasket, getCurrentBuckets, updateBasket } from 'ish-core/store/customer/basket';
 import { map } from 'rxjs/operators';
 import { BasketSurchargeHelper } from 'ish-core/models/basket-surcharge/basket-surcharge.helper';
+import { getCalculatedBasket } from 'camfil-pwa/store/ish-customer/ish-basket/ish-basket.selectors';
 
 @Injectable({ providedIn: 'root' })
 export class IshCheckoutFacade extends CheckoutFacade {
@@ -62,6 +63,8 @@ export class IshCheckoutFacade extends CheckoutFacade {
     )
   );
 
+  calculatedBasket$ = this.store.pipe(select(getCalculatedBasket));
+
   loadOrder$(orderId: string) {
     this.store.dispatch(loadOrder({ orderId }));
     return this.store.pipe(select(getOrder, { orderId }));
@@ -69,5 +72,9 @@ export class IshCheckoutFacade extends CheckoutFacade {
 
   camfilUpdateBasketAddress(address: Address, isBasket?: boolean) {
     this.store.dispatch(camfilUpdateBasketAddress({ address, isBasket }));
+  }
+
+  updateCalculatedBasket(calculated: boolean) {
+    this.store.dispatch(updateBasket({ update: { calculated } }));
   }
 }
