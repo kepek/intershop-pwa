@@ -47,7 +47,6 @@ import {
   getBasketValidationResults,
   getBucketEmailRecipients,
   getBucketsVolumeDiscounts,
-  getCalculatedBasket,
   getCalendarExceptions,
   getCurrentBasket,
   getCurrentBuckets,
@@ -68,7 +67,6 @@ import {
   setBasketPayment,
   setBucketScrollIndex,
   startCheckout,
-  updateBasket,
   updateBasketAddress,
   updateBasketItemAttributes,
   updateBasketItems,
@@ -134,7 +132,6 @@ export class CheckoutFacade {
   anonymousBasketExtension$ = this.store.pipe(select(getAnonymousBasketExtensions));
   submittedAnonymousBasketExtension$ = this.store.pipe(select(getSubmittedAnonymousBasketExtensions));
   isFreightCostInvalid$ = this.store.pipe(select(getFreightCostInvalid));
-  calculatedBasket$ = this.store.pipe(select(getCalculatedBasket));
 
   // ORDERS
   private ordersError$ = this.store.pipe(select(getOrdersError));
@@ -316,9 +313,5 @@ export class CheckoutFacade {
 
   getBucketGoodsAcceptanceNote$(urn: string) {
     return this.store.pipe(select(getBucketGoodsAcceptanceNote(urn)));
-  }
-
-  updateCalculatedBasket(calculated: boolean) {
-    this.store.dispatch(updateBasket({ update: { calculated } }));
   }
 }

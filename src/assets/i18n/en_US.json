@@ -878,6 +878,7 @@
   "camfil.cam_card.product.your_price.label": "Your Price",
   "camfil.camcards.modal.add.search.subtitle": "Select or create a new Camcard",
   "camfil.category_landing.boxes.headline": "Air Filters Categories",
+  "camfil.checkout.basket_calculation_header": "Basket calculation in progress...",
   "camfil.checkout.confirmation.continue_shopping": "Continue shopping",
   "camfil.checkout.confirmation.title": "Thank you for your purchase!",
   "camfil.checkout.create_new_order": "Create new order",

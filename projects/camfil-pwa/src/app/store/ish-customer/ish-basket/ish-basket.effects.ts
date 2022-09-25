@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { routerNavigationAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { IshBasketService } from 'camfil-pwa/services/ish-basket/ish-basket.service';
 import { iif, of } from 'rxjs';
@@ -11,6 +12,7 @@ import {
   distinctUntilChanged,
   filter,
   map,
+  mapTo,
   mergeMap,
   shareReplay,
   startWith,
@@ -61,6 +63,7 @@ import {
   setBasketAttribute,
   setBasketAttributeFail,
   setBasketAttributeSuccess,
+  updateBasket,
 } from 'ish-core/store/customer/basket';
 import { BasketEffects } from 'ish-core/store/customer/basket/basket.effects';
 import { getLoggedInCustomer } from 'ish-core/store/customer/user';
@@ -69,6 +72,7 @@ import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, mapToProperty } from 'ish-core/utils/operators';
 
 import { deleteBasket, loadBuckets, loadBucketsFail, loadBucketsSuccess, reloadBasket } from './ish-basket.actions';
+import { getCalculatedBasket } from './ish-basket.selectors';
 
 export const STANDARD_SHIPPING_METHOD = 'STD_GROUND';
 
@@ -379,6 +383,17 @@ export class IshBasketEffects extends BasketEffects {
           mapErrorToAction(loadCustomerDeliveryTermFail)
         )
       )
+    )
+  );
+
+  updateCalculatedBasket$ = createEffect(() =>
+    this.ishActions$.pipe(
+      ofType(routerNavigationAction),
+      mapToPayloadProperty('routerState'),
+      filter(routerState => routerState.url === '/checkout/onestep'),
+      withLatestFrom(this.ishStore.select(getCalculatedBasket)),
+      filter(([, calculated]) => !calculated),
+      mapTo(updateBasket({ update: { calculated: true } }))
     )
   );
   protected ishBasketContainsAttribute(basketOrError: Basket, attributeName: string): boolean {

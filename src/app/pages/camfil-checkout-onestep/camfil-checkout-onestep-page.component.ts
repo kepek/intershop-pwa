@@ -37,6 +37,7 @@ import { isEqual } from 'lodash-es';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CamfilQuoteCreatedDialogComponent } from './camfil-quote-created-dialog/camfil-quote-created-dialog.component';
+import { IshCheckoutFacade } from 'camfil-pwa/facades/ish-checkout.facade';
 
 @Component({
   templateUrl: './camfil-checkout-onestep-page.component.html',
@@ -62,24 +63,25 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, AfterViewInit
   basketTotals$: Observable<BasketTotal>;
   validationResults$: Observable<BasketValidationResultType>;
   isFreightCostInvalid$: Observable<boolean>;
+  calculatedBasket$: Observable<boolean>;
 
   private isValid = false;
   private destroy$ = new Subject<void>();
 
   @ViewChild('guestForm') guestForm: CamfilCheckoutGuestFormComponent;
   @ViewChild('freightCostWarningDialog') freightCostWarningDialog: CamfilModalDialogComponent<unknown>;
-
   constructor(
     private appFacade: AppFacade,
     private accountFacade: AccountFacade,
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
     private camCardsFacade: CamCardsFacade,
+    private ishCheckoutFacade: IshCheckoutFacade,
     private dialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.checkoutFacade.updateCalculatedBasket(true);
+    this.calculatedBasket$ = this.ishCheckoutFacade.calculatedBasket$;
 
     this.basketLoading$ = this.checkoutFacade.basketLoading$;
     this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
@@ -87,58 +89,57 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, AfterViewInit
     this.isFreightCostInvalid$ = this.checkoutFacade.isFreightCostInvalid$;
     this.ordersLoading$ = this.checkoutFacade.ordersLoading$;
 
-    this.checkoutFacade.calculatedBasket$
+    this.buckets$ = this.checkoutFacade.buckets$;
+    this.checkoutStep$ = this.checkoutFacade.checkoutStep$;
+    this.emptyBuckets$ = this.checkoutFacade.emptyBuckets$;
+
+    this.paymentMethods$ = this.checkoutFacade.eligiblePaymentMethods$();
+    this.priceType$ = this.checkoutFacade.priceType$;
+    this.submittedBasket$ = this.checkoutFacade.submittedBasket$;
+    this.submittedBuckets$ = this.checkoutFacade.submittedBuckets$;
+    this.validationResults$ = this.checkoutFacade.basketValidationResults$;
+
+    this.basket$ = this.checkoutFacade.basket$;
+
+    this.basketTotals$ = this.basket$?.pipe(
+      withLatestFrom(this.appFacade.getCurrencyByChannel$),
+      map(([basket, currency]) => (basket?.totals?.itemTotal ? basket.totals : BasketMockData.getEmptyTotals(currency)))
+    );
+
+    this.allBuckets$ = this.checkoutFacade.allBuckets$;
+
+    this.isEditable$ = this.submittedBasket$?.pipe(
+      startWith(false),
+      withLatestFrom(this.checkoutFacade.selectedOrder$),
+      map(([submittedBasket, order]) => !submittedBasket || order.statusCode === 'RFQ')
+    );
+
+    this.isEmpty$ = this.allBuckets$?.pipe(map(allBuckets => allBuckets?.length === 0));
+
+    this.submittedBasket$
+      ?.pipe(
+        startWith(false),
+        whenTruthy(),
+        withLatestFrom(this.checkoutFacade.selectedOrder$),
+        map(([, order]) => order),
+        filter(order => order.statusCode === 'RFQ'),
+        debounceTime(500),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(() => this.dialog.open(CamfilQuoteCreatedDialogComponent));
+
+    this.calculatedBasket$
       .pipe(
         filter(cal => cal),
         take(1)
       )
       .subscribe(() => {
-        this.buckets$ = this.checkoutFacade.buckets$;
-        this.checkoutStep$ = this.checkoutFacade.checkoutStep$;
-        this.emptyBuckets$ = this.checkoutFacade.emptyBuckets$;
-        this.paymentMethods$ = this.checkoutFacade.eligiblePaymentMethods$();
-        this.priceType$ = this.checkoutFacade.priceType$;
-        this.submittedBasket$ = this.checkoutFacade.submittedBasket$;
-        this.submittedBuckets$ = this.checkoutFacade.submittedBuckets$;
-        this.validationResults$ = this.checkoutFacade.basketValidationResults$;
-
-        this.basket$ = this.checkoutFacade.basket$;
-
-        this.basketTotals$ = this.basket$.pipe(
-          withLatestFrom(this.appFacade.getCurrencyByChannel$),
-          map(([basket, currency]) =>
-            basket?.totals?.itemTotal ? basket.totals : BasketMockData.getEmptyTotals(currency)
-          )
-        );
-
-        this.allBuckets$ = this.checkoutFacade.allBuckets$;
-
-        this.isEditable$ = this.submittedBasket$.pipe(
-          startWith(false),
-          withLatestFrom(this.checkoutFacade.selectedOrder$),
-          map(([submittedBasket, order]) => !submittedBasket || order.statusCode === 'RFQ')
-        );
-
-        this.isEmpty$ = this.allBuckets$.pipe(map(allBuckets => allBuckets?.length === 0));
-
-        this.submittedBasket$
-          .pipe(
-            startWith(false),
-            whenTruthy(),
-            withLatestFrom(this.checkoutFacade.selectedOrder$),
-            map(([, order]) => order),
-            filter(order => order.statusCode === 'RFQ'),
-            debounceTime(500),
-            takeUntil(this.destroy$)
-          )
-          .subscribe(() => this.dialog.open(CamfilQuoteCreatedDialogComponent));
-
         this.initBasket();
       });
   }
 
   ngAfterViewInit() {
-    this.isFreightCostInvalid$.pipe(takeUntil(this.destroy$)).subscribe(isFreightCostInvalid => {
+    this.isFreightCostInvalid$?.pipe(takeUntil(this.destroy$)).subscribe(isFreightCostInvalid => {
       this.freightCostWarningDialog?.[isFreightCostInvalid ? 'show' : 'hide']();
     });
   }

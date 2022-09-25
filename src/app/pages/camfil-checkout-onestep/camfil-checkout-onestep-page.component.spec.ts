@@ -5,6 +5,7 @@ import { Action } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
+import { IshCheckoutFacade } from 'camfil-pwa/facades/ish-checkout.facade';
 import { CamfilChannelConfiguration } from 'camfil-pwa/models/camfil-channel-configuration/camfil-channel-configuration.model';
 import { getCamfilConfigurationState } from 'camfil-pwa/store/camfil-configuration';
 import { MockComponent, MockDirective } from 'ng-mocks';
@@ -43,6 +44,7 @@ describe('Camfil Checkout Onestep Page Component', () => {
   let checkoutFacade: CheckoutFacade;
   let shoppingFacadeMock: ShoppingFacade;
   let camfilConfigurationFacadeMock: CamfilConfigurationFacade;
+  let ishCheckoutFacade: IshCheckoutFacade;
   let actions$: Observable<Action>;
 
   const configuration: CamfilChannelConfiguration = {
@@ -86,6 +88,7 @@ describe('Camfil Checkout Onestep Page Component', () => {
       },
       isEstimated: false,
     },
+    calculated: true,
   };
 
   const selectedOrder: Order = {
@@ -125,6 +128,7 @@ describe('Camfil Checkout Onestep Page Component', () => {
     appFacadeMock = mock(AppFacade);
     camCardFacadeMock = mock(CamCardsFacade);
     checkoutFacade = mock(CheckoutFacade);
+    ishCheckoutFacade = mock(IshCheckoutFacade);
     shoppingFacadeMock = mock(ShoppingFacade);
     camfilConfigurationFacadeMock = mock(CamfilConfigurationFacade);
 
@@ -154,6 +158,7 @@ describe('Camfil Checkout Onestep Page Component', () => {
         { provide: AppFacade, useFactory: () => instance(appFacadeMock) },
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
+        { provide: CheckoutFacade, useFactory: () => instance(ishCheckoutFacade) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
         provideMockStore({
           selectors: [{ selector: getCamfilConfigurationState, value: configuration }],
@@ -190,7 +195,7 @@ describe('Camfil Checkout Onestep Page Component', () => {
     when(checkoutFacade.submittedBuckets$).thenReturn(of(undefined));
     when(checkoutFacade.isFreightCostInvalid$).thenReturn(of(false));
     when(checkoutFacade.eligiblePaymentMethods$()).thenReturn(of([]));
-    when(checkoutFacade.calculatedBasket$).thenReturn(of(true));
+    when(ishCheckoutFacade.calculatedBasket$).thenReturn(of(true));
   });
 
   it('should be created', () => {
