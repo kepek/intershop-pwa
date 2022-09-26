@@ -715,7 +715,7 @@
   "camfil.account.orderlist.filter.toDate.title": "Alla data",
   "camfil.account.orderlist.order_channel": "Canale dell'ordine",
   "camfil.account.orderlist.search.button.title": "Cerca",
-  "camfil.account.orderlist.search.placeholder.text": "Cerca ordini",
+  "camfil.account.orderlist.search.placeholder.text": "Ricerca degli ordini",
   "camfil.account.orderlist.show_more": "Mostra di più",
   "camfil.account.orderlist.showing_of": "Mostrando {{0}} di {{1}}",
   "camfil.account.orderlist.table.camfil_order_number": "Numero d'ordine del cliente",
