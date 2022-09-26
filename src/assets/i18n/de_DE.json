@@ -703,7 +703,7 @@
   "camfil.account.orderlist.filter.toDate.title": "Bis Datum",
   "camfil.account.orderlist.order_channel": "Bestellart",
   "camfil.account.orderlist.search.button.title": "Suche",
-  "camfil.account.orderlist.search.placeholder.text": "CamCard suchen",
+  "camfil.account.orderlist.search.placeholder.text": "Bestellung suchen",
   "camfil.account.orderlist.show_more": "Mehr anzeigen",
   "camfil.account.orderlist.showing_of": "Zeige {{0}} von {{1}}",
   "camfil.account.orderlist.table.camfil_order_number": "Ihre Bestellnummer",
