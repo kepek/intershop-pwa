@@ -53,6 +53,7 @@ export class CamfilLoginFormComponent implements OnInit, OnDestroy {
     const credentials: Credentials = { ...formValue };
 
     // Required encoding for FI and SE characters like å ä ö
+    credentials.login = unescape(encodeURIComponent(credentials.login));
     credentials.password = unescape(encodeURIComponent(credentials.password));
 
     this.accountFacade.loginUser(credentials);
