@@ -9,6 +9,7 @@ import {
 
 import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { Address } from 'ish-core/models/address/address.model';
+import { BasketFeedbackView } from 'ish-core/models/basket-feedback/basket-feedback.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { Basket } from 'ish-core/models/basket/basket.model';
@@ -67,6 +68,7 @@ import {
   deleteBucketFail,
   deleteBucketSuccess,
   deleteEmptyBucket,
+  doubleBucketItemsQuantitySuccess,
   loadBasket,
   loadBasketAddressesSuccess,
   loadBasketEligiblePaymentMethods,
@@ -151,6 +153,11 @@ const initialValidationResults: BasketValidationResultType = {
   adjusted: undefined,
   errors: [],
 };
+
+export const resetResultsButKeepInfoMessage = (infos: BasketFeedbackView[]): BasketValidationResultType => ({
+  ...initialValidationResults,
+  infos,
+});
 
 export const initialState: BasketState = {
   basket: undefined,
@@ -349,7 +356,8 @@ export const basketReducer = createReducer(
     updateBucketSuccess,
     (state: BasketState) => ({
       ...state,
-      validationResults: initialValidationResults,
+      // CAMFIL changes
+      validationResults: resetResultsButKeepInfoMessage(state?.validationResults?.infos || []),
     })
   ),
   on(addItemsToBasket, addItemsToBasketFromCamCard, addProductsFromCamCard, (state: BasketState) => ({
@@ -378,6 +386,7 @@ export const basketReducer = createReducer(
     error: undefined,
     productAdded: true,
     productUpdated: true,
+    validationResults: initialValidationResults,
   })),
   on(resetProductAdded, (state: BasketState) => ({
     ...state,
@@ -479,7 +488,8 @@ export const basketReducer = createReducer(
     error: undefined,
     info: undefined,
     promotionError: undefined,
-    validationResults: initialValidationResults,
+    // CAMFIL changes
+    validationResults: resetResultsButKeepInfoMessage(state?.validationResults?.infos || []),
   })),
 
   // CAMFIL
@@ -573,5 +583,9 @@ export const basketReducer = createReducer(
   on(setBasketOrderType, (state: BasketState, action) => ({
     ...state,
     orderType: action.payload.orderType,
+  })),
+  on(doubleBucketItemsQuantitySuccess, updateBasketItemsSuccess, (state: BasketState) => ({
+    ...state,
+    validationResults: initialValidationResults,
   }))
 );
