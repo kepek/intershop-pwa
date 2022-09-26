@@ -32,25 +32,26 @@
                 [cdkDragData]="item"
                 cdkDrag
               >
-              <div class="d-flex align-items-center">
-                <mat-icon svgIcon="move" class="size-24 handle" cdkDragHandle></mat-icon>
-                <ng-container *ngIf="!isNewSku(item.product.sku)">
-                  <camfil-account-cam-card-detail-line-item
-                    [camCard]="camCard"
-                    [camCardItem]="item"
-                    [selectedItemsForm]="selectedItemsForm"
-                    [index]="i + 1"
-                    [customerPrices]="getCustomerPriceForSku(item.product.sku)"
-                    [isIntervalVisible]="isIntervalVisible$ | async"
-                    (handleLoad)="productUpdate($event, item)"
-                    (handleUpdate)="productUpdate($event, item)"
-                    (delete)="openDeleteConfirmationDialog(productDeleteDialog, null, 'product', $event)"
-                    mode="edit"
-                  ></camfil-account-cam-card-detail-line-item>
-                </ng-container>
+                <div class="d-flex align-items-center">
+                  <mat-icon svgIcon="move" class="size-24 handle" cdkDragHandle></mat-icon>
+                  <ng-container *ngIf="!isNewSku(item.product.sku)">
+                    <camfil-account-cam-card-detail-line-item
+                      [camCard]="camCard"
+                      [camCardItem]="item"
+                      [selectedItemsForm]="selectedItemsForm"
+                      [index]="i + 1"
+                      [customerPrices]="getCustomerPriceForSku(item.product.sku)"
+                      [isIntervalVisible]="isIntervalVisible$ | async"
+                      (handleLoad)="productUpdate($event, item)"
+                      (handleUpdate)="productUpdate($event, item)"
+                      (delete)="openDeleteConfirmationDialog(productDeleteDialog, null, 'product', $event)"
+                      mode="edit"
+                    >
+                    </camfil-account-cam-card-detail-line-item>
+                  </ng-container>
+                </div>
               </div>
-              </div>
-              </div>
+            </div>
           </cdk-virtual-scroll-viewport>
         </div>
         <div *ngFor="let sub of camCard.subCamCards">
@@ -66,7 +67,8 @@
               [mainDeliveryInterval]="camCard?.deliveryInterval"
               [isIntervalVisible]="isIntervalVisible$ | async"
               (delete)="openDeleteConfirmationDialog(subDeleteDialog, sub, 'sub')"
-            ></camfil-account-cam-card-detail-sub-title>
+            >
+            </camfil-account-cam-card-detail-sub-title>
           </div>
           <mat-expansion-panel class="mat-elevation-z0" [expanded]="isSubCamCardOpen(sub.id)">
             <div
@@ -95,7 +97,8 @@
                       (handleUpdate)="productUpdate($event, subItem)"
                       (delete)="openDeleteConfirmationDialog(productDeleteDialog, null, 'product', $event)"
                       mode="edit"
-                    ></camfil-account-cam-card-detail-line-item>
+                    >
+                    </camfil-account-cam-card-detail-line-item>
                   </div>
                 </div>
               </ng-container>
@@ -198,6 +201,6 @@
   {{ 'camfil.account.cam_card.in.basket.text' | translate }}
 </camfil-modal-dialog>
 
-<div *ngIf="loading || (camCardsInBasketsForAllUsersLoading$ | async)" class="loader-container">
+<div *ngIf="loading || (ccInOtherBasketsLoading$ | async)" class="loader-container">
   <camfil-loading></camfil-loading>
 </div>

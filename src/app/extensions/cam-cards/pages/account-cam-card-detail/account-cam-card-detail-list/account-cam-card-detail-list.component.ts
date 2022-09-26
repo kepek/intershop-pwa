@@ -135,8 +135,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
 
   invalidProducts: InvalidProducts = { notAvailable: [] };
   modalType: 'noErpNoAddress' | 'invalidProducts';
-  camCardsInBasketsForAllUsersLoading$: Observable<boolean>;
-  camCardsInBasketsForAllUsers: string[];
+  ccInOtherBasketsLoading$: Observable<boolean>;
+  ccInOtherBaskets$: Observable<string[]>;
   isIntervalVisible$: Observable<boolean>;
   isIntervalVisible = false;
   private destroy$ = new Subject();
@@ -157,7 +157,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     this.shoppingFacade.loadBasketAddresses();
     this.basket$ = this.checkoutFacade.basket$;
     this.buckets$ = this.checkoutFacade.buckets$;
-    this.camCardsInBasketsForAllUsersLoading$ = this.camCardsFacade.getCamCardsInBasketsForAllUsersLoading$;
+    this.ccInOtherBasketsLoading$ = this.camCardsFacade.getCamCardsInBasketsForAllUsersLoading$;
+    this.ccInOtherBaskets$ = this.camCardsFacade.getCamCardsInBasketsForAllUsers$;
 
     this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
       this.basketId = basket.id;
@@ -168,9 +169,6 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     });
     this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
       this.basketAddresses = basketAddresses;
-    });
-    this.camCardsFacade.getCamCardsInBasketsForAllUsers$.pipe(takeUntil(this.destroy$)).subscribe(list => {
-      this.camCardsInBasketsForAllUsers = list;
     });
 
     const { id, parent } = this.camCard.customer;
@@ -338,12 +336,14 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     }
 
     this.camCardsFacade.checkCamCardsInBasketsForAllUsers([this.camCard.id]);
-    this.camCardsInBasketsForAllUsersLoading$.pipe(whenTruthy(), take(1)).subscribe(() => {
-      if (this.camCardsInBasketsForAllUsers?.length && checkInBasketModal?.show) {
-        checkInBasketModal.show();
-      } else {
-        this.addItemsToCart(addToCartFlowModal);
-      }
+    this.ccInOtherBasketsLoading$.pipe(whenFalsy(), take(1)).subscribe(() => {
+      this.ccInOtherBaskets$.pipe(take(1)).subscribe(list => {
+        if (list.length && checkInBasketModal) {
+          checkInBasketModal.show();
+        } else {
+          this.addItemsToCart(addToCartFlowModal);
+        }
+      });
     });
   }
 

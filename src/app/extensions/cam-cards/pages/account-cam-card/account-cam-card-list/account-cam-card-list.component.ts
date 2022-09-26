@@ -488,7 +488,7 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
     const ids = this.checkedCamCards.map(cc => cc.id);
     this.camCardsFacade.checkCamCardsInBasketsForAllUsers(ids);
     this.camCardsInBasketsForAllUsersLoading$.pipe(whenFalsy(), take(1)).subscribe(() => {
-      if (this.camCardsInBasketsForAllUsers?.length && checkInBasketModal?.show) {
+      if (this.camCardsInBasketsForAllUsers?.length && checkInBasketModal) {
         checkInBasketModal.show();
       } else {
         this.addToCart(addToCartFlowModal);
@@ -497,21 +497,22 @@ export class AccountCamCardListComponent implements OnInit, AfterViewInit, OnCha
   }
 
   addToCart(modal: CamfilModalDialogComponent<unknown>) {
-    const { notBuyableElemnts } = {
-      notBuyableElemnts: this.getIncorrectCamCardsElements(),
-    };
-
-    if (notBuyableElemnts.length) {
-      this.notBuyableElemnts = notBuyableElemnts;
-
-      modal.show();
+    if (!this.addToCartProcess) {
+      this.addToCartProcess = true;
+      this.notBuyableElemnts = this.getIncorrectCamCardsElements();
+      if (this.notBuyableElemnts.length) {
+        setTimeout(() => {
+          modal.show();
+        });
+      } else {
+        this.addSelectedItemsToCart();
+      }
     } else {
-      this.addSelectedItemsToCart();
+      this.addToCartProcess = false;
     }
   }
 
   addSelectedItemsToCart() {
-    this.addToCartProcess = true;
     const list = Object.values(this.productsChecked).reduce((acc, val: CamCamProductChecked) => {
       const key = val.camCardRoot || val.camCardId;
       const products = acc[key]?.products || [];
