@@ -2,8 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
-import { MockComponent, MockPipe } from 'ng-mocks';
+import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { OrderFormComponent } from 'src/app/extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
 import { instance, mock, when } from 'ts-mockito';
@@ -41,6 +42,7 @@ describe('Camfil Requisition Summary Component', () => {
         CamfilRequisitionSummaryComponent,
         EditApprovalDetailsModalComponent,
         MockComponent(OrderFormComponent),
+        MockDirective(CamfilChannelToggleDirective),
         MockPipe(DatePipe),
         MockPipe(PricePipe),
       ],
