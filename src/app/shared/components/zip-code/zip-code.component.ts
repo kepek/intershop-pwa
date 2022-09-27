@@ -92,7 +92,8 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
               }
             } else {
               const ccCity = this.form.get(this.fieldCity).value;
-              this.form.patchValue({ citySelect: '', [this.fieldCity]: city });
+              const citySelect = data?.length === 1 ? city : '';
+              this.form.patchValue({ citySelect, [this.fieldCity]: city });
               if (!this.checkOnInit || ccCity !== city) {
                 this.submitEmitter.emit();
               }
@@ -101,7 +102,7 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
           } else {
             this.zipCodesLoading$.pipe(take(1)).subscribe(loading => {
               if (!loading) {
-                this.form.patchValue({ [this.fieldCity]: '' });
+                this.form.patchValue({ citySelect: '', [this.fieldCity]: '' });
                 this.formField.setErrors({ incorrect: true });
                 this.form.updateValueAndValidity();
               }

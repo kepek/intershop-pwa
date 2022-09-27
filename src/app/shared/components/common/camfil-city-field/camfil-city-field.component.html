@@ -25,5 +25,10 @@
     <small class="text-warning" *ngIf="!this.form.get(fieldCity).value">
       {{ 'camfil.form.warning.pick_city' | translate }}
     </small>
+    <camfil-error
+      [errorValidators]="errorValidator"
+      [errors]="formSelect.errors"
+      [touched]="formSelect.touched || formSelect.dirty"
+    ></camfil-error>
   </mat-form-field>
 </ng-template>
