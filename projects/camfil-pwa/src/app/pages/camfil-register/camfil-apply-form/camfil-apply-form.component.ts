@@ -41,6 +41,7 @@ export class CamfilApplyFormComponent implements OnInit {
 
   validators = APPLY_VALIDATORS;
 
+  channelTypes = Channel;
   channel: string;
   hideTitleField = false;
 

@@ -11,7 +11,7 @@
       <mat-label>{{ 'camfil.account.apply_form.title' | translate }}</mat-label>
       <mat-select formControlName="title">
         <ng-container *ngFor="let title of preferredTitles; let i = index">
-          <mat-option *ngIf="channel !== 'DE' || i < 2" [value]="title">
+          <mat-option *ngIf="channel !== channelTypes.DE || i < 2" [value]="title">
             {{ title | slugify: 'camfil.dynamic.salutation' | translate }}
           </mat-option>
         </ng-container>
