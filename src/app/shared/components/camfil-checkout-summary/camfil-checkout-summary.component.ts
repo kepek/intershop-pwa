@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { Observable, Subject, combineLatest } from 'rxjs';
-import { map, skipWhile, startWith, take, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { map, skipWhile, startWith, switchMap, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -87,16 +87,25 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
       this.camfilConfigurationFacade.isEnabled$('allowQuotes'),
     ]).pipe(map(([hasRequestRole, isQuotesModuleEnabled]) => hasRequestRole && isQuotesModuleEnabled));
 
-    this.shoppingFacade.basketAddresses$
+    this.checkoutFacade.allBuckets$
       .pipe(
-        skipWhile(addresses => !addresses || !addresses.length),
-        map(addresses => addresses[0]),
-        withLatestFrom(this.camfilConfigurationFacade.isEnabled$('goodsAcceptanceTimeMandatory')),
-        takeUntil(this.destroy$)
+        skipWhile(buckets => !buckets || !buckets.length),
+        switchMap(buckets =>
+          this.shoppingFacade.basketAddresses$.pipe(
+            skipWhile(addresses => !addresses || !addresses.length),
+            map(addresses =>
+              (buckets || []).map(bucket => addresses.find(address => address.id === bucket.shipToAddressFull.id))
+            ),
+            withLatestFrom(this.camfilConfigurationFacade.isEnabled$('goodsAcceptanceTimeMandatory')),
+            map(
+              ([addresses, isMandatory]) =>
+                !(isMandatory && addresses.filter(address => !address.goodsAcceptanceNote).length > 0)
+            ),
+            takeUntil(this.destroy$)
+          )
+        )
       )
-      .subscribe(
-        ([address, isMandatory]) => (this.isGoodsAcceptanceTimeValid = !(isMandatory && !address?.goodsAcceptanceNote))
-      );
+      .subscribe(isValid => (this.isGoodsAcceptanceTimeValid = isValid));
   }
 
   submitOrder(orderType?: string) {

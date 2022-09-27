@@ -83,6 +83,7 @@ describe('Camfil Checkout Summary Component', () => {
     when(accountFacade.isLoggedIn$).thenReturn(of(false));
     when(camfilConfigurationFacade.isEnabled$('goodsAcceptanceTimeMandatory')).thenReturn(of(false));
     when(shoppingFacade.basketAddresses$).thenReturn(of([]));
+    when(checkoutFacade.allBuckets$).thenReturn(of([]));
   });
 
   it('should be created', () => {
