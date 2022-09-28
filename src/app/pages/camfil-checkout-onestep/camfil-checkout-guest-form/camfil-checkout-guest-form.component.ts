@@ -135,7 +135,7 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
       addressLine1: ['', [Validators.required]],
       postalCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
       city: ['', [Validators.required]],
-      citySelect: [''],
+      citySelect: ['', Validators.required],
       countryCode: ['', [Validators.required]],
       sameAddressAsInvoice: [true],
       boxLabel: [''],
@@ -150,7 +150,7 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
       addressLine1: ['', [Validators.required]],
       postalCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
       city: ['', [Validators.required]],
-      citySelect: [''],
+      citySelect: ['', Validators.required],
       countryCode: ['', [Validators.required]],
     });
   }

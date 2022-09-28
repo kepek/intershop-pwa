@@ -217,7 +217,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
       addressLine2: ['', [Validators.maxLength(200)]],
       postalCode: ['', [Validators.required, Validators.maxLength(maxL)]],
       city: [{ value: '', disabled: true }, [Validators.maxLength(maxL)]],
-      citySelect: [''],
+      citySelect: ['', Validators.required],
       lastDelivery: ['', [Validators.maxLength(maxL)]],
       deliveryInterval: ['', [Validators.maxLength(maxL)]],
       nextDelivery: [{ value: '', disabled: true }, [Validators.maxLength(maxL)]],

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
@@ -7,6 +7,8 @@ import { take, takeUntil } from 'rxjs/operators';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ZipCodeInfo } from 'ish-core/models/zip-codes/zip-codes.interface';
 import { whenTruthy } from 'ish-core/utils/operators';
+
+import { CITY_SELECT_VALIDATORS } from './validators';
 
 @Component({
   selector: 'camfil-city-field',
@@ -19,8 +21,10 @@ export class CamfilCityFieldComponent implements OnInit, OnDestroy {
   @Input() fieldSelect: string;
   @Input() fieldCode: string;
   @Input() appearance = 'fill';
+  errorValidator = CITY_SELECT_VALIDATORS;
 
   citiesList$: Observable<ZipCodeInfo[]>;
+  formSelect: AbstractControl;
 
   @Output() pickCityEmit = new EventEmitter();
 
@@ -28,6 +32,7 @@ export class CamfilCityFieldComponent implements OnInit, OnDestroy {
   constructor(private accountFacade: AccountFacade) {}
 
   ngOnInit() {
+    this.formSelect = this.form.controls[this.fieldSelect];
     const zip = this.form.get(this.fieldCode)?.value;
     if (zip) {
       this.citiesList$ = this.accountFacade.getZipCode$(zip).pipe(whenTruthy(), take(1));

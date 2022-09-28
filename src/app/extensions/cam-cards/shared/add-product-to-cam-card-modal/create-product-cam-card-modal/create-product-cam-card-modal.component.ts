@@ -121,9 +121,9 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
       company: [''],
       addressLine1: [''],
       addressLine2: [''],
-      citySelect: [''],
+      citySelect: ['', Validators.required],
       zipCode: [''],
-      area: [{ value: '', disabled: true }, [Validators.required]],
+      area: [{ value: '', disabled: true }, Validators.required],
       countryCode: [{ value: this.defaultCountryCode }, [Validators.maxLength(35)]],
       newCamCard: ['', [Validators.maxLength(30)]],
     });
