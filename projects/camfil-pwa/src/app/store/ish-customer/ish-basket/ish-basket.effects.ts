@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigationAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { IshBasketService } from 'camfil-pwa/services/ish-basket/ish-basket.service';
-import { iif, of } from 'rxjs';
+import { EMPTY, iif, of } from 'rxjs';
 import {
   concatMap,
   concatMapTo,
@@ -210,20 +210,23 @@ export class IshBasketEffects extends BasketEffects {
       withLatestFrom(this.ishAnonymousBasket$),
       switchMap(([, [sourceBasketId]]) =>
         this.ishBasketService.getBaskets().pipe(
-          switchMap(baskets => {
+          withLatestFrom(this.ishStore.select(getCurrentBasket)),
+          switchMap(([baskets, current]) => {
             if (sourceBasketId) {
               // anonymous basket exists -> get or create user basket and merge anonymous basket into it
-              return iif(
-                () => !!baskets.length,
-                this.ishBasketService.getBasket(),
-                this.ishBasketService.createBasket()
-              ).pipe(
-                map(basket => loadBasketSuccess({ basket })),
-                mapErrorToAction(loadBasketFail)
-              );
+              return current
+                ? EMPTY
+                : iif(
+                    () => !!baskets.length,
+                    this.ishBasketService.getBasket(),
+                    this.ishBasketService.createBasket()
+                  ).pipe(
+                    map(basket => loadBasketSuccess({ basket })),
+                    mapErrorToAction(loadBasketFail)
+                  );
             } else if (baskets.length) {
               // basket exists and user (both logged in & anonymous) already has a basket -> load it
-              return of(loadBasket());
+              return current ? EMPTY : of(loadBasket());
             } else {
               // is logged user but does not have basket -> create basket
               return this.ishBasketService.createBasket().pipe(
