@@ -1,5 +1,9 @@
 <camfil-loading
-  *ngIf="!(calculatedBasket$ | async) || (ordersLoading$ | async) || (basketLoading$ | async)"
+  *ngIf="
+    ((allBuckets$ | async)?.length && !(calculatedBasket$ | async)) ||
+    (ordersLoading$ | async) ||
+    (basketLoading$ | async)
+  "
   fixed="true"
 ></camfil-loading>
 
