@@ -37,7 +37,7 @@
 </ng-template>
 
 <ng-template #defaultTemplate>
-  <div *ngIf="editable && calculatedBasket" class="row align-items-end">
+  <div *ngIf="editable && (calculatedBasket || !buckets?.length)" class="row align-items-end">
     <div class="col-md-3">
       <p>
         <span>{{ 'camfil.checkout.number_of_orders' | translate }}:</span>
@@ -58,7 +58,7 @@
     </div>
   </div>
 
-  <h1 *ngIf="!calculatedBasket">
+  <h1 *ngIf="buckets?.length && !calculatedBasket">
     {{ 'camfil.checkout.basket_calculation_header' | translate }}
   </h1>
 </ng-template>

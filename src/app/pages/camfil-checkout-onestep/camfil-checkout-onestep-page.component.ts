@@ -233,7 +233,7 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, AfterViewInit
         filter(pm => !pm.parameters),
         take(1),
         withLatestFrom(this.checkoutFacade.basket$),
-        filter(([, basket]) => basket?.id && !basket?.payment),
+        filter(([, basket]) => basket?.id && !basket?.payment && !!basket.lineItems.length),
         takeUntil(this.destroy$)
       )
       .subscribe(([pm]) => this.updateBasketPaymentMethod(pm.id));
