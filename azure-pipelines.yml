@@ -50,6 +50,8 @@ resources:
 stages:
 - stage: Checkout
   displayName: 'Checkout'
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+
 
   jobs:
   - job: Checkout
@@ -60,6 +62,7 @@ stages:
 
 - stage: Build
   displayName: 'Build and Push'
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
 
   jobs:
   - job: Build
@@ -91,7 +94,7 @@ stages:
 - stage: Release
   displayName: 'Realease'
   dependsOn: Build
-  condition: startsWith(variables['build.sourceBranch'], 'refs/tags/release')
+  condition: or(and(succeeded(), eq(variables['Build.Reason'], 'PullRequest')), startsWith(variables['build.sourceBranch'], 'refs/tags/release'))
 
   variables:
     pwaSSR.imageFullReleaseName:  '$(registryServerName)/$(pwaSSR.imageName):release-$(tag)'
