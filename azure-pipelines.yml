@@ -10,108 +10,123 @@ trigger:
     exclude:
       - azure-pipelines.yml
 
-resources:
-  - repo: self
-
 variables:
-  - group: acr_ishpwa
+- group:  acr_ishpwa
 
-  - name: projectName
-    value: 'cmflz'
+- name:   projectName
+  value: 'cmflz'
 
-  - name: registryServerName
-    value: $(registryName).azurecr.io
+- name:   registryServerName
+  value:  $(registryName).azurecr.io
 
-  - name: tag
-    value: '$(Build.BuildId)'
+- name:  tag
+  value: '$(Build.BuildId)'
 
-  - name: imageSuffix
-    ${{ if     eq(variables['Build.SourceBranchName'] , 'master') }}:
-      value: ''
-    ${{ if not(eq(variables['Build.SourceBranchName'] , 'master')) }}:
-      value: -dev
+- name: imageSuffix
+  ${{ if     eq(variables['Build.SourceBranchName'] , 'master') }}:
+    value: ''
+  ${{ if not(eq(variables['Build.SourceBranchName'] , 'master')) }}:
+    value: -dev
 
-  - name: 'pwaSSR.imageName'
-    value: '$(projectName)-pwa-ssr$(imageSuffix)'
+- name:  'pwaSSR.imageName'
+  value: '$(projectName)-pwa-ssr$(imageSuffix)'
 
-  - name: 'pwaNginx.imageName'
-    value: '$(projectName)-pwa-nginx$(imageSuffix)'
+- name:  'pwaNginx.imageName'
+  value: '$(projectName)-pwa-nginx$(imageSuffix)'
 
-  - name: 'pwaSSR.imageFullName'
-    value: '$(registryServerName)/$(pwaSSR.imageName):$(tag)'
+- name:  'pwaSSR.imageFullName'
+  value: '$(registryServerName)/$(pwaSSR.imageName):$(tag)'
 
-  - name: 'pwaNginx.imageFullName'
-    value: '$(registryServerName)/$(pwaNginx.imageName):$(tag)'
+- name:  'pwaNginx.imageFullName'
+  value: '$(registryServerName)/$(pwaNginx.imageName):$(tag)'
+
+resources:
+  repositories:
+    - repository: ColumbusBitbucketRepo
+      type: bitbucket
+      endpoint: Bitbucket - extmlk
+      name: istonecrosscommerce/columbus-camfil-pwa
 
 stages:
-  - stage: Build
+- stage: Checkout
+  displayName: 'Checkout'
+
+  jobs:
+  - job: Checkout
+    displayName: 'Checkout'
+    steps:
+      - checkout: self
+      - checkout: ColumbusBitbucketRepo
+
+- stage: Build
+  displayName: 'Build and Push'
+
+  jobs:
+  - job: Build
     displayName: 'Build and Push'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - bash: |
+          docker build -f $(system.defaultWorkingDirectory)/Dockerfile -t $(pwaSSR.imageFullName) $(system.defaultWorkingDirectory) --build-arg displayVersion=$(tag)
+        displayName: 'docker build pwa-ssr'
 
-    jobs:
-      - job: Build
-        displayName: 'Build and Push'
-        pool:
-          vmImage: 'ubuntu-latest'
-        steps:
-          - bash: |
-              docker build -f $(system.defaultWorkingDirectory)/Dockerfile -t $(pwaSSR.imageFullName) $(system.defaultWorkingDirectory) --build-arg displayVersion=$(tag)
-            displayName: 'docker build pwa-ssr'
+      - bash: |
+          docker build -f $(system.defaultWorkingDirectory)/nginx/Dockerfile -t $(pwaNginx.imageFullName) $(system.defaultWorkingDirectory)/nginx --build-arg displayVersion=$(tag)
+        displayName: 'docker build pwa-nginx'
 
-          - bash: |
-              docker build -f $(system.defaultWorkingDirectory)/nginx/Dockerfile -t $(pwaNginx.imageFullName) $(system.defaultWorkingDirectory)/nginx --build-arg displayVersion=$(tag)
-            displayName: 'docker build pwa-nginx'
+      - bash: |
+          docker login $(registryServerName) -u $(registryLogin) -p $(registryPassword)
+        displayName: docker login
 
-          - bash: |
-              docker login $(registryServerName) -u $(registryLogin) -p $(registryPassword)
-            displayName: docker login
+      - bash: |
+          docker push $(pwaSSR.imageFullName)
+        displayName: 'docker push pwa-ssr'
 
-          - bash: |
-              docker push $(pwaSSR.imageFullName)
-            displayName: 'docker push pwa-ssr'
+      - bash: |
+          docker push $(pwaNginx.imageFullName)
+        displayName: 'docker push pwa-nginx'
 
-          - bash: |
-              docker push $(pwaNginx.imageFullName)
-            displayName: 'docker push pwa-nginx'
 
-  - stage: Release
-    displayName: 'Realease'
-    dependsOn: Build
-    condition: startsWith(variables['build.sourceBranch'], 'refs/tags/release')
+- stage: Release
+  displayName: 'Realease'
+  dependsOn: Build
+  condition: startsWith(variables['build.sourceBranch'], 'refs/tags/release')
 
-    variables:
-      pwaSSR.imageFullReleaseName: '$(registryServerName)/$(pwaSSR.imageName):release-$(tag)'
-      pwaNginx.imageFullReleaseName: '$(registryServerName)/$(pwaNginx.imageName):release-$(tag)'
+  variables:
+    pwaSSR.imageFullReleaseName:  '$(registryServerName)/$(pwaSSR.imageName):release-$(tag)'
+    pwaNginx.imageFullReleaseName: '$(registryServerName)/$(pwaNginx.imageName):release-$(tag)'
 
-    jobs:
-      - job: Release
-        displayName: 'create release tag'
-        pool:
-          vmImage: 'ubuntu-latest'
-        steps:
-          - bash: |
-              docker login $(registryServerName) -u $(registryLogin) -p $(registryPassword)
-            displayName: docker login
+  jobs:
+  - job: Release
+    displayName: 'create release tag'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - bash: |
+          docker login $(registryServerName) -u $(registryLogin) -p $(registryPassword)
+        displayName: docker login
 
-          - bash: |
-              docker pull $(pwaSSR.imageFullName)
-            displayName: 'docker pull: pwa-ssr'
+      - bash: |
+          docker pull $(pwaSSR.imageFullName)
+        displayName: 'docker pull: pwa-ssr'
 
-          - bash: |
-              docker pull $(pwaNginx.imageFullName)
-            displayName: 'docker pull: pwa-nginx'
+      - bash: |
+          docker pull $(pwaNginx.imageFullName)
+        displayName: 'docker pull: pwa-nginx'
 
-          - bash: |
-              docker tag $(pwaSSR.imageFullName) $(pwaSSR.imageFullReleaseName)
-            displayName: 'docker tag: pwa-ssr'
+      - bash: |
+          docker tag $(pwaSSR.imageFullName) $(pwaSSR.imageFullReleaseName)
+        displayName: 'docker tag: pwa-ssr'
 
-          - bash: |
-              docker tag $(pwaNginx.imageFullName) $(pwaNginx.imageFullReleaseName)
-            displayName: 'docker tag: pwa-nginx'
+      - bash: |
+          docker tag $(pwaNginx.imageFullName) $(pwaNginx.imageFullReleaseName)
+        displayName: 'docker tag: pwa-nginx'
 
-          - bash: |
-              docker push $(pwaSSR.imageFullReleaseName)
-            displayName: 'docker push pwa-ssr'
+      - bash: |
+          docker push $(pwaSSR.imageFullReleaseName)
+        displayName: 'docker push pwa-ssr'
 
-          - bash: |
-              docker push $(pwaNginx.imageFullReleaseName)
-            displayName: 'docker push pwa-nginx'
+      - bash: |
+          docker push $(pwaNginx.imageFullReleaseName)
+        displayName: 'docker push pwa-nginx'
