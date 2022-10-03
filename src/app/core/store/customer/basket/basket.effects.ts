@@ -24,7 +24,6 @@ import {
   submitBasketFail,
   submitBasketSuccess,
   updateBasket,
-  updateBasketExternalOrderReference,
   updateBasketFail,
   updateBasketShippingMethod,
   validateBasket,
@@ -98,16 +97,6 @@ export class BasketEffects {
       ofType(updateBasketShippingMethod),
       mapToPayloadProperty('shippingId'),
       map(commonShippingMethod => updateBasket({ update: { commonShippingMethod } }))
-    )
-  );
-  /**
-   * Updates the order reference of the basket.
-   */
-  updateBasketExternalOrderReference$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(updateBasketExternalOrderReference),
-      mapToPayloadProperty('externalOrderReference'),
-      map(externalOrderReference => updateBasket({ update: { externalOrderReference } }))
     )
   );
   /**

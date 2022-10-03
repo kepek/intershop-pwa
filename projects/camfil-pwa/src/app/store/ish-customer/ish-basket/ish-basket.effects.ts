@@ -64,6 +64,7 @@ import {
   setBasketAttributeFail,
   setBasketAttributeSuccess,
   updateBasket,
+  updateBasketExternalOrderReference,
 } from 'ish-core/store/customer/basket';
 import { BasketEffects } from 'ish-core/store/customer/basket/basket.effects';
 import { getLoggedInCustomer } from 'ish-core/store/customer/user';
@@ -399,6 +400,37 @@ export class IshBasketEffects extends BasketEffects {
       mapTo(updateBasket({ update: { calculated: true } }))
     )
   );
+
+  /**
+   * The load basket effect.
+   */
+  loadBasket$ = createEffect(() =>
+    this.ishActions$.pipe(
+      ofType(loadBasket),
+      withLatestFrom(this.ishStore.pipe(select(getCurrentBasket))),
+      mergeMap(([, current]) =>
+        current?.calculated
+          ? [loadBasketSuccess({ basket: current })]
+          : this.ishBasketService.getBasket().pipe(
+              map(basket => loadBasketSuccess({ basket })),
+              mapErrorToAction(loadBasketFail)
+            )
+      )
+    )
+  );
+
+  /**
+   * Updates the order reference of the basket.
+   */
+  updateBasketExternalOrderReference$ = createEffect(() =>
+    this.ishActions$.pipe(
+      ofType(updateBasketExternalOrderReference),
+      mapToPayloadProperty('externalOrderReference'),
+      filter(externalOrderReference => !!externalOrderReference),
+      map(externalOrderReference => updateBasket({ update: { externalOrderReference } }))
+    )
+  );
+
   protected ishBasketContainsAttribute(basketOrError: Basket, attributeName: string): boolean {
     return !!basketOrError?.attributes?.find(attr => attr.name === attributeName);
   }
