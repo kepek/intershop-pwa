@@ -12,12 +12,12 @@ import { CamfilOrganizationUsersListComponent } from './components/camfil-organi
 
 const exportedComponents = [
   CamfilOrganizationRolesNamesComponent,
+  CamfilOrganizationUserApproversComponent,
   CamfilOrganizationUserCustomerContactFormComponent,
   CamfilOrganizationUserDetailsFormComponent,
   CamfilOrganizationUserRolesFormComponent,
   CamfilOrganizationUsersListComponent,
   CamfilOrganizationUsersListToolbarComponent,
-  CamfilOrganizationUserApproversComponent
 ];
 
 @NgModule({
@@ -25,4 +25,4 @@ const exportedComponents = [
   declarations: [...exportedComponents],
   exports: [...exportedComponents],
 })
-export class CamOrganizationManagementModule { }
+export class CamOrganizationManagementModule {}
