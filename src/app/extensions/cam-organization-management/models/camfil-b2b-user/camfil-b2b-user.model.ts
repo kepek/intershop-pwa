@@ -14,6 +14,7 @@ export const camfilB2bUserRelationsKeys = ['roleIDs'];
 export interface CamfilB2bUser extends B2bUser, CamfilB2bUserRelations {
   id: string;
   currentLogin?: string;
+  approvers?: string[];
 }
 
 export type CamfilB2bUserKeys = keyof CamfilB2bUser;

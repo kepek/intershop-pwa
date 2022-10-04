@@ -74,9 +74,11 @@ import {
   getUsersLoading,
   isUserInitialized,
   loadCustomerUser,
+  loadCustomerUserApprovers,
   loadCustomerUsers,
   resetCustomerUserPassword,
   updateCustomerUser,
+  updateCustomerUserApprovers,
 } from '../store/user';
 
 // tslint:disable:member-ordering
@@ -513,12 +515,14 @@ export class CamOrganizationManagementFacade {
    * @param user
    * @param contacts
    * @param roles
+   * @param approvers
    */
   createCustomerUser$(
     customer: CamfilB2bCustomer,
     user: CamfilB2bUser,
     contacts: CamfilB2bCustomerContact[],
-    roles: CamfilB2bRole[]
+    roles: CamfilB2bRole[],
+    approvers: string[]
   ) {
     this.store.dispatch(
       createCustomerUser({
@@ -526,7 +530,20 @@ export class CamOrganizationManagementFacade {
         user,
         contacts,
         roles,
+        approvers,
       })
     );
+  }
+
+  loadCustomerUserApprovers(customerId: string, userId: string) {
+    this.store.dispatch(loadCustomerUserApprovers({ customerId, userId }));
+  }
+
+  getCustomerUserApprovers$() {
+    return this.store.pipe(select(getSelectedUser)).pipe(map(user => user.approvers));
+  }
+
+  setCustomerUserApprovers(customerId: string, userId: string, approversIds: string[]) {
+    this.store.dispatch(updateCustomerUserApprovers({ customerId, userId, approversIds }));
   }
 }

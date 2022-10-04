@@ -31,6 +31,7 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
   newUserStaticRoles$: Observable<CamfilB2bRole[]>;
   newUserStaticCustomers$: Observable<CamfilB2bCustomer[]>;
   validCustomerContactRoles$: BehaviorSubject<boolean>;
+  approverIds$: BehaviorSubject<string[]>;
 
   context$: Observable<{
     customer: CamfilB2bCustomer;
@@ -38,7 +39,10 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
     contacts: CamfilB2bCustomerContact[];
     roles: CamfilB2bRole[];
     validCustomerContactRoles: boolean;
+    approverIds: string[];
   }>;
+
+  approverUsers$: Observable<CamfilB2bUser[]>;
 
   // Methods
 
@@ -81,6 +85,7 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
     this.newUserStaticCustomers$ = this.newUserId$.pipe(
       switchMap(userId => this.organizationFacade.getUserStaticCustomers$(userId))
     );
+    this.approverIds$ = new BehaviorSubject([]);
 
     this.roles$()
       .pipe(take(1))
@@ -108,14 +113,21 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
       this.newUserContacts$,
       this.newUserRoles$,
       this.validCustomerContactRoles$,
+      this.approverIds$,
     ]).pipe(
-      map(([customer, user, contacts, roles, validCustomerContactRoles]) => ({
+      map(([customer, user, contacts, roles, validCustomerContactRoles, approverIds]) => ({
         customer,
         user,
         contacts,
         roles,
         validCustomerContactRoles,
+        approverIds,
       }))
+    );
+
+    this.approverUsers$ = this.organizationFacade.getOrganizationUsers$().pipe(
+      take(1),
+      map(users => users.filter(u => u.roleIDs.includes('APP_B2B_APPROVER')))
     );
   }
 
@@ -199,6 +211,10 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
     });
   }
 
+  onUpdateApprovers(approverIds: string[]) {
+    this.approverIds$.next(approverIds);
+  }
+
   // Observables
 
   loading$() {
@@ -223,5 +239,13 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
 
   roles$() {
     return this.organizationFacade.getRoles$();
+  }
+
+  userWithApprovers$(): Observable<CamfilB2bUser> {
+    return this.approverIds$.pipe(map(approvers => ({ id: undefined, approvers })));
+  }
+
+  showApprovers$() {
+    return this.newUserRoles$.pipe(map(userRoles => userRoles.map(role => role.id).includes('APP_B2B_NEEDS_APPROVAL')));
   }
 }

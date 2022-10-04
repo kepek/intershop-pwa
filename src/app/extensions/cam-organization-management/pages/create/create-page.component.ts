@@ -44,9 +44,9 @@ export class CreatePageComponent extends CreatePageDataSourceComponent implement
           whenTruthy(),
           filter(({ validCustomerContactRoles }) => validCustomerContactRoles)
         )
-        .subscribe(({ customer, user, contacts, roles }) => {
+        .subscribe(({ customer, user, contacts, roles, approverIds }) => {
           if (customer && contacts.length && roles.length) {
-            this.organizationFacade.createCustomerUser$(customer, user, contacts, roles);
+            this.organizationFacade.createCustomerUser$(customer, user, contacts, roles, approverIds);
           } else {
             this.validCustomerContactRoles$.next(false);
           }

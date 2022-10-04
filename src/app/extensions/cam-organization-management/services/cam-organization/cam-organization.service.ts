@@ -190,7 +190,8 @@ export class CamOrganizationService {
     customer: CamfilB2bCustomer,
     user: CamfilB2bUser,
     contacts: CamfilB2bCustomerContact[],
-    roles: CamfilB2bRole[]
+    roles: CamfilB2bRole[],
+    approvers: string[]
   ) {
     const roleIDs = [].concat(roles).map(r => r?.id);
 
@@ -251,6 +252,12 @@ export class CamOrganizationService {
             ),
             switchMap(createdUser =>
               this.updateCustomerUserRoles(customer.id, createdUser.id, roleIDs).pipe(
+                map(() => createdUser),
+                catchError(() => EMPTY)
+              )
+            ),
+            switchMap(createdUser =>
+              this.setCustomerUserApprovers(customer.id, createdUser.id, approvers).pipe(
                 map(() => createdUser),
                 catchError(() => EMPTY)
               )
@@ -388,6 +395,28 @@ export class CamOrganizationService {
       .pipe(
         unpackEnvelope<CamfilB2bRoleData>('userRoles'),
         map(data => this.b2bRoleMapper.fromData(data))
+      );
+  }
+
+  // Customer -> User -> Approvers
+
+  getCustomerUserApprovers(customerId: string, userId: string): Observable<string[]> {
+    return this.apiService
+      .get<CamfilB2bUserData>(`camfilrequisitions/customers/${customerId}/users/${userId}/approvers`)
+      .pipe(
+        unpackEnvelope<CamfilB2bUserData>('data'),
+        map(data => CamfilB2bUserMapper.fromListData(data).map(user => user.currentLogin)),
+        defaultIfEmpty([])
+      );
+  }
+
+  setCustomerUserApprovers(customerId: string, userId: string, approverIds: string[]): Observable<string[]> {
+    return this.apiService
+      .put<CamfilB2bUserData>(`camfilrequisitions/customers/${customerId}/users/${userId}/approvers`, { approverIds })
+      .pipe(
+        unpackEnvelope<CamfilB2bUserData>('data'),
+        map(data => CamfilB2bUserMapper.fromListData(data).map(user => user.currentLogin)),
+        defaultIfEmpty([])
       );
   }
 

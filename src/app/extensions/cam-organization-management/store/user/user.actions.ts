@@ -97,6 +97,7 @@ export const createCustomerUser = createAction(
     user: CamfilB2bUser;
     contacts: CamfilB2bCustomerContact[];
     roles: CamfilB2bRole[];
+    approvers: string[];
   }>()
 );
 
@@ -170,4 +171,36 @@ export const loadOrganizationUsersFail = createAction('[Camfil Organization API]
 export const loadOrganizationUsersSuccess = createAction(
   '[Camfil Organization API] Load Users Success',
   payload<{ customerIDs: string[]; users: CamfilB2bUser[] }>()
+);
+
+// Customer -> User -> Approvers
+
+export const loadCustomerUserApprovers = createAction(
+  '[Camfil User] Load Customer User Approvers',
+  payload<{ customerId: string; userId: string }>()
+);
+
+export const loadCustomerUserApproversFail = createAction(
+  '[Camfil User API] Load Customer User Approvers Fail',
+  httpError()
+);
+
+export const loadCustomerUserApproversSuccess = createAction(
+  '[Camfil User API] Load Customer User Approvers Success',
+  payload<{ customerId: string; userId: string; approvers: string[] }>()
+);
+
+export const updateCustomerUserApprovers = createAction(
+  '[Camfil User] Update Customer User Approvers',
+  payload<{ customerId: string; userId: string; approversIds: string[] }>()
+);
+
+export const updateCustomerUserApproversFail = createAction(
+  '[Camfil User API] Update Customer User Approvers Fail',
+  httpError()
+);
+
+export const updateCustomerUserApproversSuccess = createAction(
+  '[Camfil User API] Update Customer User Approvers Success',
+  payload<{ customerId: string; userId: string; approvers: string[] }>()
 );
