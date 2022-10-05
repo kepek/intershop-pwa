@@ -6,7 +6,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   languages: ['sv_SE', 'en_GB'],
   continueShoppingUrl: '/account/camcards',
   channelCode: 'SE',
-  currency: 'EUR',
+  currency: 'SEK',
   icmChannel: 'Camfil-CamfilSE-Site',
   showAddToCamCardButtonForNonLoggedInUser: true,
   showCountryFieldOnAddressForms: false,
