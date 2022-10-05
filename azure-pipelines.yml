@@ -65,7 +65,7 @@ variables:
     ${{ elseif eq(variables['isUAT'], 'True') }}:
       value: 'release v$(tag) ($(envName) @ $(build.buildId)~$(build.sourceVersion))' # release v22.01-rc1 (uat @ 897~f6e8adb29dcdeb70e2c25a00e3be6a1649f7d0a6)
     ${{ elseif eq(variables['isINT'], 'True') }}:
-      value: 'develop @ $(build.buildId)~$(build.sourceVersion))' # develop (int @ 897~e60423b6947bc8cf67b8bacd115e90e1dace4408)
+      value: 'develop @ ($(envName) @ $(build.buildId)~$(build.sourceVersion))' # develop (int @ 897~e60423b6947bc8cf67b8bacd115e90e1dace4408)
 
   - name: 'pwaSSR.imageName'
     value: '$(projectName)-pwa-ssr$(imageSuffix)'
