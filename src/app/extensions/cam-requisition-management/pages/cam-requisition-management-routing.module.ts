@@ -34,6 +34,7 @@ const routes: Routes = [
     canActivate: [FeatureToggleGuard],
     data: {
       feature: 'camRequisitionManagement',
+      breadcrumbData: [{ key: 'account.requisitions.approval.link' }],
     },
     loadChildren: () =>
       import('./requisition-detail/cam-requisition-detail-page.module').then(m => m.CamRequisitionDetailPageModule),

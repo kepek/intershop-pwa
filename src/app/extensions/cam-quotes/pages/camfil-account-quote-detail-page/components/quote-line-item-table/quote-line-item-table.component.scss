@@ -2,16 +2,13 @@
 @import '~src/styles/themes/camfil/variables.scss';
 
 :host {
-  tr.mat-header-row {
-    height: 40px;
-  }
-
-  tr.mat-row {
-    height: 60px;
-  }
-
-  tr:last-child td {
-    border-bottom: none;
+  tr {
+    &.mat-row {
+      height: 60px;
+    }
+    &:last-child td {
+      border-bottom: none;
+    }
   }
 
   td div.text-truncate {
@@ -40,6 +37,11 @@
 
     .quick-view {
       margin-left: 6px;
+      &::before {
+        content: '|';
+        margin-right: 6px;
+        display: inline-block;
+      }
     }
   }
 }
@@ -47,23 +49,26 @@
 table {
   width: 100%;
 
-  td,
   th {
-    font-size: $font-size-base;
+    padding-left: $space-box;
+    color: $text-color-primary;
+    white-space: nowrap;
+    background-color: rgba($color-corporate, 0.1);
+  }
+  td {
+    padding-top: $space-default/2;
+    padding-bottom: $space-default/2;
+    padding-left: $space-box;
+    white-space: nowrap;
   }
 
-  th {
-    height: 45px;
-    color: #000;
-    background-color: $greyD9;
-  }
-
-  tr.orderlist-row:hover {
-    background: $greyF5;
-  }
-
-  tr.orderlist-row:active {
-    background: $greyEF;
+  tr.orderlist-row {
+    &:hover {
+      background: $greyF5;
+    }
+    &:active {
+      background: $greyEF;
+    }
   }
 }
 

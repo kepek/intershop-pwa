@@ -43,7 +43,8 @@
       {{ 'camfil.lineitem.table.product' | translate }}
     </th>
     <td mat-cell *matCellDef="let pli">
-      <span>{{ pli.product.name }}</span>
+      <camfil-product-title [class]="'text-truncate'" [product]="getProductInfo(pli.productSKU) | async">
+      </camfil-product-title>
       <a (click)="openQuickViewDialog(pli.productSKU)" class="quick-view text-nowrap">
         <mat-icon class="size-16" svgIcon="search"></mat-icon>
         {{ 'Quickview' | translate }}

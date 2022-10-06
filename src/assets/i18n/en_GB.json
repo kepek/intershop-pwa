@@ -271,6 +271,7 @@
   "account.register.password_confirmation.label": "Confirm Password",
   "account.registration.email.not_match.error": "The e-mail addresses you entered do not match.",
   "account.required_field.message": "Required field",
+  "account.requisitions.approval.link": "My Approvals",
   "account.requisitions.approvals": "Approvals",
   "account.requisitions.approvals.navtab.approved": "Approved by you",
   "account.requisitions.approvals.navtab.partially_approved": "Partially approved",

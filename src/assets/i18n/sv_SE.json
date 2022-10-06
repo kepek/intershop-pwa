@@ -271,6 +271,7 @@
   "account.register.password_confirmation.label": "Bekräfta lösenord",
   "account.registration.email.not_match.error": "E-postadressen du har angivit stämmer inte överrens.",
   "account.required_field.message": "Obligatoriskt fält",
+  "account.requisitions.approval.link": "Mina godkännanden",
   "account.requisitions.approvals": "Attestanter",
   "account.requisitions.approvals.navtab.approved": "Godkänd av dig",
   "account.requisitions.approvals.navtab.partially_approved": "(sv_SE)_Partially approved",
