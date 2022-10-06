@@ -3,14 +3,13 @@
 
 mat-card {
   display: flex;
-  padding: 0;
 
   .column {
-    flex: 1 1 50%;
     display: flex;
+    flex: 1 1 50%;
     flex-direction: column;
     gap: 1rem;
-    padding: 1rem 5rem;
+    padding: 1rem 4rem;
 
     .fields-group {
       display: flex;
@@ -28,17 +27,16 @@ mat-card {
       textarea {
         height: auto;
         padding: 1rem;
-        border: none;
-        background-color: #f0f0f0;
-        outline: none;
         resize: none;
+        border: none;
+        outline: none;
       }
     }
   }
 
   .divider {
     width: 1px;
-    background-color: $gray-400;
+    background-color: $gray-300;
   }
 }
 

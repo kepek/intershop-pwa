@@ -2,43 +2,43 @@
   <div class="column left-column">
     <div class="fields-group">
       <div class="field">
-        <span class="label">{{'camfil.account.orderdetails.customer_name.label' | translate}}</span>
+        <span class="label">{{ 'camfil.account.orderdetails.customer_name.label' | translate }}</span>
         <span class="value">{{ details.customerName }}</span>
       </div>
       <div class="field">
-        <span class="label">{{'camfil.account.apply_form.customer_no' | translate}}</span>
+        <span class="label">{{ 'camfil.account.apply_form.customer_no' | translate }}</span>
         <span class="value">{{ details.customerNumber }}</span>
       </div>
       <div class="field">
-        <span class="label">{{'camfil.account.orderdetails.customer_department.label' | translate}}</span>
+        <span class="label">{{ 'camfil.account.orderdetails.customer_department.label' | translate }}</span>
         <span class="value">{{ details.customerDepartment }}</span>
       </div>
     </div>
     <div class="fields-group">
       <div class="field">
-        <span class="label">{{'camfil.quotes.quote_detail.quotation_number' | translate}}</span>
+        <span class="label">{{ 'camfil.quotes.quote_detail.quotation_number' | translate }}</span>
         <span class="value">{{ details.camfilQuoteNumber }}</span>
       </div>
       <div class="field">
-        <span class="label">{{'camfil.quotes.quote_detail.customer_quotation_number' | translate}}</span>
+        <span class="label">{{ 'camfil.quotes.quote_detail.customer_quotation_number' | translate }}</span>
         <span class="value">{{ details.customerQuoteNumber }}</span>
       </div>
       <div class="field">
-        <span class="label">{{'camfil.quotes.quote_detail.reference' | translate}}</span>
+        <span class="label">{{ 'camfil.quotes.quote_detail.reference' | translate }}</span>
         <span class="value">{{ details.quotationReference }}</span>
       </div>
     </div>
     <div class="fields-group">
       <div class="field">
-        <span class="label">{{'camfil.quotes.quoteslist.columns.status' | translate}}</span>
+        <span class="label">{{ 'camfil.quotes.quoteslist.columns.status' | translate }}</span>
         <span class="value">{{ details.statusText }}</span>
       </div>
       <div class="field">
-        <span class="label">{{'camfil.quotes.quoteslist.columns.requested_date' | translate}}</span>
+        <span class="label">{{ 'camfil.quotes.quoteslist.columns.requested_date' | translate }}</span>
         <span class="value">{{ details.requestedDate | camfilDate }}</span>
       </div>
       <div class="field">
-        <span class="label">{{'camfil.quotes.quote_detail.expiration_date' | translate}}</span>
+        <span class="label">{{ 'camfil.quotes.quote_detail.expiration_date' | translate }}</span>
         <span class="value">{{ details.validToDate | camfilDate }}</span>
       </div>
     </div>
@@ -47,21 +47,21 @@
   <div class="column right-column">
     <div class="fields-group">
       <div class="field">
-        <span class="label">{{'camfil.quotes.quote_detail.requested_by' | translate}}</span>
+        <span class="label">{{ 'camfil.quotes.quote_detail.requested_by' | translate }}</span>
         <span class="value">{{ details.requestedBy }}</span>
       </div>
       <div class="field">
-        <span class="label">{{'camfil.quotes.quoteslist.columns.channel' | translate}}</span>
+        <span class="label">{{ 'camfil.quotes.quoteslist.columns.channel' | translate }}</span>
         <span class="value">{{ details.orderChannel }}</span>
       </div>
       <div class="field">
-        <span class="label">{{'camfil.quotes.quote_detail.phone_notification' | translate}}</span>
+        <span class="label">{{ 'camfil.quotes.quote_detail.phone_notification' | translate }}</span>
         <span class="value">{{ details.phone }}</span>
       </div>
     </div>
     <div class="fields-group">
       <div class="field delivery-address">
-        <span class="label">{{'camfil.account.orderdetails.delivery_address.label' | translate}}</span>
+        <span class="label">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</span>
         <span *ngIf="details.deliveryAddress" class="value text-right">
           {{ details.deliveryAddress.addressLine1 }}
           <br />
@@ -71,8 +71,10 @@
         </span>
       </div>
     </div>
-    <div class="fields-group">
-      <textarea [placeholder]="'camfil.quotes.quote_detail.note' | translate" rows="3" disabled></textarea>
+    <div class="fields-group" *ngIf="details.customerServiceNote">
+      <textarea [placeholder]="'camfil.quotes.quote_detail.note' | translate" rows="3" disabled>{{
+        details.customerServiceNote
+      }}</textarea>
     </div>
   </div>
 </mat-card>

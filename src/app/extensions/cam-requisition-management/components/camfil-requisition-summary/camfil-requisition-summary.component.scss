@@ -1,6 +1,19 @@
+@import '~src/styles/themes/camfil/variables.scss';
+
 :host {
-  .col-border {
-    border-right: 1px solid #eaeaea;
+  @media (min-width: $screen-md-min) {
+    .col-border {
+      border-right: 1px solid $gray-300;
+    }
+  }
+
+  @media (min-width: $screen-lg-min) {
+    .dl-horizontal {
+      &,
+      & + .text-right {
+        padding: 0 3.5rem;
+      }
+    }
   }
   .dl-horizontal {
     dd {

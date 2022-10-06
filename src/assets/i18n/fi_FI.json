@@ -271,6 +271,7 @@
   "account.register.password_confirmation.label": "Vahvista salasana",
   "account.registration.email.not_match.error": "Antamasi sähköpostiosoitteet eivät täsmää.",
   "account.required_field.message": "Vaadittu kenttä",
+  "account.requisitions.approval.link": "Hyväksyntäni",
   "account.requisitions.approvals": "Hyväksynnät",
   "account.requisitions.approvals.navtab.approved": "Sinun hyväksymä",
   "account.requisitions.approvals.navtab.partially_approved": "(fi_FI)_Partially approved",

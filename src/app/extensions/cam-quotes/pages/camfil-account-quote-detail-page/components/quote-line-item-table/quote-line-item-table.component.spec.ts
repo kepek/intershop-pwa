@@ -10,6 +10,7 @@ import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { CamfilProductImageComponent } from 'ish-shared/components/product/camfil-product-image/camfil-product-image.component';
+import { CamfilProductTitleComponent } from 'ish-shared/components/product/camfil-product-title/camfil-product-title.component';
 
 import { QuoteLineItemTableComponent } from './quote-line-item-table.component';
 
@@ -27,6 +28,7 @@ describe('Quote Line Item Table Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         MockComponent(CamfilProductImageComponent),
+        MockComponent(CamfilProductTitleComponent),
         MockPipe(DatePipe),
         MockPipe(PricePipe),
         QuoteLineItemTableComponent,

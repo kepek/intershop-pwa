@@ -271,6 +271,7 @@
   "account.register.password_confirmation.label": "Confermare la password",
   "account.registration.email.not_match.error": "Gli indirizzi e-mail inseriti non corrispondono.",
   "account.required_field.message": "Campo obbligatorio",
+  "account.requisitions.approval.link": "Le mie approvazioni",
   "account.requisitions.approvals": "Approvazioni",
   "account.requisitions.approvals.navtab.approved": "Approvato da te",
   "account.requisitions.approvals.navtab.partially_approved": "(it_IT)_Partially approved",

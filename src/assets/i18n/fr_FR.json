@@ -271,6 +271,7 @@
   "account.register.password_confirmation.label": "Confirmer le mot de passe",
   "account.registration.email.not_match.error": "Les adresses e-mails saisies ne correspondent pas.",
   "account.required_field.message": "Champ obligatoire",
+  "account.requisitions.approval.link": "Mes approbations",
   "account.requisitions.approvals": "Approbations",
   "account.requisitions.approvals.navtab.approved": "Approuvé par vous",
   "account.requisitions.approvals.navtab.partially_approved": "(fr_FR)_Partially approved",
