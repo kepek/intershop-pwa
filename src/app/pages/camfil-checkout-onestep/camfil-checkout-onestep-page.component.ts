@@ -194,7 +194,7 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, AfterViewInit
   updateGuestBucketAddress(guestFormValue: any) {
     combineLatest([
       this.isLoggedIn$,
-      this.checkoutFacade.basket$.pipe(map(basket => basket?.id)),
+      this.basket$.pipe(map(basket => basket?.id)),
       this.buckets$.pipe(map(buckets => buckets?.[0])),
     ])
       .pipe(
@@ -232,7 +232,7 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, AfterViewInit
         map(methods => methods?.[0]),
         filter(pm => !pm.parameters),
         take(1),
-        withLatestFrom(this.checkoutFacade.basket$),
+        withLatestFrom(this.basket$),
         filter(([, basket]) => basket?.id && !basket?.payment && !!basket.lineItems.length),
         takeUntil(this.destroy$)
       )
