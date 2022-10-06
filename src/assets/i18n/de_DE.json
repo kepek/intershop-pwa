@@ -1412,7 +1412,7 @@
   "checkout.receipt.continue.shopping": "Weiter einkaufen",
   "checkout.receipt.createCamCardsDialog.accept": "Ja, bitte.",
   "checkout.receipt.createCamCardsDialog.cancel": "Nein, danke.",
-  "checkout.receipt.createCamCardsDialog.content": "Eine CamCard ist eine Aufstellung Ihrer Luftfilter, damit Sie beim nächsten Filterwechsel in nur wenigen Schritten bestellen können. Sparen Sie Zeit und Kosten bei der nächsten Bestellung und verschaffen Sie sich einen besseren Überblick über Ihren Filterbedarf.",
+  "checkout.receipt.createCamCardsDialog.content": "Eine CamCard ist eine Aufstellung Ihrer Luftfilter für ein bestimmtes Objekt, damit Sie beim nächsten Filterwechsel in nur wenigen Schritten bestellen können. Sparen Sie Zeit und Kosten bei der nächsten Bestellung und verschaffen Sie sich einen besseren Überblick über Ihren Filterbedarf.",
   "checkout.receipt.createCamCardsDialog.title": "Möchten Sie Ihre Bestellung als CamCard speichern?",
   "checkout.receipt.notification.mail.text": "Wir werden <strong>{{0}}</strong> per E-Mail Über den Status Ihrer Bestellung informieren.",
   "checkout.receipt.order_pending.message": "Der Bestell-Status bleibt unverändert bis der Zahlungsvorgang abgeschlossen wurde.",
