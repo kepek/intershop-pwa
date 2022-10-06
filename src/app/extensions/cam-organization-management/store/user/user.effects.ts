@@ -43,6 +43,9 @@ import {
   disconnectUserFromCustomerFail,
   disconnectUserFromCustomerSuccess,
   loadCustomerUser,
+  loadCustomerUserApprovers,
+  loadCustomerUserApproversFail,
+  loadCustomerUserApproversSuccess,
   loadCustomerUserFail,
   loadCustomerUserSuccess,
   loadCustomerUsers,
@@ -56,6 +59,9 @@ import {
   resetCustomerUserPasswordSuccess,
   selectUser,
   updateCustomerUser,
+  updateCustomerUserApprovers,
+  updateCustomerUserApproversFail,
+  updateCustomerUserApproversSuccess,
   updateCustomerUserFail,
   updateCustomerUserSuccess,
 } from './user.actions';
@@ -218,8 +224,8 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(createCustomerUser),
       mapToPayload(),
-      mergeMap(({ customer, user, contacts, roles }) =>
-        this.organizationService.createCustomerUser(customer, user, contacts, roles).pipe(
+      mergeMap(({ customer, user, contacts, roles, approvers }) =>
+        this.organizationService.createCustomerUser(customer, user, contacts, roles, approvers).pipe(
           tap(createdUser => {
             const customerId = contacts[0].customer?.parentCustomer?.id || contacts[0].customer.id;
             this.navigateTo(`../customers/${customerId}/users/${createdUser.id}`);
@@ -363,6 +369,32 @@ export class UserEffects {
             authorized && basket?.externalOrderReference !== externalOrderReference
         ),
         map(([, , externalOrderReference]) => updateBasketExternalOrderReference({ externalOrderReference }))
+      )
+    )
+  );
+
+  loadCustomerUserApprovers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCustomerUserApprovers),
+      mapToPayload(),
+      concatMap(({ customerId, userId }) =>
+        this.organizationService.getCustomerUserApprovers(customerId, userId).pipe(
+          map(approvers => loadCustomerUserApproversSuccess({ customerId, userId, approvers })),
+          mapErrorToAction(loadCustomerUserApproversFail, { customerId, userId })
+        )
+      )
+    )
+  );
+
+  updateCustomerUserApprovers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCustomerUserApprovers),
+      mapToPayload(),
+      concatMap(({ customerId, userId, approversIds }) =>
+        this.organizationService.setCustomerUserApprovers(customerId, userId, approversIds).pipe(
+          map(approvers => updateCustomerUserApproversSuccess({ customerId, userId, approvers })),
+          mapErrorToAction(updateCustomerUserApproversFail, { customerId, userId })
+        )
       )
     )
   );

@@ -55,7 +55,22 @@
         (connectUserWithCustomer)="onConnectUserWithCustomer($event)"
         (disconnectUserFromCustomer)="onDisconnectUserFromCustomer($event)"
         (connectContactWithUserAndCustomer)="onConnectContactWithUserAndCustomer($event)"
-      ></camfil-organization-user-customer-contact-form>
+      >
+      </camfil-organization-user-customer-contact-form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #userApprovers>
+  <div class="section section--customers">
+    <h2 class="section__title">Approvers</h2>
+    <div class="section__content">
+      <camfil-organization-user-approvers
+        [user]="userWithApprovers$() | async"
+        [approverUsers]="approverUsers$ | async"
+        (changeApprovers)="onUpdateApprovers($event)"
+      >
+      </camfil-organization-user-approvers>
     </div>
   </div>
 </ng-template>
@@ -71,7 +86,8 @@
         [staticRoles]="newUserStaticRoles$ | async"
         [selectedRoles]="newUserRoles$ | async"
         (selectCustomerUserRoles)="onUpdateSelectedCustomerUserRoles($event)"
-      ></camfil-organization-user-roles-form>
+      >
+      </camfil-organization-user-roles-form>
     </div>
   </div>
 </ng-template>
@@ -88,6 +104,9 @@
     <div class="row no-gutters">
       <div class="col-sm-7 col-12">
         <ng-container *ngTemplateOutlet="userCustomersContacts"></ng-container>
+        <ng-container *ngIf="showApprovers$() | async">
+          <ng-container *ngTemplateOutlet="userApprovers"></ng-container>
+        </ng-container>
       </div>
       <div class="col-sm-5 col-12">
         <ng-container *ngTemplateOutlet="userRoles"></ng-container>

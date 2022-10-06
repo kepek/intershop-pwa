@@ -22,6 +22,8 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
   context$: Observable<{ customer: CamfilB2bCustomer; user: CamfilB2bUser }>;
   validRoles = true;
 
+  approverUsers$: Observable<CamfilB2bUser[]>;
+
   // tslint:disable-next-line:no-empty
   ngOnInit() {
     this.customer$ = this.organizationFacade.selectedCustomer$.pipe(whenTruthy(), take(1));
@@ -31,6 +33,13 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
     this.userId$ = this.organizationFacade.selectedUserId$.pipe(whenTruthy(), take(1));
 
     this.context$ = combineLatest([this.customer$, this.user$]).pipe(map(([customer, user]) => ({ customer, user })));
+
+    this.approverUsers$ = this.organizationFacade
+      .getOrganizationUsers$()
+      .pipe(map(users => users.filter(u => u.roleIDs.includes('APP_B2B_APPROVER'))));
+    this.context$
+      .pipe(take(1))
+      .subscribe(({ customer, user }) => this.organizationFacade.loadCustomerUserApprovers(customer.id, user.id));
   }
 
   // tslint:disable-next-line:no-empty
@@ -83,6 +92,12 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
     return this.userId$.pipe(switchMap(userId => this.organizationFacade.getCustomerUserContact$(customerId, userId)));
   }
 
+  showApprovers$() {
+    return this.selectedUserRoles$().pipe(
+      map(userRoles => userRoles.map(role => role.id).includes('APP_B2B_NEEDS_APPROVAL'))
+    );
+  }
+
   onUpdateSelectedCustomerUserActive({ active }) {
     // TODO (extMlk): This one suppose to be do the job but then the changes are not reflected in Camfil Customers API endpoints;
     // tslint:disable-next-line:no-commented-out-code
@@ -126,5 +141,11 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
 
   onConnectContactWithUserAndCustomer({ customer, user, contact }) {
     this.organizationFacade.connectContactWithUserAndCustomer$(customer.id, user.id, contact);
+  }
+
+  onUpdateSelectedCustomerUserApprovers(approverIds: string[]) {
+    this.context$
+      .pipe(take(1), whenTruthy())
+      .subscribe(({ user }) => this.organizationFacade.setCustomerUserApprovers(user.customerId, user.id, approverIds));
   }
 }

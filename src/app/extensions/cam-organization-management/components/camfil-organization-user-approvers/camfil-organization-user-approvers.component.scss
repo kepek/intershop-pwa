@@ -1,0 +1,30 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins';
+
+:host {
+  &::ng-deep .mat-checkbox-layout,
+  &::ng-deep .mat-form-field-wrapper {
+    margin: 0;
+  }
+
+  .form {
+    &:hover mat-card {
+      box-shadow: $dark-box-shadow;
+    }
+
+    &__section {
+      padding: $space-default;
+
+      &--name {
+        margin-bottom: 15px;
+      }
+    }
+
+    &__subtitle {
+      @include font-size-h3;
+
+      font-weight: bold;
+      text-transform: none;
+    }
+  }
+}

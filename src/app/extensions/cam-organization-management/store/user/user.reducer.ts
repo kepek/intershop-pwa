@@ -24,6 +24,7 @@ import {
   disconnectUserFromCustomerFail,
   disconnectUserFromCustomerSuccess,
   loadCustomerUser,
+  loadCustomerUserApproversSuccess,
   loadCustomerUserFail,
   loadCustomerUserSuccess,
   loadCustomerUsers,
@@ -161,5 +162,16 @@ export const userReducer = createReducer(
     const { users } = action.payload;
 
     return userAdapter.upsertMany(users, state);
+  }),
+  on(loadCustomerUserApproversSuccess, (state: UserState, action) => {
+    const { userId, approvers } = action.payload;
+
+    const entities = { ...state.entities };
+    const user = entities[userId];
+    if (user) {
+      entities[userId] = { ...user, approvers };
+    }
+
+    return { ...state, entities };
   })
 );
