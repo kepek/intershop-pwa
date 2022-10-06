@@ -1,13 +1,13 @@
 import {
-  ChangeDetectionStrategy,
-  Compiler,
-  Component,
-  Injector,
-  NgModuleFactory,
-  OnInit,
-  ViewChild,
-  ViewContainerRef,
+  ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewContainerRef,
+  Compiler, Injector, NgModuleFactory,
+  
+  
 } from '@angular/core';
+
+
+
+
 
 @Component({
   selector: 'ish-lazy-requisition-widget',
@@ -27,25 +27,36 @@ export class LazyRequisitionWidgetComponent implements OnInit {
    */
 
   @ViewChild('anchor', { read: ViewContainerRef, static: true }) anchor: ViewContainerRef;
+  
 
-  constructor(private compiler: Compiler, private injector: Injector) {}
+  
+
+  constructor(
+    
+    private compiler: Compiler,
+    private injector: Injector
+  ) {}
 
   async ngOnInit() {
-    // prevent cyclic dependency warnings
-    const extension = 'requisition-management';
-    const moduleObj = await import(`../../${extension}.module`);
-    const module = moduleObj[Object.keys(moduleObj)[0]];
+    
+      // prevent cyclic dependency warnings
+      const extension = 'requisition-management';
+      const moduleObj = await import(`../../${extension}.module`);
+      const module = moduleObj[Object.keys(moduleObj)[0]];
 
-    const { RequisitionWidgetComponent } = await import(
-      '../../components/requisition-widget/requisition-widget.component'
-    );
+      const { RequisitionWidgetComponent } = await import('../../components/requisition-widget/requisition-widget.component');
 
-    const moduleFactory = await this.loadModuleFactory(module);
-    const moduleRef = moduleFactory.create(this.injector);
-    const factory = moduleRef.componentFactoryResolver.resolveComponentFactory(RequisitionWidgetComponent);
+      const moduleFactory = await this.loadModuleFactory(module);
+      const moduleRef = moduleFactory.create(this.injector);
+      const factory = moduleRef.componentFactoryResolver.resolveComponentFactory(RequisitionWidgetComponent);
 
-    this.anchor.createComponent(factory).changeDetectorRef.markForCheck();
+    
+      this.anchor.createComponent(factory).changeDetectorRef.markForCheck();
+    
+    
   }
+
+
 
   private async loadModuleFactory(t) {
     if (t instanceof NgModuleFactory) {

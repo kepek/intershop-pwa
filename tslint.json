@@ -9,6 +9,15 @@
     "tslint-plugin-prettier",
     "tslint-config-prettier"
   ],
+  "linterOptions": {
+    "exclude": [
+      "schematics/src/**/*.js",
+      "schematics/src/**/*.d.ts",
+      "src/app/extensions/**/exports/**/*.ts",
+      "projects/**/src/app/exports/**/*.ts",
+      "projects/**/src/exports/**/*.ts"
+    ]
+  },
   "rulesDirectory": ["node_modules/codelyzer"],
   "rules": {
     "prettier": true,
@@ -791,7 +800,7 @@
           "core/utils/",
           ".*.actions.ts$",
           ".*.model.ts$",
-          "projects/camfil-icons/src/exports/"
+          "projects/camfil-icons/src/exports/*.ts$"
         ]
       }
     }

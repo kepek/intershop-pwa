@@ -1,16 +1,11 @@
 import {
-  ChangeDetectionStrategy,
-  Compiler,
-  Component,
-  ComponentRef,
-  Injector,
-  Input,
-  NgModuleFactory,
-  OnChanges,
-  OnInit,
-  ViewChild,
-  ViewContainerRef,
+  ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewContainerRef,
+  Compiler, Injector, NgModuleFactory,
+  ComponentRef, Input, OnChanges, 
+  
 } from '@angular/core';
+
+
 
 import { Basket } from 'ish-core/models/basket/basket.model';
 
@@ -20,7 +15,7 @@ import { Basket } from 'ish-core/models/basket/basket.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // tslint:disable-next-line:component-creation-test
-export class LazyCheckoutReceiptRequisitionComponent implements OnInit, OnChanges {
+export class LazyCheckoutReceiptRequisitionComponent implements OnInit , OnChanges {
   /*
    * WARNING!
    *
@@ -37,32 +32,41 @@ export class LazyCheckoutReceiptRequisitionComponent implements OnInit, OnChange
   // tslint:disable-next-line: no-any
   private component: ComponentRef<any>;
 
-  constructor(private compiler: Compiler, private injector: Injector) {}
+  constructor(
+    
+    private compiler: Compiler,
+    private injector: Injector
+  ) {}
 
   async ngOnInit() {
-    // prevent cyclic dependency warnings
-    const extension = 'requisition-management';
-    const moduleObj = await import(`../../${extension}.module`);
-    const module = moduleObj[Object.keys(moduleObj)[0]];
+    
+      // prevent cyclic dependency warnings
+      const extension = 'requisition-management';
+      const moduleObj = await import(`../../${extension}.module`);
+      const module = moduleObj[Object.keys(moduleObj)[0]];
 
-    const { CheckoutReceiptRequisitionComponent } = await import(
-      '../../components/checkout-receipt-requisition/checkout-receipt-requisition.component'
-    );
+      const { CheckoutReceiptRequisitionComponent } = await import('../../components/checkout-receipt-requisition/checkout-receipt-requisition.component');
 
-    const moduleFactory = await this.loadModuleFactory(module);
-    const moduleRef = moduleFactory.create(this.injector);
-    const factory = moduleRef.componentFactoryResolver.resolveComponentFactory(CheckoutReceiptRequisitionComponent);
+      const moduleFactory = await this.loadModuleFactory(module);
+      const moduleRef = moduleFactory.create(this.injector);
+      const factory = moduleRef.componentFactoryResolver.resolveComponentFactory(CheckoutReceiptRequisitionComponent);
 
-    this.component = this.anchor.createComponent(factory);
-    this.ngOnChanges();
-    this.component.changeDetectorRef.markForCheck();
+    
+      this.component = this.anchor.createComponent(factory);
+      this.ngOnChanges();
+      this.component.changeDetectorRef.markForCheck();
+    
+    
   }
+
 
   ngOnChanges() {
     if (this.component) {
       this.component.instance.basket = this.basket;
+      
     }
   }
+
 
   private async loadModuleFactory(t) {
     if (t instanceof NgModuleFactory) {
