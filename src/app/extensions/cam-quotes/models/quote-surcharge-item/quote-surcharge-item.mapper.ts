@@ -46,7 +46,6 @@ export class QuoteSurchargeItemMapper {
           })
           .filter(Boolean);
       }
-      console.log(surcharges);
       return sortBy(surcharges, 'displayName');
     }
   }
