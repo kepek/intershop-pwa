@@ -2,6 +2,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { Price } from 'ish-core/models/price/price.model';
 
 import { Quantity } from '../quote-item/quote-item.interface';
+import { QuoteSurchargeItem } from '../quote-surcharge-item/quote-surcharge-item.model';
 import { QuoteStatus, QuoteType } from '../quote/quote.model';
 
 export interface QuoteLineItem {
@@ -55,4 +56,5 @@ export interface QuoteDetails {
   taxAmount: Price;
   totalPriceAfterDiscountExVAT: Price;
   totalQty: number;
+  surchargeItems: QuoteSurchargeItem[];
 }

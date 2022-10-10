@@ -13,6 +13,14 @@
         <dt class="col-8">{{ 'camfil.checkout.volume_discount' | translate }}</dt>
         <dd class="col-4">{{ handlePrice(volumeDiscount) | ishPrice }}</dd>
       </ng-container>
+      <ng-container *ngFor="let surchargeItem of quote?.surchargeItems">
+        <dt class="col-8">
+          {{ surchargeItem.displayName | slugify: 'camfil.dynamic' | translate }}
+        </dt>
+        <dd class="col-4" [class.text-line-through]="surchargeItem.strikethrough">
+          {{ surchargeItem.amount | ishPrice }}
+        </dd>
+      </ng-container>
       <dt class="col-8">
         {{ 'camfil.account.orderdetails.your.tax_amount.text' | translate }}
       </dt>
