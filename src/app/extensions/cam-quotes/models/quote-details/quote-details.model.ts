@@ -1,4 +1,5 @@
 import { Address } from 'ish-core/models/address/address.model';
+import { BasketSurcharge } from 'ish-core/models/basket-surcharge/basket-surcharge.model';
 import { Price } from 'ish-core/models/price/price.model';
 
 import { Quantity } from '../quote-item/quote-item.interface';
@@ -55,4 +56,5 @@ export interface QuoteDetails {
   taxAmount: Price;
   totalPriceAfterDiscountExVAT: Price;
   totalQty: number;
+  surchargeItems: BasketSurcharge[];
 }

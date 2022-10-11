@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockPipe } from 'ng-mocks';
 
 import { PricePipe } from 'ish-core/models/price/price.pipe';
+import { CamfilSlugifyPipe } from 'ish-core/pipes/camfil-slugify.pipe';
 
 import { QuoteCostSummaryComponent } from './quote-cost-summary.component';
 
@@ -12,7 +13,7 @@ describe('Quote Cost Summary Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MockPipe(PricePipe), QuoteCostSummaryComponent],
+      declarations: [MockPipe(CamfilSlugifyPipe), MockPipe(PricePipe), QuoteCostSummaryComponent],
     }).compileComponents();
   });
 

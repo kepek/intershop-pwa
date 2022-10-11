@@ -134,6 +134,7 @@ describe('Quote Details Component', () => {
         currency: 'Tempora eos deserunt.',
       },
       totalQty: 0,
+      surchargeItems: [],
     };
     element = fixture.nativeElement;
   });

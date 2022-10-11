@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { AddressMapper } from 'ish-core/models/address/address.mapper';
 
+import { QuoteSurchargeItemMapper } from '../quote-surcharge-item/quote-surcharge-item.mapper';
 import { QuoteStatus } from '../quote/quote.model';
 
 import { QuoteDetailsData } from './quote-details.interface';
@@ -55,6 +56,7 @@ export class QuoteDetailsMapper {
         taxAmount: data.taxAmount,
         totalPriceAfterDiscountExVAT: data.totalPriceAfterDiscountExVAT,
         totalQty: data.totalQty,
+        surchargeItems: QuoteSurchargeItemMapper.fromListData([...data.surchargeItems]),
       };
     } else {
       throw new Error(`QuoteDetails data is required`);
