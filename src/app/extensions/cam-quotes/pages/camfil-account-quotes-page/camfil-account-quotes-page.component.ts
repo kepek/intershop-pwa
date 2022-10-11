@@ -136,7 +136,7 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
         })
       )
       .subscribe(quotes => {
-        this.allQuotes = quotes;
+        this.allQuotes = [...quotes].sort((q1, q2) => q2.requestedDate.getTime() - q1.requestedDate.getTime());
         this.filteredQuotes = this.filterQuotes(this.filtersForm.value, this.allQuotes);
         this.loadQuotesInTable(this.filteredQuotes);
       });
