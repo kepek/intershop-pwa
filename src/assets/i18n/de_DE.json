@@ -521,7 +521,7 @@
   "camfil.account.cam_card.add_to_camcard.error.quantity.button.ok": "OK",
   "camfil.account.cam_card.add_to_camcard.error.quantity.header": "Bitte geben Sie eine Menge an bevor Sie den Artikel zur CamCard hinzufügen",
   "camfil.account.cam_card.add_to_cart.error.quantity.header": "Bitte geben Se eine Menge an bevor Sie den Artikel zum Warenkorb hinzufügen",
-  "camfil.account.cam_card.add_to_form.address": "Adresse",
+  "camfil.account.cam_card.add_to_form.address": "Straße & Hausnummer",
   "camfil.account.cam_card.add_to_form.camcards_details": "CamCard-Details",
   "camfil.account.cam_card.add_to_form.camcards_name": "CamCard Bezeichnung",
   "camfil.account.cam_card.add_to_form.choose_address": "Adresse auswählen oder eine neue eingeben",
