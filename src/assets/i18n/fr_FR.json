@@ -948,6 +948,7 @@
   "camfil.checkout.single_total_price_net": "Montant de la commande (HT)",
   "camfil.checkout.tax.text": "TVA",
   "camfil.checkout.tax_amount": "TVA",
+  "camfil.checkout.total_approval_btn": "Envoyer pour approbation",
   "camfil.checkout.total_order_summary": "Récapitulatif global de la commande",
   "camfil.checkout.validation.for_order": "{{0}} pour la commande {{1}}",
   "camfil.checkout.volume_discount": "Remise sur volume",

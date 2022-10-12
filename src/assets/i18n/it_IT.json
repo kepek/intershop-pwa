@@ -948,6 +948,7 @@
   "camfil.checkout.single_total_price_net": "Prezzo dell'ordine (IVA esclusa)",
   "camfil.checkout.tax.text": "Importo delle tasse",
   "camfil.checkout.tax_amount": "Importo dell'imposta",
+  "camfil.checkout.total_approval_btn": "Invia per approvazione",
   "camfil.checkout.total_order_summary": "Riepilogo totale dell'ordine",
   "camfil.checkout.validation.for_order": "{{0}} per l'ordine {{1}}",
   "camfil.checkout.volume_discount": "Sconto sul volume",

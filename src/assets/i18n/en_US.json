@@ -948,6 +948,7 @@
   "camfil.checkout.single_total_price_net": "Order price (excl. VAT)",
   "camfil.checkout.tax.text": "Tax amount",
   "camfil.checkout.tax_amount": "Tax amount",
+  "camfil.checkout.total_approval_btn": "Send for approval",
   "camfil.checkout.total_order_summary": "Total order summary",
   "camfil.checkout.validation.for_order": "{{0}} for order {{1}}",
   "camfil.checkout.volume_discount": "Volume discount",
