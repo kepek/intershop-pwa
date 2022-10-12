@@ -936,6 +936,7 @@
   "camfil.checkout.single_total_price_net": "Zwischensumme der Bestellung",
   "camfil.checkout.tax.text": "Mehrwertsteuer",
   "camfil.checkout.tax_amount": "Mehrwertsteuer",
+  "camfil.checkout.total_approval_btn": "Zur Genehmigung senden",
   "camfil.checkout.total_order_summary": "Summe der Gesamtbestellung",
   "camfil.checkout.validation.for_order": "{{0}} Für Bestellung {{1}}",
   "camfil.checkout.volume_discount": "Mengenrabatt",
