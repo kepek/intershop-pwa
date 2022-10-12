@@ -9,58 +9,73 @@ pipelines:
   pull-requests:
     '**':
       - step:
-          name: List Files
+          name: Setup
           script:
-            - node -v
-            - npm -v
-            - echo "$(ls -la)"
+            # Git
+            - git fetch --no-tags origin $BITBUCKET_PR_DESTINATION_BRANCH
+            - git log --no-merges origin/$BITBUCKET_PR_DESTINATION_BRANCH..origin/$BITBUCKET_BRANCH --pretty=oneline >> my_log.txt
+            - git diff --name-only --diff-filter=ACMR origin/$BITBUCKET_PR_DESTINATION_BRANCH..origin/$BITBUCKET_BRANCH >> my_diff.txt
+            # Variables
+            - MY_BRANCH_COMMIT_COUNT=$(git rev-list --count origin/$BITBUCKET_PR_DESTINATION_BRANCH..origin/$BITBUCKET_BRANCH)
+            - echo "export MY_BRANCH_COMMIT_COUNT='$MY_BRANCH_COMMIT_COUNT'" >> my_env_variables.sh
+            - MY_BRANCH_COMMIT=$(git log --no-merges origin/$BITBUCKET_PR_DESTINATION_BRANCH..origin/$BITBUCKET_BRANCH --pretty=format:"%H" | tail -1)
+            - echo "export MY_BRANCH_COMMIT='$MY_BRANCH_COMMIT'" >> my_env_variables.sh
+            - MY_BRANCH_LAST_COMMIT_BODY=$(git log -n 1 --pretty=format:"%B" $MY_BRANCH_COMMIT)
+            - echo "export MY_BRANCH_LAST_COMMIT_BODY='$MY_BRANCH_LAST_COMMIT_BODY'" >> my_env_variables.sh
+            - MY_PR_DESTINATION_BRANCH_COMMIT=$(git log --no-merges -n 1 origin/$BITBUCKET_PR_DESTINATION_BRANCH..origin/$BITBUCKET_BRANCH --pretty=format:"%H")
+            - echo "export MY_PR_DESTINATION_BRANCH_COMMIT='$MY_PR_DESTINATION_BRANCH_COMMIT'" >> my_env_variables.sh
+            # Preview
+            - cat my_env_variables.sh
+            - cat my_log.txt
+            - cat my_diff.txt
+          artifacts:
+            - my_log.txt
+            - my_diff.txt
+            - my_env_variables.sh
       - step:
-          name: Install & Build Dependencies
+          name: Install Dependencies
           caches:
             - node
           artifacts:
-            - node_modules/**
-            - projects/organization-management/src/app/exports/**
-            - projects/requisition-management/src/app/exports/**
-            - projects/camfil-icons/src/exports/build/**
-            - node_modules/intershop-tslint-rules/**
+            - node_modules/**/*
             - schematics/src/**/*.js
             - schematics/src/**/*.d.ts
-            - src/app/extensions/**/exports/**
+            - src/app/extensions/**/exports/**/*
+            - projects/**/src/app/exports/**/*
+            - projects/**/src/exports/**/*
           script:
             - npm ci
-            - npm run build:icons
-            - npm run build:tslint-rules
-            - npm run build:schematics
-            - npm run synchronize-lazy-components -- --ci
+            - npm run postinstall
           after-script:
             - cat $HOME/.npm/_logs/*
-            - cat $(find /tmp/ng-** -name "angular-errors.log")
       - step:
-          name: Simulating Build
+          name: Lint Commit
           caches:
             - node
           script:
-            - npm run tsc:build-all -- --noEmit
+            - cat my_env_variables.sh
+            - source my_env_variables.sh
+            - npm i -g -D @commitlint/{config-conventional,cli}
+            - if [ "$MY_BRANCH_COMMIT" = "$MY_PR_DESTINATION_BRANCH_COMMIT" ]; then echo $MY_BRANCH_LAST_COMMIT_BODY | commitlint; else commitlint --from $MY_BRANCH_COMMIT --to $MY_PR_DESTINATION_BRANCH_COMMIT; fi
+      - step:
+          name: Compile Code
+          caches:
+            - node
+          script:
+            - npm run tsc:build-all
+      - step:
+          name: Lint Code
+          caches:
+            - node
+          script:
+            - cat my_diff.txt | grep ".ts$" | xargs ./node_modules/.bin/tslint --project tsconfig.base.json
+      - step:
+          name: Test Code
+          caches:
+            - node
+          script:
+            - git fetch --no-tags origin $BITBUCKET_PR_DESTINATION_BRANCH
+            - npm test -- --runInBand --changedSince=origin/$BITBUCKET_PR_DESTINATION_BRANCH --coverage
           after-script:
             - cat $HOME/.npm/_logs/*
             - cat $(find /tmp/ng-** -name "angular-errors.log")
-      - parallel:
-          - step:
-              name: Code Linting
-              caches:
-                - node
-              script:
-                - npm run lint
-              after-script:
-                - cat $HOME/.npm/_logs/*
-                - cat $(find /tmp/ng-** -name "angular-errors.log")
-          - step:
-              name: Unit Testing
-              caches:
-                - node
-              script:
-                - npm run test -- --forceExit --ci -w=4 -u
-              after-script:
-                - cat $HOME/.npm/_logs/*
-                - cat $(find /tmp/ng-** -name "angular-errors.log")

@@ -1,13 +1,13 @@
 import {
-  ChangeDetectionStrategy,
-  Compiler,
-  Component,
-  Injector,
-  NgModuleFactory,
-  OnInit,
-  ViewChild,
-  ViewContainerRef,
+  ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewContainerRef,
+  Compiler, Injector, NgModuleFactory,
+  
+  
 } from '@angular/core';
+
+
+
+
 
 @Component({
   selector: 'ish-lazy-approval-widget',
@@ -27,23 +27,36 @@ export class LazyApprovalWidgetComponent implements OnInit {
    */
 
   @ViewChild('anchor', { read: ViewContainerRef, static: true }) anchor: ViewContainerRef;
+  
 
-  constructor(private compiler: Compiler, private injector: Injector) {}
+  
+
+  constructor(
+    
+    private compiler: Compiler,
+    private injector: Injector
+  ) {}
 
   async ngOnInit() {
-    // prevent cyclic dependency warnings
-    const extension = 'requisition-management';
-    const moduleObj = await import(`../../${extension}.module`);
-    const module = moduleObj[Object.keys(moduleObj)[0]];
+    
+      // prevent cyclic dependency warnings
+      const extension = 'requisition-management';
+      const moduleObj = await import(`../../${extension}.module`);
+      const module = moduleObj[Object.keys(moduleObj)[0]];
 
-    const { ApprovalWidgetComponent } = await import('../../components/approval-widget/approval-widget.component');
+      const { ApprovalWidgetComponent } = await import('../../components/approval-widget/approval-widget.component');
 
-    const moduleFactory = await this.loadModuleFactory(module);
-    const moduleRef = moduleFactory.create(this.injector);
-    const factory = moduleRef.componentFactoryResolver.resolveComponentFactory(ApprovalWidgetComponent);
+      const moduleFactory = await this.loadModuleFactory(module);
+      const moduleRef = moduleFactory.create(this.injector);
+      const factory = moduleRef.componentFactoryResolver.resolveComponentFactory(ApprovalWidgetComponent);
 
-    this.anchor.createComponent(factory).changeDetectorRef.markForCheck();
+    
+      this.anchor.createComponent(factory).changeDetectorRef.markForCheck();
+    
+    
   }
+
+
 
   private async loadModuleFactory(t) {
     if (t instanceof NgModuleFactory) {
