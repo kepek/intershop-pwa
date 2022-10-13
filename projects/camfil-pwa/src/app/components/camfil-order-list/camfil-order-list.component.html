@@ -3,34 +3,12 @@
     <mat-card-content data-testing-id="orders-list-item-container">
       <div class="row">
         <!-- Search Box -->
-        <div class="col-12 col-md-6 col-lg-3 d-flex align-items-center pr-0 mb-2 mt-0">
-          <div class="search-container">
-            <mat-icon class="search__icon background-icon" svgIcon="search"></mat-icon>
-            <input
-              #searchInput
-              (focus)="isActive = !isActive"
-              (focusout)="isActive = !isActive"
-              [class.mat-elevation-z2]="!isActive"
-              [class.mat-elevation-z4]="isActive"
-              [formControl]="searchInputFilter"
-              [placeholder]="'camfil.account.orderlist.search.placeholder.text' | translate"
-              autocomplete="off"
-              class="search-input"
-              matInput
-              type="text"
-            />
-            <div class="buttons">
-              <button
-                [title]="'camfil.account.orderlist.search.button.title' | translate"
-                color="primary"
-                mat-flat-button
-                name="search"
-                type="submit"
-              >
-                {{ 'camfil.account.orderlist.search.button.title' | translate }}
-              </button>
-            </div>
-          </div>
+        <div class="col-12 col-md-6 col-lg-3 d-flex align-items-center pr-0 mb-2 mt-0" [formGroup]="searchForm">
+          <camfil-search-input
+            [placeholder]="'camfil.account.orderlist.search.placeholder.text' | translate"
+            formControlName="search"
+          >
+          </camfil-search-input>
         </div>
         <div class="col-12 col-md-6 col-lg-3 d-flex align-items-center mb-2 mt-2 mt-md-0 px-lg-2">
           <!-- Customer Filter -->
