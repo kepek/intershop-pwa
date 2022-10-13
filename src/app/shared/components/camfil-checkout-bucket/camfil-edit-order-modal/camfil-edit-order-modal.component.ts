@@ -56,15 +56,14 @@ export class CamfilEditOrderModalComponent implements OnDestroy {
     } else {
       const basketExtension = this.getUpdatedBasketExtension();
       const shipToAddressFull = this.getUpdatedAddress();
-      const form = this.orderForm.addressForm;
 
       const bucket = {
         ...this.bucket,
-        contactPerson: form.get('contactFull').value || this.bucket.contactPerson,
-        orderMark: form.get('orderMark').value,
-        invoiceLabel: form.get('invoiceLabel').value,
-        info: form.get('info').value,
-        phoneNumber: form.get('phoneNumber').value,
+        contactPerson: addressForm.get('contactFull').value || this.bucket.contactPerson,
+        orderMark: addressForm.get('orderMark').value,
+        invoiceLabel: addressForm.get('invoiceLabel').value,
+        info: addressForm.get('info').value,
+        phoneNumber: addressForm.get('phoneNumber').value,
         shipToAddressFull,
       };
 
@@ -120,6 +119,7 @@ export class CamfilEditOrderModalComponent implements OnDestroy {
       postalCode: form.get('zipCode').value,
       city: form.get('area').value,
       companyName1: form.get('company').value,
+      goodsAcceptanceNote: form.get('goodsAcceptanceNote').value || '',
     };
   }
 
