@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { CamfilPwaFacade } from 'camfil-pwa/facades/camfil-pwa.facade';
@@ -11,6 +12,7 @@ import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
+import { SearchInputComponent } from 'ish-shared/forms/components/search-input/search-input.component';
 
 import { CamfilOrderListComponent } from './camfil-order-list.component';
 
@@ -28,12 +30,14 @@ describe('Camfil Order List Component', () => {
         CamfilOrderListComponent,
         MockComponent(AddressComponent),
         MockComponent(CamfilLoadingComponent),
+        MockComponent(SearchInputComponent),
         MockPipe(DatePipe),
         MockPipe(PricePipe),
       ],
       providers: [{ provide: CamfilPwaFacade, useFactory: () => instance(camfilAccountFacade) }],
       imports: [
         AuthorizationToggleModule.forTesting('APP_B2B_MANAGE_ALL_ORDERS'),
+        FormsModule,
         RouterTestingModule,
         TranslateModule.forRoot(),
       ],

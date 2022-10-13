@@ -10,7 +10,7 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -66,7 +66,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   statuses = [];
   customers = [];
   filterCheckboxes$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
-  searchInputFilter = new FormControl();
+  searchForm = this.builder.group({ search: new FormControl() });
   customerFilter = new FormControl();
   dateFromFilter = new FormControl(new Date(new Date().setDate(new Date().getDate() - 90)));
   dateToFilter = new FormControl(new Date());
@@ -88,7 +88,8 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private camfilAccountFacade: CamfilPwaFacade
+    private camfilAccountFacade: CamfilPwaFacade,
+    private builder: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -163,11 +164,14 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
     });
 
     // set and subscribe to search input changes
-    this.searchInputFilter.setValue(this.filteredValues.search);
-    this.searchInputFilter.valueChanges.pipe(debounceTime(500), takeUntil(this.destroy$)).subscribe(filterValue => {
-      this.filteredValues.search = filterValue === '' ? undefined : filterValue;
-      this.applyFilters();
-    });
+    this.searchForm.get('search').setValue(this.filteredValues.search);
+    this.searchForm
+      .get('search')
+      .valueChanges.pipe(debounceTime(500), takeUntil(this.destroy$))
+      .subscribe(filterValue => {
+        this.filteredValues.search = filterValue === '' ? undefined : filterValue;
+        this.applyFilters();
+      });
 
     // set and subscribe to customer select changes
     this.customerFilter.setValue(this.filteredValues.customer);
